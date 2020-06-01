@@ -55,22 +55,22 @@ Pairings are fundamental in the construction of several cryptographic algorithms
       </section>
       <section anchor="applications-of-pairing-based-cryptography" numbered="true" toc="default">
         <name>Applications of Pairing-based Cryptography</name>
-        <t>Several applications using pairing-based cryptography are standardized and implemented. We show example applications available in the real world.</t>
+        <t>Several applications using pairing-based cryptography have already been standardized and deployed. We list here some examples of applications available in the real world.</t>
         <t>IETF published RFCs for pairing-based cryptography such as Identity-Based Cryptography <xref target="RFC5091" format="default"/>, Sakai-Kasahara Key Encryption (SAKKE) <xref target="RFC6508" format="default"/>, and Identity-Based Authenticated Key Exchange (IBAKE) <xref target="RFC6539" format="default"/>. 
 SAKKE is applied to Multimedia Internet KEYing (MIKEY) <xref target="RFC6509" format="default"/> and used in 3GPP <xref target="SAKKE" format="default"/>.</t>
         <t>Pairing-based key agreement protocols are standardized in ISO/IEC <xref target="ISOIEC11770-3" format="default"/>.
 In <xref target="ISOIEC11770-3" format="default"/>, a key agreement scheme by Joux <xref target="Joux00" format="default"/>, identity-based key agreement schemes by Smart-Chen-Cheng <xref target="CCS07" format="default"/> and Fujioka-Suzuki-Ustaoglu <xref target="FSU10" format="default"/> are specified.</t>
         <t>MIRACL implements M-Pin, a multi-factor authentication protocol <xref target="M-Pin" format="default"/>.
-The M-Pin protocol includes a type of zero-knowledge proof, where pairing is used for its construction.</t>
-        <t>The Trusted Computing Group (TCG) specified the Elliptic Curve Direct Anonymous Attestation (ECDAA) in the specification of the Trusted Platform Module (TPM) <xref target="TPM" format="default"/>. 
-ECDAA is a protocol for proving the attestation held by a TPM to a verifier without revealing the attestation held by that TPM. Pairing is used for constructing ECDAA. FIDO Alliance <xref target="FIDO" format="default"/> and W3C <xref target="W3C" format="default"/> also published an ECDAA algorithm similar to TCG.</t>
+The M-Pin protocol includes a type of zero-knowledge proof, where pairins are used for its construction.</t>
+        <t>The Trusted Computing Group (TCG) specified the Elliptic Curve Direct Anonymous Attestation (ECDAA) in the specification of a Trusted Platform Module (TPM) <xref target="TPM" format="default"/>. 
+ECDAA is a protocol for proving the attestation held by a TPM to a verifier without revealing the attestation held by that TPM. Pairings are used in the construction of ECDAA. FIDO Alliance <xref target="FIDO" format="default"/> and W3C <xref target="W3C" format="default"/> also published an ECDAA algorithm similar to TCG.</t>
         <!-- Intel SGX EPID -->
 
-<t>Intel introduced Intel Enhanced Privacy ID (EPID) that enables remote attestation of a hardware device while preserving the privacy of the device as a functionality of Intel Software Guard Extensions (SGX) <xref target="EPID" format="default"/>. They extended TPM ECDAA to realize such functionality. A pairing-based EPID has been proposed <xref target="BL10" format="default"/> and distributed along with Intel SGX applications.</t>
+<t>Intel introduced Intel Enhanced Privacy ID (EPID) that enables remote attestation of a hardware device while preserving the privacy of the device as part of the functionality of Intel Software Guard Extensions (SGX) <xref target="EPID" format="default"/>. They extended TPM ECDAA to realize such functionality. A pairing-based EPID was proposed <xref target="BL10" format="default"/> and distributed along with Intel SGX applications.</t>
 
-<t>Zcash implemented their own zero-knowledge proof algorithm named Zero-Knowledge Succinct Non-Interactive Argument of Knowledge (zk-SNARKs) <xref target="Zcash" format="default"/>. zk-SNARKs are used for protecting the privacy of transactions of Zcash. They use pairing to construct zk-SNARKs.</t>
-<t>Cloudflare introduced Geo Key Manager <xref target="Cloudflare" format="default"/> to restrict distribution of customers' private keys to the subset of their data centers. To achieve this functionality, ABE is used, and pairing takes a role as a building block. In addition, Cloudflare published a new cryptographic library, the Cloudflare Interoperable, Reusable Cryptographic Library (CIRCL) <xref target="CIRCL" format="default"/> in 2019. They plan to support secure pairing-friendly curves in CIRCL.</t>
-        <t>Recently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized 
+<t>Zcash implemented their own zero-knowledge proof algorithm named Zero-Knowledge Succinct Non-Interactive Argument of Knowledge (zk-SNARKs) <xref target="Zcash" format="default"/>. zk-SNARKs are used for protecting the privacy of transactions of Zcash. They use pairings to construct zk-SNARKs.</t>
+<t>Cloudflare introduced Geo Key Manager <xref target="Cloudflare" format="default"/> to restrict distribution of customers' private keys to a subset of their data centers. To achieve this functionality, ABE is used, and pairings take a role as a building block. In addition, Cloudflare published a new cryptographic library, the Cloudflare Interoperable, Reusable Cryptographic Library (CIRCL) <xref target="CIRCL" format="default"/> in 2019. They plan to support secure pairing-friendly curves in CIRCL.</t>
+        <t>Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized 
 <xref target="I-D.boneh-bls-signature" format="default"/> and utilized in several blockchain projects 
 such as Ethereum <xref target="Ethereum" format="default"/>, Algorand <xref target="Algorand" format="default"/>, Chia Network <xref target="Chia" format="default"/>, and DFINITY <xref target="DFINITY" format="default"/>. 
 The aggregation functionality of BLS signatures is effective for their applications of decentralization and scalability.</t>
