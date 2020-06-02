@@ -976,11 +976,9 @@ As described below, BN curves with 256-bit p and 512-bit p specified in ISO/IEC 
 
       <section anchor="applications" numbered="true" toc="default">
         <name>Applications</name>
-<t>Several applications adopt pairing-friendly curves such as BN curves and BLS curves.</t>
-<t>Zcash implements a BN curve (named BN128) in their library libsnark <xref target="libsnark" format="default"/>.
-After exTNFS, they proposed a new parameter of BLS12 as BLS12_381 <xref target="BLS12-381" format="default"/>
-and published its experimental implementation <xref target="zkcrypto" format="default"/>.</t>
-      <t>Ethereum 2.0 adopts the BLS12_381 and uses an implementation by Meyer<xref target="pureGo-bls" format="default"/>. Chia Network published their implementation <xref target="Chia" format="default"/> by integrating the RELIC toolkit <xref target="RELIC" format="default"/>. DFINITY uses mcl, and Algorand published their implementation that supports BLS12_381.</t>
+<t>Zcash uses a BN curve (named BN128) in their library libsnark <xref target="libsnark" format="default"/>.
+In response to the exTNFS attacks, they proposed new parameters using BLS12_381 <xref target="BLS12-381" format="default"/> and published its experimental implementation <xref target="zkcrypto" format="default"/>.</t>
+      <t>Ethereum 2.0 adopted BLS12_381 and uses the implementation by Meyer <xref target="pureGo-bls" format="default"/>. Chia Network published their implementation <xref target="Chia" format="default"/> by integrating the RELIC toolkit <xref target="RELIC" format="default"/>. DFINITY uses mcl, and Algorand published an implementation which supports BLS12_381.</t>
 
       </section>
  </section>
