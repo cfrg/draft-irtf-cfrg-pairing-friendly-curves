@@ -211,17 +211,16 @@ In that case, care for interoperability must be taken.
       <name>Security of Pairing-Friendly Curves</name>
       <section anchor="evaluating-the-security-of-pairing-friendly-curves" numbered="true" toc="default">
         <name>Evaluating the Security of Pairing-Friendly Curves</name>
-        <t>The security of pairing-friendly curves is evaluated by the hardness of the following discrete logarithm problems.</t>
+        <t>The security of pairing-friendly curves is evaluated by the hardness of the following discrete logarithm problems: </t>
         <ul spacing="normal">
           <li>The elliptic curve discrete logarithm problem (ECDLP) in G_1 and G_2</li>
           <li>The finite field discrete logarithm problem (FFDLP) in G_T</li>
         </ul>
-        <t>There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography. Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, bilinear Diffie-Hellman (BDH) problem, decision bilinear Diffie-Hellman (DBDH) problem, gap DBDH problem, etc. <xref target="ECRYPT" format="default"/>.
+        <t>There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography. Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, the bilinear Diffie-Hellman (BDH) problem, the decision bilinear Diffie-Hellman (DBDH) problem, the gap DBDH problem, etc. <xref target="ECRYPT" format="default"/>.
 Almost all of these variants are reduced to the hardness of discrete logarithm problems described above and are believed to be easier than the discrete logarithm problems.</t>
-        <t>Since such attacks where an attacker solves these reduced problems to break pairing-based cryptography have yet to be discovered, we discuss the hardness of the discrete logarithm problems in this memo.</t>
-        <t>The security level of pairing-friendly curves is estimated by the computational cost of the most efficient algorithm to solve the above discrete logarithm problems. 
-The well-known algorithms for solving the discrete logarithm problems include Pollard's rho algorithm <xref target="Pollard78" format="default"/>, Index Calculus <xref target="HR83" format="default"/> and so on. 
-To make index calculus algorithms more efficient, number field sieve (NFS) algorithms are utilized.</t>
+        <t>Although it would be sufficient to attack any of these problems to attack paiting-based crytography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.</t>
+        <t>The security level of pairing-friendly curves is estimated by the computational cost of the most efficient algorithm to solve the above discrete logarithm problems. The best known algorithms for solving the discrete logarithm problems are based on Pollard's rho algorithm <xref target="Pollard78" format="default"/> and Index Calculus <xref target="HR83" format="default"/>. 
+        To make index calculus algorithms more efficient, number field sieve (NFS) algorithms are utilized.</t>
       </section>
       <section anchor="impact" numbered="true" toc="default">
         <name>Impact of Recent Attacks</name>
