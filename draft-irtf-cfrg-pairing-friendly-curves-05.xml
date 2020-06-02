@@ -2046,8 +2046,8 @@ The p-power Frobenius map pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, 
       <section anchor="optimal-ate-pairings-over-barreto-naehrig-curves" numbered="true" toc="default">
         <name>Optimal Ate Pairings over Barreto-Naehrig Curves</name>
         <t>Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.</t>
-        <t>The following algorithm shows the computation of optimal Ate pairing over BN curves.
-It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and an order r as input, and outputs e(P, Q).</t>
+        <t>The following algorithm shows the computation of the optimal Ate pairing on BN curves.
+It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).</t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
     f := 1; T := Q;
     if (c_L = -1)
