@@ -238,7 +238,7 @@ For 256-bit security, Kiyomura et al. estimated the minimum bit length of p^k of
     <section anchor="secure_params" numbered="true" toc="default">
       <name>Selection of Pairing-Friendly Curves</name>
 <t>
-In this section, we introduce secure pairing-friendly curves that consider the impact of exTNFS.
+In this section, we introduce some of the known secure pairing-friendly curves that consider the impact of exTNFS.
 </t>
 <t>
 First, we show the adoption status of pairing-friendly curves in standards, libraries and applications, and classify them in accordance with 128-bit, 192-bit, and 256-bit security levels.
@@ -246,7 +246,7 @@ Then, from the viewpoints of "security" and "widely used", pairing-friendly curv
 </t>
 <t>
 In our selection policy, it is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. 
-In addition, "efficiency" is one of the important aspects but greatly depends on implementations, so we consider that the viewpoints of "security" and "widely used" are more important than "efficiency" when considering interconnections and interoperability on future Internet. </t>
+In addition, "efficiency" is one of the important aspects but greatly dependant on implementations, so we choose to prioritize "security" and "widely used" over "efficiency" in consideration of future interconnections and interoperability over the internet. </t>
     <section anchor="impl" numbered="true" toc="default">
         <name>Adoption Status of Pairing-friendly Curves</name>
           <t>We show the pairing-friendly curves selected by existing standards, cryptographic libraries, and applications.</t>
