@@ -2024,10 +2024,10 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
       </references>
     </references>
     <section anchor="comp_pairing" numbered="true" toc="default">
-      <name>Computing Optimal Ate Pairing</name>
-      <t>Before presenting the computation of optimal Ate pairing e(P, Q) 
+      <name>Computing the Optimal Ate Pairing</name>
+      <t>Before presenting the computation of the optimal Ate pairing e(P, Q) 
 satisfying the properties shown in <xref target="pairing" format="default"/>, 
-we give subfunctions used for the pairing computation.</t>
+we give the subfunctions used for the pairing computation.</t>
       <t>The following algorithm, Line_Function shows the computation of the line function.
 It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_1 as input, and outputs an element of G_T.</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -2040,9 +2040,9 @@ It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_
     end if;
     return (l * (P[1] -A[1]) + A[2] -P[2]);
 ]]></artwork>
-      <t>When implementing the line function, implementers should consider the isomorphism of E and its twisted curve E' so that one can reduce the computational cost of operations in G_2. We note that Line_function does not consider such isomorphism.</t>
-      <t>Computation of optimal Ate pairing for BN curves uses a Frobenius map.
-Let a Frobenius map pi for a point Q = (x, y) over E' be pi(p, Q) = (x^p, y^p).</t>
+      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2. We note that Line_function does not consider such an isomorphism.</t>
+      <t>The computation of the optimal Ate pairing for BN curves uses the Frobenius map.
+The p-power Frobenius map pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).</t>
       <section anchor="optimal-ate-pairings-over-barreto-naehrig-curves" numbered="true" toc="default">
         <name>Optimal Ate Pairings over Barreto-Naehrig Curves</name>
         <t>Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.</t>
