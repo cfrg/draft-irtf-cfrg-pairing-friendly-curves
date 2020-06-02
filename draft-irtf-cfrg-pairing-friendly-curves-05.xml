@@ -188,32 +188,19 @@ In the same way as BN curves, BLS curves can be categorized into D-type and M-ty
       </section>
       
       <section anchor="representation-convention-for-an-extension-field" numbered="true" toc="default">
-        <name>Representation Convention for an Extension Field</name><!--
-        <t>Pairing-friendly curves use a tower of some extension fields. 
-To encode an element of an extension field, we adopt the representation convention shown in Appendix J.4 of <xref target="I-D.ietf-lwig-curve-representations" format="default"/> .</t>
-        <t>Let F_p be a finite field of characteristic p and F_p^d be an extension field of F_p of degree d and an indeterminate i.</t>
-        <t>
-    For an element s in F_p^d such that s = s_0 + s_1 * i + ... + s_{d - 1} *&nbsp;&nbsp;i^{d - 1} for s_0, s_1, ... , s_{d - 1} in a basefield F_p, s is represented as an octet string by oct(s) = s_0 || s_1 || ... || s_{d - 1}.
-</t>
-        <t>Let F_p^d' be an extension field of F_p^d of degree d' / d and an indeterminate j.</t>
-        <t>
-    For an element s' in F_p^d' such that s' = s'_0 + s'_1 * j + ... + s'_{d' / d - 1} * j^{d' / d - 1} for s'_0, s'_1, ..., s'_{d' / d - 1} in a basefield F_p^d, s' is represented as an integer by oct(s') = oct(s'_0) || oct(s'_1) || ... || oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1}) are octet strings encoded by the above convention.
-</t>
-        <t>In general, one can define the encoding between an integer and element of any finite field tower by inductively applying the above convention.</t>
-        <t>The parameters and test vectors of the extension fields described in this memo are encoded by this convention and represented in an octet stream.</t>
--->
+        <name>Representation Convention for an Extension Field</name>
         <t>Pairing-friendly curves use a tower of some extension fields. 
 In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of <xref target="I-D.ietf-lwig-curve-representations" format="default"/> as a standard and effective method.</t>
-        <t>Let F_p be a finite field of characteristic p and F_p^d be an extension field of F_p of degree d and an indeterminate i.</t>
+        <t>Let F_p be a finite field of characteristic p and F_p^d = F_p(i) be an extension field of F_p of degree d'.</t>
         <t>
-    For an element s in F_p^d such that s = s_0 + s_1 * i + ... + s_{d - 1} *&nbsp;&nbsp;i^{d - 1} for s_0, s_1, ... , s_{d - 1} in a basefield F_p, s is represented as octet string by oct(s) = s_0 || s_1 || ... || s_{d - 1}.
+    For an element s in F_p^d such that s = s_0 + s_1 * i + ... + s_{d - 1} *&nbsp;&nbsp;i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the basefield F_p, s is represented as octet string by oct(s) = s_0 || s_1 || ... || s_{d - 1}.
 </t>
-        <t>Let F_p^d' be an extension field of F_p^d of degree d' / d and an indeterminate j.</t>
+        <t>Let F_p^d' = F_p^d(j) be an extension field of F_p^d of degree d' / d.</t>
         <t>
-    For an element s' in F_p^d' such that s' = s'_0 + s'_1 * j + ... + s'_{d' / d - 1} * j^{d' / d - 1} for s'_0, s'_1, ..., s'_{d' / d - 1} in a basefield F_p^d, s' is represented as integer by oct(s') = oct(s'_0) || oct(s'_1) || ... || oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1}) are octet strings encoded by above convention.
+    For an element s' in F_p^d' such that s' = s'_0 + s'_1 * j + ... + s'_{d' / d - 1} * j^{d' / d - 1} where s'_0, s'_1, ..., s'_{d' / d - 1} in the basefield F_p^d, s' is represented as integer by oct(s') = oct(s'_0) || oct(s'_1) || ... || oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1}) are octet strings encoded by above convention.
 </t>
         <t>In general, one can define encoding between integer and an element of any finite field tower by inductively applying the above convention.</t>
-        <t>The parameters and test vectors of extension fields described in this memo are encoded by this convention and represented in octet stream.</t>
+        <t>The parameters and test vectors of extension fields described in this memo are encoded by this convention and represented in an octet stream.</t>
 <t>
 When applications communicate elements in an extension field, using the compression method <xref target="MP04" format="default"/> may be more effective. 
 In that case, care for interoperability must be taken.
