@@ -130,23 +130,19 @@ This is called the Weierstrass normal form of an elliptic curve.</t>
         </dl>
       </section>
       <section anchor="pairing" numbered="true" toc="default">
-        <name>Pairing</name>
-        <t>Pairing is a kind of the bilinear map defined over two elliptic curves E and E'.
-Examples include Weil pairing, Tate pairing, optimal Ate pairing <xref target="Ver09" format="default"/>, and so on.
-Optimal Ate pairing is considered to be especially efficient to compute and is mainly used for practical implementation.</t>
-        <t>Let E be an elliptic curve defined over a prime field F_p and E' be an elliptic curve defined over an extension field of F_p.
-Let k be a minimum integer such that r is a divisor of p^k - 1, which is called an embedding degree.
-Let G_1 be a cyclic subgroup on the elliptic curve E with order r, 
-and G_2 be a cyclic subgroup on the elliptic curve E' with order r.
-Let G_T be an order r subgroup of a multiplicative group (F_p^k)^*.</t>
-        <t>Pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T
+        <name>Pairings</name>
+        <t>Pairing is a kind of the bilinear map defined over two elliptic curves E and E'. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing <xref target="Ver09" format="default"/>, and so on.
+The optimal Ate pairing is considered to be the most efficient to compute is the one that is most commonly used for practical implementation.</t>
+
+<t>Let E be an elliptic curve defined over a prime field F_p. Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree. Let G_1 be a cyclic subgroup of E(F_p) of order r, there also exists cyclic subgroup of E(F_p^k) of order r, define this to be G_2. Let G_T be an order r subgroup of the multiplicative group (F_p^k)^*; this exists by definition of k.</t>
+        <t>A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T
 satisfying the following properties:</t>
         <ol spacing="normal" type="1">
           <li>Bilinearity: for any S in G_1, T in G_2, and integers a and b, e([a]S, [b]T) = e(S, T)^{a * b}.</li>
           <li>Non-degeneracy: for any T in G_2, e(S, T) = 1 if and only if S = O_E.
  Similarly, for any S in G_1, e(S, T) = 1 if and only if T = O_E.</li>
-          <li>Computability: for any S in G_1 and T in G_2, the bilinear map is efficiently computable.</li>
         </ol>
+      <t>In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable.</t>
       </section>
       <section anchor="BNdef" numbered="true" toc="default">
         <name>Barreto-Naehrig Curve</name>
