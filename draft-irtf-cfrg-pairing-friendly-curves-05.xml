@@ -95,36 +95,38 @@ The aggregation functionality of BLS signatures is effective for their applicati
     <section anchor="preliminaries" numbered="true" toc="default">
       <name>Preliminaries</name>
       <section anchor="elliptic-curve" numbered="true" toc="default">
-        <name>Elliptic Curve</name>
+        <name>Elliptic Curves</name>
         <t>Let p &gt; 3 be a prime and q = p^n for a natural number n.
 Let F_q be a finite field.
-The curve defined by the following equation E is called an elliptic curve.</t>
+The curve defined by the following equation E is called an elliptic curve: </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
    E : y^2 = x^3 + A * x + B,
 ]]></artwork>
-        <t>where x and y are in F_q, and A and B in F_q satisfy the discriminant inequality 4 * A^3 + 27 * B^2 != 0 mod q.
+        <t> and A and B in F_q satisfy the discriminant inequality 4 * A^3 + 27 * B^2 != 0 mod q.
 This is called the Weierstrass normal form of an elliptic curve.</t>
-        <t>Soluti\ons (x, y) for an elliptic curve E, as well as the point at infinity, O_E, 
-are called F_q-rational points.
-If P and Q are two points on the curve E, we can define R = P + Q as the opposite point of the intersection between the curve E and the line that passes through P and Q. 
-We can define P + O_E = P = O_E + P as well.
-Similarly, we can define 2P = P + P and a scalar multiplication S = [a]P for a positive integer a can be defined as an (a-1)-time addition of P.</t>
-        <t>The additive group, denoted by E(F_q), is constructed by the set of F_q-rational points and the addition law described above.
-We can define the cyclic additive group with a prime order r by taking a base point BP in E(F_q) as a generator. This group is used for the elliptic curve cryptography.</t>
-        <t>We define terminology used in this memo as follows.</t>
+<t>A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number k, we define the set of (F_q^k)-rational points of E, denoted by E(F_q^k), to be the set of all solutions (x,y) in F_q^k, together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.</t>
+<t>The set E(F_q^k) forms a group under a group law which can be defined geometrically as follows. For P and Q in E(F_q^k) define P + Q to be the reflection about the x-axis of the unique third point of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [a]P for a positive integer a as the point P added to itself (a-1) times.</t>
+<t>We define some of the terminology used in this memo as follows:</t>
+
         <dl newline="false" spacing="normal">
           <dt>O_E:</dt>
           <dd>
   the point at infinity over an elliptic curve E.</dd>
-          <dt>E(F_q):</dt>
+          <dt>E(F_q^k):</dt>
           <dd>
-  a group constructed by F_q-rational points of E.</dd>
-          <dt>#E(F_q):</dt>
+  the group of F_q-rational points of E.</dd>
+          <dt>#E(F_q^k):</dt>
           <dd>
   the number of F_q-rational points of E.</dd>
+          <dt>r:</dt>
+          <dd>
+  the largest prime divisor of #E(F_q).</dd>
+          <dt>BP:</dt>
+          <dd>
+  a point in E(F_q) of order r. (The 'base point' of a cyclic subgroup of E(F_q))</dd>
           <dt>h:</dt>
           <dd>
-  a cofactor such that h =  #E(F_q) / r.</dd>
+  the cofactor h =  #E(F_q) / r.</dd>
         </dl>
       </section>
       <section anchor="pairing" numbered="true" toc="default">
