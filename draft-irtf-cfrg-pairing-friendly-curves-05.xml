@@ -1099,7 +1099,7 @@ BN462 is defined by the following parameter</t>
 
       <section anchor="for-192-bits-of-security" numbered="true" toc="default">
         <name>For 192-bit Security</name>
-        <t>As shown in <xref target="adoption" format="default"/>, candidates of pairing-friendly curves for 192-bit security are only two curves: BLS24_477 and BLS24_479. BLS24_477 has only one implementation and BLS24_479 is an experimental parameter that is not shown in peer-reviewed papers. Therefore, because none match our selection policy, we could not show the parameters for 192-bit security here.</t>
+        <t>As shown in <xref target="adoption" format="default"/>, there are only two candidates of pairing-friendly curves for the 192-bit security level, BLS24_477 and BLS24_479. BLS24_477 has only one implementation and BLS24_479 is an experimental parameter that is not shown in any peer-reviewed paper. Therefore, because neither match our selection policy, we do not show the parameters for 192-bit security here.</t>
       </section>
       
       
