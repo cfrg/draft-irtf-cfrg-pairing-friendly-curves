@@ -2091,7 +2091,7 @@ and an order r as input, and outputs e(P, Q).</t>
 
     <section anchor="test-vectors-of-optimal-ate-pairing" numbered="true" toc="default">
       <name>Test Vectors of Optimal Ate Pairing</name>
-      <t>We provide test vectors for Optimal Ate Pairing e(P, Q) given in <xref target="comp_pairing" format="default"/> for the curves BN462 and BLS48-581 given in <xref target="secure_params" format="default"/>.
+      <t>We provide test vectors for the optimal Ate Pairing e(P, Q) given in <xref target="comp_pairing" format="default"/> for the curves BN462 and BLS48-581 given in <xref target="secure_params" format="default"/>.
 Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <xref target="secure_params" format="default"/>.</t>
       <t>For BN462, Q = (x', y') is given by</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
