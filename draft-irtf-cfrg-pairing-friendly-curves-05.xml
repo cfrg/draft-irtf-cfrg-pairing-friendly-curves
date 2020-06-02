@@ -988,7 +988,7 @@ and published its experimental implementation <xref target="zkcrypto" format="de
       <section anchor="for-128-bits-of-security" numbered="true" toc="default">      
         <name>For 128-bit Security</name>
 <t>
-<xref target="adoption" format="default"/> shows that a lot of pairing-friendly curves whose types are BN and BLS are adopted as 128-bit security level curves.
+<xref target="adoption" format="default"/> shows a lot of cases of adopting BN and BLS curves.
 Among them, the one that best matches our selection policy is BN462, so we introduce the parameters of BN462 in this section.
 </t>
 <t>
