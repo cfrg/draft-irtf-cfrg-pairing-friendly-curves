@@ -144,8 +144,10 @@ satisfying the following properties:</t>
         </ol>
       <t>In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable.</t>
       </section>
+
+
       <section anchor="BNdef" numbered="true" toc="default">
-        <name>Barreto-Naehrig Curve</name>
+        <name>Barreto-Naehrig Curves</name>
         <t>A BN curve <xref target="BN05" format="default"/> is one of the instantiations of pairing-friendly curves proposed in 2005. A pairing over BN curves constructs optimal Ate pairings.</t>
         <t>A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
 E is defined over F_p, where p is a prime more than or equal to 5, and E(F_p) has a subgroup of prime order r.
@@ -156,7 +158,7 @@ The characteristic p and the order r are parameterized by</t>
 ]]></artwork>
         <t>for an integer t.</t>
         <t>The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is an element of multiplicative group of order p.</t>
-        <t>BN curves always have order 6 twists. If m is an element that is neither a square nor a cube in an extension field F_p^2, the twisted curve E' of E is defined over an extension field F_p^2 by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
+        <t>BN curves always have order 6 twists. If m is an element that is neither a square nor a cube in an extension field F_p^2, the twist E' of E is defined over an extension field F_p^2 by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
 BN curves are called D-type if b' = b / m, and M-type if b' = b * m.
 The embedded degree k is 12.</t>
         <t>A pairing e is defined by taking G_1 as a subgroup of E(F_p) of order r, G_2 as a subgroup of E'(F_p^2), and G_T as a subgroup of a multiplicative group (F_p^12)^* of order r.</t>
