@@ -164,11 +164,11 @@ The embedded degree k is 12.</t>
         <t>A pairing e is defined by taking G_1 as a subgroup of E(F_p) of order r, G_2 as a subgroup of E'(F_p^2), and G_T as a subgroup of a multiplicative group (F_p^12)^* of order r.</t>
       </section>
       <section anchor="BLSdef" numbered="true" toc="default">
-        <name>Barreto-Lynn-Scott Curve</name>
+        <name>Barreto-Lynn-Scott Curves</name>
         <t>A BLS curve <xref target="BLS02" format="default"/> is another instantiation of pairings proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.</t>
         <t>A BLS curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
 E is defined over a finite field F_p by an equation of the form E: y^2 = x^3 + b,
-and its twisted curve, E': y^2 = x^3 + b', is defined in the same way as BN curves. 
+and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves. 
 In contrast to BN curves, E(F_p) does not have a prime order.
 Instead, its order is divisible by a large parameterized prime r and denoted by h * r with cofactor h.
 The pairing is defined on the r-torsions points.
