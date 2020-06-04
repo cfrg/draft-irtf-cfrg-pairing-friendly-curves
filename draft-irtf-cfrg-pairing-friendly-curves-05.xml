@@ -131,7 +131,7 @@ This is called the Weierstrass normal form of an elliptic curve.</t>
       </section>
       <section anchor="pairing" numbered="true" toc="default">
         <name>Pairings</name>
-        <t>Pairing is a kind of the bilinear map defined over two elliptic curves E and E'. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing <xref target="Ver09" format="default"/>, and so on.
+        <t>A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing <xref target="Ver09" format="default"/>, and so on.
 The optimal Ate pairing is considered to be the most efficient to compute is the one that is most commonly used for practical implementation.</t>
 
 <t>Let E be an elliptic curve defined over a prime field F_p. Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree. Let G_1 be a cyclic subgroup of E(F_p) of order r, there also exists cyclic subgroup of E(F_p^k) of order r, define this to be G_2. Let G_T be an order r subgroup of the multiplicative group (F_p^k)^*; this exists by definition of k.</t>
