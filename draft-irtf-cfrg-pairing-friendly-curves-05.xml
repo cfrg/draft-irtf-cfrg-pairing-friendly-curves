@@ -38,7 +38,7 @@
     <keyword>Pairing-Friendly Curves</keyword>
     <keyword>Eliptic Curve Cryptgraphy</keyword>
     <abstract>
-      <t>Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairing is a special map defined using elliptic curves and it can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve algorithm named exTNFS for the discrete logarithm problem in a finite field. Several types of pairing-friendly curves such as Barreto-Naehrig curves are affected by the attack. In particular, a Barreto-Naehrig curve with a 254-bit characteristic was adopted by a lot of cryptographic libraries as a parameter of 128-bit security, however, it ensures no more than the 100-bit security level due to the effect of the attack. In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in standards, libraries and applications, and classify them in the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely use", we select the recommended pairing-friendly curves considering exTNFS.
+      <t>Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairing is a special map defined using elliptic curves and it can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve algorithm named exTNFS for the discrete logarithm problem in a finite field. Several types of pairing-friendly curves such as Barreto-Naehrig curves are affected by the attack. In particular, a Barreto-Naehrig curve with a 254-bit characteristic was adopted by a lot of cryptographic libraries as a parameter of 128-bit security, however, it ensures no more than the 100-bit security level due to the effect of the attack. In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in standards, libraries and applications, and classify them in the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", we select the recommended pairing-friendly curves considering exTNFS.
 </t>
     </abstract>
   </front>
@@ -79,7 +79,8 @@ The aggregation functionality of BLS signatures is effective for their applicati
 
       <section anchor="goal" numbered="true" toc="default">
         <name>Motivation and Contribution</name>
-<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve(NSF) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of 128-bit security, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack.</t>
+<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve(NSF) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
+</t>
 
 <t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/>.</t>
 
@@ -227,7 +228,8 @@ Almost all of these variants are reduced to the hardness of discrete logarithm p
         <name>Impact of Recent Attacks</name>
         <t>In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <xref target="KB16" format="default"/>.
 Due to exTNFS, the security level of certain pairing-friendly curves asymptotically dropped down.
-For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <xref target="BD18" format="default"/>.</t>
+For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <xref target="BD18" format="default"/>. Here, the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
+</t>
         <t>There has since been research into the minimum bit length of the parameters of pairing-friendly curves for each security level when applying exTNFS as an attacking method for FFDLP.
 For 128-bit security, Barbulescu and Duquesne estimated the minimum bit length of p of BN curves and BLS12 curves after exTNFS as 461 bits <xref target="BD18" format="default"/>.
 For 256-bit security, Kiyomura et al. estimated the minimum bit length of p^k of BLS48 curves as 27,410 bits, which indicated 572 bits of p <xref target="KIK17" format="default"/>.</t>
@@ -1498,6 +1500,17 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
               <organization/>
             </author>
             <author initials="E." surname="Thome" fullname="Emmanuel Thome">
+              <organization/>
+            </author>
+            <date year="2020"/>
+          </front>
+        </reference>
+
+        <reference anchor="NIST">
+          <front>
+            <title>NIST special publication 800-57 part 1 (revised) : Recommendation for key management, part 1: General (revised)</title>
+            <seriesInfo name="National Institute of Standards and Technology" value="(NIST)"/>
+            <author initials="E." surname="Barker">
               <organization/>
             </author>
             <date year="2020"/>
