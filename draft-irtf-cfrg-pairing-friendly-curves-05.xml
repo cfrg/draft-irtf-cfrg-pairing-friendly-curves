@@ -253,7 +253,7 @@ In addition, "efficiency" is one of the important aspects but greatly dependant 
     <section anchor="impl" numbered="true" toc="default">
         <name>Adoption Status of Pairing-friendly Curves</name>
           <t>We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications.</t>
-<t><xref target="adoption" format="default"/> summarizes the adoption status of pairing-friendly curves. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
+<t><xref target="adoption" format="default"/> summarizes the adoption status of pairing-friendly curves. In this table, "Arnd" is an abbreviation for "Around". The curves categorized into 'Arnd 128bit', 'Arnd 192bit' and 'Arnd 256bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
 Due to space limitations, <xref target="adoption" format="default"/> omits libraries that have not been maintained since the 2016 exTNFS attacks and curves that have had the security levels below 128 bits since before 2016 (ex. BN160). The full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. In this table, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GME19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the Freeman curves and MNT curves are not included in this table because <xref target="BD18" format="default"/> does not show the security level of these curves.
 </t>
 
@@ -270,11 +270,11 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left"> ~ </td>
-            <td align="left"> Ard 128 </td>
+            <td align="left"> Arnd 128 </td>
             <td align="left"> ~ </td>
-            <td align="left"> Ard 192 </td>
+            <td align="left"> Arnd 192 </td>
             <td align="left"> ~ </td>
-            <td align="left"> Ard 256 </td>            
+            <td align="left"> Arnd 256 </td>            
           </tr>
         </thead>
         <tbody>
@@ -1182,7 +1182,7 @@ BN462 is defined by the parameter</t>
       
       
       <section anchor="for-256-bits-of-security" numbered="true" toc="default">
-        <name>For 256-bits Security</name>
+        <name>For 256-bit Security</name>
         
         <t>As shown in <xref target="adoption" format="default"/>, there are three candidates of pairing-friendly curves for 256-bit security. According to our selection policy, we select BLS48_581, as it is the most widely adopted by cryptographic libraries.
 		</t>
