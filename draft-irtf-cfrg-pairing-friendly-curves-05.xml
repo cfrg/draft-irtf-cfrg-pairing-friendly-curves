@@ -254,7 +254,7 @@ In addition, "efficiency" is one of the important aspects but greatly dependant 
         <name>Adoption Status of Pairing-friendly Curves</name>
           <t>We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications.</t>
 <t><xref target="adoption" format="default"/> summarizes the adoption status of pairing-friendly curves. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
-Due to space limitations, <xref target="adoption" format="default"/> omits libraries that have not been maintained since the 2016 exTNFS attacks and curves that have had the security levels below 128 bits since before 2016 (ex. BN160). The full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. In this table, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GME19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the curves marked as (*) indicate that the evaluation of the security level does not take into account the impact of the exTNFS because <xref target="BD18" format="default"/> does not show the security level of these curves.
+Due to space limitations, <xref target="adoption" format="default"/> omits libraries that have not been maintained since the 2016 exTNFS attacks and curves that have had the security levels below 128 bits since before 2016 (ex. BN160). The full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. In this table, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GME19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the Freeman curves and MNT curves are not included in this table because <xref target="BD18" format="default"/> does not show the security level of these curves.
 </t>
 
 
@@ -279,8 +279,8 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
         </thead>
         <tbody>
           <tr>
-            <td align="left" rowspan="12">Standard</td>
-            <td align="left" rowspan="6">ISO/IEC</td>
+            <td align="left" rowspan="9">Standard</td>
+            <td align="left" rowspan="3">ISO/IEC</td>
             <td align="left">BN256I</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
@@ -307,33 +307,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>         
-           <tr>
-            <td align="left">Freeman224</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">*</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-           <tr>
-            <td align="left">Freeman256</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">*</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-           <tr>
-            <td align="left">MNT256</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">*</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
           <tr>
             <td align="left" rowspan="2">TCG</td>
             <td align="left">BN256I</td>
