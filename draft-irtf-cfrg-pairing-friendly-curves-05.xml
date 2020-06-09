@@ -30,6 +30,12 @@
         <email>tsunekazu.saito.hg@hco.ntt.co.jp</email>
       </address>
     </author>
+    <author initials="R." surname="Wahby" fullname="Riad S. Wahby">
+      <organization>Stanford University</organization>
+      <address>
+        <email>rsw@cs.stanford.edu</email>
+      </address>
+    </author>
     <date/>
     <area>IRTF</area>
     <workgroup>CFRG</workgroup>
@@ -64,7 +70,6 @@ In <xref target="ISOIEC11770-3" format="default"/>, a key agreement scheme by Jo
 The M-Pin protocol includes a type of zero-knowledge proof, where pairins are used for its construction.</t>
         <t>The Trusted Computing Group (TCG) specified the Elliptic Curve Direct Anonymous Attestation (ECDAA) in the specification of a Trusted Platform Module (TPM) <xref target="TPM" format="default"/>. 
 ECDAA is a protocol for proving the attestation held by a TPM to a verifier without revealing the attestation held by that TPM. Pairings are used in the construction of ECDAA. FIDO Alliance <xref target="FIDO" format="default"/> and W3C <xref target="W3C" format="default"/> also published an ECDAA algorithm similar to TCG.</t>
-        <!-- Intel SGX EPID -->
 
 <t>Intel introduced Intel Enhanced Privacy ID (EPID) that enables remote attestation of a hardware device while preserving the privacy of the device as part of the functionality of Intel Software Guard Extensions (SGX) <xref target="EPID" format="default"/>. They extended TPM ECDAA to realize such functionality. A pairing-based EPID was proposed <xref target="BL10" format="default"/> and distributed along with Intel SGX applications.</t>
 
@@ -259,7 +264,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
 </t>
 
 
-      <!-- Table:Under Construction -->
       <table anchor="adoption" align="center">
         <name>Adoption Status of Pairing-Friendly Curves</name>
         <thead>
@@ -1074,6 +1078,10 @@ by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized into 
             <dd>
   4 * (u + 1)</dd>
           </dl>
+          
+          <t>
+          As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, <xref target="zcash_rep_bls12_381" format="default"/> shows the serialization format of points on an elliptic curve as useful information. This serialization format is also adopted in <xref target="I-D.boneh-bls-signature" format="default"/> <xref target="zkcrypto" format="default"/>.
+          </t>
 	    </section>
 	    
 
@@ -1248,7 +1256,6 @@ and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized into D-type.</t>
           <dd>
       0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70
   </dd>
-          <!-- x' and y' -->
 <dt>x'_0:</dt>
           <dd>
     0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab
@@ -1366,7 +1373,6 @@ If the coefficient is out of range, there is a possible that security vulnerabil
       <name>Acknowledgements</name>
       <t>The authors would like to thank Akihiro Kato and Shoko Yonezawa for their significant contribution to an early version of this memo.
 The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck Wee, Sergey Gorbunov, and Michael Scott for their valuable comments.</t>
-      <!-- # Change log -->
 
 </section>
   </middle>
@@ -1514,6 +1520,7 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6539.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6509.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7748.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8017.xml"/>
         <reference anchor="SAKKE">
           <front>
             <title>Security of the mission critical service (Release 15)</title>
@@ -1638,6 +1645,7 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date year="2010" month="August"/>
           </front>
         </reference>
+
         <reference anchor="Zcash" target="https://z.cash/technology/zksnarks.html">
           <front>
             <title>What are zk-SNARKs?</title>
@@ -1647,6 +1655,17 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date/>
           </front>
         </reference>
+
+        <reference anchor="ZCashRep" target="https://github.com/zkcrypto/pairing/blob/master/src/bls12_381/README.md">
+          <front>
+            <title>BLS12-381</title>
+            <author>
+              <organization>Electric Coin Company</organization>
+            </author>
+            <date year="2017" month="July"/>
+          </front>
+        </reference>
+
         <reference anchor="Cloudflare" target="https://blog.cloudflare.com/geo-key-manager-how-it-works/">
           <front>
             <title>Geo Key Manager: How It Works</title>
@@ -1694,19 +1713,6 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date>n.d.</date>
           </front>
         </reference>
-        <!--
-<reference anchor="IEEE-1363a-2004" >
-  <front>
-    <title>IEEE Standard Specifications for Public-Key Cryptography - Amendment 1: Additional Techniques</title>
-    <author >
-      <organization></organization>
-    </author>
-    <date year="n.d."/>
-  </front>
-  <seriesInfo name="IEEE" value="standard"/>
-  <seriesInfo name="DOI" value="10.1109/ieeestd.2004.94612"/>
-</reference>
--->
 <reference anchor="IEEE1363" >
   <front>
     <title>IEEE Standard Specifications for Public-Key Cryptography</title>
@@ -2302,7 +2308,6 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
         <dd>
       0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be
   </dd>
-        <!-- added e0 - e11 -->
 
   <dt>e_0:</dt>
         <dd>
@@ -2380,7 +2385,6 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
         <dd>
       0x073ef0cbd438cbe0172c8ae37306324d44d5e6b0c69ac57b393f1ab370fd725cc647692444a04ef87387aa68d53743493b9eba14cc552ca2a93a
   </dd>
-        <!-- added e0 - e11 -->
   <dt>e_0:</dt>
         <dd>
       0x0cf7f0f2e01610804272f4a7a24014ac085543d787c8f8bf07059f93f87ba7e2a4ac77835d4ff10e78669be39cd23cc3a659c093dbe3b9647e8c
@@ -2441,7 +2445,7 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
         <dd>
       0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70
   </dd>
-        <!-- x' and y' -->
+
   <dt>x'_0:</dt>
         <dd>
     0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab
@@ -2506,7 +2510,6 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
         <dd>
     0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6
   </dd>
-        <!-- added e0 - e47 -->
 
   <dt>e_0:</dt>
         <dd>
@@ -2703,6 +2706,309 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
       </dl>
     </section>
 
+<section anchor="zcash_rep_bls12_381" numbered="true" toc="default">
+      <name>ZCash serialization format for BLS12-381</name>
+<t>
+This section describes the serialization format defined by <xref target="ZCashRep" format="default"/>.
+This format applies to points on the BLS12-381 elliptic curves E and E',
+whose parameters are given in <xref target="parameter-BLS12-381" format="default"/>.
+</t>
+<t>
+At a high level, the serialization format is defined as follows:
+</t>
+          <ul spacing="normal">
+           <li>Serialized points include three metadata bits that indicate
+  whether a point is compressed or not, whether a point is the point at
+  infinity or not, and (for compressed points) the sign of the point's
+  y-coordinate.
+            </li>
+            <li>Points on E are serialized into 48 bytes (compressed) or 96 bytes (uncompressed). Points on E' are serialized into 96 bytes (compressed) or 192 bytes (uncompressed).</li>
+            <li>The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.
+            </li>
+            <li>The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.
+            </li>
+            <li>The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.
+            </li>
+           </ul>
+<t>
+Below, we give detailed serialization and de-serialization procedures.
+The following notation is used in the rest of this section:
+</t>
+          <ul spacing="normal">
+          <li>Elements of F_p^2 are represented as polynomial with F_p coefficients like <xref target="representation-convention-for-an-extension-field" format="default"/>.
+          </li>
+          <li> For a byte string str, str[0] is defined as the first byte of str.
+          </li>
+          <li>The function sign_F_p(y) returns one bit representing the sign of an
+  element of F_p. This function is defined as follows:
+          </li>
+          </ul>
+          <artwork name="" type="" align="left" alt=""><![CDATA[
+    sign_F_p(y) := { 1 if y > (p - 1) / 2, else
+                   { 0 otherwise.
+]]></artwork>
+          <ul spacing="normal">          
+            <li> The function sign_F_p^2(y') returns one bit representing the sign of an element in F_p^2. This function is defined as follows:
+            </li>
+          </ul>
+          <artwork name="" type="" align="left" alt=""><![CDATA[
+    sign_F_p^2(y') := { sign_F_p(y'_0) if y'_1 equals 0, else
+                      { 1 if y'_1 > (p - 1) / 2, else
+                      { 0 otherwise.
+]]></artwork>
+
+<section anchor="zcash_rep_bls12_381_seri_procedure" numbered="true" toc="default">
+      <name>Point Serialization Procedure</name>
+
+      <t>The serialization procedure is defined as follows for a point P = (x, y).
+This procedure uses the I2OSP function defined in <xref target="RFC8017" format="default"/>.
+      </t>
+
+      <ol spacing="normal" type="1">
+      <li>
+      <t>
+      Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
+      </t>
+      <ul spacing="normal">
+      <li>
+      C_bit is 1 if point compression should be used, otherwise it is 0.
+      </li>
+
+      <li>
+      I_bit is 1 if P is the point at infinity, otherwise it is 0.
+      </li>
+
+      <li>
+      S_bit is 0 if P is the point at infinity or if point compression is not used.
+      Otherwise (i.e., when point compression is used and P is not the point at infinity), if P is a point on E, S_bit = sign_F_p(y), else if P is a point on E', S_bit = sign_F_p^2(y).
+      </li>
+      </ul>
+      </li>
+
+      <li>
+      <t>
+Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
+      </t>
+      </li>
+
+      <li>
+      <t>Let x_string be the serialization of x, which is defined as follows:
+      </t>
+      <ul spacing="normal">
+      <li>
+      If P is the point at infinity on E, let x_string = I2OSP(0, 48).
+      </li>
+
+    <li>
+        If P is a point on E other than the point at infinity, then x is an
+      element of F_p, i.e., an integer in the inclusive range [0, p - 1].
+      In this case, let x_string = I2OSP(x, 48).
+      </li>
+
+      <li>
+    If P is the point at infinity on E', let x_string = I2OSP(0, 96).
+      </li>
+      <li>
+    If P is a point on E' other than the point at infinity, then x can be
+      represented as (x_0, x_1) where x_0 and x_1 are elements of F_p,
+      i.e., integers in the inclusive range [0, p - 1] (see discussion of
+      vector representations above).
+      In this case, let x_string = I2OSP(x_1, 48) || I2OSP(x_0, 48).
+     </li>
+</ul>
+<t>
+    Notice that in all of the above cases, the 3 most significant bits of
+    x_string[0] are guaranteed to be 0.
+</t>
+</li>
+
+<li>
+<t>
+If point compression is used, let y_string be the empty string.
+   Otherwise (i.e., when point compression is not used), let y_string
+   be the serialization of y, which is defined in Step 3.
+</t>
+</li>
+
+<li>
+<t>
+Let s_string = x_string || y_string.
+</t>
+</li>
+
+<li>
+<t>
+Set s_string[0] = x_string[0] OR m_byte, where OR is computed bitwise.
+   After this operation, the most significant bit of s_string[0] equals
+   C_bit, the next bit equals I_bit, and the next equals S_bit.
+   (This is true because the three most significant bits of x_string[0]
+   are guaranteed to be zero, as discussed above.)
+</t>
+</li>
+
+<li>
+<t>
+Output s_string.
+</t>
+</li>
+      </ol>
+
+</section>
+
+<section anchor="zcash_rep_bls12_381_deseri_procedure" numbered="true" toc="default">
+      <name>Point deserialization procedure</name>
+      
+      <t>The deserialization procedure is defined as follows for a string s_string. This procedure uses the OS2IP function defined in <xref target="RFC8017" format="default"/>.
+      </t>
+      <ol spacing="normal" type="1">
+      <li>
+      <t>Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0.
+      </t>
+      <t>
+      If m_byte equals any of 0x20, 0x60, or 0xE0, output INVALID and stop decoding.
+      </t>
+      <t>
+Otherwise:
+</t>
+<ul spacing="normal">
+<li>Let C_bit equal the most significant bit of m_byte,
+</li>
+<li>
+Let I_bit equal the second most significant bit of m_byte, and
+</li>
+<li>
+Let S_bit equal the third most significant bit of m_byte.
+</li>
+</ul>
+      </li>
+
+<li>
+<t>
+If C_bit is 1:
+</t>
+<ul spacing="normal">
+<li>
+    If s_string has length 48 bytes, the output point is on the curve E.
+</li>
+<li>
+    If s_string has length 96 bytes, the output point is on the curve E'.
+</li>
+<li>
+    If s_string has any other length, output INVALID and stop decoding.
+</li>
+</ul>
+<t>
+    If C_bit is 0:
+</t>
+<ul spacing="normal">
+<li>
+    If s_string has length 96 bytes, the output point is on E.
+</li>
+<li>
+    If s_string has length 192 bytes, the output point is on E'.
+</li>
+<li>
+    If s_string has any other length, output INVALID and stop decoding.
+</li>
+</ul>
+</li>
+
+<li>
+Let s_string[0] = s_string[0] AND 0x1F, where AND is computed bitwise.
+   In other words, set the three most significant bits of s_string[0] to 0.
+</li>
+
+<li>
+<t>If I_bit is 1:
+</t>
+<ul spacing="normal">
+<li>
+    If s_string is not the all zeros string, output INVALID and stop decoding.
+</li>
+<li>
+    Otherwise (i.e., if s_string is the all zeros string), output the point
+      at infinity on the curve that was determined in step 2 and stop decoding.
+</li>
+</ul>
+<t>
+    Otherwise, I_bit must be 0. Continue decoding.
+</t>
+</li>
+
+<li>
+<t>
+ If C_bit is 0:
+</t>
+<ul spacing="normal">
+<li>
+    Let x_string be the first half of s_string.
+</li>
+<li>
+    Let y_string be the last half of s_string.
+</li>
+<li>
+    Let x = OS2IP(x_string).
+</li>
+<li>
+    Let y = OS2IP(y_string).
+</li>
+<li>
+    If the point P = (x, y) is not a valid point on the curve that was determined
+      in step 2, output INVALID and stop decoding.
+</li>
+<li>
+    Otherwise, output the point P = (x, y) and stop decoding.
+</li>
+</ul>
+<t>
+    Otherwise, C_bit must be 1. Continue decoding.
+</t>
+</li>
+
+<li>
+Let x = OS2IP(s_string).
+</li>
+
+<li>
+<t>
+If the curve that was determined in step 2 is E:
+</t>
+<ul spacing="normal">
+<li>
+    Let y2 = x^3 + 4 in F_p.
+</li>
+<li>
+    If y2 is not square in F_p, output INVALID and stop decoding.
+</li>
+<li>
+    Otherwise, let y = sqrt(y2) in F_p and let Y_bit = sign_F_p(y).
+</li>
+</ul>
+<t>
+    Otherwise, (i.e., when the curve that was determined in step 2 is E'):
+</t>
+<ul spacing="normal">
+<li>
+    Let y2 = x^3 + 4 * (u + 1) in F_p^2.
+</li>
+<li>
+    If y2 is not square in F_p^2, output INVALID and stop decoding.
+</li>
+<li>
+    Otherwise, let y = sqrt(y2) in F_p^2 and let Y_bit = sign_F_p^2(y).
+</li>
+</ul>
+</li>
+<li>
+If S_bit equals Y_bit, output P = (x, y) and stop decoding.
+   Otherwise, output P = (x, -y) and stop decoding.
+</li>
+
+
+</ol>
+
+</section>
+</section>
     
 
   </back>
