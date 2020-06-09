@@ -1372,7 +1372,7 @@ If the coefficient is out of range, there is a possible that security vulnerabil
     <section anchor="acknowledgements" numbered="true" toc="default">
       <name>Acknowledgements</name>
       <t>The authors would like to thank Akihiro Kato and Shoko Yonezawa for their significant contribution to an early version of this memo.
-The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck Wee, Sergey Gorbunov, and Michael Scott for their valuable comments.</t>
+The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armand Faz, and Satoru Kanno for their valuable comments.</t>
 
 </section>
   </middle>
