@@ -997,7 +997,7 @@ As curves of 128-bit security level are currently the most widely used, we recom
 ]]></artwork>
           <t>Defined by t, the elliptic curve E and its twist E' are represented 
 by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized into M-type.</t>
-          <t>We have to note that, according to <xref target="BD18" format="default"/>, the bit length of p for BLS12 to achieve 128-bit security is calculated as 461 bits and more, which BLS12_381 does not satisfy. 
+          <t>We have to note that the security level of this pairing is expected to be 126 rather than 128 bits <xref target="GMT19" format="default"/>.
 </t>
           <t>Parameters of BLS12_381 are given as follows.</t>
           <ul spacing="normal">
