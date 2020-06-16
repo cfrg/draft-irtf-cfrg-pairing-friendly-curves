@@ -976,7 +976,7 @@ Especially, the one that best matches the policy is BLS12_381 from the viewpoint
 On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced. 
 As shown in recent security evaluations for BLS12_381<xref target="BD18" format="default"/> <xref target="GMT19" format="default"/>, its security level close to 128-bit but it is less than 128-bit.
 If the attack is improved even a little, BLS12_381 will not be suitable for the curve of the 128-bit security level.
-Therefore, the curve of the 128-bit security level is often used at current, so this memo recommends both BLS12-381 and BN462 in consideration of the future use and the safety side.
+As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
 </t>
 
 <section anchor="parameter-BLS12-381" numbered="true" toc="default">
