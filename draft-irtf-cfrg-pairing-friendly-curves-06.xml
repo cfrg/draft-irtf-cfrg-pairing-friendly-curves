@@ -1350,7 +1350,7 @@ and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized into D-type.</t>
 Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters.
 As of 2020, as far as we know, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS.
 </t>
-      <t>BLS curves of embedding degree 12 require a characteristic p of 461 bits or larger to achieve the 128-bit security level <xref target="BD18" format="default"/>.
+      <t>BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level <xref target="BD18" format="default"/>.
 Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <xref target="BD18" format="default"/> <xref target="GMT19" format="default"/>.
 </t>
       <t> BN254 is used in most of the existing implementations as shown in <xref target="adoption" format="default"/>, however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.
