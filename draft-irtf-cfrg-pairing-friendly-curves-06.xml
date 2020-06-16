@@ -55,9 +55,9 @@
         <name>Pairing-based Cryptography</name>
         <t>Elliptic curve cryptography is an important area in currently deployed cryptography. The cryptographic algorithms based on elliptic curve cryptography, such as the Elliptic Curve Digital Signature Algorithm (ECDSA), are widely used in many applications.</t>
         <t>Pairing-based cryptography, a subfield of elliptic curve cryptography, has attracted much attention due to its flexible and practical functionality.
-Pairing is a special map defined using elliptic curves.
+Pairings are special maps defined using elliptic curves.
 Pairings are fundamental in the construction of several cryptographic algorithms and protocols such as identity-based encryption (IBE), attribute-based encryption (ABE), authenticated key exchange (AKE), short signatures, and so on. Several applications of pairing-based cryptography are currently in practical use.</t>
-        <t>As the importance of pairing grows, elliptic curves where pairing is efficiently computable are studied and the special curves called pairing-friendly curves are proposed.</t>
+        <t>As the importance of pairings grows, elliptic curves where pairings are efficiently computable are studied and the special curves called pairing-friendly curves are proposed.</t>
       </section>
       <section anchor="applications-of-pairing-based-cryptography" numbered="true" toc="default">
         <name>Applications of Pairing-based Cryptography</name>
@@ -67,7 +67,7 @@ SAKKE is applied to Multimedia Internet KEYing (MIKEY) <xref target="RFC6509" fo
         <t>Pairing-based key agreement protocols are standardized in ISO/IEC <xref target="ISOIEC11770-3" format="default"/>.
 In <xref target="ISOIEC11770-3" format="default"/>, a key agreement scheme by Joux <xref target="Joux00" format="default"/>, identity-based key agreement schemes by Smart-Chen-Cheng <xref target="CCS07" format="default"/> and Fujioka-Suzuki-Ustaoglu <xref target="FSU10" format="default"/> are specified.</t>
         <t>MIRACL implements M-Pin, a multi-factor authentication protocol <xref target="M-Pin" format="default"/>.
-The M-Pin protocol includes a type of zero-knowledge proof, where pairins are used for its construction.</t>
+The M-Pin protocol includes a type of zero-knowledge proof, where pairings are used for its construction.</t>
         <t>The Trusted Computing Group (TCG) specified the Elliptic Curve Direct Anonymous Attestation (ECDAA) in the specification of a Trusted Platform Module (TPM) <xref target="TPM" format="default"/>. 
 ECDAA is a protocol for proving the attestation held by a TPM to a verifier without revealing the attestation held by that TPM. Pairings are used in the construction of ECDAA. FIDO Alliance <xref target="FIDO" format="default"/> and W3C <xref target="W3C" format="default"/> also published an ECDAA algorithm similar to TCG.</t>
 
@@ -84,12 +84,12 @@ The aggregation functionality of BLS signatures is effective for their applicati
 
       <section anchor="goal" numbered="true" toc="default">
         <name>Motivation and Contribution</name>
-<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve(NSF) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
+<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
 
 <t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/>.</t>
 
-<t>In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and classify them in the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluation by Barbulescu et al.<xref target="BD18" format="default"/>. </t> 
+<t>In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and classify them in the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluation by Barbulescu and Duquesne <xref target="BD18" format="default"/>. </t> 
 
 <t> As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. This memo shows their specific test vectors.</t>
       </section>
