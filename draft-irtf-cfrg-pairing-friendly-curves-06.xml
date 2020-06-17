@@ -87,7 +87,7 @@ The aggregation functionality of BLS signatures is effective for their applicati
 <t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
 
-<t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/>.</t>
+<t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/> <xref target="Zexe" format="default"/>.</t>
 
 <t>In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and classify them in the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluation by Barbulescu and Duquesne <xref target="BD18" format="default"/>. </t> 
 
@@ -369,7 +369,7 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="51">Library</td>
+            <td align="left" rowspan="59">Library</td>
             <td align="left" rowspan="5">mcl</td>
             <td align="left">BLS12_381</td>
             <td align="left">&nbsp;</td>
@@ -837,7 +837,82 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="10">Application</td>
+            <td align="left" rowspan="2">libzexe</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_381</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="3">gurvy</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_381</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left">BN_SNARK1</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="3">zk-swap-libff</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_381</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left">BN_SNARK1</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="12">Application</td>
             <td align="left" rowspan="2">Zcash</td>
             <td align="left">BLS12_381</td>
             <td align="left">&nbsp;</td>
@@ -932,6 +1007,26 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
+          <tr>
+            <td align="left" >Celo</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left" >EY Nightfall</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
         </tbody>
       </table>
 
@@ -955,6 +1050,9 @@ As described below, BN curves with 256-bit p and 512-bit p specified in ISO/IEC 
        <t>Apache Milagro Crypto Library (AMCL)<xref target="AMCL" format="default"/> supports four BLS curves (BLS12_381, BLS12_461, BLS24_479 and BLS48_556) and four BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, and BN512I). In addition to AMCL's supported curves, MIRACL <xref target="MIRACL" format="default"/> supports BN462 and BLS48_581.</t>
 <t>Adjoint published a library that supports the BLS12_381 and six BN curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462) <xref target="AdjointLib" format="default"/>, where BN254S1 and BN254S2 are BN curves adopted by an old version of AMCL <xref target="AMCLv2" format="default"/>. The suffix 'S' of BN254S1 and BN254S2 are given from the initials of developper's name because he proposed these parameters. 
 </t>
+      <t>libzexe <xref target="libzexe" format="default"/> is a library centered around pairing-based SNARKs, implementing the constructions described in the Zexe paper <xref target="Zexe" format="default"/>. The library supports BLS12_377 and BLS12_381.</t>
+      <t>gurvy <xref target="gurvy" format="default"/> is a library implementing BLS12_377, BLS12_381 and BN_SNARK1.</t>
+      <t>zk-swap-libff <xref target="zk-swap-libff" format="default"/> is a library implementing BLS12_377, BLS12_381 and BN_SNARK1.</t>
       </section>
 
       <section anchor="applications" numbered="true" toc="default">
@@ -962,7 +1060,7 @@ As described below, BN curves with 256-bit p and 512-bit p specified in ISO/IEC 
 <t>Zcash uses a BN curve (named BN128) in their library libsnark <xref target="libsnark" format="default"/>.
 In response to the exTNFS attacks, they proposed new parameters using BLS12_381 <xref target="BLS12-381" format="default"/> <xref target="GMT19" format="default"/>and published its experimental implementation <xref target="zkcrypto" format="default"/>.</t>
       <t>Ethereum 2.0 adopted BLS12_381 and uses the implementation by Meyer <xref target="pureGo-bls" format="default"/>. Chia Network published their implementation <xref target="Chia" format="default"/> by integrating the RELIC toolkit <xref target="RELIC" format="default"/>. DFINITY uses mcl, and Algorand published an implementation which supports BLS12_381.</t>
-
+      <t>Celo adopted BLS12_377 in their library <xref target="celo-bls-snark-rs" format="default"/> which uses the <xref target="libzexe" format="default"/> implementation.</t>
       </section>
  </section>
            
@@ -978,111 +1076,221 @@ As shown in recent security evaluations for BLS12_381<xref target="BD18" format=
 If the attack is improved even a little, BLS12_381 will not be suitable for the curve of the 128-bit security level.
 As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
 </t>
-
-<section anchor="parameter-BLS12-381" numbered="true" toc="default">
-      <name>BLS Curves for the 128-bit security level</name>
-      <t>
-      In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of embedding degree 12 with 381-bit p that is adopted by a lot of applications such as Zcash <xref target="Zcash" format="default"/>, Ethereum <xref target="Ethereum" format="default"/>, and so on.
-      </t>
-          <t>The BLS12_381 curve is shown in <xref target="BLS12-381" format="default"/> and it is defined by the parameter</t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[
-    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16 
-]]></artwork>
-          <t>where the size of p becomes 381-bit length.</t>
-          <t>For the finite field F_p, the towers of extension field F_p^2, F_p^6 and F_p^12 are defined by indeterminates u, v, and w as follows:</t>
-          <artwork name="" type="" align="left" alt=""><![CDATA[
-    F_p^2 = F_p[u] / (u^2 + 1)
-    F_p^6 = F_p^2[v] / (v^3 - u - 1)
-    F_p^12 = F_p^6[w] / (w^2 - v).
-]]></artwork>
-          <t>Defined by t, the elliptic curve E and its twist E' are represented 
-by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized into M-type.</t>
-          <t>We have to note that the security level of this pairing is expected to be 126 rather than 128 bits <xref target="GMT19" format="default"/>.
+<t>
+For the unique case of a curve that can be efficiently used inside a SNARK proof, BLS12_377 matches the policy.
 </t>
-          <t>Parameters of BLS12_381 are given as follows.</t>
-          <ul spacing="normal">
-            <li>
-              <t>G_1 is the largest prime-order subgroup of E(F_p)
-              </t>
-              <ul spacing="normal">
-                <li>r : the order of G_1</li>
-                <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-                <li>h : the cofactor #E(F_p)/r</li>
-              </ul>
-            </li>
-            <li>
-              <t>G_2 is an r-order subgroup of E'(F_p^2)
-              </t>
-              <ul spacing="normal">
-                <li>
-                  <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
-                  </t>
-                  <ul spacing="normal">
-                    <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in F_p)</li>
-                    <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in F_p)</li>
-                  </ul>
-                </li>
-                <li>h' : the cofactor #Et(F_p^8)/r</li>
-              </ul>
-            </li>
-          </ul>
-          <dl newline="false" spacing="normal">
-            <dt>p:</dt>
-            <dd>
-      0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab
-  </dd>
-            <dt>r:</dt>
-            <dd>
-      0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001
-  </dd>
-            <dt>x:</dt>
-            <dd>
-      0x17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac586c55e83ff97a1aeffb3af00adb22c6bb
-  </dd>
-            <dt>y:</dt>
-            <dd>
-      0x08b3f481e3aaa0f1a09e30ed741d8ae4fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1
-  </dd>
-            <dt>h:</dt>
-            <dd>
-      0x396c8c005555e1568c00aaab0000aaab
-  </dd>
-            <dt>b:</dt>
-            <dd>
-  4</dd>
-            <dt>r':</dt>
-            <dd>
-      0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab
-  </dd>
-            <dt>x'_0:</dt>
-            <dd>
-      0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
-  </dd>
-            <dt>x'_1:</dt>
-            <dd>
-      0x13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e
-  </dd>
-            <dt>y'_0:</dt>
-            <dd>
-      0x0ce5d527727d6e118cc9cdc6da2e351aadfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801
-  </dd>
-            <dt>y'_1:</dt>
-            <dd>
-      0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be
-  </dd>
-            <dt>h':</dt>
-            <dd>
-      0x5d543a95414e7f1091d50792876a202cd91de4547085abaa68a205b2e5a7ddfa628f1cb4d9e82ef21537e293a6691ae1616ec6e786f0c70cf1c38e31c7238e5
-  </dd>
-            <dt>b':</dt>
-            <dd>
-  4 * (u + 1)</dd>
-          </dl>
-          
-          <t>
-          As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, <xref target="zcash_rep_bls12_381" format="default"/> shows the serialization format of points on an elliptic curve as useful information. This serialization format is also adopted in <xref target="I-D.boneh-bls-signature" format="default"/> <xref target="zkcrypto" format="default"/>.
-          </t>
-	    </section>
+
+  <section anchor="parameter-BLS12" numbered="true" toc="default">
+      <name>BLS Curves for the 128-bit security level</name>
+      <section anchor="parameter-BLS12-381" numbered="true" toc="default">
+      <name>BLS12_381</name>
+        <t>
+        In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of embedding degree 12 with 381-bit p that is adopted by a lot of applications such as Zcash <xref target="Zcash" format="default"/>, Ethereum <xref target="Ethereum" format="default"/>, and so on.
+        </t>
+            <t>The BLS12_381 curve is shown in <xref target="BLS12-381" format="default"/> and it is defined by the parameter</t>
+            <artwork name="" type="" align="left" alt=""><![CDATA[
+      t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16 
+  ]]></artwork>
+            <t>where the size of p becomes 381-bit length.</t>
+            <t>For the finite field F_p, the towers of extension field F_p^2, F_p^6 and F_p^12 are defined by indeterminates u, v, and w as follows:</t>
+            <artwork name="" type="" align="left" alt=""><![CDATA[
+      F_p^2 = F_p[u] / (u^2 + 1)
+      F_p^6 = F_p^2[v] / (v^3 - u - 1)
+      F_p^12 = F_p^6[w] / (w^2 - v).
+  ]]></artwork>
+            <t>Defined by t, the elliptic curve E and its twist E' are represented 
+  by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized into M-type.</t>
+          <t>We have to note that the security level of this pairing is expected to be 126 rather than 128 bits <xref target="GMT19" format="default"/>.
+  </t>
+            <t>Parameters of BLS12_381 are given as follows.</t>
+            <ul spacing="normal">
+              <li>
+                <t>G_1 is the largest prime-order subgroup of E(F_p)
+                </t>
+                <ul spacing="normal">
+                  <li>r : the order of G_1</li>
+                  <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
+                  <li>h : the cofactor #E(F_p)/r</li>
+                </ul>
+              </li>
+              <li>
+                <t>G_2 is an r-order subgroup of E'(F_p^2)
+                </t>
+                <ul spacing="normal">
+                  <li>
+                    <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
+                    </t>
+                    <ul spacing="normal">
+                      <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in F_p)</li>
+                      <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in F_p)</li>
+                    </ul>
+                  </li>
+                  <li>h' : the cofactor #tEt(F_p^8)/r</li>
+                </ul>
+              </li>
+            </ul>
+            <dl newline="false" spacing="normal">
+              <dt>p:</dt>
+              <dd>
+        0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab
+    </dd>
+              <dt>r:</dt>
+              <dd>
+        0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001
+    </dd>
+              <dt>x:</dt>
+              <dd>
+        0x17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac586c55e83ff97a1aeffb3af00adb22c6bb
+    </dd>
+              <dt>y:</dt>
+              <dd>
+        0x08b3f481e3aaa0f1a09e30ed741d8ae4fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1
+    </dd>
+              <dt>h:</dt>
+              <dd>
+        0x396c8c005555e1568c00aaab0000aaab
+    </dd>
+              <dt>b:</dt>
+              <dd>
+    4</dd>
+              <dt>r':</dt>
+              <dd>
+        0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab
+    </dd>
+              <dt>x'_0:</dt>
+              <dd>
+        0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
+    </dd>
+              <dt>x'_1:</dt>
+              <dd>
+        0x13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e
+    </dd>
+              <dt>y'_0:</dt>
+              <dd>
+        0x0ce5d527727d6e118cc9cdc6da2e351aadfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801
+    </dd>
+              <dt>y'_1:</dt>
+              <dd>
+        0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be
+    </dd>
+              <dt>h':</dt>
+              <dd>
+        0x5d543a95414e7f1091d50792876a202cd91de4547085abaa68a205b2e5a7ddfa628f1cb4d9e82ef21537e293a6691ae1616ec6e786f0c70cf1c38e31c7238e5
+    </dd>
+              <dt>b':</dt>
+              <dd>
+    4 * (u + 1)</dd>
+            </dl>
+            
+            <t>
+            As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, <xref target="zcash_rep_bls12_381" format="default"/> shows the serialization format of points on an elliptic curve as useful information. This serialization format is also adopted in <xref target="I-D.boneh-bls-signature" format="default"/> <xref target="zkcrypto" format="default"/>.
+            </t>
+        </section>
+      <section anchor="parameter-BLS12-377" numbered="true" toc="default">
+      <name>BLS12_377</name>
+        <t>
+        In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of embedding degree 12 with 377-bit p which is adopted in applications where statements about BLS12-377 operations are proven in SNARKs. Examples of such applications include Celo <xref target="celo-bls-snark-rs" format="default"/> and EY Nightfall <xref target="nightfall" format="default"/> among others.
+        </t>
+            <t>The BLS12_377 curve is shown in <xref target="Zexe" format="default"/> and it is defined by the parameter</t>
+            <artwork name="" type="" align="left" alt=""><![CDATA[
+      t = 0x8508c00000000001 
+  ]]></artwork>
+            <t>where the size of p becomes 377-bit length.</t>
+            <t>For the finite field F_p, the towers of extension field F_p^2, F_p^6 and F_p^12 are defined by indeterminates u, v, and w as follows:</t>
+            <artwork name="" type="" align="left" alt=""><![CDATA[
+      F_p^2 = F_p[u] / (u^2 + 5)
+      F_p^6 = F_p^2[v] / (v^3 - u)
+      F_p^12 = F_p^6[w] / (w^2 - v).
+  ]]></artwork>
+            <t>Defined by t, the elliptic curve E and its twist E' are represented 
+  by E: y^2 = x^3 + 1 and E': y^2 = x^3 + 1/u. BLS12_377 is categorized into D-type.</t>
+            <t>We note that, according to <xref target="BD18" format="default"/>, the bit length of p for BLS12 to achieve 128-bit security is calculated as at least 461 bits which BLS12_377 does not satisfy. 
+  </t>
+            <t>Parameters of BLS12_377 are given as follows.</t>
+            <ul spacing="normal">
+              <li>
+                <t>G_1 is the largest prime-order subgroup of E(F_p)
+                </t>
+                <ul spacing="normal">
+                  <li>r : the order of G_1</li>
+                  <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
+                  <li>h : the cofactor #E(F_p)/r</li>
+                </ul>
+              </li>
+              <li>
+                <t>G_2 is an r-order subgroup of E'(F_p^2)
+                </t>
+                <ul spacing="normal">
+                  <li>
+                    <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
+                    </t>
+                    <ul spacing="normal">
+                      <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in F_p)</li>
+                      <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in F_p)</li>
+                    </ul>
+                  </li>
+                  <li>h' : the cofactor #E'(F_p^2)/r</li>
+                </ul>
+              </li>
+            </ul>
+            <dl newline="false" spacing="normal">
+              <dt>p:</dt>
+              <dd>
+        0x1ae3a4617c510eac63b05c06ca1493b1a22d9f300f5138f1ef3622fba094800170b5d44300000008508c00000000001
+    </dd>
+              <dt>r:</dt>
+              <dd>
+        0x12ab655e9a2ca55660b44d1e5c37b00159aa76fed00000010a11800000000001
+    </dd>
+              <dt>x:</dt>
+              <dd>
+        0x8848defe740a67c8fc6225bf87ff5485951e2caa9d41bb188282c8bd37cb5cd5481512ffcd394eeab9b16eb21be9ef
+    </dd>
+              <dt>y:</dt>
+              <dd>
+        0x1914a69c5102eff1f674f5d30afeec4bd7fb348ca3e52d96d182ad44fb82305c2fe3d3634a9591afd82de55559c8ea6
+    </dd>
+              <dt>h:</dt>
+              <dd>
+        0x170b5d44300000000000000000000000
+    </dd>
+              <dt>b:</dt>
+              <dd>
+    1</dd>
+              <dt>r':</dt>
+              <dd>
+        0x12ab655e9a2ca55660b44d1e5c37b00159aa76fed00000010a11800000000001
+    </dd>
+              <dt>x'_0:</dt>
+              <dd>
+        0x18480be71c785fec89630a2a3841d01c565f071203e50317ea501f557db6b9b71889f52bb53540274e3e48f7c005196
+    </dd>
+              <dt>x'_1:</dt>
+              <dd>
+        0xea6040e700403170dc5a51b1b140d5532777ee6651cecbe7223ece0799c9de5cf89984bff76fe6b26bfefa6ea16afe
+    </dd>
+              <dt>y'_0:</dt>
+              <dd>
+        0x690d665d446f7bd960736bcbb2efb4de03ed7274b49a58e458c282f832d204f2cf88886d8c7c2ef094094409fd4ddf
+    </dd>
+              <dt>y'_1:</dt>
+              <dd>
+        0xf8169fd28355189e549da3151a70aa61ef11ac3d591bf12463b01acee304c24279b83f5e52270bd9a1cdd185eb8f93
+    </dd>
+              <dt>h':</dt>
+              <dd>
+        0x26ba558ae9562addd88d99a6f6a829fbb36b00e1dcc40c8c505634fae2e189d693e8c36676bd09a0f3622fba094800452217cc900000000000000000000001
+    </dd>
+              <dt>b':</dt>
+              <dd>
+                  1/u</dd>
+            </dl>
+            
+            <t>
+            The recommended serialization format for BLS12_377 is the same as BLS12_381.
+            </t>
+        </section>
+    </section>
 	    
 
         <section anchor="bn-curves" numbered="true" toc="default">
@@ -2177,7 +2385,105 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date year="2016"/>
           </front>
         </reference>
-
+        <reference anchor="Zexe" target="https://eprint.iacr.org/2018/962">
+          <front>
+            <title>Zexe: Enabling Decentralized Private Computation</title>
+            <author initials="S." surname="Bowe">
+              <organization/>
+            </author>
+            <author initials="A." surname="Chiesa">
+              <organization/>
+            </author>
+            <author initials="M." surname="Green">
+              <organization/>
+            </author>
+            <author initials="I." surname="Miers">
+              <organization/>
+            </author>
+            <author initials="P." surname="Mishra">
+              <organization/>
+            </author>
+            <author initials="H." surname="Wu">
+              <organization/>
+            </author>
+            <date/>
+          </front>
+        </reference>
+        <reference anchor="libzexe" target="https://github.com/scipr-lab/zexe">
+          <front>
+            <title>ZEXE (Zero knowledge EXEcution)</title>
+            <author initials="S." surname="Bowe">
+              <organization/>
+            </author>
+            <author initials="A." surname="Chiesa">
+              <organization/>
+            </author>
+            <author initials="M." surname="Green">
+              <organization/>
+            </author>
+            <author initials="I." surname="Miers">
+              <organization/>
+            </author>
+            <author initials="P." surname="Mishra">
+              <organization/>
+            </author>
+            <author initials="H." surname="Wu">
+              <organization/>
+            </author>
+            <date/>
+          </front>
+        </reference>
+        <reference anchor="celo-bls-snark-rs" target="https://github.com/scipr-lab/zexe">
+          <front>
+            <title>SNARK-friendly BLS signatures over BLS12-377 and SW6</title>
+            <author initials="J." surname="Ansel">
+              <organization/>
+            </author>
+            <author initials="K." surname="Gurkan">
+              <organization/>
+            </author>
+            <author initials="G." surname="Konstantopoulos">
+              <organization/>
+            </author>
+            <author initials="M." surname="Straka">
+              <organization/>
+            </author>
+            <date/>
+          </front>
+        </reference>
+        <reference anchor="gurvy" target="https://github.com/ConsenSys/gurvy">
+          <front>
+            <title>Elliptic Curve Cryptography (+Pairing) for BLS381, BLS377 and BN256</title>
+            <author initials="G." surname="Botrel">
+              <organization/>
+            </author>
+            <author initials="G." surname="Gutoski">
+              <organization/>
+            </author>
+            <author initials="T." surname="Piellard">
+              <organization/>
+            </author>
+            <date/>
+          </front>
+        </reference>
+        <reference anchor="nightfall" target="https://github.com/EYBlockchain/nightfall">
+          <front>
+            <title>EY Nightfall</title>
+            <author fullname="EY">
+              <organization/>
+            </author>
+            <date/>
+          </front>
+        </reference>
+        <reference anchor="zk-swap-libff" target="https://github.com/EYBlockchain/zk-swap-libff">
+          <front>
+            <title>zk-swap-libff</title>
+            <author fullname="EY">
+              <organization/>
+            </author>
+            <date/>
+          </front>
+        </reference>
       </references>
     </references>
     <section anchor="comp_pairing" numbered="true" toc="default">
