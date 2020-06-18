@@ -1365,6 +1365,9 @@ Note that the security level of BLS12-381, which is adopted by a lot of librarie
 When converting between an element in extension field and an octet string, implementors should check that the coefficient is within an appropriate range <xref target="IEEE1363" format="default"/>.
 If the coefficient is out of range, there is a possible that security vulnerabilities such as the signature forgery may occur.
 </t>
+<t>
+Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem <xref target="Cheon06" format="default"/>. Therefore, implementers should be careful when they design cryptographic protocols based on the strong DH problem. For example, in the case of Short Signatures, they can prevent the Cheon's attack by carefully setting the maximum number of queries.
+</t>
     </section>
     <section anchor="iana-considerations" numbered="true" toc="default">
       <name>IANA Considerations</name>
@@ -1725,6 +1728,19 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
   <seriesInfo name="IEEE" value="standard"/>
   <seriesInfo name="DOI" value="10.1109/IEEESTD.2000.92292"/>
 </reference>
+
+        <reference anchor="Cheon06">
+          <front>
+            <title>Security Analysis of the Strong Diffie-Hellman Problem</title>
+            <seriesInfo name="DOI" value="10.1007/11761679_1"/>
+            <seriesInfo name="EUROCRYPT 2006" value="pp. 1-11"/>
+            <author initials="J. H. " surname="Cheon" fullname="Jung Hee Cheon">
+              <organization/>
+            </author>
+            <date year="2006"/>
+          </front>
+        </reference>
+
 
 <reference anchor="ECRYPT">
           <front>
