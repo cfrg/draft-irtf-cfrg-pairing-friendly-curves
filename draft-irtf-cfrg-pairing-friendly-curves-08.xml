@@ -84,7 +84,7 @@ The aggregation functionality of BLS signatures is effective for their applicati
 
       <section anchor="goal" numbered="true" toc="default">
         <name>Motivation and Contribution</name>
-<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
+<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
 
 <t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/>.</t>
@@ -103,7 +103,7 @@ The aggregation functionality of BLS signatures is effective for their applicati
       <name>Preliminaries</name>
       <section anchor="elliptic-curve" numbered="true" toc="default">
         <name>Elliptic Curves</name>
-        <t>Let p &gt; 3 be a prime and q = p^n for a natural number n.
+        <t>Let p be a prime number and q = p^n for a natural number n, where at least 5.
 Let F_q be a finite field.
 The curve defined by the following equation E is called an elliptic curve: </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -157,7 +157,7 @@ satisfying the following properties:</t>
         <name>Barreto-Naehrig Curves</name>
         <t>A BN curve <xref target="BN05" format="default"/> is one of the instantiations of pairing-friendly curves proposed in 2005. A pairing over BN curves constructs optimal Ate pairings.</t>
         <t>A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
-E is defined over F_p, where p is a prime more than or equal to 5, and E(F_p) has a subgroup of prime order r.
+E is defined over F_p, where p is a prime number and at least 5, and E(F_p) has a subgroup of prime order r.
 The characteristic p and the order r are parameterized by</t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
     p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
@@ -179,9 +179,9 @@ and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves.
 In contrast to BN curves, E(F_p) does not have a prime order.
 Instead, its order is divisible by a large parameterized prime r and denoted by h * r with cofactor h.
 The pairing is defined on the r-torsion points.
-In the same way as BN curves, BLS curves can be categorized into D-type and M-type.</t>
+In the same way as BN curves, BLS curves can be categorized as D-type and M-type.</t>
         <t>BLS curves vary in accordance with different embedding degrees. In this memo, we deal with the BLS12 and BLS48 families with embedding degrees 12 and 48 with respect to r, respectively.</t>
-        <t>In BLS curves, parameterized p and r are given by the following equations:</t>
+        <t>In BLS curves, parameters p and r are given by the following equations:</t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
    BLS12:
        p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
@@ -226,14 +226,14 @@ In that case, care for interoperability must be taken.
         <t>There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography. Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, the bilinear Diffie-Hellman (BDH) problem, the decision bilinear Diffie-Hellman (DBDH) problem, the gap DBDH problem, etc. <xref target="ECRYPT" format="default"/>.
 Almost all of these variants are reduced to the hardness of discrete logarithm problems described above and are believed to be easier than the discrete logarithm problems.</t>
         <t>Although it would be sufficient to attack any of these problems to attack pairing-based crytography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.</t>
-        <t>The security level of pairing-friendly curves is estimated by the computational cost of the most efficient algorithm to solve the above discrete logarithm problems. The best known algorithms for solving the discrete logarithm problems are based on Pollard's rho algorithm <xref target="Pollard78" format="default"/> and Index Calculus <xref target="HR83" format="default"/>. 
+        <t>The security levels of pairing-friendly curves are estimated by the computational cost of the most efficient algorithm for solving the above discrete logarithm problems. The best known algorithms for solving the discrete logarithm problems are based on Pollard's rho algorithm <xref target="Pollard78" format="default"/> and Index Calculus <xref target="HR83" format="default"/>. 
         To make index calculus algorithms more efficient, number field sieve (NFS) algorithms are utilized.</t>
       </section>
       <section anchor="impact" numbered="true" toc="default">
         <name>Impact of Recent Attacks</name>
         <t>In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <xref target="KB16" format="default"/>.
-Due to exTNFS, the security level of certain pairing-friendly curves asymptotically dropped down.
-For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <xref target="BD18" format="default"/>. Here, the security level described in this memo corresponds to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
+Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down.
+For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <xref target="BD18" format="default"/>. Here, the security levels described in this memo correspond to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
         <t>There has since been research into the minimum bit length of the parameters of pairing-friendly curves for each security level when applying exTNFS as an attacking method for FFDLP.
 For 128-bit security, Barbulescu and Duquesne estimated the minimum bit length of p of BN curves and BLS12 curves after exTNFS as 461 bits <xref target="BD18" format="default"/>.
@@ -258,9 +258,9 @@ In addition, "efficiency" is one of the important aspects but greatly dependant 
     <section anchor="impl" numbered="true" toc="default">
         <name>Adoption Status of Pairing-friendly Curves</name>
           <t>We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications.</t>
-<t><xref target="adoption" format="default"/> summarizes the adoption status of pairing-friendly curves. In this table, "Arnd" is an abbreviation for "Around". The curves categorized into 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. Other labels shown with '~' mean that the security level of the categorized curve is outside the range of each security level. Specifically, the security level of the categorized curves is more than the previous column and is less than the next column.
+<t><xref target="adoption" format="default"/> summarizes the adoption status of pairing-friendly curves. In this table, "Arnd" is an abbreviation for "Around". The curves categorized as 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. Other labels shown with '~' mean that the security level of the categorized curve is outside the range of each security level. Specifically, the security level of the categorized curves is more than the previous column and is less than the next column.
 The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
-Due to space limitations, <xref target="adoption" format="default"/> omits libraries that have not been maintained since the 2016 exTNFS attacks and curves that have had the security levels below 128 bits since before 2016 (ex. BN160). The full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. In this table, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GMT19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the Freeman curves and MNT curves are not included in this table because <xref target="BD18" format="default"/> does not show the security level of these curves.
+Due to space limitations, <xref target="adoption" format="default"/> omits libraries that have not been maintained since the 2016 exTNFS attacks and curves that have had the security levels below 128 bits since before 2016 (ex. BN160). The full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. In this table, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GMT19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the Freeman curves and MNT curves are not included in this table because <xref target="BD18" format="default"/> does not show the security levels of these curves.
 </t>
 
 
@@ -996,7 +996,7 @@ As curves of 128-bit security level are currently the most widely used, we recom
     F_p^12 = F_p^6[w] / (w^2 - v).
 ]]></artwork>
           <t>Defined by t, the elliptic curve E and its twist E' are represented 
-by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized into M-type.</t>
+by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.</t>
           <t>We have to note that the security level of this pairing is expected to be 126 rather than 128 bits <xref target="GMT19" format="default"/>.
 </t>
           <t>Parameters of BLS12_381 are given as follows.</t>
@@ -1099,7 +1099,7 @@ BN462 is defined by the parameter</t>
     F_p^6 = F_p^2[v] / (v^3 - u - 2)
     F_p^12 = F_p^6[w] / (w^2 - v).
 ]]></artwork>
-          <t>Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized into D-type.</t>
+          <t>Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.</t>
           <t>We have to note that BN462 is significantly slower than BLS12_381, but has 134-bit security level <xref target="GMT19" format="default"/>, so may be more resistant to future small improvements to the exTNFS attack.</t>
           <t>We note also that CP8_544 is more efficient than BN462, has 131-bit security level,and that due to its construction will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.</t>
           <t>We give the following parameters for BN462.</t>
@@ -1211,7 +1211,7 @@ BN462 is defined by the parameter</t>
     F_p^48 = F_p^24[s] / (s^2 + z).
 ]]></artwork>
         <t>The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 
-and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized into D-type.</t>
+and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
         <t>We then give the parameters for BLS48-581 as follows.</t>
         <ul spacing="normal">
           <li>
