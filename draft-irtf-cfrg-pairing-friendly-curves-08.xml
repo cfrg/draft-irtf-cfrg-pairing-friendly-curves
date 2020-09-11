@@ -116,6 +116,9 @@ This is called the Weierstrass normal form of an elliptic curve.</t>
 <t>We define some of the terminology used in this memo as follows:</t>
 
         <dl newline="false" spacing="normal">
+          <dt>b:</dt>
+          <dd>
+  a primitive element of the multiplicative group (F_q)^*.</dd>        
           <dt>O_E:</dt>
           <dd>
   the point at infinity over an elliptic curve E.</dd>
@@ -164,7 +167,7 @@ The characteristic p and the order r are parameterized by</t>
     r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 ]]></artwork>
         <t>for an integer t.</t>
-        <t>The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is an element of a multiplicative group (F_p)^* of order (p - 1).</t>
+        <t>The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (F_p)^* of order (p - 1).</t>
         <t>BN curves always have order-6 twists. If m is an element that is neither a square nor a cube in an extension field F_p^2, the twist E' of E is defined over an extension field F_p^2 by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
 BN curves are called D-type if b' = b / m, and M-type if b' = b * m.
 The embedding degree k is 12.</t>
