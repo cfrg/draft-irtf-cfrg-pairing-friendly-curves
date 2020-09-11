@@ -155,7 +155,7 @@ satisfying the following properties:</t>
 
       <section anchor="BNdef" numbered="true" toc="default">
         <name>Barreto-Naehrig Curves</name>
-        <t>A BN curve <xref target="BN05" format="default"/> is one of the instantiations of pairing-friendly curves proposed in 2005. A pairing over BN curves constructs optimal Ate pairings.</t>
+        <t>A BN curve <xref target="BN05" format="default"/> is a family of pairing-friendly curves proposed in 2005. A pairing over BN curves constructs optimal Ate pairings.</t>
         <t>A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
 E is defined over F_p, where p is a prime number and at least 5, and E(F_p) has a subgroup of prime order r.
 The characteristic p and the order r are parameterized by</t>
@@ -172,7 +172,7 @@ The embedding degree k is 12.</t>
       </section>
       <section anchor="BLSdef" numbered="true" toc="default">
         <name>Barreto-Lynn-Scott Curves</name>
-        <t>A BLS curve <xref target="BLS02" format="default"/> is another instantiation of pairings proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.</t>
+        <t>A BLS curve <xref target="BLS02" format="default"/> is a another family of pairing-frinedly curves proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.</t>
         <t>A BLS curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
 E is defined over a finite field F_p by an equation of the form E: y^2 = x^3 + b,
 and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves. 
