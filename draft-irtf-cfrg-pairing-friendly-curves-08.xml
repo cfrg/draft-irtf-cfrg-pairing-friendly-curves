@@ -372,7 +372,7 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="51">Library</td>
+            <td align="left" rowspan="52">Library</td>
             <td align="left" rowspan="5">mcl</td>
             <td align="left">BLS12_381</td>
             <td align="left">&nbsp;</td>
@@ -840,6 +840,17 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
+            <td align="left">bls12377js</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">X</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+
+          <tr>
             <td align="left" rowspan="10">Application</td>
             <td align="left" rowspan="2">Zcash</td>
             <td align="left">BLS12_381</td>
@@ -958,6 +969,9 @@ As described below, BN curves with 256-bit p and 512-bit p specified in ISO/IEC 
        <t>Apache Milagro Crypto Library (AMCL)<xref target="AMCL" format="default"/> supports four BLS curves (BLS12_381, BLS12_461, BLS24_479 and BLS48_556) and four BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, and BN512I). In addition to AMCL's supported curves, MIRACL <xref target="MIRACL" format="default"/> supports BN462 and BLS48_581.</t>
 <t>Adjoint published a library that supports the BLS12_381 and six BN curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462) <xref target="AdjointLib" format="default"/>, where BN254S1 and BN254S2 are BN curves adopted by an old version of AMCL <xref target="AMCLv2" format="default"/>. The suffix 'S' of BN254S1 and BN254S2 are given from the initials of developper's name because he proposed these parameters. 
 </t>
+<t>The Celo foundation published the bls12377js library <xref target="bls12377js" format="default"/>. The supported curve is the BLS12_377 curve which is shown in <xref target="BCGMMW20" format="default"/>.
+</t>
+
       </section>
 
       <section anchor="applications" numbered="true" toc="default">
@@ -1528,6 +1542,44 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6509.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7748.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8017.xml"/>
+        
+        <reference anchor="BCGMMW20">
+          <front>
+            <title>ZEXE: Enabling Decentralized Private Computation</title>
+            <seriesInfo name="DOI" value="10.1109/SP40000.2020.00050"/>
+            <seriesInfo name="IEEE Symposium on Security and Privacy" value="2020"/>
+            <author initials="S." surname="Bowe" fullname="Sean Bowe">
+              <organization/>
+            </author>
+            <author initials="A." surname="Chiesa" fullname="Alessandro Chiesa">
+              <organization/>
+            </author>
+            <author initials="M." surname="Green" fullname="Matthew Green">
+              <organization/>
+            </author>
+            <author initials="I." surname="Miers" fullname="Ian Miers">
+              <organization/>
+            </author>
+            <author initials="P." surname="Mishra" fullname="Pratyush Mishra">
+              <organization/>
+            </author>
+            <author initials="H." surname="Wu" fullname="Howard Wu">
+              <organization/>
+            </author>
+            <date year="2020"/>
+          </front>
+        </reference>
+        
+        <reference anchor="bls12377js" target="https://github.com/celo-org/bls12377js">
+          <front>
+            <title>bls12377js</title>
+            <author>
+              <organization>The Celo Foundation</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+
         <reference anchor="SAKKE">
           <front>
             <title>Security of the mission critical service (Release 15)</title>
@@ -1883,6 +1935,7 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date year="2013"/>
           </front>
         </reference>
+        
         <reference anchor="AMCL" target="https://github.com/apache/incubator-milagro-crypto">
           <front>
             <title>The Apache Milagro Cryptographic Library (AMCL)</title>
@@ -1892,6 +1945,7 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date year="2016"/>
           </front>
         </reference>
+
         <reference anchor="Intel-IPP" target="https://software.intel.com/en-us/ipp-crypto-reference-arithmetic-of-the-group-of-elliptic-curve-points">
           <front>
             <title>Developer Reference for Intel Integrated Performance Primitives Cryptography 2019</title>
