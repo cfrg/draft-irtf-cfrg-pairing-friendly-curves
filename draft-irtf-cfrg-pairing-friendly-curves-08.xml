@@ -168,7 +168,7 @@ The characteristic p and the order r are parameterized by</t>
 ]]></artwork>
         <t>for an integer t.</t>
         <t>The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (F_p)^* of order (p - 1).</t>
-        <t>BN curves always have order-6 twists. If m is an element that is neither a square nor a cube in an extension field F_p^2, the twist E' of E is defined over an extension field F_p^2 by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
+        <t>In the case of BN curves, we can use twists of the degree 6. If m is an element that is neither a square nor a cube in an extension field F_p^2, the twist E' of E is defined over an extension field F_p^2 by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
 BN curves are called D-type if b' = b / m, and M-type if b' = b * m.
 The embedding degree k is 12.</t>
         <t>A pairing e is defined by taking G_1 as a subgroup of E(F_p) of order r, G_2 as a subgroup of E'(F_p^2), and G_T as a subgroup of a multiplicative group (F_p^12)^* of order r.</t>
