@@ -1118,7 +1118,7 @@ BN462 is defined by the parameter</t>
 ]]></artwork>
           <t>Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.</t>
           <t>We have to note that BN462 is significantly slower than BLS12_381, but has 134-bit security level <xref target="GMT19" format="default"/>, so may be more resistant to future small improvements to the exTNFS attack.</t>
-          <t>We note also that CP8_544 is more efficient than BN462, has 131-bit security level,and that due to its construction will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.</t>
+          <t>We note also that CP8_544 is about 20% faster that BN462 <xref target="GMT19" format="default"/>, has 131-bit security level,and that due to its construction will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.</t>
           <t>We give the following parameters for BN462.</t>
           <ul spacing="normal">
             <li>
