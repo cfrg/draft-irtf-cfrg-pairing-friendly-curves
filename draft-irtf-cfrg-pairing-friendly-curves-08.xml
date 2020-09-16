@@ -136,7 +136,7 @@ This is called the Weierstrass normal form of an elliptic curve.</t>
   a point in E(F_q) of order r. (The 'base point' of a cyclic subgroup of E(F_q))</dd>
           <dt>h:</dt>
           <dd>
-  the cofactor h =  #E(F_q) / r.</dd>
+  the cofactor h =  #E(F_q) / r, where gcd(h, r)=1.</dd>
         </dl>
       </section>
       <section anchor="pairing" numbered="true" toc="default">
