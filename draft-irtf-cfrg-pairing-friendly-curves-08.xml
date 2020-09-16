@@ -107,12 +107,12 @@ The aggregation functionality of BLS signatures is effective for their applicati
 Let F_q be a finite field.
 The curve defined by the following equation E is called an elliptic curve: </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-   E : y^2 = x^3 + A * x + B,
+   E : y^2 = x^3 + a * x + b,
 ]]></artwork>
-        <t> and A and B in F_q satisfy the discriminant inequality 4 * A^3 + 27 * B^2 != 0 mod q.
+        <t> and a and b in F_q satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q.
 This is called the Weierstrass normal form of an elliptic curve.</t>
 <t>A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number k, we define the set of (F_q^k)-rational points of E, denoted by E(F_q^k), to be the set of all solutions (x,y) in F_q^k, together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.</t>
-<t>The set E(F_q^k) forms a group under a group law which can be defined geometrically as follows. For P and Q in E(F_q^k) define P + Q to be the reflection about the x-axis of the unique third point of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [a]P for a positive integer a as the point P added to itself (a-1) times.</t>
+<t>The set E(F_q^k) forms a group under a group law which can be defined geometrically as follows. For P and Q in E(F_q^k) define P + Q to be the reflection about the x-axis of the unique third point of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times.</t>
 <t>We define some of the terminology used in this memo as follows:</t>
 
         <dl newline="false" spacing="normal">
@@ -148,7 +148,7 @@ The optimal Ate pairing is considered to be the most efficient to compute and is
         <t>A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T
 satisfying the following properties:</t>
         <ol spacing="normal" type="1">
-          <li>Bilinearity: for any S in G_1, T in G_2, and integers a and b, e([a]S, [b]T) = e(S, T)^{a * b}.</li>
+          <li>Bilinearity: for any S in G_1, T in G_2, and integers K and L, e([K]S, [L]T) = e(S, T)^{K * L}.</li>
           <li>Non-degeneracy: for any T in G_2, e(S, T) = 1 if and only if S = O_E.
  Similarly, for any S in G_1, e(S, T) = 1 if and only if T = O_E.</li>
         </ol>
