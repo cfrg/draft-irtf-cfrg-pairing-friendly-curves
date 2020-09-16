@@ -113,31 +113,7 @@ The curve defined by the following equation E is called an elliptic curve: </t>
 This is called the Weierstrass normal form of an elliptic curve.</t>
 <t>A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number k, we define the set of (GF(q^k))-rational points of E, denoted by E(GF(q^k)), to be the set of all solutions (x,y) in GF(q^k), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.</t>
 <t>The set E(GF(q^k)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^k)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied. </t>
-<t>We define some of the terminology used in this memo as follows:</t>
 
-        <dl newline="false" spacing="normal">
-          <dt>b:</dt>
-          <dd>
-  a primitive element of the multiplicative group (GF(q))^*.</dd>        
-          <dt>O_E:</dt>
-          <dd>
-  the point at infinity over an elliptic curve E.</dd>
-          <dt>E(GF(q^k)):</dt>
-          <dd>
-  the group of GF(q)-rational points of E.</dd>
-          <dt>#E(GF(q^k)):</dt>
-          <dd>
-  the number of GF(q)-rational points of E.</dd>
-          <dt>r:</dt>
-          <dd>
-  the largest prime divisor of #E(GF(q)).</dd>
-          <dt>BP:</dt>
-          <dd>
-  a point in E(GF(q)) of order r. (The 'base point' of a cyclic subgroup of E(GF(q)))</dd>
-          <dt>h:</dt>
-          <dd>
-  the cofactor h =  #E(GF(q)) / r, where gcd(h, r)=1.</dd>
-        </dl>
       </section>
       <section anchor="pairing" numbered="true" toc="default">
         <name>Pairings</name>
@@ -153,6 +129,32 @@ satisfying the following properties:</t>
  Similarly, for any S in G_1, e(S, T) = 1 if and only if T = O_E.</li>
         </ol>
       <t>In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable.</t>
+<t>We define some of the terminology used in this memo as follows:</t>
+
+        <dl newline="false" spacing="normal">
+          <dt>b:</dt>
+          <dd>
+  a primitive element of the multiplicative group (GF(p))^*.</dd>        
+          <dt>O_E:</dt>
+          <dd>
+  the point at infinity over an elliptic curve E.</dd>
+          <dt>E(GF(p^k)):</dt>
+          <dd>
+  the group of GF(p)-rational points of E.</dd>
+          <dt>#E(GF(p^k)):</dt>
+          <dd>
+  the number of GF(p)-rational points of E.</dd>
+          <dt>r:</dt>
+          <dd>
+  the order of G_1 and G_2.</dd>
+          <dt>BP:</dt>
+          <dd>
+  a point in G_1. (The 'base point' of a cyclic subgroup of G_1)</dd>
+          <dt>h:</dt>
+          <dd>
+  the cofactor h =  #E(GF(p)) / r, where gcd(h, r)=1.</dd>
+        </dl>
+
       </section>
 
 
@@ -1022,9 +1024,7 @@ by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-
               <t>G_1 is the largest prime-order subgroup of E(GF(p))
               </t>
               <ul spacing="normal">
-                <li>r : the order of G_1</li>
                 <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-                <li>h : the cofactor #E(GF(p))/r</li>
               </ul>
             </li>
             <li>
@@ -1067,10 +1067,6 @@ by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-
             <dt>b:</dt>
             <dd>
   4</dd>
-            <dt>r':</dt>
-            <dd>
-      0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab
-  </dd>
             <dt>x'_0:</dt>
             <dd>
       0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
@@ -1125,9 +1121,7 @@ BN462 is defined by the parameter</t>
               <t>G_1 is the largest prime-order subgroup of E(GF(p))
               </t>
               <ul spacing="normal">
-                <li>r : the order of G_1</li>
                 <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-                <li>h : the cofactor #E(GF(p))/r</li>
               </ul>
             </li>
             <li>
@@ -1169,10 +1163,6 @@ BN462 is defined by the parameter</t>
             <dt>b:</dt>
             <dd>
   5</dd>
-            <dt>r':</dt>
-            <dd>
-      0x240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908ee1c201f7fffffffff6ff66fc7bf717f7c0000000002401b007e010800d
-  </dd>
             <dt>x'_0:</dt>
             <dd>
       0x0257ccc85b58dda0dfb38e3a8cbdc5482e0337e7c1cd96ed61c913820408208f9ad2699bad92e0032ae1f0aa6a8b48807695468e3d934ae1e4df
@@ -1235,16 +1225,13 @@ and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
             <t>G_1 is the largest prime-order subgroup of E(GF(p))
             </t>
             <ul spacing="normal">
-              <li>r : the order of G_1</li>
               <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-              <li>h : the cofactor #E(GF(p))/r</li>
             </ul>
           </li>
           <li>
             <t>G_2 is an r-order subgroup of E'(GF(p^8))
             </t>
             <ul spacing="normal">
-              <li>r': an order</li>
               <li>
                 <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
                 </t>
@@ -1345,10 +1332,6 @@ and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
           <dt>b:</dt>
           <dd>
   1</dd>
-          <dt>r':</dt>
-          <dd>
-      0x2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e741969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
-  </dd>
           <dt>h':</dt>
           <dd>
       0x170e915cb0a6b7406b8d94042317f811d6bc3fc6e211ada42e58ccfcb3ac076a7e4499d700a0c23dc4b0c078f92def8c87b7fe63e1eea270db353a4ef4d38b5998ad8f0d042ea24c8f02be1c0c83992fe5d7725227bb27123a949e0876c0a8ce0a67326db0e955dcb791b867f31d6bfa62fbdd5f44a00504df04e186fae033f1eb43c1b1a08b6e086eff03c8fee9ebdd1e191a8a4b0466c90b389987de5637d5dd13dab33196bd2e5afa6cd19cf0fc3fc7db7ece1f3fac742626b1b02fcee04043b2ea96492f6afa51739597c54bb78aa6b0b99319fef9d09f768831018ee6564c68d054c62f2e0b4549426fec24ab26957a669dba2a2b6945ce40c9aec6afdeda16c79e15546cd7771fa544d5364236690ea06832679562a68731420ae52d0d35a90b8d10b688e31b6aee45f45b7a5083c71732105852decc888f64839a4de33b99521f0984a418d20fc7b0609530e454f0696fa2a8075ac01cc8ae3869e8d0fe1f3788ffac4c01aa2720e431da333c83d9663bfb1fb7a1a7b90528482c6be7892299030bb51a51dc7e91e9156874416bf4c26f1ea7ec578058563960ef92bbbb8632d3a1b695f954af10e9a78e40acffc13b06540aae9da5287fc4429485d44e6289d8c0d6a3eb2ece35012452751839fb48bc14b515478e2ff412d930ac20307561f3a5c998e6bcbfebd97effc6433033a2361bfcdc4fc74ad379a16c6dea49c209b1
