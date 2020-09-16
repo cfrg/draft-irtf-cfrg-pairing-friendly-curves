@@ -120,7 +120,7 @@ This is called the Weierstrass normal form of an elliptic curve.</t>
         <t>A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing <xref target="Ver09" format="default"/>, and so on.
 The optimal Ate pairing is considered to be the most efficient to compute and is the one that is most commonly used for practical implementation.</t>
 
-<t>Let E be an elliptic curve defined over a prime field GF(p). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let G_1 be a cyclic subgroup of E(GF(p)) of order r, there also exists a cyclic subgroup of E(GF(p^k)) of order r, define this to be G_2. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.</t>
+<t>Let E be an elliptic curve defined over a prime field GF(p). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let G_1 be a cyclic subgroup of E(GF(p)) of order r, there also exists a cyclic subgroup of E(GF(p^k)) of order r, define this to be G_2. Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If an isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist of E. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.</t>
         <t>A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T
 satisfying the following properties:</t>
         <ol spacing="normal" type="1">
@@ -132,18 +132,36 @@ satisfying the following properties:</t>
 <t>We define some of the terminology used in this memo as follows:</t>
 
         <dl newline="false" spacing="normal">
+          <dt>GF(p):</dt>
+          <dd>
+  a finite field with characteristic p.</dd>
+
+          <dt>GF(p^k):</dt>
+          <dd>
+  an extension field of degree k.</dd>
+
+          <dt>(GF(p))*:</dt>
+          <dd>
+  a multiplicative group of GF(p).</dd>
+
+          <dt>(GF(p^k))*:</dt>
+          <dd>
+  a multiplicative group of GF(p^k).</dd>
+
           <dt>b:</dt>
           <dd>
   a primitive element of the multiplicative group (GF(p))^*.</dd>        
+
           <dt>O_E:</dt>
           <dd>
   the point at infinity over an elliptic curve E.</dd>
+
           <dt>E(GF(p^k)):</dt>
           <dd>
-  the group of GF(p)-rational points of E.</dd>
+  the group of GF(p^k)-rational points of E.</dd>
           <dt>#E(GF(p^k)):</dt>
           <dd>
-  the number of GF(p)-rational points of E.</dd>
+  the number of GF(p^k)-rational points of E.</dd>
           <dt>r:</dt>
           <dd>
   the order of G_1 and G_2.</dd>
