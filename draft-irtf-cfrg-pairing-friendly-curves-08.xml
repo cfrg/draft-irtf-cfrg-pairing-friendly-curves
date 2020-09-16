@@ -104,39 +104,39 @@ The aggregation functionality of BLS signatures is effective for their applicati
       <section anchor="elliptic-curve" numbered="true" toc="default">
         <name>Elliptic Curves</name>
         <t>Let p be a prime number and q = p^n for a natural number n, where at least 5.
-Let F_q be a finite field.
+Let GF(q) be a finite field.
 The curve defined by the following equation E is called an elliptic curve: </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
    E : y^2 = x^3 + a * x + b,
 ]]></artwork>
-        <t> and a and b in F_q satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q.
+        <t> and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q.
 This is called the Weierstrass normal form of an elliptic curve.</t>
-<t>A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number k, we define the set of (F_q^k)-rational points of E, denoted by E(F_q^k), to be the set of all solutions (x,y) in F_q^k, together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.</t>
-<t>The set E(F_q^k) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(F_q^k) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied. </t>
+<t>A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number k, we define the set of (GF(q^k))-rational points of E, denoted by E(GF(q^k)), to be the set of all solutions (x,y) in GF(q^k), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.</t>
+<t>The set E(GF(q^k)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^k)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied. </t>
 <t>We define some of the terminology used in this memo as follows:</t>
 
         <dl newline="false" spacing="normal">
           <dt>b:</dt>
           <dd>
-  a primitive element of the multiplicative group (F_q)^*.</dd>        
+  a primitive element of the multiplicative group (GF(q))^*.</dd>        
           <dt>O_E:</dt>
           <dd>
   the point at infinity over an elliptic curve E.</dd>
-          <dt>E(F_q^k):</dt>
+          <dt>E(GF(q^k)):</dt>
           <dd>
-  the group of F_q-rational points of E.</dd>
-          <dt>#E(F_q^k):</dt>
+  the group of GF(q)-rational points of E.</dd>
+          <dt>#E(GF(q^k)):</dt>
           <dd>
-  the number of F_q-rational points of E.</dd>
+  the number of GF(q)-rational points of E.</dd>
           <dt>r:</dt>
           <dd>
-  the largest prime divisor of #E(F_q).</dd>
+  the largest prime divisor of #E(GF(q)).</dd>
           <dt>BP:</dt>
           <dd>
-  a point in E(F_q) of order r. (The 'base point' of a cyclic subgroup of E(F_q))</dd>
+  a point in E(GF(q)) of order r. (The 'base point' of a cyclic subgroup of E(GF(q)))</dd>
           <dt>h:</dt>
           <dd>
-  the cofactor h =  #E(F_q) / r, where gcd(h, r)=1.</dd>
+  the cofactor h =  #E(GF(q)) / r, where gcd(h, r)=1.</dd>
         </dl>
       </section>
       <section anchor="pairing" numbered="true" toc="default">
@@ -144,7 +144,7 @@ This is called the Weierstrass normal form of an elliptic curve.</t>
         <t>A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing <xref target="Ver09" format="default"/>, and so on.
 The optimal Ate pairing is considered to be the most efficient to compute and is the one that is most commonly used for practical implementation.</t>
 
-<t>Let E be an elliptic curve defined over a prime field F_p. Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over F_p. Let G_1 be a cyclic subgroup of E(F_p) of order r, there also exists a cyclic subgroup of E(F_p^k) of order r, define this to be G_2. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (F_p^k)^*; this exists by definition of k.</t>
+<t>Let E be an elliptic curve defined over a prime field GF(p). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let G_1 be a cyclic subgroup of E(GF(p)) of order r, there also exists a cyclic subgroup of E(GF(p^k)) of order r, define this to be G_2. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.</t>
         <t>A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T
 satisfying the following properties:</t>
         <ol spacing="normal" type="1">
@@ -160,26 +160,26 @@ satisfying the following properties:</t>
         <name>Barreto-Naehrig Curves</name>
         <t>A BN curve <xref target="BN05" format="default"/> is a family of pairing-friendly curves proposed in 2005. A pairing over BN curves constructs optimal Ate pairings.</t>
         <t>A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
-E is defined over F_p, where p is a prime number and at least 5, and E(F_p) has a subgroup of prime order r.
+E is defined over GF(p), where p is a prime number and at least 5, and E(GF(p)) has a subgroup of prime order r.
 The characteristic p and the order r are parameterized by</t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
     p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
     r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 ]]></artwork>
         <t>for an integer t.</t>
-        <t>The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (F_p)^* of order (p - 1).</t>
-        <t>In the case of BN curves, we can use twists of the degree 6. If m is an element that is neither a square nor a cube in an extension field F_p^2, the twist E' of E is defined over an extension field F_p^2 by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
+        <t>The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (GF(p))^* of order (p - 1).</t>
+        <t>In the case of BN curves, we can use twists of the degree 6. If m is an element that is neither a square nor a cube in an extension field GF(p^2), the twist E' of E is defined over an extension field GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. 
 BN curves are called D-type if b' = b / m, and M-type if b' = b * m.
 The embedding degree k is 12.</t>
-        <t>A pairing e is defined by taking G_1 as a subgroup of E(F_p) of order r, G_2 as a subgroup of E'(F_p^2), and G_T as a subgroup of a multiplicative group (F_p^12)^* of order r.</t>
+        <t>A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as a subgroup of a multiplicative group (GF(p^12))^* of order r.</t>
       </section>
       <section anchor="BLSdef" numbered="true" toc="default">
         <name>Barreto-Lynn-Scott Curves</name>
         <t>A BLS curve <xref target="BLS02" format="default"/> is a another family of pairing-frinedly curves proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.</t>
         <t>A BLS curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t.
-E is defined over a finite field F_p by an equation of the form E: y^2 = x^3 + b,
+E is defined over a finite field GF(p) by an equation of the form E: y^2 = x^3 + b,
 and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves. 
-In contrast to BN curves, E(F_p) does not have a prime order.
+In contrast to BN curves, E(GF(p)) does not have a prime order.
 Instead, its order is divisible by a large parameterized prime r and denoted by h * r with cofactor h.
 The pairing is defined on the r-torsion points.
 In the same way as BN curves, BLS curves can be categorized as D-type and M-type.</t>
@@ -194,20 +194,20 @@ In the same way as BN curves, BLS curves can be categorized as D-type and M-type
        r = t^16 - t^8 + 1
 ]]></artwork>
         <t>for a well chosen integer t where t must be 1 (mod 3).</t>
-        <t>A pairing e is defined by taking G_1 as a subgroup of E(F_p) of order r, G_2 as an order r subgroup of E'(F_p^2) for BLS12 and of E'(F_p^8) for BLS48, and G_T as an order r subgroup of a multiplicative group (F_p^12)^* for BLS12 and of a multiplicative group (F_p^48)^* for BLS48.</t>
+        <t>A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of a multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative group (GF(p^48))^* for BLS48.</t>
       </section>
       
       <section anchor="representation-convention-for-an-extension-field" numbered="true" toc="default">
         <name>Representation Convention for an Extension Field</name>
         <t>Pairing-friendly curves use a tower of some extension fields. 
 In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of <xref target="I-D.ietf-lwig-curve-representations" format="default"/> as a standard and effective method.</t>
-        <t>Let F_p be a finite field of characteristic p and F_p^d = F_p(i) be an extension field of F_p of degree d.</t>
+        <t>Let GF(p) be a finite field of characteristic p and GF(p^d) = GF(p)(i) be an extension field of GF(p) of degree d.</t>
         <t>
-    For an element s in F_p^d such that s = s_0 + s_1 * i + ... + s_{d - 1} *&nbsp;&nbsp;i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the basefield F_p, s is represented as octet string by oct(s) = s_0 || s_1 || ... || s_{d - 1}.
+    For an element s in GF(p^d) such that s = s_0 + s_1 * i + ... + s_{d - 1} *&nbsp;&nbsp;i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the basefield GF(p), s is represented as octet string by oct(s) = s_0 || s_1 || ... || s_{d - 1}.
 </t>
-        <t>Let F_p^d' = F_p^d(j) be an extension field of F_p^d of degree d' / d.</t>
+        <t>Let GF(p^d') = GF(p^d)(j) be an extension field of GF(p^d) of degree d' / d.</t>
         <t>
-    For an element s' in F_p^d' such that s' = s'_0 + s'_1 * j + ... + s'_{d' / d - 1} * j^{d' / d - 1} where s'_0, s'_1, ..., s'_{d' / d - 1} in the basefield F_p^d, s' is represented as integer by oct(s') = oct(s'_0) || oct(s'_1) || ... || oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1}) are octet strings encoded by above convention.
+    For an element s' in GF(p^d') such that s' = s'_0 + s'_1 * j + ... + s'_{d' / d - 1} * j^{d' / d - 1} where s'_0, s'_1, ..., s'_{d' / d - 1} in the basefield GF(p^d), s' is represented as integer by oct(s') = oct(s'_0) || oct(s'_1) || ... || oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1}) are octet strings encoded by above convention.
 </t>
         <t>In general, one can define encoding between integer and an element of any finite field tower by inductively applying the above convention.</t>
         <t>The parameters and test vectors of extension fields described in this memo are encoded by this convention and represented in an octet stream.</t>
@@ -1006,11 +1006,11 @@ As curves of 128-bit security level are currently the most widely used, we recom
     t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16 
 ]]></artwork>
           <t>where the size of p becomes 381-bit length.</t>
-          <t>For the finite field F_p, the towers of extension field F_p^2, F_p^6 and F_p^12 are defined by indeterminates u, v, and w as follows:</t>
+          <t>For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:</t>
           <artwork name="" type="" align="left" alt=""><![CDATA[
-    F_p^2 = F_p[u] / (u^2 + 1)
-    F_p^6 = F_p^2[v] / (v^3 - u - 1)
-    F_p^12 = F_p^6[w] / (w^2 - v).
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
+    GF(p^12) = GF(p^6)[w] / (w^2 - v).
 ]]></artwork>
           <t>Defined by t, the elliptic curve E and its twist E' are represented 
 by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.</t>
@@ -1019,27 +1019,27 @@ by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-
           <t>Parameters of BLS12_381 are given as follows.</t>
           <ul spacing="normal">
             <li>
-              <t>G_1 is the largest prime-order subgroup of E(F_p)
+              <t>G_1 is the largest prime-order subgroup of E(GF(p))
               </t>
               <ul spacing="normal">
                 <li>r : the order of G_1</li>
                 <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-                <li>h : the cofactor #E(F_p)/r</li>
+                <li>h : the cofactor #E(GF(p))/r</li>
               </ul>
             </li>
             <li>
-              <t>G_2 is an r-order subgroup of E'(F_p^2)
+              <t>G_2 is an r-order subgroup of E'(GF(p^2))
               </t>
               <ul spacing="normal">
                 <li>
                   <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
                   </t>
                   <ul spacing="normal">
-                    <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in F_p)</li>
-                    <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in F_p)</li>
+                    <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p))</li>
+                    <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p))</li>
                   </ul>
                 </li>
-                <li>h' : the cofactor #E'(F_p^2)/r</li>
+                <li>h' : the cofactor #E'(GF(p^2))/r</li>
               </ul>
             </li>
           </ul>
@@ -1110,39 +1110,39 @@ BN462 is defined by the parameter</t>
     t = 2^114 + 2^101 - 2^14 - 1 
 ]]></artwork>
           <t>for the definition in <xref target="BNdef" format="default"/>.</t>
-          <t>For the finite field F_p, the towers of extension field F_p^2, F_p^6 and F_p^12 are defined by indeterminates u, v, and w as follows:</t>
+          <t>For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:</t>
           <artwork name="" type="" align="left" alt=""><![CDATA[
-    F_p^2 = F_p[u] / (u^2 + 1)
-    F_p^6 = F_p^2[v] / (v^3 - u - 2)
-    F_p^12 = F_p^6[w] / (w^2 - v).
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
+    GF(p^12) = GF(p^6)[w] / (w^2 - v).
 ]]></artwork>
           <t>Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.</t>
           <t>We have to note that BN462 is significantly slower than BLS12_381, but has 134-bit security level <xref target="GMT19" format="default"/>, so may be more resistant to future small improvements to the exTNFS attack.</t>
-          <t>We note also that CP8_544 is about 20% faster that BN462 <xref target="GMT19" format="default"/>, has 131-bit security level,and that due to its construction will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.</t>
+          <t>We note also that CP8_544 is about 20% faster that BN462 <xref target="GMT19" format="default"/>, has 131-bit security level, and that due to its construction will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.</t>
           <t>We give the following parameters for BN462.</t>
           <ul spacing="normal">
             <li>
-              <t>G_1 is the largest prime-order subgroup of E(F_p)
+              <t>G_1 is the largest prime-order subgroup of E(GF(p))
               </t>
               <ul spacing="normal">
                 <li>r : the order of G_1</li>
                 <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-                <li>h : the cofactor #E(F_p)/r</li>
+                <li>h : the cofactor #E(GF(p))/r</li>
               </ul>
             </li>
             <li>
-              <t>G_2 is an r-order subgroup of E'(F_p^2)
+              <t>G_2 is an r-order subgroup of E'(GF(p^2))
               </t>
               <ul spacing="normal">
                 <li>
                   <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
                   </t>
                   <ul spacing="normal">
-                    <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in F_p)</li>
-                    <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in F_p)</li>
+                    <li>x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p))</li>
+                    <li>y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p))</li>
                   </ul>
                 </li>
-                <li>h' : the cofactor #E'(F_p^2)/r</li>
+                <li>h' : the cofactor #E'(GF(p^2))/r</li>
               </ul>
             </li>
           </ul>
@@ -1219,29 +1219,29 @@ BN462 is defined by the parameter</t>
     t = -1 + 2^7 - 2^10 - 2^30 - 2^32. 
 ]]></artwork>
 <t>In this case, the size of p becomes 581-bit. </t>
-        <t>For the finite field F_p, the towers of extension field F_p^2, F_p^4, F_p^8, F_p^24 and F_p^48 are defined by indeterminates u, v, w, z, and s as follows:</t>
+        <t>For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:</t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
-    F_p^2 = F_p[u] / (u^2 + 1)
-    F_p^4 = F_p^2[v] / (v^2 + u + 1)
-    F_p^8 = F_p^4[w] / (w^2 + v)
-    F_p^24 = F_p^8[z] / (z^3 + w)
-    F_p^48 = F_p^24[s] / (s^2 + z).
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
+    GF(p^8) = GF(p^4)[w] / (w^2 + v)
+    GF(p^24) = GF(p^8)[z] / (z^3 + w)
+    GF(p^48)= GF(p^24)[s] / (s^2 + z).
 ]]></artwork>
         <t>The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 
 and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
         <t>We then give the parameters for BLS48-581 as follows.</t>
         <ul spacing="normal">
           <li>
-            <t>G_1 is the largest prime-order subgroup of E(F_p)
+            <t>G_1 is the largest prime-order subgroup of E(GF(p))
             </t>
             <ul spacing="normal">
               <li>r : the order of G_1</li>
               <li>BP = (x,y) : a 'base point', i.e., a generator of G_1</li>
-              <li>h : the cofactor #E(F_p)/r</li>
+              <li>h : the cofactor #E(GF(p))/r</li>
             </ul>
           </li>
           <li>
-            <t>G_2 is an r-order subgroup of E'(F_p^8)
+            <t>G_2 is an r-order subgroup of E'(GF(p^8))
             </t>
             <ul spacing="normal">
               <li>r': an order</li>
@@ -1249,11 +1249,11 @@ and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
                 <t>BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <xref target="I-D.ietf-lwig-curve-representations" format="default"/>)
                 </t>
                 <ul spacing="normal">
-                  <li>x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in F_p)</li>
-                  <li>y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in F_p)</li>
+                  <li>x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p))</li>
+                  <li>y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p))</li>
                 </ul>
               </li>
-              <li>h' : the cofactor #E'(F_p^8)/r</li>
+              <li>h' : the cofactor #E'(GF(p^8))/r</li>
             </ul>
           </li>
         </ul>
@@ -2328,7 +2328,7 @@ Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points B
     x' = x'_0 + x'_1 * u and
     y' = y'_0 + y'_1 * u,
 ]]></artwork>
-      <t>where u is a indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of F_p.</t>
+      <t>where u is a indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).</t>
       <t>For BLS48-581, Q = (x', y') is given by</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
     x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v 
@@ -2336,7 +2336,7 @@ Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points B
     y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v 
         + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 ]]></artwork>
-      <t>where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of F_p.
+      <t>where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p).
 The representation of Q = (x', y') given below is followed by <xref target="I-D.ietf-lwig-curve-representations" format="default"/>.</t>
 
       <t>BLS12-381:</t>
@@ -2792,24 +2792,24 @@ Below, we give detailed serialization and de-serialization procedures.
 The following notation is used in the rest of this section:
 </t>
           <ul spacing="normal">
-          <li>Elements of F_p^2 are represented as polynomial with F_p coefficients like <xref target="representation-convention-for-an-extension-field" format="default"/>.
+          <li>Elements of GF(p^2) are represented as polynomial with GF(p) coefficients like <xref target="representation-convention-for-an-extension-field" format="default"/>.
           </li>
           <li> For a byte string str, str[0] is defined as the first byte of str.
           </li>
-          <li>The function sign_F_p(y) returns one bit representing the sign of an
-  element of F_p. This function is defined as follows:
+          <li>The function sign_GF_p(y) returns one bit representing the sign of an
+  element of GF(p). This function is defined as follows:
           </li>
           </ul>
           <artwork name="" type="" align="left" alt=""><![CDATA[
-    sign_F_p(y) := { 1 if y > (p - 1) / 2, else
+    sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
                    { 0 otherwise.
 ]]></artwork>
           <ul spacing="normal">          
-            <li> The function sign_F_p^2(y') returns one bit representing the sign of an element in F_p^2. This function is defined as follows:
+            <li> The function sign_GF_p^2(y') returns one bit representing the sign of an element in GF(p^2). This function is defined as follows:
             </li>
           </ul>
           <artwork name="" type="" align="left" alt=""><![CDATA[
-    sign_F_p^2(y') := { sign_F_p(y'_0) if y'_1 equals 0, else
+    sign_GF_p^2(y') := { sign_GF_p(y'_0) if y'_1 equals 0, else
                       { 1 if y'_1 > (p - 1) / 2, else
                       { 0 otherwise.
 ]]></artwork>
@@ -2837,7 +2837,7 @@ This procedure uses the I2OSP function defined in <xref target="RFC8017" format=
 
       <li>
       S_bit is 0 if P is the point at infinity or if point compression is not used.
-      Otherwise (i.e., when point compression is used and P is not the point at infinity), if P is a point on E, S_bit = sign_F_p(y), else if P is a point on E', S_bit = sign_F_p^2(y).
+      Otherwise (i.e., when point compression is used and P is not the point at infinity), if P is a point on E, S_bit = sign_GF_p(y), else if P is a point on E', S_bit = sign_GF_p^2(y).
       </li>
       </ul>
       </li>
@@ -2858,7 +2858,7 @@ Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
 
     <li>
         If P is a point on E other than the point at infinity, then x is an
-      element of F_p, i.e., an integer in the inclusive range [0, p - 1].
+      element of GF(p), i.e., an integer in the inclusive range [0, p - 1].
       In this case, let x_string = I2OSP(x, 48).
       </li>
 
@@ -2867,7 +2867,7 @@ Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
       </li>
       <li>
     If P is a point on E' other than the point at infinity, then x can be
-      represented as (x_0, x_1) where x_0 and x_1 are elements of F_p,
+      represented as (x_0, x_1) where x_0 and x_1 are elements of GF(p),
       i.e., integers in the inclusive range [0, p - 1] (see discussion of
       vector representations above).
       In this case, let x_string = I2OSP(x_1, 48) || I2OSP(x_0, 48).
@@ -3032,13 +3032,13 @@ If the curve that was determined in step 2 is E:
 </t>
 <ul spacing="normal">
 <li>
-    Let y2 = x^3 + 4 in F_p.
+    Let y2 = x^3 + 4 in GF(p).
 </li>
 <li>
-    If y2 is not square in F_p, output INVALID and stop decoding.
+    If y2 is not square in GF(p), output INVALID and stop decoding.
 </li>
 <li>
-    Otherwise, let y = sqrt(y2) in F_p and let Y_bit = sign_F_p(y).
+    Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit = sign_GF_p(y).
 </li>
 </ul>
 <t>
@@ -3046,13 +3046,13 @@ If the curve that was determined in step 2 is E:
 </t>
 <ul spacing="normal">
 <li>
-    Let y2 = x^3 + 4 * (u + 1) in F_p^2.
+    Let y2 = x^3 + 4 * (u + 1) in GF(p^2).
 </li>
 <li>
-    If y2 is not square in F_p^2, output INVALID and stop decoding.
+    If y2 is not square in GF(p^2), output INVALID and stop decoding.
 </li>
 <li>
-    Otherwise, let y = sqrt(y2) in F_p^2 and let Y_bit = sign_F_p^2(y).
+    Otherwise, let y = sqrt(y2) in GF(p^2) and let Y_bit = sign_GF_p^2(y).
 </li>
 </ul>
 </li>
