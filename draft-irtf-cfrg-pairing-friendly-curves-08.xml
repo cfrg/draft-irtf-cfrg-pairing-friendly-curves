@@ -84,7 +84,13 @@ The aggregation functionality of BLS signatures is effective for their applicati
 
       <section anchor="goal" numbered="true" toc="default">
         <name>Motivation and Contribution</name>
-<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field <xref target="KB16" format="default"/>. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
+<t> At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) <xref target="KB16" format="default"/>. 
+The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k).
+The idea is applicable when the embedding degree k is a composite that satisfies k = i*j (gcd (i, j) = 1, i, j> 1).
+The basic idea is based on the equality GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the amount of cost for solving the discrete logarithm problem is using sub-field calculation. 
+Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves)<xref target="BN05" format="default"/> and Barreto-Lynn-Scott curves (BLS curves)<xref target="BLS02" format="default"/> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult.
+Please refer to <xref target="KB16" format="default"/> for detailed ideas and calculation algorithms of the attack by Kim.
+In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
 
 <t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/>.</t>
@@ -255,6 +261,12 @@ Almost all of these variants are reduced to the hardness of discrete logarithm p
       <section anchor="impact" numbered="true" toc="default">
         <name>Impact of Recent Attacks</name>
         <t>In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <xref target="KB16" format="default"/>.
+The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k).
+The idea is applicable when the embedding degree k is a composite  that satisfies k = i * j (gcd (i, j) = 1, i, j> 1).
+Since the above condition is satisfied especially when k = 2^n*3^m (n, m> 1), BN curves and BLS curves whose embedding degree is divisible by 6 are affected by the exTNFS.
+The basic idea of the exTNFS is based on the equality GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the amount of cost for solving FFDLP is using sub-field calculation. 
+Please refer to <xref target="KB16" format="default"/> for detailed ideas and calculation algorithms of exTNFS.
+
 Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down.
 For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <xref target="BD18" format="default"/>. Here, the security levels described in this memo correspond to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
