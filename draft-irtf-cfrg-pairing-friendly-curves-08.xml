@@ -295,21 +295,27 @@ In addition, "efficiency" is one of the important aspects but greatly dependant 
           <t>We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications.</t>
 <t><xref target="adoption" format="default"/> summarizes the adoption status of pairing-friendly curves. In this table, "Arnd" is an abbreviation for "Around". The curves categorized as 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. Other labels shown with '~' mean that the security level of the categorized curve is outside the range of each security level. Specifically, the security level of the categorized curves is more than the previous column and is less than the next column.
 The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
-Due to space limitations, <xref target="adoption" format="default"/> omits libraries that have not been maintained since the 2016 exTNFS attacks and curves that have had the security levels below 128 bits since before 2016 (ex. BN160). The full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. In this table, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GMT19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the Freeman curves and MNT curves are not included in this table because <xref target="BD18" format="default"/> does not show the security levels of these curves.
+</t>
+<t>
+<xref target="adoption" format="default"/> omits parameters with security levels below the "Arnd 128-bit" range due to space limitations and viewpoints of secure usage of parameters.
+On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore <xref target="adoption_status_100bit_security" format="default"/> shows these parameters. In addition, the full version of <xref target="adoption" format="default"/> is available at <eref target="https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/" brackets="none"/>. 
+</t>
+<t>
+In <xref target="adoption" format="default"/>, the security level for each curve is evaluated in accordance with <xref target="BD18" format="default"/>,<xref target="GMT19" format="default"/>, <xref target="MAF19" format="default"/> and <xref target="FK18" format="default"/>. Note that the Freeman curves and MNT curves are not included in this table because <xref target="BD18" format="default"/> does not show the security levels of these curves.
 </t>
 
 
-      <table anchor="adoption" align="center">
+           <table anchor="adoption" align="center">
+
         <name>Adoption Status of Pairing-Friendly Curves</name>
         <thead>
           <tr>
             <th align="center" rowspan="2" >Category</th>
             <th align="center" rowspan="2">Name</th>
             <th align="center" rowspan="2">Curve Type</th>
-            <th align="center" colspan="6">Security Levels (bit)</th>
+            <th align="center" colspan="5">Security Levels (bit)</th>
           </tr>
           <tr>
-            <td align="left"> ~ </td>
             <td align="left"> Arnd 128 </td>
             <td align="left"> ~ </td>
             <td align="left"> Arnd 192 </td>
@@ -320,18 +326,8 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
         <tbody>
           <tr>
             <td align="left" rowspan="9">Standard</td>
-            <td align="left" rowspan="3">ISO/IEC</td>
-            <td align="left">BN256I</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
+            <td align="left" rowspan="2">ISO/IEC</td>
             <td align="left">BN384</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -340,7 +336,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
            <tr>
             <td align="left">BN512I</td>
-            <td align="left">&nbsp;</td>
             <td align="left"></td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
@@ -348,47 +343,18 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>         
           <tr>
-            <td align="left" rowspan="2">TCG</td>
-            <td align="left">BN256I</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
+            <td align="left" rowspan="1">TCG</td>
             <td align="left">BN638</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="4">FIDO/W3C</td>
-            <td align="left">BN256I</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN256D</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
+            <td align="left" rowspan="2">FIDO/W3C</td>
             <td align="left">BN512I</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -397,44 +363,25 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">BN638</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
+        </tbody>
+        <tbody>
           <tr>
-            <td align="left" rowspan="52">Library</td>
-            <td align="left" rowspan="5">mcl</td>
+            <td align="left" rowspan="34">Library</td>
+            <td align="left" rowspan="3">mcl</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
-          <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN_SNARK1</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
+         <tr>
             <td align="left">BN382M</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -443,7 +390,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BN462</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -451,28 +397,8 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="2">TEPLA</td>
-            <td align="left">BN254B</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left" rowspan="15">RELIC</td>
+            <td align="left" rowspan="13">RELIC</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -481,7 +407,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS12_446</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -490,7 +415,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS12_455</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -500,7 +424,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">BLS12_638</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -508,7 +431,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS24_477</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left"></td>
             <td align="left">X</td>
@@ -521,30 +443,10 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
           </tr>
           <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>    
-          <tr>
-            <td align="left">BN256D</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>    
-          <tr>
             <td align="left">BN382R</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -553,7 +455,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>    
           <tr>
             <td align="left">BN446</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -563,7 +464,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">BN638</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -571,7 +471,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr> 
           <tr>
             <td align="left">CP8_544</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left"></td>
             <td align="left">&nbsp;</td>
@@ -581,7 +480,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">K54_569</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left"></td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -590,7 +488,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">KSS18_508</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -598,7 +495,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr> 
           <tr>
             <td align="left">OT8_511</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left"></td>
             <td align="left">&nbsp;</td>
@@ -606,9 +502,8 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr> 
           <tr>
-            <td align="left" rowspan="9">AMCL</td>
+            <td align="left" rowspan="6">AMCL</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -617,7 +512,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS12_383</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -626,7 +520,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS12_461</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -635,7 +528,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS24_479</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">X</td>
@@ -648,51 +540,12 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
-          </tr>
-          <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254CX</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN256I</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
           </tr>
           <tr>
             <td align="left">BN512I</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">Intel IPP</td>
-            <td align="left">BN256I</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -704,13 +557,11 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
           </tr>
           <tr>
-            <td align="left" rowspan="11">MIRACL</td>
+            <td align="left" rowspan="8">MIRACL</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -719,7 +570,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS12_383</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -728,7 +578,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS12_461</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -737,7 +586,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BLS24_479</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">X</td>
@@ -750,7 +598,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
           </tr>
           <tr>
@@ -759,39 +606,10 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
-          </tr>
-          <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254CX</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN256I</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
           </tr>
           <tr>
             <td align="left">BN462</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -801,62 +619,15 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">BN512I</td>
             <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="7">Adjoint</td>
+            <td align="left" rowspan="2">Adjoint</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN_SNARK1</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254B</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254S1</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254S2</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -864,7 +635,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BN462</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -874,7 +644,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">bls12377js</td>
             <td align="left">BLS12_377</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -883,20 +652,10 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
 
           <tr>
-            <td align="left" rowspan="10">Application</td>
-            <td align="left" rowspan="2">Zcash</td>
+            <td align="left" rowspan="7">Application</td>
+            <td align="left" rowspan="1">Zcash</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN_SNARK1</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -905,7 +664,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left" >Ethereum</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -915,7 +673,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left">Chia Network</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -923,28 +680,9 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
             <td align="left">&nbsp;</td>
           </tr>
           <tr>
-            <td align="left" rowspan="5">DFINITY</td>
+            <td align="left" rowspan="3">DFINITY</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN254N</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-            <td align="left">&nbsp;</td>
-          </tr>
-          <tr>
-            <td align="left">BN_SNARK1</td>
-            <td align="left">X</td>
-            <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -952,7 +690,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BN382M</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -961,7 +698,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
           <tr>
             <td align="left">BN462</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -971,7 +707,6 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           <tr>
             <td align="left" >Algorand</td>
             <td align="left">BLS12_381</td>
-            <td align="left">&nbsp;</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
@@ -980,6 +715,7 @@ Due to space limitations, <xref target="adoption" format="default"/> omits libra
           </tr>
         </tbody>
       </table>
+
 
       <section anchor="standardization" numbered="true" toc="default">
         <name>International Standards</name>
@@ -3080,7 +2816,130 @@ If S_bit equals Y_bit, output P = (x, y) and stop decoding.
 
 </section>
 </section>
-    
+
+<section anchor="adoption_status_100bit_security" numbered="true" toc="default">
+
+<name>Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level</name>
+
+<t>
+BN curves including BN254 that were estimated as the 128-bit security level before exTNFS ensure no more than the 100-bit security level by the effect of exTNFS. <xref target="table_100-bit" format="default"/> summarizes the adoption status of the parameters with a security level lower than the "Arnd 128-bit" range. Please refer the <xref target="secure_params" format="default"/> for the naming conventions for each curve listed in <xref target="table_100-bit" format="default"/>.
+</t>
+      <table anchor="table_100-bit" align="center">
+        <name> Adoption Status of Pairing-Friendly Curves with 100-bit Security Level(Legacy)</name>
+        <thead>
+          <tr>
+            <th align="center" rowspan="1" >Category</th>
+            <th align="center" rowspan="1">Name</th>
+            <th align="center" colspan="1">Supported 100-bit Curves</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr>
+            <td align="left" rowspan="4">Standard</td>
+            <td align="left" rowspan="1">ISO/IEC</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="1">TCG</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">FIDO/W3C</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left">BN256D</td>
+          </tr>
+        </tbody>
+        
+        <tbody>
+           <tr>
+            <td align="left" rowspan="18">Library</td>
+            <td align="left" rowspan="2">mcl</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">TEPLA</td>
+            <td align="left">BN254B</td>
+          </tr>
+          <tr>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">RELIC</td>
+            <td align="left">BN254N</td>
+          </tr>    
+          <tr>
+            <td align="left">BN256D</td>
+          </tr> 
+          <tr>
+            <td align="left" rowspan="3">AMCL</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN254CX</td>
+          </tr>
+          <tr>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="1">Intel IPP</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="3">MIRACL</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN254CX</td>
+          </tr>
+          <tr>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="5">Adjoint</td>
+            <td align="left">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td align="left">BN254B</td>
+          </tr>
+          <tr>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN254S1</td>
+          </tr>
+          <tr>
+            <td align="left">BN254S2</td>
+          </tr>
+        </tbody>
+        
+        <tbody>
+           <tr>
+            <td align="left" rowspan="3">Application</td>
+            <td align="left" rowspan="1">Zcash</td>
+           <td align="left">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">DFINITY</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN_SNARK1</td>
+          </tr>
+        </tbody>
+
+        
+        
+      </table>
+
+
+</section>
+
 
   </back>
 </rfc>
