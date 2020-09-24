@@ -1125,7 +1125,7 @@ Note that the security level of BLS12-381, which is adopted by a lot of librarie
 <t>In addition, implementors should be aware of the following points when they implement pairing-based cryptographic applications using recommended curves.</t>
 <t>In applications such as key agreement protocols, users exchange the elements in G_1 and G_2 as public keys. To check these elements are so-called sub-group secure <xref target="BCM15" format="default"/>, implementors should validate if the elements have the correct order r. Specifically, for public keys P in G_1 and Q in G_2, a receiver should calculate scalar multiplications [r]P and [r]Q, and check the results become points at infinity.
 </t>
-<t>The pairing-based protocols, such as the BLS signatures, calculate a scalar multiplication with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementors should apply countermeasure techniques such as montgomery ladder when they implement a module of scalar multiplication<xref target="Montgomery" format="default"/> <xref target="RFC7748" format="default"/>.
+<t>The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G_2 and an exponentiation in G_3 with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementors should apply countermeasure techniques such as montgomery ladder <xref target="Montgomery" format="default"/> <xref target="CF06" format="default"/> when they implement modules of a scalar multiplication and an exponentiation. Please refer <xref target="Montgomery" format="default"/> and <xref target="CF06" format="default"/> for the detailed algorithms of montgomery ladder.
 </t>
 <t>
 When converting between an element in extension field and an octet string, implementors should check that the coefficient is within an appropriate range <xref target="IEEE1363" format="default"/>.
@@ -1289,9 +1289,23 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6508.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6539.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6509.xml"/>
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7748.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8017.xml"/>
         
+        <reference anchor="CF06">
+          <front>
+            <title>Handbook of Elliptic and Hyperelliptic Curve Cryptography</title>
+            <seriesInfo name="DOI" value="10.1201/9780367801625"/>
+            <seriesInfo name="Chapman and Hall" value="CRC"/>
+            <author initials="H." surname="Cohen" fullname="Henri Cohen">
+              <organization/>
+            </author>
+            <author initials="G." surname="Frey" fullname="Gerhard Frey">
+              <organization/>
+            </author>
+            <date year="2006"/>
+          </front>
+        </reference>
+
         <reference anchor="BCGMMW20">
           <front>
             <title>ZEXE: Enabling Decentralized Private Computation</title>
