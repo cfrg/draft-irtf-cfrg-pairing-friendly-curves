@@ -1114,15 +1114,15 @@ and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
       <name>Security Considerations</name>
       <t>The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 <xref target="KB16" format="default"/> and they are categorized in each security level in accordance with <xref target="BD18" format="default"/>.
 Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters.
-As of 2020, as far as we know, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS.
+As of 2020, as far as we've investigated the top cryptographic conferences in the past, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS.
 </t>
       <t>BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level <xref target="BD18" format="default"/>.
 Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <xref target="BD18" format="default"/> <xref target="GMT19" format="default"/>.
 </t>
-      <t> BN254 is used in most of the existing implementations as shown in <xref target="adoption" format="default"/>, however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.
- Implementers MAY use pairing-friendly curves with 100-bit security only if they need to keep interoperability with the existing applications.
+      <t> BN254 is used in most of the existing implementations as shown in <xref target="impl" format="default"/> ( and <xref target="adoption_status_100bit_security" format="default"/>), however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.
 </t>      
-<t>In addition, implementors should be aware of the following points when they implement pairing-based cryptographic applications using recommended curves.</t>
+<t>In addition, implementors should be aware of the following points when they implement pairing-based cryptographic applications using recommended curves. Regarding the use case and applications of pairing-based cryptographic applications, please refer <xref target="applications-of-pairing-based-cryptography" format="default"/>.</t>
+
 <t>In applications such as key agreement protocols, users exchange the elements in G_1 and G_2 as public keys. To check these elements are so-called sub-group secure <xref target="BCM15" format="default"/>, implementors should validate if the elements have the correct order r. Specifically, for public keys P in G_1 and Q in G_2, a receiver should calculate scalar multiplications [r]P and [r]Q, and check the results become points at infinity.
 </t>
 <t>The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G_2 and an exponentiation in G_3 with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementors should apply countermeasure techniques such as montgomery ladder <xref target="Montgomery" format="default"/> <xref target="CF06" format="default"/> when they implement modules of a scalar multiplication and an exponentiation. Please refer <xref target="Montgomery" format="default"/> and <xref target="CF06" format="default"/> for the detailed algorithms of montgomery ladder.
@@ -1132,7 +1132,7 @@ When converting between an element in extension field and an octet string, imple
 If the coefficient is out of range, there is a possible that security vulnerabilities such as the signature forgery may occur.
 </t>
 <t>
-Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem <xref target="Cheon06" format="default"/>. Therefore, implementers should be careful when they design cryptographic protocols based on the strong DH problem. For example, in the case of Short Signatures, they can prevent the Cheon's attack by carefully setting the maximum number of queries.
+Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem <xref target="Cheon06" format="default"/>. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P, for i=1,...,n, then we find a secret K. Since the complexity of ECDLPwAI is given as O(sqrt((r-1)/n + sqrt(n)) where n|r-1 by using Cheon's algorithm whereas the complexity of ECDLP is given as O(sqrt(r)), the complexity of ECDLPwAI with the ideal value n becomes dramatically smaller than that of ECDLP. Please refer <xref target="Cheon06" format="default"/> for the details of Cheon's algorithm. Therefore, implementers should be careful when they design cryptographic protocols based on the strong DH problem. For example, in the case of Short Signatures, they can prevent the Cheon's attack by carefully setting the maximum number of queries which corresponds to the parameter n.
 </t>
     </section>
     <section anchor="iana-considerations" numbered="true" toc="default">
