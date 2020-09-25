@@ -1535,6 +1535,7 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date>n.d.</date>
           </front>
         </reference>
+        
 <reference anchor="IEEE1363" >
   <front>
     <title>IEEE Standard Specifications for Public-Key Cryptography</title>
@@ -1545,6 +1546,16 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
   </front>
   <seriesInfo name="IEEE" value="standard"/>
   <seriesInfo name="DOI" value="10.1109/IEEESTD.2000.92292"/>
+</reference>
+
+<reference anchor="SEC1" target="https://www.secg.org/sec1-v2.pdf">
+  <front>
+    <title>SEC 1: Elliptic Curve Cryptography</title>
+    <author >
+      <organization>Standards for Efficient Cryptography Group (SECG)</organization>
+    </author>
+    <date year="2009"/>
+  </front>
 </reference>
 
         <reference anchor="Cheon06">
@@ -2532,7 +2543,7 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
 This section describes the serialization format defined by <xref target="ZCashRep" format="default"/>.
 This format applies to points on the BLS12-381 elliptic curves E and E',
 whose parameters are given in <xref target="parameter-BLS12-381" format="default"/>.
-Note that this serialization method is based on the representation shown in SECG1 and it is a tiny tweak so as to apply to GF(p^m). It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers.
+Note that this serialization method is based on the representation shown in <xref target="SEC1" format="default"/> and it is a tiny tweak so as to apply to GF(p^m). It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers.
 </t>
 <t>
 At a high level, the serialization format is defined as follows:
