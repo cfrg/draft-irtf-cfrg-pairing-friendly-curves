@@ -1964,6 +1964,22 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
           </front>
         </reference>
 
+        <reference anchor="CLN09" target="https://eprint.iacr.org/2009/615.pdf">
+          <front>
+            <title>Faster Pairing Computations on Curves with High-Degree Twists</title>
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2009/615"/>
+            <author initials="C." surname="Costello">
+              <organization/>
+            </author>
+            <author initials="T." surname="Lange">
+              <organization/>
+            </author>
+            <author initials="M." surname="Naehrig">
+              <organization/>
+            </author>
+            <date year="2009"/>
+          </front>
+        </reference>
 
         <reference anchor="S86">
           <front>
@@ -2044,7 +2060,7 @@ It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_
     end if;
     return (l * (P[1] -A[1]) + A[2] -P[2]);
 ]]></artwork>
-      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2. We note that Line_function does not consider such an isomorphism.</t>
+      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="KIK17" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
       <t>The computation of the optimal Ate pairing for BN curves uses the Frobenius map.
 The p-power Frobenius map pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).</t>
       <section anchor="optimal-ate-pairings-over-barreto-naehrig-curves" numbered="true" toc="default">
