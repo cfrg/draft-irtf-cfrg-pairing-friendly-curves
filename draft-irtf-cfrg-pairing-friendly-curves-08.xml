@@ -109,7 +109,7 @@ In particular, BN254, which is a BN curve with a 254-bit characteristic effectiv
       <name>Preliminaries</name>
       <section anchor="elliptic-curve" numbered="true" toc="default">
         <name>Elliptic Curves</name>
-        <t>Let p be a prime number and q = p^n for a natural number n, where at least 5.
+        <t>Let p be a prime number and q = p^n for a natural number n > 0, where p at least 5.
 Let GF(q) be a finite field.
 The curve defined by the following equation E is called an elliptic curve: </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -2060,7 +2060,7 @@ It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_
     end if;
     return (l * (P[1] -A[1]) + A[2] -P[2]);
 ]]></artwork>
-      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="KIK17" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
+      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="CLN09" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
       <t>The computation of the optimal Ate pairing for BN curves uses the Frobenius map.
 The p-power Frobenius map pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).</t>
       <section anchor="optimal-ate-pairings-over-barreto-naehrig-curves" numbered="true" toc="default">
