@@ -325,7 +325,7 @@ In <xref target="adoption" format="default"/>, the security level for each curve
         </thead>
         <tbody>
           <tr>
-            <td align="left" rowspan="9">Standard</td>
+            <td align="left" rowspan="5">Standard</td>
             <td align="left" rowspan="2">ISO/IEC</td>
             <td align="left">BN384</td>
             <td align="left">X</td>
@@ -343,7 +343,7 @@ In <xref target="adoption" format="default"/>, the security level for each curve
             <td align="left">&nbsp;</td>
           </tr>         
           <tr>
-            <td align="left" rowspan="1">TCG</td>
+            <td align="left" >TCG</td>
             <td align="left">BN638</td>
             <td align="left">&nbsp;</td>
             <td align="left">X</td>
@@ -368,8 +368,6 @@ In <xref target="adoption" format="default"/>, the security level for each curve
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
-        </tbody>
-        <tbody>
           <tr>
             <td align="left" rowspan="34">Library</td>
             <td align="left" rowspan="3">mcl</td>
@@ -650,10 +648,9 @@ In <xref target="adoption" format="default"/>, the security level for each curve
             <td align="left">&nbsp;</td>
             <td align="left">&nbsp;</td>
           </tr>
-
           <tr>
             <td align="left" rowspan="7">Application</td>
-            <td align="left" rowspan="1">Zcash</td>
+            <td align="left" >Zcash</td>
             <td align="left">BLS12_381</td>
             <td align="left">X</td>
             <td align="left">&nbsp;</td>
@@ -2060,7 +2057,7 @@ It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_
     end if;
     return (l * (P[1] -A[1]) + A[2] -P[2]);
 ]]></artwork>
-      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="CLN09" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
+      <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="KIK17" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
       <t>The computation of the optimal Ate pairing for BN curves uses the Frobenius map.
 The p-power Frobenius map pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).</t>
       <section anchor="optimal-ate-pairings-over-barreto-naehrig-curves" numbered="true" toc="default">
@@ -2865,24 +2862,24 @@ If S_bit equals Y_bit, output P = (x, y) and stop decoding.
 <t>
 BN curves including BN254 that were estimated as the 128-bit security level before exTNFS ensure no more than the 100-bit security level by the effect of exTNFS. <xref target="table_100-bit" format="default"/> summarizes the adoption status of the parameters with a security level lower than the "Arnd 128-bit" range. Please refer the <xref target="secure_params" format="default"/> for the naming conventions for each curve listed in <xref target="table_100-bit" format="default"/>.
 </t>
+
       <table anchor="table_100-bit" align="center">
         <name> Adoption Status of Pairing-Friendly Curves with 100-bit Security Level(Legacy)</name>
         <thead>
           <tr>
-            <th align="center" rowspan="1" >Category</th>
-            <th align="center" rowspan="1">Name</th>
-            <th align="center" colspan="1">Supported 100-bit Curves</th>
+            <th align="center" >Category</th>
+            <th align="center" >Name</th>
+            <th align="center" >Supported 100-bit Curves</th>
           </tr>
         </thead>
-        
         <tbody>
           <tr>
             <td align="left" rowspan="4">Standard</td>
-            <td align="left" rowspan="1">ISO/IEC</td>
+            <td align="left" >ISO/IEC</td>
             <td align="left">BN256I</td>
           </tr>
           <tr>
-            <td align="left" rowspan="1">TCG</td>
+            <td align="left" >TCG</td>
             <td align="left">BN256I</td>
           </tr>
           <tr>
@@ -2892,9 +2889,6 @@ BN curves including BN254 that were estimated as the 128-bit security level befo
           <tr>
             <td align="left">BN256D</td>
           </tr>
-        </tbody>
-        
-        <tbody>
            <tr>
             <td align="left" rowspan="18">Library</td>
             <td align="left" rowspan="2">mcl</td>
@@ -2928,7 +2922,7 @@ BN curves including BN254 that were estimated as the 128-bit security level befo
             <td align="left">BN256I</td>
           </tr>
           <tr>
-            <td align="left" rowspan="1">Intel IPP</td>
+            <td align="left" >Intel IPP</td>
             <td align="left">BN256I</td>
           </tr>
           <tr>
@@ -2957,12 +2951,9 @@ BN curves including BN254 that were estimated as the 128-bit security level befo
           <tr>
             <td align="left">BN254S2</td>
           </tr>
-        </tbody>
-        
-        <tbody>
            <tr>
             <td align="left" rowspan="3">Application</td>
-            <td align="left" rowspan="1">Zcash</td>
+            <td align="left" >Zcash</td>
            <td align="left">BN_SNARK1</td>
           </tr>
           <tr>
@@ -2973,9 +2964,6 @@ BN curves including BN254 that were estimated as the 128-bit security level befo
             <td align="left">BN_SNARK1</td>
           </tr>
         </tbody>
-
-        
-        
       </table>
 
 
