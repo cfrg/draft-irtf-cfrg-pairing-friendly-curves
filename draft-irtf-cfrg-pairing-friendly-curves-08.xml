@@ -226,7 +226,8 @@ In the same way as BN curves, BLS curves can be categorized as D-type and M-type
       <section anchor="representation-convention-for-an-extension-field" numbered="true" toc="default">
         <name>Representation Convention for an Extension Field</name>
         <t>Pairing-friendly curves use a tower of some extension fields. 
-In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of <xref target="I-D.ietf-lwig-curve-representations" format="default"/> as a standard and effective method.</t>
+In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of <xref target="I-D.ietf-lwig-curve-representations" format="default"/> as a standard and effective method. Note that the big-endian encoding is used for an element in GF(p) which follows to mcl <xref target="mcl" format="default"/>, ISO/IEC 15946-5 <xref target="ISOIEC15946-5" format="default"/> and etc.
+</t>
         <t>Let GF(p) be a finite field of characteristic p and GF(p^d) = GF(p)(i) be an extension field of GF(p) of degree d.</t>
         <t>
     For an element s in GF(p^d) such that s = s_0 + s_1 * i + ... + s_{d - 1} *&nbsp;&nbsp;i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the basefield GF(p), s is represented as octet string by oct(s) = s_0 || s_1 || ... || s_{d - 1}.
