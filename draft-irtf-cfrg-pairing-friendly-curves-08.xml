@@ -858,6 +858,9 @@ by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-
           <t>
           As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, <xref target="zcash_rep_bls12_381" format="default"/> shows the serialization format of points on an elliptic curve as useful information. This serialization format is also adopted in <xref target="I-D.boneh-bls-signature" format="default"/> <xref target="zkcrypto" format="default"/>.
           </t>
+          <t>
+          In addition, many pairing-based cryptographic applications use a hashing to an elliptic curve procedure that outputs a rational point on an elliptic curve from an arbitrary input. A standard specification of ciphersuites for a hashing to an elliptic curve, including BLS12-381, is under discussion in the IETF <xref target="I-D.irtf-cfrg-hash-to-curve" format="default"/> and it will be valuable information for implementers.
+          </t>
 	    </section>
 	    
 
@@ -1494,8 +1497,11 @@ The authors would also like to acknowledge Sakae Chikara, Kim Taechan, Hoeteck W
             <date/>
           </front>
         </reference>
+
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-lwig-curve-representations-08.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-boneh-bls-signature-00.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-hash-to-curve-09.xml"/>
+
         <reference anchor="Ethereum" target="https://medium.com/prysmatic-labs/ethereum-2-0-development-update-17-prysmatic-labs-ed5bcf82ec00">
           <front>
             <title>Ethereum 2.0 Development Update #17 - Prysmatic Labs</title>
