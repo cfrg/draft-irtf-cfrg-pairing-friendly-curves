@@ -290,7 +290,10 @@ Then, from the viewpoints of "security" and "widely used", pairing-friendly curv
 <t>
 In our selection policy, it is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. 
 In addition, "efficiency" is one of the important aspects but greatly dependant on implementations, so we choose to prioritize "security" and "widely used" over "efficiency" in consideration of future interconnections and interoperability over the internet. </t>
-
+<t>
+As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level.
+On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
+</t>
     <section anchor="impl" numbered="true" toc="default">
         <name>Adoption Status of Pairing-friendly Curves</name>
           <t>We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications.</t>
@@ -958,13 +961,6 @@ BN462 is defined by the parameter</t>
 
       </section>
 
-
-      <section anchor="for-192-bits-of-security" numbered="true" toc="default">
-        <name>For 192-bit Security</name>
-        <t>As shown in <xref target="adoption" format="default"/>, there are only two candidates of pairing-friendly curves for the 192-bit security level, BLS24_477 and BLS24_479. BLS24_477 has only one implementation and BLS24_479 is an experimental parameter that is not shown in any peer-reviewed paper. Therefore, because neither match our selection policy, we do not show the parameters for 192-bit security here.</t>
-      </section>
-      
-      
       <section anchor="for-256-bits-of-security" numbered="true" toc="default">
         <name>For 256-bit Security</name>
         
