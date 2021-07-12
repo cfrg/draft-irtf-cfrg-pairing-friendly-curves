@@ -2061,8 +2061,8 @@ It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_
     return (l * (P[1] -A[1]) + A[2] -P[2]);
 ]]></artwork>
       <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="KIK17" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
-      <t>The computation of the optimal Ate pairing uses the Frobenius map.
-The p-power Frobenius map pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).</t>
+      <t>The computation of the optimal Ate pairing uses the Frobenius endomorphism.
+The p-power Frobenius endomorphism pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).</t>
       <section anchor="optimal-ate-pairings-over-barreto-naehrig-curves" numbered="true" toc="default">
         <name>Optimal Ate Pairings over Barreto-Naehrig Curves</name>
         <t>Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.</t>
