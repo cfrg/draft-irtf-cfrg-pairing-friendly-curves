@@ -2118,7 +2118,7 @@ Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points B
     x' = x'_0 + x'_1 * u and
     y' = y'_0 + y'_1 * u,
 ]]></artwork>
-      <t>where u is a indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).</t>
+      <t>where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).</t>
       <t>For BLS48-581, Q = (x', y') is given by</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
     x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v 
