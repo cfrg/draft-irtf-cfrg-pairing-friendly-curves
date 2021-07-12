@@ -2557,9 +2557,10 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
       <name>ZCash serialization format for BLS12-381</name>
 <t>
 This section describes the serialization format defined by <xref target="ZCashRep" format="default"/>.
+It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers.
 This format applies to points on the BLS12-381 elliptic curves E and E',
 whose parameters are given in <xref target="parameter-BLS12-381" format="default"/>.
-Note that this serialization method is based on the representation shown in <xref target="SEC1" format="default"/> and it is a tiny tweak so as to apply to GF(p^m). It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers.
+Note that this serialization method is based on the representation shown in <xref target="SEC1" format="default"/> and it is a tiny tweak so as to apply to GF(p^m).
 </t>
 <t>
 At a high level, the serialization format is defined as follows:
