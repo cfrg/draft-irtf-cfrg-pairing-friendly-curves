@@ -93,7 +93,7 @@ Please refer to <xref target="KB16" format="default"/> for detailed ideas and ca
 In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <xref target="NIST" format="default"/>.
 </t>
 
-<t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12-381" format="default"/>.</t>
+<t>To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <xref target="BD18" format="default"/> <xref target="BLS12_381" format="default"/>.</t>
 
 <t>In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and classify them in the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluation by Barbulescu and Duquesne <xref target="BD18" format="default"/>. </t> 
 
@@ -746,7 +746,7 @@ As described below, BN curves with 256-bit p and 512-bit p specified in ISO/IEC 
       <section anchor="applications" numbered="true" toc="default">
         <name>Applications</name>
 <t>Zcash uses a BN curve (named BN128) in their library libsnark <xref target="libsnark" format="default"/>.
-In response to the exTNFS attacks, they proposed new parameters using BLS12_381 <xref target="BLS12-381" format="default"/> <xref target="GMT19" format="default"/>and published its experimental implementation <xref target="zkcrypto" format="default"/>.</t>
+In response to the exTNFS attacks, they proposed new parameters using BLS12_381 <xref target="BLS12_381" format="default"/> <xref target="GMT19" format="default"/>and published its experimental implementation <xref target="zkcrypto" format="default"/>.</t>
       <t>Ethereum 2.0 adopted BLS12_381 and uses the implementation by Meyer <xref target="pureGo-bls" format="default"/>. Chia Network published their implementation <xref target="Chia" format="default"/> by integrating the RELIC toolkit <xref target="RELIC" format="default"/>. DFINITY uses mcl, and Algorand published an implementation which supports BLS12_381.</t>
 
       </section>
@@ -762,15 +762,15 @@ Especially, the one that best matches the policy is BLS12_381 from the viewpoint
 On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced. 
 As shown in recent security evaluations for BLS12_381<xref target="BD18" format="default"/> <xref target="GMT19" format="default"/>, its security level close to 128-bit but it is less than 128-bit.
 If the attack is improved even a little, BLS12_381 will not be suitable for the curve of the 128-bit security level.
-As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
+As curves of 128-bit security level are currently the most widely used, we recommend both BLS12_381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
 </t>
 
-<section anchor="parameter-BLS12-381" numbered="true" toc="default">
-      <name>BLS Curves for the 128-bit security level</name>
+<section anchor="parameter-BLS12_381" numbered="true" toc="default">
+      <name>BLS Curves for the 128-bit security level (BLS12_381)</name>
       <t>
       In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of embedding degree 12 with 381-bit p that is adopted by a lot of applications such as Zcash <xref target="Zcash" format="default"/>, Ethereum <xref target="Ethereum" format="default"/>, and so on.
       </t>
-          <t>The BLS12_381 curve is shown in <xref target="BLS12-381" format="default"/> and it is defined by the parameter</t>
+          <t>The BLS12_381 curve is shown in <xref target="BLS12_381" format="default"/> and it is defined by the parameter</t>
           <artwork name="" type="" align="left" alt=""><![CDATA[
     t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16 
 ]]></artwork>
@@ -863,13 +863,13 @@ by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-
           As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, <xref target="zcash_rep_bls12_381" format="default"/> shows the serialization format of points on an elliptic curve as useful information. This serialization format is also adopted in <xref target="I-D.boneh-bls-signature" format="default"/> <xref target="zkcrypto" format="default"/>.
           </t>
           <t>
-          In addition, many pairing-based cryptographic applications use a hashing to an elliptic curve procedure that outputs a rational point on an elliptic curve from an arbitrary input. A standard specification of ciphersuites for a hashing to an elliptic curve, including BLS12-381, is under discussion in the IETF <xref target="I-D.irtf-cfrg-hash-to-curve" format="default"/> and it will be valuable information for implementers.
+          In addition, many pairing-based cryptographic applications use a hashing to an elliptic curve procedure that outputs a rational point on an elliptic curve from an arbitrary input. A standard specification of ciphersuites for a hashing to an elliptic curve, including BLS12_381, is under discussion in the IETF <xref target="I-D.irtf-cfrg-hash-to-curve" format="default"/> and it will be valuable information for implementers.
           </t>
 	    </section>
 	    
 
         <section anchor="bn-curves" numbered="true" toc="default">
-          <name>BN Curves for the 128-bit security level</name>
+          <name>BN Curves for the 128-bit security level (BN462)</name>
           <t>A BN curve with the 128-bit security level is shown in <xref target="BD18" format="default"/>, which we call BN462. 
 BN462 is defined by the parameter</t>
           <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -981,8 +981,8 @@ BN462 is defined by the parameter</t>
     GF(p^48)= GF(p^24)[s] / (s^2 + z).
 ]]></artwork>
         <t>The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 
-and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.</t>
-        <t>We then give the parameters for BLS48-581 as follows.</t>
+and E': y^2 = x^3 - 1 / w. BLS48_581 is categorized as D-type.</t>
+        <t>We then give the parameters for BLS48_581 as follows.</t>
         <ul spacing="normal">
           <li>
             <t>G_1 is the largest prime-order subgroup of E(GF(p))
@@ -1114,7 +1114,7 @@ Implementers who will newly develop pairing-based cryptography applications SHOU
 As of 2020, as far as we've investigated the top cryptographic conferences in the past, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS.
 </t>
       <t>BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level <xref target="BD18" format="default"/>.
-Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <xref target="BD18" format="default"/> <xref target="GMT19" format="default"/>.
+Note that the security level of BLS12_381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <xref target="BD18" format="default"/> <xref target="GMT19" format="default"/>.
 </t>
       <t> BN254 is used in most of the existing implementations as shown in <xref target="impl" format="default"/> ( and <xref target="adoption_status_100bit_security" format="default"/>), however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.
 </t>      
@@ -1615,7 +1615,7 @@ The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorb
             <date year="2016"/>
           </front>
         </reference>
-        <reference anchor="BLS12-381" target="https://electriccoin.co/blog/new-snark-curve/">
+        <reference anchor="BLS12_381" target="https://electriccoin.co/blog/new-snark-curve/">
           <front>
             <title>BLS12-381: New zk-SNARK Elliptic Curve Construction</title>
             <author initials="S." surname="Bowe">
@@ -2115,15 +2115,15 @@ It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that th
 
     <section anchor="test-vectors-of-optimal-ate-pairing" numbered="true" toc="default">
       <name>Test Vectors of Optimal Ate Pairing</name>
-      <t>We provide test vectors for Optimal Ate Pairing e(P, Q) given in <xref target="comp_pairing" format="default"/> for the curves BLS12-381, BN462 and BLS48-581 given in <xref target="secure_params" format="default"/>.
+      <t>We provide test vectors for Optimal Ate Pairing e(P, Q) given in <xref target="comp_pairing" format="default"/> for the curves BLS12_381, BN462 and BLS48_581 given in <xref target="secure_params" format="default"/>.
 Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <xref target="secure_params" format="default"/>.</t>
-      <t>For BLS12-381 and BN462, Q = (x', y') is given by</t>
+      <t>For BLS12_381 and BN462, Q = (x', y') is given by</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
     x' = x'_0 + x'_1 * u and
     y' = y'_0 + y'_1 * u,
 ]]></artwork>
       <t>where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).</t>
-      <t>For BLS48-581, Q = (x', y') is given by</t>
+      <t>For BLS48_581, Q = (x', y') is given by</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
     x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v 
         + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and 
@@ -2133,7 +2133,7 @@ Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points B
       <t>where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p).
 The representation of Q = (x', y') given below is followed by <xref target="I-D.ietf-lwig-curve-representations" format="default"/>.</t>
 
-      <t>BLS12-381:</t>
+      <t>BLS12_381:</t>
       <dl newline="false" spacing="normal">
         <dt>Input x value:</dt>
         <dd>
@@ -2286,7 +2286,7 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
   </dd>
       </dl>
 
-      <t>BLS48-581:</t>
+      <t>BLS48_581:</t>
       <dl newline="false" spacing="normal">
         <dt>Input x value:</dt>
         <dd>
@@ -2558,12 +2558,12 @@ The representation of Q = (x', y') given below is followed by <xref target="I-D.
     </section>
 
 <section anchor="zcash_rep_bls12_381" numbered="true" toc="default">
-      <name>ZCash serialization format for BLS12-381</name>
+      <name>ZCash serialization format for BLS12_381</name>
 <t>
 This section describes the serialization format defined by <xref target="ZCashRep" format="default"/>.
 It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers.
-This format applies to points on the BLS12-381 elliptic curves E and E',
-whose parameters are given in <xref target="parameter-BLS12-381" format="default"/>.
+This format applies to points on the BLS12_381 elliptic curves E and E',
+whose parameters are given in <xref target="parameter-BLS12_381" format="default"/>.
 Note that this serialization method is based on the representation shown in <xref target="SEC1" format="default"/> and it is a tiny tweak so as to apply to GF(p^m).
 </t>
 <t>
