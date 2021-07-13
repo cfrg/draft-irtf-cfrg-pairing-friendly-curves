@@ -2073,10 +2073,12 @@ It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that th
     if (c_L = -1)
         T := -T;
     end if
-    for i = L-1 to 0
-        f := f^2 * Line_function(T, T, P); T := 2 * T;
-        if (c_i = 1 | c_i = -1)
-            f := f * Line_function(T, c_i * Q); T := T + c_i * Q;
+    for i = L-1 downto 0
+        f := f^2 * Line_function(T, T, P); T := T + T;
+        if (c_i = 1)
+            f := f * Line_function(T, Q, P); T := T + Q;
+        else if (c_i = -1)
+            f := f * Line_function(T, -Q, P); T := T - Q;
         end if
     end for
     Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
@@ -2097,10 +2099,12 @@ It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that th
     if (c_L = -1)
         T := -T;
     end if
-    for i = L-1 to 0
-        f := f^2 * Line_function(T, T, P); T := 2 * T;
-        if (c_i = 1 | c_i = -1)
-            f := f * Line_function(T, c_i * Q, P); T := T + c_i * Q;
+    for i = L-1 downto 0
+        f := f^2 * Line_function(T, T, P); T := T + T;
+        if (c_i = 1)
+            f := f * Line_function(T, Q, P); T := T + Q;
+        else if (c_i = -1)
+            f := f * Line_function(T, -Q, P); T := T - Q;
         end if
     end for
     f := f^{(p^k - 1) / r};
