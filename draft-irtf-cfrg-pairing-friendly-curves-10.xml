@@ -2049,16 +2049,16 @@ The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorb
 satisfying the properties shown in <xref target="pairing" format="default"/>, 
 we give the subfunctions used for the pairing computation.</t>
       <t>The following algorithm, Line_Function shows the computation of the line function.
-It takes A = (A[1], A[2]), B = (B[1], B[2]) in G_2, and P = ((P[1], P[2])) in G_1 as input, and outputs an element of G_T.</t>
+It takes Q_1 = (x_1, x_2), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of G_T.</t>
       <artwork name="" type="" align="left" alt=""><![CDATA[
-    if (A = B) then
-        l := (3 * A[1]^2) / (2 * A[2]);
-    else if (A = -B) then
-        return P[1] - A[1];
+    if (Q_1 = Q_2) then
+        l := (3 * x_1^2) / (2 * y_1);
+    else if (Q_1 = -Q_2) then
+        return x - x_1;
     else
-        l := (B[2] - A[2]) / (B[1] - A[1]);
+        l := (y_2 - y_1) / (x_2 - x_1);
     end if;
-    return (l * (P[1] -A[1]) + A[2] -P[2]);
+    return (l * (x - x_1) + y_1 - y);
 ]]></artwork>
       <t>When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <xref target="CLN09" format="default"/><xref target="KIK17" format="default"/>. We note that Line_function does not consider such an isomorphism.</t>
       <t>The computation of the optimal Ate pairing uses the Frobenius endomorphism.
