@@ -2088,10 +2088,10 @@ It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that th
       </section>
       <section anchor="optimal-ate-pairings-over-barreto-lynn-scott-curves" numbered="true" toc="default">
         <name>Optimal Ate Pairings over Barreto-Lynn-Scott Curves</name>
-        <t>Let c = t for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.
-The following algorithm shows the computation of optimal Ate pairing over Barreto-Lynn-Scott curves.
-It takes P in G_1, Q in G_2, a parameter c, c_0, c_1, ..., c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L), 
-and an order r as input, and outputs e(P, Q).</t>
+        <t>Let c = t for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.</t>
+        <t>The following algorithm shows the computation of the optimal Ate pairing on Barreto-Lynn-Scott curves.
+It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).</t>
+
         <artwork name="" type="" align="left" alt=""><![CDATA[
     f := 1; T := Q;
     if (c_L = -1)
