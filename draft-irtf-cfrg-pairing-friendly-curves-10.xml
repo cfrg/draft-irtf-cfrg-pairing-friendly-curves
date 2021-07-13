@@ -2132,7 +2132,7 @@ Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points B
 ]]></artwork>
       <t>where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p).
 The representation of Q = (x', y') given below is followed by <xref target="I-D.ietf-lwig-curve-representations" format="default"/>.</t>
-
+      <t>In addition, we use the notation e_i (i = 0, ..., k-1) to represent each element in e(P, Q), where the extension field that e(P, Q) belongs is constructed according to <xref target="I-D.ietf-lwig-curve-representations" format="default"/>.</t>
       <t>BLS12_381:</t>
       <dl newline="false" spacing="normal">
         <dt>Input x value:</dt>
