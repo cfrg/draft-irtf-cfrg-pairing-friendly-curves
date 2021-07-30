@@ -13,9 +13,9 @@
     <title>Pairing-Friendly Curves</title>
     <seriesInfo name="Internet-Draft" value="draft-irtf-cfrg-pairing-friendly-curves-10"/>
     <author initials="Y." surname="Sakemi" fullname="Yumi Sakemi" role="editor">
-      <organization>Lepidum</organization>
+      <organization>Infours</organization>
       <address>
-        <email>yumi.sakemi@lepidum.co.jp</email>
+        <email>yumi.sakemi@infours.co.jp</email>
       </address>
     </author>
     <author initials="T." surname="Kobayashi" fullname="Tetsutaro Kobayashi">
