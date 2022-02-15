@@ -313,7 +313,7 @@ A pairing `e` is defined by taking `G_1` as a subgroup of `E(GF(p))` of order `r
 
 ## Barreto-Lynn-Scott Curves
 
-A BLS curve [@!BLS02] is a another family of pairing-frinedly curves proposed in 2002. 
+A BLS curve [@!BLS02] is a another family of pairing-friendly curves proposed in 2002. 
 Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.
 
 A BLS curve is defined by elliptic curves `E` and `E'` parameterized by a well-chosen integer `t`. 
