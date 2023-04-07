@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Pairing-Friendly Curves</title>
+<meta content="Yumi Sakemi" name="author">
+<meta content="Riad S. Wahby" name="author">
+<meta content="
+       Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairings are special maps defined using elliptic curves and it can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. This memo defines a set of chosen curves at 128 and 256 bit security levels and describes the algorithms required to compute with them. 
+    " name="description">
+<meta content="xml2rfc 3.17.0" name="generator">
+<meta content="draft-irtf-cfrg-pairing-friendly-curves-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.17.0
+    Python 3.10.10
+    appdirs 1.4.4
+    ConfigArgParse 1.5.3
+    google-i18n-address 2.5.2
+    html5lib 1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.2
+    MarkupSafe 2.1.1
+    pycountry 22.3.5
+    PyYAML 6.0
+    requests 2.28.1
+    setuptools 65.6.0
+    six 1.16.0
+    wcwidth 0.2.6
+-->
+<link href="draft-irtf-cfrg-pairing-friendly-curves.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 8em !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">Pairing-Friendly Curves</td>
+<td class="right">April 2023</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Sakemi &amp; Wahby</td>
+<td class="center">Expires 9 October 2023</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-irtf-cfrg-pairing-friendly-curves-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2023-04-07" class="published">7 April 2023</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2023-10-09">9 October 2023</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">Y. Sakemi</div>
+<div class="org">Infours</div>
+</div>
+<div class="author">
+      <div class="author-name">R. S. Wahby</div>
+<div class="org">Stanford University</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Pairing-Friendly Curves</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairings are special maps defined using elliptic curves and it can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. This memo defines a set of chosen curves at 128 and 256 bit security levels and describes the algorithms required to compute with them.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-discussion-venues">
+<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">Discussion of this document takes place on the
+    Crypto Forum Research Group mailing list (cfrg@ietf.org),
+    which is archived at <span><a href="https://mailarchive.ietf.org/arch/search/?email_list=cfrg">https://mailarchive.ietf.org/arch/search/?email_list=cfrg</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
+    <span><a href="https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves">https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 9 October 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2023 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-pairing-based-cryptography" class="internal xref">Pairing-based Cryptography</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-motivation" class="internal xref">Motivation</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-preliminaries" class="internal xref">Preliminaries</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-elliptic-curves" class="internal xref">Elliptic Curves</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-pairings" class="internal xref">Pairings</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-barreto-naehrig-curvesbncur" class="internal xref">Barreto-Naehrig Curves{#BNCurves}</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-barreto-lynn-scott-curves" class="internal xref">Barreto-Lynn-Scott Curves</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-representation-convention-f" class="internal xref">Representation Convention for an Extension Field</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-of-pairing-friendl" class="internal xref">Security of Pairing-Friendly Curves</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-evaluating-the-security-of-" class="internal xref">Evaluating the Security of Pairing-Friendly Curves</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-impact-of-recent-attacks" class="internal xref">Impact of Recent Attacks</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-selection-of-pairing-friend" class="internal xref">Selection of Pairing-Friendly Curves</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-for-128-bit-security" class="internal xref">For 128-bit Security</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
+                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-bls-curves-for-the-128-bit-" class="internal xref">BLS Curves for the 128-bit security level (BLS12_381)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-bn-curves-for-the-128-bit-s" class="internal xref">BN Curves for the 128-bit security level (BN462)</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-for-256-bit-security" class="internal xref">For 256-bit Security</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-computing-the-optimal-ate-p" class="internal xref">Computing the Optimal Ate Pairing</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#appendix-B.1" class="auto internal xref">B.1</a>.  <a href="#name-optimal-ate-pairings-over-b" class="internal xref">Optimal Ate Pairings over Barreto-Naehrig Curves</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-optimal-ate-pairings-over-ba" class="internal xref">Optimal Ate Pairings over Barreto-Lynn-Scott Curves</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-test-vectors-of-optimal-ate" class="internal xref">Test Vectors of Optimal Ate Pairing</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref">Appendix D</a>.  <a href="#name-zcash-serialization-format-" class="internal xref">ZCash serialization format for BLS12_381{#ZCashSerial}</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-D.1" class="auto internal xref">D.1</a>.  <a href="#name-point-serialization-procedu" class="internal xref">Point Serialization Procedure</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-D.2" class="auto internal xref">D.2</a>.  <a href="#name-point-deserialization-proce" class="internal xref">Point deserialization procedure</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-E" class="auto internal xref">Appendix E</a>.  <a href="#name-adoption-status-of-pairing-" class="internal xref">Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<div id="pairing-based-cryptography">
+<section id="section-1.1">
+        <h3 id="name-pairing-based-cryptography">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-pairing-based-cryptography" class="section-name selfRef">Pairing-based Cryptography</a>
+        </h3>
+<p id="section-1.1-1">Elliptic curve cryptography is an important area in currently deployed cryptography. The cryptographic algorithms based on elliptic curve cryptography, such as the Elliptic Curve Digital Signature Algorithm (ECDSA), are widely used in many applications.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Pairing-based cryptography, a subfield of elliptic curve cryptography, has attracted much attention due to its flexible and practical functionality. Pairings are special maps defined using elliptic curves. Pairings are fundamental in the construction of several cryptographic algorithms and protocols such as identity-based encryption (IBE), attribute-based encryption (ABE), authenticated key exchange (AKE), short signatures, and so on. Several applications of pairing-based cryptography are currently in practical use.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">As the importance of pairings grows, elliptic curves where pairings are efficiently computable are studied and the special curves called pairing-friendly curves are proposed.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="motivation">
+<section id="section-1.2">
+        <h3 id="name-motivation">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-motivation" class="section-name selfRef">Motivation</a>
+        </h3>
+<p id="section-1.2-1">Several applications using pairing-based cryptography have already been standardized and deployed.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">IETF published RFCs for pairing-based cryptography such as Identity-Based Cryptography <span>[<a href="#RFC5091" class="cite xref">RFC5091</a>]</span>, Sakai-Kasahara Key Encryption (SAKKE) <span>[<a href="#RFC6508" class="cite xref">RFC6508</a>]</span>, and Identity-Based Authenticated Key Exchange (IBAKE) <span>[<a href="#RFC6539" class="cite xref">RFC6539</a>]</span>. SAKKE is applied to Multimedia Internet KEYing (MIKEY) <span>[<a href="#RFC6509" class="cite xref">RFC6509</a>]</span> and used in 3GPP <span>[<a href="#SAKKE" class="cite xref">SAKKE</a>]</span>.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">Pairing-based key agreement protocols are standardized in ISO/IEC <span>[<a href="#ISOIEC11770-3" class="cite xref">ISOIEC11770-3</a>]</span>. In <span>[<a href="#ISOIEC11770-3" class="cite xref">ISOIEC11770-3</a>]</span>, a key agreement scheme by Joux <span>[<a href="#Joux00" class="cite xref">Joux00</a>]</span>, identity-based key agreement schemes by Smart-Chen-Cheng <span>[<a href="#CCS07" class="cite xref">CCS07</a>]</span> and Fujioka-Suzuki-Ustaoglu <span>[<a href="#FSU10" class="cite xref">FSU10</a>]</span> are specified.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">The Trusted Computing Group (TCG) specified the Elliptic Curve Direct Anonymous Attestation (ECDAA) in the specification of a Trusted Platform Module (TPM) <span>[<a href="#TPM" class="cite xref">TPM</a>]</span>. ECDAA is a protocol for proving the attestation held by a TPM to a verifier without revealing the attestation held by that TPM. Pairings are used in the construction of ECDAA. FIDO Alliance <span>[<a href="#FIDO" class="cite xref">FIDO</a>]</span> and W3C <span>[<a href="#W3C" class="cite xref">W3C</a>]</span> also published an ECDAA algorithm similar to TCG.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">Zcash implemented their own zero-knowledge proof algorithm named Zero-Knowledge Succinct Non-Interactive Argument of Knowledge (zk-SNARKs) <span>[<a href="#Zcash" class="cite xref">Zcash</a>]</span>. zk-SNARKs are used for protecting the privacy of transactions of Zcash. They use pairings to construct zk-SNARKs.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being specified <span>[<a href="#I-D.irtf-cfrg-bls-signature" class="cite xref">I-D.irtf-cfrg-bls-signature</a>]</span>.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-2">
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      </h2>
+<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="preliminaries">
+<section id="section-3">
+      <h2 id="name-preliminaries">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-preliminaries" class="section-name selfRef">Preliminaries</a>
+      </h2>
+<div id="elliptic-curves">
+<section id="section-3.1">
+        <h3 id="name-elliptic-curves">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-elliptic-curves" class="section-name selfRef">Elliptic Curves</a>
+        </h3>
+<p id="section-3.1-1">Let <code>p</code> be a prime number and <code>q = p^n</code> for a natural number <code>n</code> &gt; 0, where <code>p</code> at least 5. Let <code>GF(q)</code> be a finite field. The curve defined by the following equation E is called an elliptic curve:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2"><code>
+   E : y^2 = x^3 + a * x + b,
+</code><a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">and <code>a</code> and <code>b</code> in <code>GF(q)</code> satisfy the discriminant inequality <code>4 * a^3 + 27 * b^2 != 0 mod q</code>.
+This is called the Weierstrass normal form of an elliptic curve.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">A solution <code>(x,y)</code> to the equation <code>E</code> can be thought of as a point on the corresponding curve.
+For a natural number <code>k</code>, we define the set of <code>(GF(q^k))</code>-rational points of <code>E</code>,
+denoted by <code>E(GF(q^k))</code>, to be the set of all solutions <code>(x,y)</code> in <code>GF(q^k)</code>, together with a 'point at infinity' <code>O_E</code>, which is defined to lie on every vertical line passing through the curve <code>E</code>.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">The set <code>E(GF(q^k))</code> forms a group under a group law that can be defined geometrically as follows.
+For <code>P</code> and <code>Q</code> in <code>E(GF(q^k))</code> define <code>P + Q</code> to be the reflection around the <code>x</code>-axis of the unique third point <code>R</code> of intersection of the straight line passing through <code>P</code> and <code>Q</code> with the curve <code>E</code>.
+If the straight line is tangent to <code>E</code>, we say that it passes through that point twice.
+The identity of this group is the point at infinity <code>O_E</code>. We also define scalar multiplication <code>[K]</code>P for a positive integer <code>K</code> as the point <code>P</code> added to itself <code>(K-1)</code> times. Here, <code>[0]</code>P becomes the point at infinity <code>O_E</code> and the relation <code>[-K]</code>P = -<code>([K]P)</code> is satisfied.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="pairings">
+<section id="section-3.2">
+        <h3 id="name-pairings">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-pairings" class="section-name selfRef">Pairings</a>
+        </h3>
+<p id="section-3.2-1">A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve. Examples include the Weil pairing,
+the Tate pairing, the optimal Ate pairing <span>[<a href="#Ver09" class="cite xref">Ver09</a>]</span>, and so on.
+The optimal Ate pairing is considered to be the most efficient to compute and is the one that is most commonly used for practical implementation.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">Let E be an elliptic curve defined over a prime field <code>GF(p)</code>.
+Let k be the minimum integer for which r is a divisor of <code>p^k - 1</code>; this is called the embedding degree of E over <code>GF(p)</code>.
+Let <code>G_1</code> be a cyclic subgroup of <code>E(GF(p))</code> of order r, there also exists a cyclic subgroup of <code>E(GF(p^k))</code> of order <code>r</code>, define this to be <code>G_2</code>.
+Let <code>d</code> be a divisor of <code>k</code> and <code>E'</code> be an elliptic curve defined over <code>GF(p^(k/d))</code>.
+If an isomorphism from <code>E'</code> to <code>E(GF(p^k))</code> exists, then <code>E'</code> is called the twist of <code>E</code>.
+It can sometimes be convenient for efficiency to do the computations of <code>G_2</code> in the twist <code>E'</code>, and so consider <code>G_2</code> to instead be a subgroup of <code>E'</code>.
+Let <code>G_T</code> be an order <code>r</code> subgroup of the multiplicative group <code>(GF(p^k))^*</code>; this exists by definition of <code>k</code>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">A pairing is defined as a bilinear map <code>e</code>: <code>(G_1, G_2)</code> -&gt; <code>G_T</code> satisfying the following properties:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.2-4">
+<li id="section-3.2-4.1">Bilinearity: for any <code>S</code> in <code>G_1</code>, <code>T</code> in <code>G_2</code>, and integers <code>K</code> and <code>L</code>, <code>e([K]S, [L]T)</code> = <code>e(S, T)</code>^<code>{K * L}</code>.<a href="#section-3.2-4.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-3.2-4.2">Non-degeneracy: for any <code>T</code> in <code>G_2</code>, <code>e(S, T)</code> = 1 if and only if <code>S</code> = <code>O_E</code>.
+ Similarly, for any <code>S</code> in <code>G_1</code>, <code>e(S, T)</code> = 1 if and only if <code>T</code> =<code> O_E</code>.<a href="#section-3.2-4.2" class="pilcrow">¶</a>
+</li>
+        </ol>
+<p id="section-3.2-5">In applications, it is also necessary that for any <code>S</code> in <code>G_1</code> and <code>T</code> in <code>G_2</code>, this bilinear map is efficiently computable.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.2-6">We define some of the terminology used in this memo as follows:<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2-7.1">
+            <code>GF(p)</code>: a finite field with characteristic <code>p</code>.<a href="#section-3.2-7.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.2">
+            <code>GF(p^k)</code>: an extension field of degree <code>k</code>.<a href="#section-3.2-7.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.3">
+            <code>(GF(p))*</code>: a multiplicative group of <code>GF(p)</code>.<a href="#section-3.2-7.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.4">
+            <code>(GF(p^k))*</code>: a multiplicative group of <code>GF(p^k)</code>.<a href="#section-3.2-7.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.5">
+            <code>b</code>: a primitive element of the multiplicative group <code>(GF(p))^*</code>.<a href="#section-3.2-7.5" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.6">
+            <code>O_E</code>: the point at infinity over an elliptic curve <code>E</code>.<a href="#section-3.2-7.6" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.7">
+            <code>E(GF(p^k))</code>: the group of <code>GF(p^k)</code>-rational points of <code>E</code>.<a href="#section-3.2-7.7" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.8">
+            <code>#E(GF(p^k))</code>: the number of <code>GF(p^k)</code>-rational points of <code>E</code>.<a href="#section-3.2-7.8" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.9">
+            <code>r</code>: the order of <code>G_1</code> and <code>G_2</code>.<a href="#section-3.2-7.9" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.10">
+            <code>BP</code>: a point in <code>G_1</code>. (The 'base point' of a cyclic subgroup of <code>G_1</code>)<a href="#section-3.2-7.10" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.2-7.11">
+            <code>h</code>: the cofactor <code>h</code> = <code>#E(GF(p))</code> / <code>r</code>, where <code>gcd(h, r)=1</code>.<a href="#section-3.2-7.11" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="barreto-naehrig-curvesbncurves">
+<section id="section-3.3">
+        <h3 id="name-barreto-naehrig-curvesbncur">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-barreto-naehrig-curvesbncur" class="section-name selfRef">Barreto-Naehrig Curves{#BNCurves}</a>
+        </h3>
+<p id="section-3.3-1">A BN curve <span>[<a href="#BN05" class="cite xref">BN05</a>]</span> is a family of pairing-friendly curves proposed in 2005.
+A pairing over BN curves constructs optimal Ate pairings.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">A BN curve is defined by elliptic curves <code>E</code> and <code>E'</code> parameterized by a well-chosen integer <code>t</code>.
+<code>E</code> is defined over <code>GF(p)</code>, where <code>p</code> is a prime number and at least 5, and <code>E(GF(p))</code> has a subgroup of prime order <code>r</code>.
+The characteristic <code>p</code> and the order <code>r</code> are parameterized by<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-3"><code>
+    p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
+    r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
+</code><a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.3-4">for an integer <code>t</code>.<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.3-5">The elliptic curve <code>E</code> has an equation of the form <code>E</code>: <code>y^2 = x^3 + b</code>, where <code>b</code> is a primitive element of the multiplicative group <code>(GF(p))^*</code> of order <code>(p - 1)</code>.<a href="#section-3.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.3-6">In the case of BN curves, we can use twists of the degree 6.
+If m is an element that is neither a square nor a cube in an extension field <code>GF(p^2)</code>, the twist <code>E'</code> of <code>E</code> is defined over an extension field <code>GF(p^2)</code> by the equation <code>E'</code>: <code>y^2 = x^3 + b'</code> with <code>b' = b / m</code> or <code>b'</code> = <code>b * m</code>.
+BN curves are called <code>D</code>-type if <code>b'</code> = <code>b / m</code>, and <code>M</code>-type if <code>b'</code> = <code>b * m</code>. The embedding degree <code>k</code> is 12.<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<p id="section-3.3-7">A pairing <code>e</code> is defined by taking <code>G_1</code> as a subgroup of <code>E(GF(p))</code> of order <code>r</code>, <code>G_2</code> as a subgroup of <code>E'(GF(p^2))</code>, and <code>G_T</code> as a subgroup of a multiplicative group <code>(GF(p^12))^*</code> of order <code>r</code>.<a href="#section-3.3-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="barreto-lynn-scott-curves">
+<section id="section-3.4">
+        <h3 id="name-barreto-lynn-scott-curves">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-barreto-lynn-scott-curves" class="section-name selfRef">Barreto-Lynn-Scott Curves</a>
+        </h3>
+<p id="section-3.4-1">A BLS curve <span>[<a href="#BLS02" class="cite xref">BLS02</a>]</span> is a another family of pairing-frinedly curves proposed in 2002.
+Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">A BLS curve is defined by elliptic curves <code>E</code> and <code>E'</code> parameterized by a well-chosen integer <code>t</code>.
+<code>E</code> is defined over a finite field <code>GF(p)</code> by an equation of the form <code>E</code>: <code>y^2 = x^3 + b</code>, and its twist <code>E'</code>: <code>y^2 = x^3 + b'</code>, is defined in the same way as BN curves.
+In contrast to BN curves, <code>E(GF(p))</code> does not have a prime order.
+Instead, its order is divisible by a large parameterized prime <code>r</code> and denoted by <code>h * r</code> with cofactor <code>h</code>.
+The pairing is defined on the <code>r</code>-torsion points. In the same way as BN curves, BLS curves can be categorized as <code>D</code>-type and <code>M</code>-type.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-3">BLS curves vary in accordance with different embedding degrees. In this memo, we deal with the BLS12 and BLS48 families with embedding degrees 12 and 48 with respect to <code>r</code>, respectively.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+<p id="section-3.4-4">In BLS curves, parameters <code>p</code> and <code>r</code> are given by the following equations:<a href="#section-3.4-4" class="pilcrow">¶</a></p>
+<p id="section-3.4-5"><code>
+   BLS12:
+       p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
+       r = t^4 - t^2 + 1
+   BLS48:
+       p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
+       r = t^16 - t^8 + 1
+</code><a href="#section-3.4-5" class="pilcrow">¶</a></p>
+<p id="section-3.4-6">for a well chosen integer <code>t</code> where <code>t</code> must be 1 <code>(mod 3)</code>.<a href="#section-3.4-6" class="pilcrow">¶</a></p>
+<p id="section-3.4-7">A pairing <code>e</code> is defined by taking <code>G_1</code> as a subgroup of <code>E(GF(p))</code> of order <code>r</code>, <code>G_2</code> as an order <code>r</code> subgroup of <code>E'(GF(p^2))</code> for BLS12 and of <code>E'(GF(p^8))</code> for BLS48, and <code>G_T</code> as an order <code>r</code> subgroup of a multiplicative group <code>(GF(p^12))^*</code> for BLS12 and of a multiplicative group <code>(GF(p^48))^*</code> for BLS48.<a href="#section-3.4-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="RepConv">
+<section id="section-3.5">
+        <h3 id="name-representation-convention-f">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-representation-convention-f" class="section-name selfRef">Representation Convention for an Extension Field</a>
+        </h3>
+<p id="section-3.5-1">Pairing-friendly curves use a tower of some extension fields. In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span> as a standard and effective method.
+Note that the big-endian encoding is used for an element in <code>GF(p)</code> which follows to mcl <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, ISO/IEC 15946-5 <span>[<a href="#ISOIEC15946-5" class="cite xref">ISOIEC15946-5</a>]</span> and etc.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-2">Let <code>GF(p)</code> be a finite field of characteristic <code>p</code> and <code>GF(p^d)</code> = <code>GF(p)(i)</code> be an extension field of <code>GF(p)</code> of degree <code>d</code>.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
+<p id="section-3.5-3">For an element <code>s</code> in <code>GF(p^d)</code> such that <code>s</code> = <code>s_0 + s_1 * i + ... + s_{d - 1} *  i^{d - 1}</code> where <code>s_0, s_1, ... , s_{d - 1}</code> in the basefield <code>GF(p)</code>, <code>s</code> is represented as octet string by <code>oct(s)</code> = <code>s_0 || s_1 || ... || s_{d - 1}</code>.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.5-4">Let <code>GF(p^d')</code> = <code>GF(p^d)(j)</code> be an extension field of <code>GF(p^d)</code> of degree <code>d' / d</code>.<a href="#section-3.5-4" class="pilcrow">¶</a></p>
+<p id="section-3.5-5">For an element <code>s'</code> in <code>GF(p^d')</code> such that <code>s'</code> = <code>s'_0 + s'_1 * j + ... + s'_{d' / d - 1} * j^{d' / d - 1}</code> where <code>s'_0, s'_1, ..., s'_{d' / d - 1}</code> in the basefield <code>GF(p^d)</code>, <code>s'</code> is represented as integer by <code>oct(s')</code> = <code>oct(s'_0) || oct(s'_1) || ... || oct(s'_{d' / d - 1})</code>, where <code>oct(s'_0), ... , oct(s'_{d' / d - 1})</code> are octet strings encoded by above convention.<a href="#section-3.5-5" class="pilcrow">¶</a></p>
+<p id="section-3.5-6">In general, one can define encoding between integer and an element of any finite field tower by inductively applying the above convention.<a href="#section-3.5-6" class="pilcrow">¶</a></p>
+<p id="section-3.5-7">The parameters and test vectors of extension fields described in this memo are encoded by this convention and represented in an octet stream.<a href="#section-3.5-7" class="pilcrow">¶</a></p>
+<p id="section-3.5-8">When applications communicate elements in an extension field, using the compression method <span>[<a href="#MP04" class="cite xref">MP04</a>]</span> may be more effective. In that case, care for interoperability must be taken.<a href="#section-3.5-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="security-of-pairing-friendly-curves">
+<section id="section-4">
+      <h2 id="name-security-of-pairing-friendl">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-of-pairing-friendl" class="section-name selfRef">Security of Pairing-Friendly Curves</a>
+      </h2>
+<div id="evaluating-the-security-of-pairing-friendly-curves">
+<section id="section-4.1">
+        <h3 id="name-evaluating-the-security-of-">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-evaluating-the-security-of-" class="section-name selfRef">Evaluating the Security of Pairing-Friendly Curves</a>
+        </h3>
+<p id="section-4.1-1">The security of pairing-friendly curves is evaluated by the hardness of the following discrete logarithm problems:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.1-2.1">The elliptic curve discrete logarithm problem (ECDLP) in <code>G_1</code> and <code>G_2</code><a href="#section-4.1-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.1-2.2">The finite field discrete logarithm problem (FFDLP) in <code>G_T</code><a href="#section-4.1-2.2" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-4.1-3">There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography.
+Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, the bilinear Diffie-Hellman (BDH) problem, the decision bilinear Diffie-Hellman (DBDH) problem, the gap DBDH problem, etc. Almost all of these variants are reduced to the hardness of discrete logarithm problems described above and are believed to be easier than the discrete logarithm problems.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1-4">Although it would be sufficient to attack any of these problems to attack pairing-based crytography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.1-5">The security levels of pairing-friendly curves are estimated by the computational cost of the most efficient algorithm for solving the above discrete logarithm problems.
+The best-known algorithms for solving the discrete logarithm problems are based on Pollard's rho algorithm <span>[<a href="#Pollard78" class="cite xref">Pollard78</a>]</span> and Index Calculus <span>[<a href="#HR83" class="cite xref">HR83</a>]</span>.
+To make index calculus algorithms more efficient, number field sieve (NFS) algorithms are utilized.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="impact-of-recent-attacks">
+<section id="section-4.2">
+        <h3 id="name-impact-of-recent-attacks">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-impact-of-recent-attacks" class="section-name selfRef">Impact of Recent Attacks</a>
+        </h3>
+<p id="section-4.2-1">In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>.
+The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in <code>GF(p^k)</code>.
+The idea is applicable when the embedding degree <code>k</code> is a composite that satisfies <code>k</code> = <code>i * j (gcd (i, j)</code> = 1, <code>i</code>, <code>j&gt; 1</code>).
+Since the above condition is satisfied especially when <code>k</code> = <code>2^n*3^m (n, m&gt; 1)</code>, BN curves and BLS curves whose embedding degree is divisible by 6 are affected by the exTNFS.
+The basic idea of the exTNFS is based on the equality <code>GF(p^k)</code> = <code>(GF(p^i)^j)</code> and one of the improvement for reducing the amount of cost for solving FFDLP is using sub-field calculation.
+Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of exTNFS.
+Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down, creating the need for new parameter selection.
+For instance, Barbulescu and Duquesne estimated that the security of the widely used BN256 curve was reduced to approximately 100 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="selection_pfc">
+<section id="section-5">
+      <h2 id="name-selection-of-pairing-friend">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-selection-of-pairing-friend" class="section-name selfRef">Selection of Pairing-Friendly Curves</a>
+      </h2>
+<p id="section-5-1">We recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. These curves are implemented widely and secure to known attacks.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="for-128-bit-security">
+<section id="section-5.1">
+        <h3 id="name-for-128-bit-security">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-for-128-bit-security" class="section-name selfRef">For 128-bit Security</a>
+        </h3>
+<p id="section-5.1-1">BLS12_381 and BN462 match our selection policy aspect of pairing-friendly curves for 128-bit security.
+Especially, the one that best matches the policy is BLS12_381 from the viewpoint of "widely used" and "efficiency", so we introduce the parameters of BLS12_381 in this memo.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced.
+As shown in recent security evaluations for BLS12_381 <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, its security level close to 128-bit but it is less than 128-bit.
+If the attack is improved even a little, BLS12_381 will not be suitable for the curve of the 128-bit security level.
+As curves of 128-bit security level are currently the most widely used, we recommend both BLS12_381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<div id="BLS12_381">
+<section id="section-5.1.1">
+          <h4 id="name-bls-curves-for-the-128-bit-">
+<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-bls-curves-for-the-128-bit-" class="section-name selfRef">BLS Curves for the 128-bit security level (BLS12_381)</a>
+          </h4>
+<p id="section-5.1.1-1">In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of embedding degree 12 with 381-bit <code>p</code> that is adopted by a lot of applications such as Zcash <span>[<a href="#Zcash" class="cite xref">Zcash</a>]</span>, Ethereum <span>[<a href="#Ethereum" class="cite xref">Ethereum</a>]</span>, and so on.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-2">The BLS12_381 curve is shown in <span>[<a href="#BLS12-381" class="cite xref">BLS12-381</a>]</span> and it is defined by the parameter<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-3"><code>
+    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
+</code><a href="#section-5.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-4">where the size of <code>p</code> becomes 381-bit length.<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-5">For the finite field <code>GF(p)</code>, the towers of extension field <code>GF(p^2)</code>, <code>GF(p^6)</code> and <code>GF(p^12)</code> are defined by indeterminates <code>u</code>, <code>v</code>, and <code>w</code> as follows:<a href="#section-5.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-6"><code>
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
+    GF(p^12) = GF(p^6)[w] / (w^2 - v).
+</code><a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-7">Defined by <code>t</code>, the elliptic curve <code>E</code> and its twist <code>E'</code> are represented by <code>E</code>: <code>y^2 = x^3 + 4</code> and <code>E'</code>: <code>y^2 = x^3 + 4(u + 1)</code>.
+BLS12_381 is categorized as M-type.<a href="#section-5.1.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-8">We have to note that the security level of this pairing is expected to be 126 rather than 128 bits <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>.<a href="#section-5.1.1-8" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-9">Parameters of BLS12_381 are given as follows.<a href="#section-5.1.1-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.1-10.1">
+              <p id="section-5.1.1-10.1.1"><code>G_1</code> is the largest prime-order subgroup of <code>E(GF(p))</code><a href="#section-5.1.1-10.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.1-10.1.2.1">
+                  <code>BP</code> = <code>(x,y)</code> : a 'base point', i.e., a generator of <code>G_1</code><a href="#section-5.1.1-10.1.2.1" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-5.1.1-10.2">
+              <p id="section-5.1.1-10.2.1"><code>G_2</code> is an <code>r</code>-order subgroup of <code>E'(GF(p^2))</code><a href="#section-5.1.1-10.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.1-10.2.2.1">
+                  <code>BP'</code> = <code>(x',y')</code> : a 'base point', i.e., a generator of <code>G_2</code> (encoded with <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>)<a href="#section-5.1.1-10.2.2.1" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-5.1.1-10.3">
+              <code>x'</code> = <code>x'_0 + x'_1 * u (x'_0</code>, <code>x'_1</code> in <code>GF(p)</code>)<a href="#section-5.1.1-10.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.4">
+              <code>y'</code> = <code>y'_0 + y'_1 * u (y'_0</code>, <code>y'_1</code> in <code>GF(p)</code>)<a href="#section-5.1.1-10.4" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.5">
+              <code>h'</code> : the cofactor <code>#E'(GF(p^2))/r</code><a href="#section-5.1.1-10.5" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.6">
+              <code>p</code> : <code>0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab</code><a href="#section-5.1.1-10.6" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.7">
+              <code>r</code>: <code>0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001</code><a href="#section-5.1.1-10.7" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.8">
+              <code>x</code>: <code>0x17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac586c55e83ff97a1aeffb3af00adb22c6bb</code><a href="#section-5.1.1-10.8" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.9">
+              <code>y</code>: <code>0x08b3f481e3aaa0f1a09e30ed741d8ae4fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1</code><a href="#section-5.1.1-10.9" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.10">
+              <code>h</code>: <code>0x396c8c005555e1568c00aaab0000aaab</code><a href="#section-5.1.1-10.10" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.11">
+              <code>b</code>: 4<a href="#section-5.1.1-10.11" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.12">
+              <code>x'_0</code>: <code>0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8</code><a href="#section-5.1.1-10.12" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.13">
+              <code>x'_1</code>: <code>0x13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e</code><a href="#section-5.1.1-10.13" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.14">
+              <code>y'_0</code>: <code>0x0ce5d527727d6e118cc9cdc6da2e351aadfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801</code><a href="#section-5.1.1-10.14" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.15">
+              <code>y'_1</code>: <code>0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be</code><a href="#section-5.1.1-10.15" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.16">
+              <code>h'</code>: <code>0x5d543a95414e7f1091d50792876a202cd91de4547085abaa68a205b2e5a7ddfa628f1cb4d9e82ef21537e293a6691ae1616ec6e786f0c70cf1c38e31c7238e5</code><a href="#section-5.1.1-10.16" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.1-10.17">
+              <code>b'</code>: <code>4 * (u + 1)</code><a href="#section-5.1.1-10.17" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-5.1.1-11">As mentioned above, BLS12_381 is adopted in a lot of applications.
+Since it is expected that BLS12_381 will continue to be widely used more and more in the future, (#ZCashSerial) shows the serialization format of points on an elliptic curve as useful information.
+This serialization format is also adopted in <span>[<a href="#I-D.irtf-cfrg-bls-signature" class="cite xref">I-D.irtf-cfrg-bls-signature</a>]</span>.<a href="#section-5.1.1-11" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-12">In addition, many pairing-based cryptographic applications use a hashing to an elliptic curve procedure that outputs a rational point on an elliptic curve from an arbitrary input.
+A standard specification of ciphersuites for a hashing to an elliptic curve, including BLS12_381, is under discussion in the IETF <span>[<a href="#I-D.irtf-cfrg-hash-to-curve" class="cite xref">I-D.irtf-cfrg-hash-to-curve</a>]</span> and it will be valuable information for implementers.<a href="#section-5.1.1-12" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="bn-curves-for-the-128-bit-security-level-bn462">
+<section id="section-5.1.2">
+          <h4 id="name-bn-curves-for-the-128-bit-s">
+<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-bn-curves-for-the-128-bit-s" class="section-name selfRef">BN Curves for the 128-bit security level (BN462)</a>
+          </h4>
+<p id="section-5.1.2-1">A BN curve with the 128-bit security level is shown in <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>, which we call BN462. BN462 is defined by the parameter<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-2"><code>
+    t = 2^114 + 2^101 - 2^14 - 1
+</code><a href="#section-5.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-3">for the definition in (#BNCurves).<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-4">For the finite field <code>GF(p)</code>, the towers of extension field <code>GF(p^2)</code>, <code>GF(p^6)</code> and <code>GF(p^12)</code> are defined by indeterminates <code>u</code>, <code>v</code>, and <code>w</code> as follows:<a href="#section-5.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-5"><code>
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
+    GF(p^12) = GF(p^6)[w] / (w^2 - v).
+</code><a href="#section-5.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-6">Defined by <code>t</code>, the elliptic curve <code>E</code> and its twist <code>E'</code> are represented by <code>E</code>: <code>y^2 = x^3 + 5</code> and <code>E'</code>: <code>y^2 = x^3 - u + 2</code>, respectively.
+The size of <code>p</code> becomes 462-bit length. BN462 is categorized as D-type.<a href="#section-5.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-7">We have to note that BN462 is significantly slower than BLS12_381, but has 134-bit security level <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, so may be more resistant to future small improvements to the exTNFS attack.<a href="#section-5.1.2-7" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-8">We note also that CP8_544 is about 20% faster that BN462 <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, has 131-bit security level, and that due to its construction will not be affected by future small improvements to the exTNFS attack.
+However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.<a href="#section-5.1.2-8" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-9">We give the following parameters for BN462.<a href="#section-5.1.2-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.2-10.1">
+              <p id="section-5.1.2-10.1.1"><code>G_1</code> is the largest prime-order subgroup of <code>E(GF(p))</code><a href="#section-5.1.2-10.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.2-10.1.2.1">
+                  <code>BP</code> = <code>(x,y)</code> : a 'base point', i.e., a generator of <code>G_1</code><a href="#section-5.1.2-10.1.2.1" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-5.1.2-10.2">
+              <p id="section-5.1.2-10.2.1"><code>G_2</code> is an <code>r</code>-order subgroup of <code>E'(GF(p^2))</code><a href="#section-5.1.2-10.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1.2-10.2.2.1">
+                  <code>BP'</code> = <code>(x',y')</code> : a 'base point', i.e., a generator of <code>G_2</code> (encoded with <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>)<a href="#section-5.1.2-10.2.2.1" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-5.1.2-10.3">
+              <code>x'</code> = <code>x'_0 + x'_1 * u</code> (<code>x'_0</code>, <code>x'_1</code> in <code>GF(p)</code>)<a href="#section-5.1.2-10.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.4">
+              <code>y'</code> = <code>y'_0 + y'_1 * u</code> (<code>y'_0</code>, <code>y'_1</code> in <code>GF(p)</code>)<a href="#section-5.1.2-10.4" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.5">
+              <code>h'</code> : the cofactor <code>#E'(GF(p^2))/r</code><a href="#section-5.1.2-10.5" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.6">
+              <code>p</code>: <code>0x240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908f41c8020ffffffffff6ff66fc6ff687f640000000002401b00840138013</code><a href="#section-5.1.2-10.6" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.7">
+              <code>r</code>: <code>0x240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908ee1c201f7fffffffff6ff66fc7bf717f7c0000000002401b007e010800d</code><a href="#section-5.1.2-10.7" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.8">
+              <code>x</code>: <code>0x21a6d67ef250191fadba34a0a30160b9ac9264b6f95f63b3edbec3cf4b2e689db1bbb4e69a416a0b1e79239c0372e5cd70113c98d91f36b6980d</code><a href="#section-5.1.2-10.8" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.9">
+              <code>y</code>: <code>0x0118ea0460f7f7abb82b33676a7432a490eeda842cccfa7d788c659650426e6af77df11b8ae40eb80f475432c66600622ecaa8a5734d36fb03de</code><a href="#section-5.1.2-10.9" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.10">
+              <code>h</code>: 1<a href="#section-5.1.2-10.10" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.11">
+              <code>b</code>: 5<a href="#section-5.1.2-10.11" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.12">
+              <code>x'_0</code>: <code>0x0257ccc85b58dda0dfb38e3a8cbdc5482e0337e7c1cd96ed61c913820408208f9ad2699bad92e0032ae1f0aa6a8b48807695468e3d934ae1e4df</code><a href="#section-5.1.2-10.12" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.13">
+              <code>x'_1</code>: <code>0x1d2e4343e8599102af8edca849566ba3c98e2a354730cbed9176884058b18134dd86bae555b783718f50af8b59bf7e850e9b73108ba6aa8cd283</code><a href="#section-5.1.2-10.13" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.14">
+              <code>y'_0</code>: <code>0x0a0650439da22c1979517427a20809eca035634706e23c3fa7a6bb42fe810f1399a1f41c9ddae32e03695a140e7b11d7c3376e5b68df0db7154e</code><a href="#section-5.1.2-10.14" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.15">
+              <code>y'_1</code>: <code>0x073ef0cbd438cbe0172c8ae37306324d44d5e6b0c69ac57b393f1ab370fd725cc647692444a04ef87387aa68d53743493b9eba14cc552ca2a93a</code><a href="#section-5.1.2-10.15" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.16">
+              <code>h'</code>: <code>0x240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908fa1ce0227fffffffff6ff66fc63f5f7f4c0000000002401b008a0168019</code><a href="#section-5.1.2-10.16" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-10.17">
+              <code>b'</code>: <code>-u + 2</code><a href="#section-5.1.2-10.17" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="for-256-bit-security">
+<section id="section-5.2">
+        <h3 id="name-for-256-bit-security">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-for-256-bit-security" class="section-name selfRef">For 256-bit Security</a>
+        </h3>
+<p id="section-5.2-1">There are three candidates of pairing-friendly curves for 256-bit security. According to our selection policy, we select BLS48_581, as it is the most widely adopted by cryptographic libraries.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">The selected BLS48 curve is shown in <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span> and it is defined by the parameter<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3"><code>
+    t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+</code><a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">In this case, the size of <code>p</code> becomes 581-bit.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.2-5">For the finite field <code>GF(p)</code>, the towers of extension field <code>GF(p^2)</code>, <code>GF(p^4)</code>, <code>GF(p^8)</code>, <code>GF(p^24)</code> and <code>GF(p^48)</code> are defined by indeterminates <code>u</code>, <code>v</code>, <code>w</code>, <code>z</code>, and <code>s</code> as follows:<a href="#section-5.2-5" class="pilcrow">¶</a></p>
+<p id="section-5.2-6"><code>
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
+    GF(p^8) = GF(p^4)[w] / (w^2 + v)
+    GF(p^24) = GF(p^8)[z] / (z^3 + w)
+    GF(p^48)= GF(p^24)[s] / (s^2 + z).
+</code><a href="#section-5.2-6" class="pilcrow">¶</a></p>
+<p id="section-5.2-7">The elliptic curve <code>E</code> and its twist <code>E'</code> are represented by <code>E</code>: <code>y^2 = x^3 + 1</code> and <code>E': y^2 = x^3 - 1 / w</code>.
+BLS48_581 is categorized as D-type.<a href="#section-5.2-7" class="pilcrow">¶</a></p>
+<p id="section-5.2-8">We then give the parameters for BLS48_581 as follows.<a href="#section-5.2-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.2-9.1">
+            <p id="section-5.2-9.1.1"><code>G_1</code> is the largest prime-order subgroup of <code>E(GF(p))</code><a href="#section-5.2-9.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.2-9.1.2.1">
+                <code>BP</code> = <code>(x,y)</code> : a 'base point', i.e., a generator of <code>G_1</code><a href="#section-5.2-9.1.2.1" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-5.2-9.2">
+            <p id="section-5.2-9.2.1"><code>G_2</code> is an <code>r</code>-order subgroup of <code>E'(GF(p^8))</code><a href="#section-5.2-9.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.2-9.2.2.1">
+                <p id="section-5.2-9.2.2.1.1"><code>BP'</code> = <code>(x',y')</code> : a 'base point', i.e., a generator of <code>G_2</code> (encoded with <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>)<a href="#section-5.2-9.2.2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.2-9.2.2.1.2.1">
+                    <code>x'</code> = <code>x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w</code> (<code>x'_0</code>, ..., <code>x'_7</code> in <code>GF(p)</code>)<a href="#section-5.2-9.2.2.1.2.1" class="pilcrow">¶</a>
+</li>
+                  <li class="normal" id="section-5.2-9.2.2.1.2.2">
+                    <code>y'</code> = <code>y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w</code> (<code>y'_0</code>, ..., <code>y'_7</code> in <code>GF(p)</code>)<a href="#section-5.2-9.2.2.1.2.2" class="pilcrow">¶</a>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="section-5.2-9.2.2.2">
+                <code>h'</code> : the cofactor <code>#E'(GF(p^8))/r</code><a href="#section-5.2-9.2.2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-5.2-9.3">
+            <code>p</code>: <code>0x1280f73ff3476f313824e31d47012a0056e84f8d122131bb3be6c0f1f3975444a48ae43af6e082acd9cd30394f4736daf68367a5513170ee0a578fdf721a4a48ac3edc154e6565912b</code><a href="#section-5.2-9.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.4">
+            <code>r</code>: <code>0x2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e741969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01</code><a href="#section-5.2-9.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.5">
+            <code>x</code>: <code>0x02af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d8c3bce8732315af640</code><a href="#section-5.2-9.5" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.6">
+            <code>y</code>: <code>0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70</code><a href="#section-5.2-9.6" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.7">
+            <code>x'_0</code>: <code>0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab</code><a href="#section-5.2-9.7" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.8">
+            <code>x'_1</code>: <code>0x07c4973ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c57</code><a href="#section-5.2-9.8" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.9">
+            <code>x'_2</code>: <code>0x01fccc70198f1334e1b2ea1853ad83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a</code><a href="#section-5.2-9.9" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.10">
+            <code>x'_3</code>: <code>0x0be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8cb4e80bc3f09a7033cbb7feafe</code><a href="#section-5.2-9.10" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.11">
+            <code>x'_4</code>: <code>0x038b91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c53f8cce5</code><a href="#section-5.2-9.11" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.12">
+            <code>x'_5</code>: <code>0x0c96c7797eb0738603f1311e4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a</code><a href="#section-5.2-9.12" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.13">
+            <code>x'_6</code>: <code>0x0b9b7951c6061ee3f0197a498908aee660dea41b39d13852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c22d63334b5b0e205c3354e41607e60750e057</code><a href="#section-5.2-9.13" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.14">
+            <code>x'_7</code>: <code>0x0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3f84e19da00fbc6ae34</code><a href="#section-5.2-9.14" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.15">
+            <code>y'_0</code>: <code>0x00eb53356c375b5dfa497216452f3024b918b4238059a577e6f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d659045012ab12c0ff323edd3fe4d2d7971</code><a href="#section-5.2-9.15" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.16">
+            <code>y'_1</code>: <code>0x0284dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3afb096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111471db936cd5665</code><a href="#section-5.2-9.16" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.17">
+            <code>y'_2</code>: <code>0x0b36a201dd008523e421efb70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e90411515536ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a8474</code><a href="#section-5.2-9.17" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.18">
+            <code>y'_3</code>: <code>0x0aec25a4621edc0688223fbbd478762b1c2cded3360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bda503ee5e578fb3d8b8a1e5337316213da92841589d</code><a href="#section-5.2-9.18" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.19">
+            <code>y'_4</code>: <code>0x0d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdddfcf7a43f47831f982e50137</code><a href="#section-5.2-9.19" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.20">
+            <code>y'_5</code>: <code>0x07d0d03745736b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c270841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf90bee4</code><a href="#section-5.2-9.20" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.21">
+            <code>y'_6</code>: <code>0x0896767811be65ea25c2d05dfdd17af8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb23986</code><a href="#section-5.2-9.21" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.22">
+            <code>y'_7</code>: <code>0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6</code><a href="#section-5.2-9.22" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.23">
+            <code>h</code>: <code>0x85555841aaaec4ac</code><a href="#section-5.2-9.23" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.24">
+            <code>b</code>: 1<a href="#section-5.2-9.24" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.25">
+            <code>h'</code>: <code>0x170e915cb0a6b7406b8d94042317f811d6bc3fc6e211ada42e58ccfcb3ac076a7e4499d700a0c23dc4b0c078f92def8c87b7fe63e1eea270db353a4ef4d38b5998ad8f0d042ea24c8f02be1c0c83992fe5d7725227bb27123a949e0876c0a8ce0a67326db0e955dcb791b867f31d6bfa62fbdd5f44a00504df04e186fae033f1eb43c1b1a08b6e086eff03c8fee9ebdd1e191a8a4b0466c90b389987de5637d5dd13dab33196bd2e5afa6cd19cf0fc3fc7db7ece1f3fac742626b1b02fcee04043b2ea96492f6afa51739597c54bb78aa6b0b99319fef9d09f768831018ee6564c68d054c62f2e0b4549426fec24ab26957a669dba2a2b6945ce40c9aec6afdeda16c79e15546cd7771fa544d5364236690ea06832679562a68731420ae52d0d35a90b8d10b688e31b6aee45f45b7a5083c71732105852decc888f64839a4de33b99521f0984a418d20fc7b0609530e454f0696fa2a8075ac01cc8ae3869e8d0fe1f3788ffac4c01aa2720e431da333c83d9663bfb1fb7a1a7b90528482c6be7892299030bb51a51dc7e91e9156874416bf4c26f1ea7ec578058563960ef92bbbb8632d3a1b695f954af10e9a78e40acffc13b06540aae9da5287fc4429485d44e6289d8c0d6a3eb2ece35012452751839fb48bc14b515478e2ff412d930ac20307561f3a5c998e6bcbfebd97effc6433033a2361bfcdc4fc74ad379a16c6dea49c209b1</code><a href="#section-5.2-9.25" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.2-9.26">
+            <code>b'</code>: <code>-1 / w</code><a href="#section-5.2-9.26" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-6-1">The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> and they are categorized in each security level in accordance with <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>.
+Implementers who will newly develop pairing-based cryptography applications <strong><span class="bcp14">SHOULD</span></strong> use the recommended parameters.
+As of 2020, as far as we've investigated the top cryptographic conferences in the past, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">BLS curves of embedding degree 12 typically require a characteristic <code>p</code> of 461 bits or larger to achieve the 128-bit security level <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>.
+Note that the security level of BLS12_381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">BN254 is used in most of the existing implementations as shown in Appendix D, however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">In addition, implementors should be aware of the following points when they implement pairing-based cryptographic applications using recommended curves.
+Regarding the use case and applications of pairing-based cryptographic applications, please refer (#motivation).<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">In applications such as key agreement protocols, users exchange the elements in <code>G_1</code> and <code>G_2</code> as public keys.
+To check these elements are so-called sub-group secure <span>[<a href="#BCM15" class="cite xref">BCM15</a>]</span>, implementors should validate if the elements have the correct order <code>r</code>.
+Specifically, for public keys <code>P</code> in <code>G_1</code> and <code>Q</code> in <code>G_2</code>, a receiver should calculate scalar multiplications <code>[r]P</code> and <code>[r]Q</code>, and check the results become points at infinity.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in <code>G_1</code>, <code>G_2</code> and an exponentiation in <code>G_3</code> with the secret key.
+In order to prevent the leakage of secret key due to side channel attacks, implementors should apply countermeasure techniques such as montgomery ladder <span>[<a href="#Montgomery" class="cite xref">Montgomery</a>]</span> when they implement modules of a scalar multiplication and an exponentiation. Please refer <span>[<a href="#Montgomery" class="cite xref">Montgomery</a>]</span> for the detailed algorithms of montgomery ladder.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-7">When converting between an element in extension field and an octet string, implementors should check that the coefficient is within an appropriate range <span>[<a href="#IEEE1363" class="cite xref">IEEE1363</a>]</span>.
+If the coefficient is out of range, there is a possible that security vulnerabilities such as the signature forgery may occur.<a href="#section-6-7" class="pilcrow">¶</a></p>
+<p id="section-6-8">Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span>.
+The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI).
+In ECDLPwAI, given rational points <code>P</code>, <code>[K]P</code>, <code>[K^i]P</code>, for <code>i=1,...,n</code>, then we find a secret <code>K</code>.
+Since the complexity of ECDLPwAI is given as <code>O(sqrt((r-1)/n + sqrt(n))</code> where <code>n|r-1</code> by using Cheon's algorithm whereas the complexity of ECDLP is given as <code>O(sqrt(r))</code>, the complexity of ECDLPwAI with the ideal value <code>n</code> becomes dramatically smaller than that of ECDLP.
+Please refer <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span> for the details of Cheon's algorithm.
+Therefore, implementers should be careful when they design cryptographic protocols based on the strong DH problem. For example, in the case of Short Signatures, they can prevent the Cheon's attack by carefully setting the maximum number of queries which corresponds to the parameter <code>n</code>.<a href="#section-6-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-7">
+      <h2 id="name-iana-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-7-1">This document has no actions for IANA.<a href="#section-7-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="BD18">[BD18]</dt>
+        <dd>
+<span class="refAuthor">Barbulescu, R.</span> and <span class="refAuthor">S. Duquesne</span>, <span class="refTitle">"Updating Key Size Estimations for Pairings"</span>, <span class="seriesInfo">Journal of Cryptology vol. 32, no. 4, pp. 1298-1336</span>, <span class="seriesInfo">DOI 10.1007/s00145-018-9280-5</span>, <time datetime="2018-01" class="refDate">January 2018</time>, <span>&lt;<a href="https://doi.org/10.1007/s00145-018-9280-5">https://doi.org/10.1007/s00145-018-9280-5</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="BLS02">[BLS02]</dt>
+        <dd>
+<span class="refAuthor">Barreto, P.</span>, <span class="refAuthor">Lynn, B.</span>, and <span class="refAuthor">M. Scott</span>, <span class="refTitle">"Constructing Elliptic Curves with Prescribed Embedding Degrees"</span>, <span class="seriesInfo">Security in Communication Networks pp. 257-267</span>, <span class="seriesInfo">DOI 10.1007/3-540-36413-7_19</span>, <time datetime="2003" class="refDate">2003</time>, <span>&lt;<a href="https://doi.org/10.1007/3-540-36413-7_19">https://doi.org/10.1007/3-540-36413-7_19</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="BLS12-381">[BLS12-381]</dt>
+        <dd>
+<span class="refAuthor">Bowe, S.</span>, <span class="refTitle">"BLS12-381: New zk-SNARK Elliptic Curve Construction"</span>, <span>n.d.</span>, <span>&lt;<a href="https://electriccoin.co/blog/new-snark-curve/">https://electriccoin.co/blog/new-snark-curve/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="BN05">[BN05]</dt>
+        <dd>
+<span class="refAuthor">Barreto, P.</span> and <span class="refAuthor">M. Naehrig</span>, <span class="refTitle">"Pairing-Friendly Elliptic Curves of Prime Order"</span>, <span class="seriesInfo">Selected Areas in Cryptography pp. 319-331</span>, <span class="seriesInfo">DOI 10.1007/11693383_22</span>, <time datetime="2006" class="refDate">2006</time>, <span>&lt;<a href="https://doi.org/10.1007/11693383_22">https://doi.org/10.1007/11693383_22</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="GMT19">[GMT19]</dt>
+        <dd>
+<span class="refAuthor">Guillevic, A.</span>, <span class="refAuthor">Masson, S.</span>, and <span class="refAuthor">E. Thomé</span>, <span class="refTitle">"Cocks–Pinch curves of embedding degrees five to eight and optimal ate pairing computation"</span>, <span class="seriesInfo">Designs, Codes and Cryptography vol. 88, no. 6, pp. 1047-1081</span>, <span class="seriesInfo">DOI 10.1007/s10623-020-00727-w</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://doi.org/10.1007/s10623-020-00727-w">https://doi.org/10.1007/s10623-020-00727-w</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="KB16">[KB16]</dt>
+        <dd>
+<span class="refAuthor">Kim, T.</span> and <span class="refAuthor">R. Barbulescu</span>, <span class="refTitle">"Extended Tower Number Field Sieve: A New Complexity for the Medium Prime Case"</span>, <span class="seriesInfo">Advances in Cryptology - CRYPTO 2016 pp. 543-571</span>, <span class="seriesInfo">DOI 10.1007/978-3-662-53018-4_20</span>, <time datetime="2016" class="refDate">2016</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-662-53018-4_20">https://doi.org/10.1007/978-3-662-53018-4_20</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="KIK17">[KIK17]</dt>
+        <dd>
+<span class="refAuthor">Kiyomura, Y.</span>, <span class="refAuthor">Inoue, A.</span>, <span class="refAuthor">Kawahara, Y.</span>, <span class="refAuthor">Yasuda, M.</span>, <span class="refAuthor">Takagi, T.</span>, and <span class="refAuthor">T. Kobayashi</span>, <span class="refTitle">"Secure and Efficient Pairing at 256-Bit Security Level"</span>, <span class="seriesInfo">Applied Cryptography and Network Security pp. 59-79</span>, <span class="seriesInfo">DOI 10.1007/978-3-319-61204-1_4</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-319-61204-1_4">https://doi.org/10.1007/978-3-319-61204-1_4</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Ver09">[Ver09]</dt>
+      <dd>
+<span class="refAuthor">Vercauteren, F.</span>, <span class="refTitle">"Optimal Pairings"</span>, <span class="seriesInfo">IEEE Transactions on Information Theory vol. 56, no. 1, pp. 455-461</span>, <span class="seriesInfo">DOI 10.1109/tit.2009.2034881</span>, <time datetime="2010-01" class="refDate">January 2010</time>, <span>&lt;<a href="https://doi.org/10.1109/tit.2009.2034881">https://doi.org/10.1109/tit.2009.2034881</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="BCM15">[BCM15]</dt>
+        <dd>
+<span class="refAuthor">Barreto, P.</span>, <span class="refAuthor">Costello, C.</span>, <span class="refAuthor">Misoczki, R.</span>, <span class="refAuthor">Naehrig, M.</span>, <span class="refAuthor">Pereira, G.</span>, and <span class="refAuthor">G. Zanon</span>, <span class="refTitle">"Subgroup Security in Pairing-Based Cryptography"</span>, <span class="seriesInfo">Progress in Cryptology -- LATINCRYPT 2015 pp. 245-265</span>, <span class="seriesInfo">DOI 10.1007/978-3-319-22174-8_14</span>, <time datetime="2015" class="refDate">2015</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-319-22174-8_14">https://doi.org/10.1007/978-3-319-22174-8_14</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="CCS07">[CCS07]</dt>
+        <dd>
+<span class="refAuthor">Chen, L.</span>, <span class="refAuthor">Cheng, Z.</span>, and <span class="refAuthor">N. Smart</span>, <span class="refTitle">"Identity-based key agreement protocols from pairings"</span>, <span class="seriesInfo">International Journal of Information Security vol. 6, no. 4, pp. 213-241</span>, <span class="seriesInfo">DOI 10.1007/s10207-006-0011-9</span>, <time datetime="2007-01" class="refDate">January 2007</time>, <span>&lt;<a href="https://doi.org/10.1007/s10207-006-0011-9">https://doi.org/10.1007/s10207-006-0011-9</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Cheon06">[Cheon06]</dt>
+        <dd>
+<span class="refAuthor">Cheon, J.</span>, <span class="refTitle">"Security Analysis of the Strong Diffie-Hellman Problem"</span>, <span class="seriesInfo">Advances in Cryptology - EUROCRYPT 2006 pp. 1-11</span>, <span class="seriesInfo">DOI 10.1007/11761679_1</span>, <time datetime="2006" class="refDate">2006</time>, <span>&lt;<a href="https://doi.org/10.1007/11761679_1">https://doi.org/10.1007/11761679_1</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="CLN09">[CLN09]</dt>
+        <dd>
+<span class="refAuthor">Costello, C.</span>, <span class="refAuthor">Lange, T.</span>, and <span class="refAuthor">M. Naehrig</span>, <span class="refTitle">"Faster Pairing Computations on Curves with High-Degree Twists"</span>, <span class="seriesInfo">Public Key Cryptography - PKC 2010 pp. 224-242</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-13013-7_14</span>, <time datetime="2010" class="refDate">2010</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-13013-7_14">https://doi.org/10.1007/978-3-642-13013-7_14</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Ethereum">[Ethereum]</dt>
+        <dd>
+<span class="refAuthor">Jordan, R.</span>, <span class="refTitle">"Ethereum 2.0 Development Update #17 - Prysmatic Labs"</span>, <span>n.d.</span>, <span>&lt;<a href="https://medium.com/prysmatic-labs/ethereum-2-0-development-update-17-prysmatic-labs-ed5bcf82ec00">https://medium.com/prysmatic-labs/ethereum-2-0-development-update-17-prysmatic-labs-ed5bcf82ec00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="FIDO">[FIDO]</dt>
+        <dd>
+<span class="refAuthor">Lindemann, R.</span>, <span class="refTitle">"FIDO ECDAA Algorithm - FIDO Alliance Review Draft 02"</span>, <span>n.d.</span>, <span>&lt;<a href="https://fidoalliance.org/specs/fido-v2.0-rd-20180702/fido-ecdaa-algorithm-v2.0-rd-20180702.html">https://fidoalliance.org/specs/fido-v2.0-rd-20180702/fido-ecdaa-algorithm-v2.0-rd-20180702.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="FSU10">[FSU10]</dt>
+        <dd>
+<span class="refAuthor">Fujioka, A.</span>, <span class="refAuthor">Suzuki, K.</span>, and <span class="refAuthor">B. Ustaoğlu</span>, <span class="refTitle">"Ephemeral Key Leakage Resilient and Efficient ID-AKEs That Can Share Identities, Private and Master Keys"</span>, <span class="seriesInfo">Lecture Notes in Computer Science pp. 187-205</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-17455-1_12</span>, <time datetime="2010" class="refDate">2010</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-17455-1_12">https://doi.org/10.1007/978-3-642-17455-1_12</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="HR83">[HR83]</dt>
+        <dd>
+<span class="refAuthor">Hellman, M.</span> and <span class="refAuthor">J. Reyneri</span>, <span class="refTitle">"Fast Computation of Discrete Logarithms in GF (q)"</span>, <span class="seriesInfo">Advances in Cryptology pp. 3-13</span>, <span class="seriesInfo">DOI 10.1007/978-1-4757-0602-4_1</span>, <time datetime="1983" class="refDate">1983</time>, <span>&lt;<a href="https://doi.org/10.1007/978-1-4757-0602-4_1">https://doi.org/10.1007/978-1-4757-0602-4_1</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-lwig-curve-representations">[I-D.ietf-lwig-curve-representations]</dt>
+        <dd>
+<span class="refAuthor">Struik, R.</span>, <span class="refTitle">"Alternative Elliptic Curve Representations"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lwig-curve-representations-23</span>, <time datetime="2022-01-21" class="refDate">21 January 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lwig-curve-representations-23">https://datatracker.ietf.org/doc/html/draft-ietf-lwig-curve-representations-23</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.irtf-cfrg-bls-signature">[I-D.irtf-cfrg-bls-signature]</dt>
+        <dd>
+<span class="refAuthor">Boneh, D.</span>, <span class="refAuthor">Gorbunov, S.</span>, <span class="refAuthor">Wahby, R. S.</span>, <span class="refAuthor">Wee, H.</span>, <span class="refAuthor">Wood, C. A.</span>, and <span class="refAuthor">Z. Zhang</span>, <span class="refTitle">"BLS Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-bls-signature-05</span>, <time datetime="2022-06-16" class="refDate">16 June 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bls-signature-05">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bls-signature-05</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.irtf-cfrg-hash-to-curve">[I-D.irtf-cfrg-hash-to-curve]</dt>
+        <dd>
+<span class="refAuthor">Faz-Hernandez, A.</span>, <span class="refAuthor">Scott, S.</span>, <span class="refAuthor">Sullivan, N.</span>, <span class="refAuthor">Wahby, R. S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Hashing to Elliptic Curves"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-hash-to-curve-16</span>, <time datetime="2022-06-15" class="refDate">15 June 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-hash-to-curve-16</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IEEE1363">[IEEE1363]</dt>
+        <dd>
+<span class="refTitle">"IEEE Standard Specifications for Public-Key Cryptography"</span>, <span class="seriesInfo">IEEE standard</span>, <span class="seriesInfo">DOI 10.1109/ieeestd.2000.92292</span>, <time datetime="2008-09" class="refDate">September 2008</time>, <span>&lt;<a href="https://doi.org/10.1109/ieeestd.2000.92292">https://doi.org/10.1109/ieeestd.2000.92292</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ISOIEC11770-3">[ISOIEC11770-3]</dt>
+        <dd>
+<span class="refAuthor">ISO/IEC</span>, <span class="refTitle">"ISO/IEC 11770-3:2015"</span>, <span class="seriesInfo">ISO/IEC Information technology -- Security techniques -- Key management -- Part 3: Mechanisms using asymmetric techniques </span>, <time datetime="2015" class="refDate">2015</time>. </dd>
+<dd class="break"></dd>
+<dt id="ISOIEC15946-5">[ISOIEC15946-5]</dt>
+        <dd>
+<span class="refAuthor">ISO/IEC</span>, <span class="refTitle">"ISO/IEC 15946-5:2017"</span>, <span class="seriesInfo">ISO/IEC Information technology -- Security techniques -- Cryptographic techniques based on elliptic curves -- Part 5: Elliptic curve generation </span>, <time datetime="2017" class="refDate">2017</time>. </dd>
+<dd class="break"></dd>
+<dt id="Joux00">[Joux00]</dt>
+        <dd>
+<span class="refAuthor">Joux, A.</span>, <span class="refTitle">"A One Round Protocol for Tripartite Diffie–Hellman"</span>, <span class="seriesInfo">Lecture Notes in Computer Science pp. 385-393</span>, <span class="seriesInfo">DOI 10.1007/10722028_23</span>, <time datetime="2000" class="refDate">2000</time>, <span>&lt;<a href="https://doi.org/10.1007/10722028_23">https://doi.org/10.1007/10722028_23</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="mcl">[mcl]</dt>
+        <dd>
+<span class="refTitle">"mcl - A portable and fast pairing-based cryptography library"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/herumi/mcl">https://github.com/herumi/mcl</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Montgomery">[Montgomery]</dt>
+        <dd>
+<span class="refAuthor">Montgomery, P.</span>, <span class="refTitle">"Speeding the Pollard and elliptic curve methods of factorization"</span>, <span class="seriesInfo">Mathematics of Computation vol. 48, no. 177, pp. 243-264</span>, <span class="seriesInfo">DOI 10.1090/s0025-5718-1987-0866113-7</span>, <time datetime="1987" class="refDate">1987</time>, <span>&lt;<a href="https://doi.org/10.1090/s0025-5718-1987-0866113-7">https://doi.org/10.1090/s0025-5718-1987-0866113-7</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="MP04">[MP04]</dt>
+        <dd>
+<span class="refAuthor">Guillevic, A.</span>, <span class="refAuthor">Masson, S.</span>, and <span class="refAuthor">E. Thomé</span>, <span class="refTitle">"Cocks–Pinch curves of embedding degrees five to eight and optimal ate pairing computation"</span>, <span class="seriesInfo">Designs, Codes and Cryptography vol. 88, no. 6, pp. 1047-1081</span>, <span class="seriesInfo">DOI 10.1007/s10623-020-00727-w</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://doi.org/10.1007/s10623-020-00727-w">https://doi.org/10.1007/s10623-020-00727-w</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Pollard78">[Pollard78]</dt>
+        <dd>
+<span class="refAuthor">Pollard, J.</span>, <span class="refTitle">"Monte Carlo methods for index computation (𝑚𝑜𝑑𝑝)"</span>, <span class="seriesInfo">Mathematics of Computation vol. 32, no. 143, pp. 918-924</span>, <span class="seriesInfo">DOI 10.1090/s0025-5718-1978-0491431-9</span>, <time datetime="1978" class="refDate">1978</time>, <span>&lt;<a href="https://doi.org/10.1090/s0025-5718-1978-0491431-9">https://doi.org/10.1090/s0025-5718-1978-0491431-9</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5091">[RFC5091]</dt>
+        <dd>
+<span class="refAuthor">Boyen, X.</span> and <span class="refAuthor">L. Martin</span>, <span class="refTitle">"Identity-Based Cryptography Standard (IBCS) #1: Supersingular Curve Implementations of the BF and BB1 Cryptosystems"</span>, <span class="seriesInfo">RFC 5091</span>, <span class="seriesInfo">DOI 10.17487/RFC5091</span>, <time datetime="2007-12" class="refDate">December 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5091">https://www.rfc-editor.org/rfc/rfc5091</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6508">[RFC6508]</dt>
+        <dd>
+<span class="refAuthor">Groves, M.</span>, <span class="refTitle">"Sakai-Kasahara Key Encryption (SAKKE)"</span>, <span class="seriesInfo">RFC 6508</span>, <span class="seriesInfo">DOI 10.17487/RFC6508</span>, <time datetime="2012-02" class="refDate">February 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6508">https://www.rfc-editor.org/rfc/rfc6508</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6509">[RFC6509]</dt>
+        <dd>
+<span class="refAuthor">Groves, M.</span>, <span class="refTitle">"MIKEY-SAKKE: Sakai-Kasahara Key Encryption in Multimedia Internet KEYing (MIKEY)"</span>, <span class="seriesInfo">RFC 6509</span>, <span class="seriesInfo">DOI 10.17487/RFC6509</span>, <time datetime="2012-02" class="refDate">February 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6509">https://www.rfc-editor.org/rfc/rfc6509</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6539">[RFC6539]</dt>
+        <dd>
+<span class="refAuthor">Cakulev, V.</span>, <span class="refAuthor">Sundaram, G.</span>, and <span class="refAuthor">I. Broustis</span>, <span class="refTitle">"IBAKE: Identity-Based Authenticated Key Exchange"</span>, <span class="seriesInfo">RFC 6539</span>, <span class="seriesInfo">DOI 10.17487/RFC6539</span>, <time datetime="2012-03" class="refDate">March 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6539">https://www.rfc-editor.org/rfc/rfc6539</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8017">[RFC8017]</dt>
+        <dd>
+<span class="refAuthor">Moriarty, K., Ed.</span>, <span class="refAuthor">Kaliski, B.</span>, <span class="refAuthor">Jonsson, J.</span>, and <span class="refAuthor">A. Rusch</span>, <span class="refTitle">"PKCS #1: RSA Cryptography Specifications Version 2.2"</span>, <span class="seriesInfo">RFC 8017</span>, <span class="seriesInfo">DOI 10.17487/RFC8017</span>, <time datetime="2016-11" class="refDate">November 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8017">https://www.rfc-editor.org/rfc/rfc8017</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SAKKE">[SAKKE]</dt>
+        <dd>
+<span class="refAuthor">3GPP</span>, <span class="refTitle">"Security of the mission critical service (Release 15)"</span>, <time datetime="2018" class="refDate">2018</time>. </dd>
+<dd class="break"></dd>
+<dt id="SEC1">[SEC1]</dt>
+        <dd>
+<span class="refAuthor">Standards for Efficient Cryptography Group (SECG)</span>, <span class="refTitle">"SEC 1: Elliptic Curve Cryptography"</span>, <time datetime="2009-05" class="refDate">May 2009</time>, <span>&lt;<a href="http://www.secg.org/sec1-v2.pdf">http://www.secg.org/sec1-v2.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="TPM">[TPM]</dt>
+        <dd>
+<span class="refAuthor">Trusted Computing Group (TCG)</span>, <span class="refTitle">"Trusted Platform Module Library Specification, Family "2.0", Level 00, Revision 01.38"</span>, <span>n.d.</span>, <span>&lt;<a href="https://trustedcomputinggroup.org/resource/tpm-library-specification/">https://trustedcomputinggroup.org/resource/tpm-library-specification/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="W3C">[W3C]</dt>
+        <dd>
+<span class="refAuthor">Lundberg, E.</span>, <span class="refTitle">"Web Authentication: An API for accessing Public Key Credentials Level 1 - W3C Recommendation"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/webauthn/">https://www.w3.org/TR/webauthn/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Zcash">[Zcash]</dt>
+        <dd>
+<span class="refAuthor">Lindemann, R.</span>, <span class="refTitle">"What are zk-SNARKs?"</span>, <span>n.d.</span>, <span>&lt;<a href="https://z.cash/technology/zksnarks.html">https://z.cash/technology/zksnarks.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ZCashRep">[ZCashRep]</dt>
+        <dd>
+<span class="refTitle">"BLS12-381"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/zkcrypto/pairing/blob/master/src/bls12_381/README.md">https://github.com/zkcrypto/pairing/blob/master/src/bls12_381/README.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="zkcrypto">[zkcrypto]</dt>
+      <dd>
+<span class="refTitle">"zkcrypto - Pairing-friendly elliptic curve library"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/zkcrypto/pairing">https://github.com/zkcrypto/pairing</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</section>
+<div id="acknowledgments">
+<section id="appendix-A">
+      <h2 id="name-acknowledgments">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-A-1">The authors would like to appreciate a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo.
+The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Satoru Kanno for their valuable comments.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="OptimalAtePairing">
+<section id="appendix-B">
+      <h2 id="name-computing-the-optimal-ate-p">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-computing-the-optimal-ate-p" class="section-name selfRef">Computing the Optimal Ate Pairing</a>
+      </h2>
+<p id="appendix-B-1">Before presenting the computation of the optimal Ate pairing <code>e(P, Q)</code> satisfying the properties shown in <a href="#pairings" class="auto internal xref">Section 3.2</a>, we give the subfunctions used for the pairing computation.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">The following algorithm, Line_Function shows the computation of the line function.
+It takes <code>Q_1</code> = <code>(x_1, x_2)</code>,<code> Q_2</code> = <code>(x_2, y_2)</code> in <code>G_2</code>, and <code>P</code> = <code>(x, y)</code> in <code>G_1</code> as input, and outputs an element of <code>G_T</code>.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3"><code>
+    if (Q_1 = Q_2) then
+        l := (3 * x_1^2) / (2 * y_1);
+    else if (Q_1 = -Q_2) then
+        return x - x_1;
+    else
+        l := (y_2 - y_1) / (x_2 - x_1);
+    end if;
+    return (l * (x - x_1) + y_1 - y);
+</code><a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">When implementing the line function, implementers should consider the isomorphism of <code>E</code> and its twist curve <code>E'</code> so that one can reduce the computational cost of operations in <code>G_2</code> <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span> <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>.
+We note that Line_function does not consider such an isomorphism.<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<p id="appendix-B-5">The computation of the optimal Ate pairing uses the Frobenius endomorphism.
+The p-power Frobenius endomorphism pi for a point <code>Q</code> = <code>(x, y)</code> over <code>E'</code> is <code>pi(p, Q)</code> = <code>(x^p, y^p)</code><a href="#appendix-B-5" class="pilcrow">¶</a></p>
+<div id="optimal-ate-pairings-over-barreto-naehrig-curves">
+<section id="appendix-B.1">
+        <h3 id="name-optimal-ate-pairings-over-b">
+<a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-optimal-ate-pairings-over-b" class="section-name selfRef">Optimal Ate Pairings over Barreto-Naehrig Curves</a>
+        </h3>
+<p id="appendix-B.1-1">Let <code>c</code> = <code>6 * t + 2</code> for a parameter <code>t</code> and <code>c_0, c_1, ... , c_L</code> in <code>{-1,0,1}</code> such that the sum of <code>c_i * 2^i</code> (<code>i = 0, 1, ..., L</code>) equals <code>c</code>.<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-2">The following algorithm shows the computation of the optimal Ate pairing on BN curves.
+It takes <code>P</code> in <code>G_1</code>, <code>Q</code> in <code>G_2</code>, an integer <code>c, c_0, ...,c_L</code> in <code>{-1,0,1}</code> such that the sum of <code>c_i * 2^i</code> (<code>i = 0, 1, ..., L</code>) equals <code>c</code>, and the order <code>r</code> of <code>G_1</code> as input, and outputs <code>e(P, Q)</code>.<a href="#appendix-B.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-3"><code>
+    f := 1; T := Q;
+    if (c_L = -1) then
+        T := -T;
+    end if
+    for i = L-1 downto 0
+        f := f^2 * Line_function(T, T, P); T := T + T;
+        if (c_i = 1) then
+            f := f * Line_function(T, Q, P); T := T + Q;
+        else if (c_i = -1) then
+            f := f * Line_function(T, -Q, P); T := T - Q;
+        end if
+    end for
+    Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
+    f := f * Line_function(T, Q_1, P); T := T + Q_1;
+    f := f * Line_function(T, -Q_2, P);
+    f := f^{(p^k - 1) / r}
+    return f;
+</code><a href="#appendix-B.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="optimal-ate-pairings-over-barreto-lynn-scott-curves">
+<section id="appendix-B.2">
+        <h3 id="name-optimal-ate-pairings-over-ba">
+<a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-optimal-ate-pairings-over-ba" class="section-name selfRef">Optimal Ate Pairings over Barreto-Lynn-Scott Curves</a>
+        </h3>
+<p id="appendix-B.2-1">Let <code>c</code> = <code>t</code> for a parameter <code>t</code> and <code>c_0, c_1, ... , c_L</code> in <code>{-1,0,1}</code> such that the sum of <code>c_i * 2^i (i = 0, 1, ..., L)</code> equals <code>c</code>.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-2">The following algorithm shows the computation of the optimal Ate pairing on Barreto-Lynn-Scott curves.
+It takes <code>P</code> in <code>G_1</code>, <code>Q</code> in <code>G_2</code>, an integer <code>c</code>, <code>c_0, ...,c_L</code> in <code>{-1,0,1}</code> such that the sum of <code>c_i * 2^i</code> (<code>i = 0, 1, ..., L</code>) equals <code>c</code>, and the order <code>r</code> of <code>G_1</code> as input, and outputs <code>e(P, Q)</code>.<a href="#appendix-B.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-3"><code>
+    f := 1; T := Q;
+    if (c_L = -1) then
+        T := -T;
+    end if
+    for i = L-1 downto 0
+        f := f^2 * Line_function(T, T, P); T := T + T;
+        if (c_i = 1) then
+            f := f * Line_function(T, Q, P); T := T + Q;
+        else if (c_i = -1) then
+            f := f * Line_function(T, -Q, P); T := T - Q;
+        end if
+    end for
+    f := f^{(p^k - 1) / r};
+    return f;
+</code><a href="#appendix-B.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="test-vectors-of-optimal-ate-pairing">
+<section id="appendix-C">
+      <h2 id="name-test-vectors-of-optimal-ate">
+<a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-test-vectors-of-optimal-ate" class="section-name selfRef">Test Vectors of Optimal Ate Pairing</a>
+      </h2>
+<p id="appendix-C-1">We provide test vectors for Optimal Ate Pairing <code>e(P, Q)</code> given in (#OptimalAtePairing) for the curves BLS12_381, BN462 and BLS48_581 given in (#selection_pfc).
+Here, the inputs <code>P</code> = <code>(x, y)</code> and <code>Q</code> = <code>(x', y')</code> are the corresponding base points <code>BP</code> and <code>BP'</code> given in (#selection_pfc).<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">For BLS12_381 and BN462, <code>Q</code> = <code>(x', y')</code> is given by<a href="#appendix-C-2" class="pilcrow">¶</a></p>
+<p id="appendix-C-3"><code>
+    x' = x'_0 + x'_1 * u and
+    y' = y'_0 + y'_1 * u,
+</code><a href="#appendix-C-3" class="pilcrow">¶</a></p>
+<p id="appendix-C-4">where <code>u</code> is an indeterminate and <code>x'_0</code>, <code>x'_1</code>, <code>y'_0</code>, <code>y'_1</code> are elements of <code>GF(p)</code>.<a href="#appendix-C-4" class="pilcrow">¶</a></p>
+<p id="appendix-C-5">For BLS48_581, <code>Q</code> = <code>(x', y')</code> is given by<a href="#appendix-C-5" class="pilcrow">¶</a></p>
+<p id="appendix-C-6"><code>
+    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
+        + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
+    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
+        + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
+</code><a href="#appendix-C-6" class="pilcrow">¶</a></p>
+<p id="appendix-C-7">where <code>u</code>, <code>v</code> and w are indeterminates and <code>x'_0, ..., x'_7</code> and <code>y'_0, ..., y'_7</code> are elements of <code>GF(p)</code>.
+The representation of <code>Q</code> = <code>(x', y')</code> given below is followed by <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>.<a href="#appendix-C-7" class="pilcrow">¶</a></p>
+<p id="appendix-C-8">In addition, we use the notation <code>e_i</code> (<code>i = 0, ..., k-1</code>) to represent each element in <code>e(P, Q)</code>, where the extension field that <code>e(P, Q)</code> belongs is constructed according to <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>.<a href="#appendix-C-8" class="pilcrow">¶</a></p>
+<p id="appendix-C-9">BLS12_381:<a href="#appendix-C-9" class="pilcrow">¶</a></p>
+<p id="appendix-C-10">Input <code>x</code> value: <code>0x17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac586c55e83ff97a1aeffb3af00adb22c6bb</code>
+Input <code>y</code> value: <code>0x08b3f481e3aaa0f1a09e30ed741d8ae4fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1</code>
+Input <code>x'_0</code> value: <code>0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8</code>
+Input <code>x'_1</code> value: <code>0x13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e</code>
+Input <code>y'_0</code> value: <code>0x0ce5d527727d6e118cc9cdc6da2e351aadfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801</code>
+Input <code>y'_1</code> value: <code>0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be</code><a href="#appendix-C-10" class="pilcrow">¶</a></p>
+<p id="appendix-C-11"><code>e_0</code>: <code>0x11619b45f61edfe3b47a15fac19442526ff489dcda25e59121d9931438907dfd448299a87dde3a649bdba96e84d54558</code>
+        <code>e_1</code>: <code>0x153ce14a76a53e205ba8f275ef1137c56a566f638b52d34ba3bf3bf22f277d70f76316218c0dfd583a394b8448d2be7f</code>
+        <code>e_2</code>: <code>0x095668fb4a02fe930ed44767834c915b283b1c6ca98c047bd4c272e9ac3f3ba6ff0b05a93e59c71fba77bce995f04692</code>
+        <code>e_3</code>: <code>0x16deedaa683124fe7260085184d88f7d036b86f53bb5b7f1fc5e248814782065413e7d958d17960109ea006b2afdeb5f</code>
+        <code>e_4</code>: <code>0x09c92cf02f3cd3d2f9d34bc44eee0dd50314ed44ca5d30ce6a9ec0539be7a86b121edc61839ccc908c4bdde256cd6048</code>
+        <code>e_5</code>: <code>0x111061f398efc2a97ff825b04d21089e24fd8b93a47e41e60eae7e9b2a38d54fa4dedced0811c34ce528781ab9e929c7</code>
+        <code>e_6</code>: <code>0x01ecfcf31c86257ab00b4709c33f1c9c4e007659dd5ffc4a735192167ce197058cfb4c94225e7f1b6c26ad9ba68f63bc</code>
+        <code>e_7</code>: <code>0x08890726743a1f94a8193a166800b7787744a8ad8e2f9365db76863e894b7a11d83f90d873567e9d645ccf725b32d26f</code>
+        <code>e_8</code>: <code>0x0e61c752414ca5dfd258e9606bac08daec29b3e2c57062669556954fb227d3f1260eedf25446a086b0844bcd43646c10</code>
+        <code>e_9</code>: <code>0x0fe63f185f56dd29150fc498bbeea78969e7e783043620db33f75a05a0a2ce5c442beaff9da195ff15164c00ab66bdde</code>
+        <code>e_10</code>: <code>0x10900338a92ed0b47af211636f7cfdec717b7ee43900eee9b5fc24f0000c5874d4801372db478987691c566a8c474978</code>
+        <code>e_11</code>: <code>0x1454814f3085f0e6602247671bc408bbce2007201536818c901dbd4d2095dd86c1ec8b888e59611f60a301af7776be3d</code><a href="#appendix-C-11" class="pilcrow">¶</a></p>
+<p id="appendix-C-12">BN462:<a href="#appendix-C-12" class="pilcrow">¶</a></p>
+<p id="appendix-C-13">Input <code>x</code> value: <code>0x21a6d67ef250191fadba34a0a30160b9ac9264b6f95f63b3edbec3cf4b2e689db1bbb4e69a416a0b1e79239c0372e5cd70113c98d91f36b6980d</code>
+Input <code>y</code> value: <code>0x0118ea0460f7f7abb82b33676a7432a490eeda842cccfa7d788c659650426e6af77df11b8ae40eb80f475432c66600622ecaa8a5734d36fb03de</code>
+Input <code>x'_0</code> value: <code>0x0257ccc85b58dda0dfb38e3a8cbdc5482e0337e7c1cd96ed61c913820408208f9ad2699bad92e0032ae1f0aa6a8b48807695468e3d934ae1e4df</code>
+Input <code>x'_1</code> value: <code>0x1d2e4343e8599102af8edca849566ba3c98e2a354730cbed9176884058b18134dd86bae555b783718f50af8b59bf7e850e9b73108ba6aa8cd283</code>
+Input <code>y'_0</code> value: <code>0x0a0650439da22c1979517427a20809eca035634706e23c3fa7a6bb42fe810f1399a1f41c9ddae32e03695a140e7b11d7c3376e5b68df0db7154e</code>
+Input <code>y'_1</code> value: <code>0x073ef0cbd438cbe0172c8ae37306324d44d5e6b0c69ac57b393f1ab370fd725cc647692444a04ef87387aa68d53743493b9eba14cc552ca2a93a</code><a href="#appendix-C-13" class="pilcrow">¶</a></p>
+<p id="appendix-C-14"><code>e_0</code>: <code>0x0cf7f0f2e01610804272f4a7a24014ac085543d787c8f8bf07059f93f87ba7e2a4ac77835d4ff10e78669be39cd23cc3a659c093dbe3b9647e8c</code>
+        <code>e_1</code>: <code>0x00ef2c737515694ee5b85051e39970f24e27ca278847c7cfa709b0df408b830b3763b1b001f1194445b62d6c093fb6f77e43e369edefb1200389</code>
+        <code>e_2</code>: <code>0x04d685b29fd2b8faedacd36873f24a06158742bb2328740f93827934592d6f1723e0772bb9ccd3025f88dc457fc4f77dfef76104ff43cd430bf7</code>
+        <code>e_3</code>: <code>0x090067ef2892de0c48ee49cbe4ff1f835286c700c8d191574cb424019de11142b3c722cc5083a71912411c4a1f61c00d1e8f14f545348eb7462c</code>
+        <code>e_4</code>: <code>0x1437603b60dce235a090c43f5147d9c03bd63081c8bb1ffa7d8a2c31d673230860bb3dfe4ca85581f7459204ef755f63cba1fbd6a4436f10ba0e</code>
+        <code>e_5</code>: <code>0x13191b1110d13650bf8e76b356fe776eb9d7a03fe33f82e3fe5732071f305d201843238cc96fd0e892bc61701e1844faa8e33446f87c6e29e75f</code>
+        <code>e_6</code>: <code>0x07b1ce375c0191c786bb184cc9c08a6ae5a569dd7586f75d6d2de2b2f075787ee5082d44ca4b8009b3285ecae5fa521e23be76e6a08f17fa5cc8</code>
+        <code>e_7</code>: <code>0x05b64add5e49574b124a02d85f508c8d2d37993ae4c370a9cda89a100cdb5e1d441b57768dbc68429ffae243c0c57fe5ab0a3ee4c6f2d9d34714</code>
+        <code>e_8</code>: <code>0x0fd9a3271854a2b4542b42c55916e1faf7a8b87a7d10907179ac7073f6a1de044906ffaf4760d11c8f92df3e50251e39ce92c700a12e77d0adf3</code>
+        <code>e_9</code>: <code>0x17fa0c7fa60c9a6d4d8bb9897991efd087899edc776f33743db921a689720c82257ee3c788e8160c112f18e841a3dd9a79a6f8782f771d542ee5</code>
+        <code>e_10</code>: <code>0x0c901397a62bb185a8f9cf336e28cfb0f354e2313f99c538cdceedf8b8aa22c23b896201170fc915690f79f6ba75581f1b76055cd89b7182041c</code>
+        <code>e_11</code>: <code>0x20f27fde93cee94ca4bf9ded1b1378c1b0d80439eeb1d0c8daef30db0037104a5e32a2ccc94fa1860a95e39a93ba51187b45f4c2c50c16482322</code><a href="#appendix-C-14" class="pilcrow">¶</a></p>
+<p id="appendix-C-15">BLS48_581:<a href="#appendix-C-15" class="pilcrow">¶</a></p>
+<p id="appendix-C-16">Input <code>x</code> value: <code>0x02af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d8c3bce8732315af640</code>
+Input <code>y</code> value: <code>0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70</code><a href="#appendix-C-16" class="pilcrow">¶</a></p>
+<p id="appendix-C-17"><code>x'_0</code>: <code>0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab</code>
+        <code>x'_1</code>: <code>0x07c4973ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c57</code>
+        <code>x'_2</code>: <code>0x01fccc70198f1334e1b2ea1853ad83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a</code>
+        <code>x'_3</code>: <code>0x0be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8cb4e80bc3f09a7033cbb7feafe</code>
+        <code>x'_4</code>: <code>0x038b91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c53f8cce5</code>
+        <code>x'_5</code>: <code>0x0c96c7797eb0738603f1311e4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a</code>
+        <code>x'_6</code>: <code>0x0b9b7951c6061ee3f0197a498908aee660dea41b39d13852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c22d63334b5b0e205c3354e41607e60750e057</code>
+        <code>x'_7</code>: <code>0x0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3f84e19da00fbc6ae34</code>
+        <code>y'_0</code>: <code>0x00eb53356c375b5dfa497216452f3024b918b4238059a577e6f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d659045012ab12c0ff323edd3fe4d2d7971</code>
+        <code>y'_1</code>: <code>0x0284dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3afb096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111471db936cd5665</code>
+        <code>y'_2</code>: <code>0x0b36a201dd008523e421efb70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e90411515536ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a8474</code>
+        <code>y'_3</code>: <code>0x0aec25a4621edc0688223fbbd478762b1c2cded3360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bda503ee5e578fb3d8b8a1e5337316213da92841589d</code>
+        <code>y'_4</code>: <code>0x0d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdddfcf7a43f47831f982e50137</code>
+        <code>y'_5</code>: <code>0x07d0d03745736b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c270841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf90bee4</code>
+        <code>y'_6</code>: <code>0x0896767811be65ea25c2d05dfdd17af8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb23986</code>
+        <code>y'_7</code>: <code>0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6</code>
+        <code>e_0</code>: <code>0x0e26c3fcb8ef67417814098de5111ffcccc1d003d15b367bad07cef2291a93d31db03e3f03376f3beae2bd877bcfc22a25dc51016eda1ab56ee3033bc4b4fec5962f02dffb3af5e38e</code>
+        <code>e_1</code>: <code>0x069061b8047279aa5c2d25cdf676ddf34eddbc8ec2ec0f03614886fa828e1fc066b26d35744c0c38271843aa4fb617b57fa9eb4bd256d17367914159fc18b10a1085cb626e5bedb145</code>
+        <code>e_2</code>: <code>0x02b9bece645fbf9d8f97025a1545359f6fe3ffab3cd57094f862f7fb9ca01c88705c26675bcc723878e943da6b56ce25d063381fcd2a292e0e7501fe572744184fb4ab4ca071a04281</code>
+        <code>e_3</code>: <code>0x0080d267bf036c1e61d7fc73905e8c630b97aa05ef3266c82e7a111072c0d2056baa8137fba111c9650dfb18cb1f43363041e202e3192fced29d2b0501c882543fb370a56bfdc2435b</code>
+        <code>e_4</code>: <code>0x03c6b4c12f338f9401e6a493a405b33e64389338db8c5e592a8dd79eac7720dd83dd6b0c189eeda20809160cd57cdf3e2edc82db15f553c1f6c953ea27114cb6bd8a38e273f407dae0</code>
+        <code>e_5</code>: <code>0x016e46224f28bfd8833f76ac29ee6e406a9da1bde55f5e82b3bd977897a9104f18b9ee41ea9af7d4183d895102950a12ce9975669db07924e1b432d9680f5ce7e5c67ed68f381eba45</code>
+        <code>e_6</code>: <code>0x008ddce7a4a1b94be5df3ceea56bef0077dcdde86d579938a50933a47296d337b7629934128e2457e24142b0eeaa978fd8e70986d7dd51fccbbeb8a1933434fec4f5bc538de2646e90</code>
+        <code>e_7</code>: <code>0x060ef6eae55728e40bd4628265218b24b38cdd434968c14bfefb87f0dcbfc76cc473ae2dc0cac6e69dfdf90951175178dc75b9cc08320fcde187aa58ea047a2ee00b1968650eec2791</code>
+        <code>e_8</code>: <code>0x0c3943636876fd4f9393414099a746f84b2633dfb7c36ba6512a0b48e66dcb2e409f1b9e150e36b0b4311165810a3c721525f0d43a021f090e6a27577b42c7a57bed3327edb98ba8f8</code>
+        <code>e_9</code>: <code>0x02d31eb8be0d923cac2a8eb6a07556c8951d849ec53c2848ee78c5eed40262eb21822527a8555b071f1cd080e049e5e7ebfe2541d5b42c1e414341694d6f16d287e4a8d28359c2d2f9</code>
+        <code>e_10</code>: <code>0x07f19673c5580d6a10d09a032397c5d425c3a99ff1dd0abe5bec40a0d47a6b8daabb22edb6b06dd8691950b8f23faefcdd80c45aa3817a840018965941f4247f9f97233a84f58b262e</code>
+        <code>e_11</code>: <code>0x0d3fe01f0c114915c3bdf8089377780076c1685302279fd9ab12d07477aac03b69291652e9f179baa0a99c38aa8851c1d25ffdb4ded2c8fe8b30338c14428607d6d822610d41f51372</code>
+        <code>e_12</code>: <code>0x0662eefd5fab9509aed968866b68cff3bc5d48ecc8ac6867c212a2d82cee5a689a3c9c67f1d611adac7268dc8b06471c0598f7016ca3d1c01649dda4b43531cffc4eb41e691e27f2eb</code>
+        <code>e_13</code>: <code>0x0aad8f4a8cfdca8de0985070304fe4f4d32f99b01d4ea50d9f7cd2abdc0aeea99311a36ec6ed18208642cef9e09b96795b27c42a5a744a7b01a617a91d9fb7623d636640d61a6596ec</code>
+        <code>e_14</code>: <code>0x0ffcf21d641fd9c6a641a749d80cab1bcad4b34ee97567d905ed9d5cfb74e9aef19674e2eb6ce3dfb706aa814d4a228db4fcd707e571259435393a27cac68b59a1b690ae8cde7a94c3</code>
+        <code>e_15</code>: <code>0x0cbe92a53151790cece4a86f91e9b31644a86fc4c954e5fa04e707beb69fc60a858fed8ebd53e4cfd51546d5c0732331071c358d721ee601bfd3847e0e904101c62822dd2e4c7f8e5c</code>
+        <code>e_16</code>: <code>0x0202db83b1ff33016679b6cfc8931deea6df1485c894dcd113bacf564411519a42026b5fda4e16262674dcb3f089cd7d552f8089a1fec93e3db6bca43788cdb06fc41baaa5c5098667</code>
+        <code>e_17</code>: <code>0x070a617ed131b857f5b74b625c4ef70cc567f619defb5f2ab67534a1a8aa72975fc4248ac8551ce02b68801703971a2cf1cb934c9c354cadd5cfc4575cde8dbde6122bd54826a9b3e9</code>
+        <code>e_18</code>: <code>0x070e1ebce457c141417f88423127b7a7321424f64119d5089d883cb953283ee4e1f2e01ffa7b903fe7a94af4bb1acb02ca6a36678e41506879069cee11c9dcf6a080b6a4a7c7f21dc9</code>
+        <code>e_19</code>: <code>0x058a06be5a36c6148d8a1287ee7f0e725453fa1bb05cf77239f235b417127e370cfa4f88e61a23ea16df3c45d29c203d04d09782b39e9b4037c0c4ac8e8653e7c533ad752a640b233e</code>
+        <code>e_20</code>: <code>0x0dfdfaaeb9349cf18d21b92ad68f8a7ecc509c35fcd4b8abeb93be7a204ac871f2195180206a2c340fccb69dbc30b9410ed0b122308a8fc75141f673ae5ec82b6a45fc2d664409c6b6</code>
+        <code>e_21</code>: <code>0x0d06c8adfdd81275da2a0ce375b8df9199f3d359e8cf50064a3dc10a592417124a3b705b05a7ffe78e20f935a08868ecf3fc5aba0ace7ce4497bb59085ca277c16b3d53dd7dae5c857</code>
+        <code>e_22</code>: <code>0x0708effd28c4ae21b6969cb9bdd0c27f8a3e341798b6f6d4baf27be259b4a47688b50cb68a69a917a4a1faf56cec93f69ac416512c32e9d5e69bd8836b6c2ba9c6889d507ad571dbc4</code>
+        <code>e_23</code>: <code>0x09da7c7aa48ce571f8ece74b98431b14ae6fb4a53ae979cd6b2e82320e8d25a0ece1ca1563aa5aa6926e7d608358af8399534f6b00788e95e37ef1b549f43a58ad250a71f0b2fdb2bf</code>
+        <code>e_24</code>: <code>0x0a7150a14471994833d89f41daeaa999dfc24a9968d4e33d88ed9e9f07aa2432c53e486ba6e3b6e4f4b8d9c989010a375935c06e4b8d6c31239fad6a61e2647b84a0e3f76e57005ff7</code>
+        <code>e_25</code>: <code>0x084696f31ff27889d4dccdc4967964a5387a5ae071ad391c5723c9034f16c2557915ada07ec68f18672b5b2107f785c15ddf9697046dc633b5a23cc0e442d28ef6eea9915d0638d4d8</code>
+        <code>e_26</code>: <code>0x0398e76e3d2202f999ac0f73e0099fe4e0fe2de9d223e78fc65c56e209cdf48f0d1ad8f6093e924ce5f0c93437c11212b7841de26f9067065b1898f48006bcc6f2ab8fa8e0b93f4ba4</code>
+        <code>e_27</code>: <code>0x06d683f556022368e7a633dc6fe319fd1d4fc0e07acff7c4d4177e83a911e73313e0ed980cd9197bd17ac45942a65d90e6cb9209ede7f36c10e009c9d337ee97c4068db40e34d0e361</code>
+        <code>e_28</code>: <code>0x0d764075344b70818f91b13ee445fd8c1587d1c0664002180bbac9a396ad4a8dc1e695b0c4267df4a09081c1e5c256c53fd49a73ffc817e65217a44fc0b20ef5ee92b28d4bc3e38576</code>
+        <code>e_29</code>: <code>0x0aa6a32fdc4423b1c6d43e5104159bcd8e03a676d055d4496f7b1bc8761164a2908a3ff0e4c4d1f4362015c14824927011e2909531b8d87ee0acd676e7221a1ca1c21a33e2cf87dc51</code>
+        <code>e_30</code>: <code>0x1147719959ac8eeab3fc913539784f1f947df47066b6c0c1beafecdb5fa784c3be9de5ab282a678a2a0cbef8714141a6c8aaa76500819a896b46af20509953495e2a85eff58348b38d</code>
+        <code>e_31</code>: <code>0x11a377bcebd3c12702bb34044f06f8870ca712fb5caa6d30c48ace96898fcbcddbcf31f331c9e524684c02c90db7f30b9fc470d6e651a7e8b1f684383f3705d7a47a1b4fe463d623c8</code>
+        <code>e_32</code>: <code>0x0b8b4511f451ba2cc58dc28e56d5e1d0a8f557ecb242f4d994a627e07cf3fa44e6d83cb907deacf303d2f761810b5d943b46c4383e1435ec23fec196a70e33946173c78be3c75dfc83</code>
+        <code>e_33</code>: <code>0x090962d632ee2a57ce4208052ce47a9f76ea0fdad724b7256bb07f3944e9639a981d3431087241e30ae9bf5e2ea32af323ce7ed195d383b749cb25bc09f678d385a49a0c09f6d9efca</code>
+        <code>e_34</code>: <code>0x0931c7befc80acd185491c68af886fa8ee39c21ed3ebd743b9168ae3b298df485bfdc75b94f0b21aecd8dca941dfc6d1566cc70dc648e6ccc73e4cbf2a1ac83c8294d447c66e74784d</code>
+        <code>e_35</code>: <code>0x020ac007bf6c76ec827d53647058aca48896916269c6a2016b8c06f0130901c8975779f1672e581e2dfdbcf504e96ecf6801d0d39aad35cf79fbe7fe193c6c882c15bce593223f0c7c</code>
+        <code>e_36</code>: <code>0x0c0aed0d890c3b0b673bf4981398dcbf0d15d36af6347a39599f3a22584184828f78f91bbbbd08124a97672963ec313ff142c456ec1a2fc3909fd4429fd699d827d48777d3b0e0e699</code>
+        <code>e_37</code>: <code>0x0ef7799241a1ba6baaa8740d5667a1ace50fb8e63accc3bc30dc07b11d78dc545b68910c027489a0d842d1ba3ac406197881361a18b9fe337ff22d730fa44afabb9f801f759086c8e4</code>
+        <code>e_38</code>: <code>0x016663c940d062f4057257c8f4fb9b35e82541717a34582dd7d55b41ebadf40d486ed74570043b2a3c4de29859fdeae9b6b456cb33bb401ecf38f9685646692300517e9b035d6665fc</code>
+        <code>e_39</code>: <code>0x1184a79510edf25e3bd2dc793a5082fa0fed0d559fa14a5ce9ffca4c61f17196e1ffbb84326272e0d079368e9a735be1d05ec80c20dc6198b50a22a765defdc151d437335f1309aced</code>
+        <code>e_40</code>: <code>0x120e47a747d942a593d202707c936dafa6fed489967dd94e48f317fd3c881b1041e3b6bbf9e8031d44e39c1ab5ae41e487eac9acd90e869129c38a8e6c97cf55d6666d22299951f91a</code>
+        <code>e_41</code>: <code>0x026b6e374108ecb2fe8d557087f40ab7bac8c5af0644a655271765d57ad71742aa331326d871610a8c4c30ccf5d8adbeec23cdff20d9502a5005fce2593caf0682c82e4873b89d6d71</code>
+        <code>e_42</code>: <code>0x041be63a2fa643e5a66faeb099a3440105c18dca58d51f74b3bf281da4e689b13f365273a2ed397e7b1c26bdd4daade710c30350318b0ae9a9b16882c29fe31ca3b884c92916d6d07a</code>
+        <code>e_43</code>: <code>0x124018a12f0f0af881e6765e9e81071acc56ebcddadcd107750bd8697440cc16f190a3595633bb8900e6829823866c5769f03a306f979a3e039e620d6d2f576793d36d840b168eeedd</code>
+        <code>e_44</code>: <code>0x0d422de4a83449c535b4b9ece586754c941548f15d50ada6740865be9c0b066788b6078727c7dee299acc15cbdcc7d51cdc5b17757c07d9a9146b01d2fdc7b8c562002da0f9084bde5</code>
+        <code>e_45</code>: <code>0x1119f6c5468bce2ec2b450858dc073fea4fb05b6e83dd20c55c9cf694cbcc57fc0effb1d33b9b5587852d0961c40ff114b7493361e4cfdff16e85fbce667869b6f7e9eb804bcec46db</code>
+        <code>e_46</code>: <code>0x061eaa8e9b0085364a61ea4f69c3516b6bf9f79f8c79d053e646ea637215cf6590203b275290872e3d7b258102dd0c0a4a310af3958165f2078ff9dc3ac9e995ce5413268d80974784</code>
+        <code>e_47</code>: <code>0x0add8d58e9ec0c9393eb8c4bc0b08174a6b421e15040ef558da58d241e5f906ad6ca2aa5de361421708a6b8ff6736efbac6b4688bf752259b4650595aa395c40d00f4417f180779985</code><a href="#appendix-C-17" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="zcash-serialization-format-for-bls12381zcashserial">
+<section id="appendix-D">
+      <h2 id="name-zcash-serialization-format-">
+<a href="#appendix-D" class="section-number selfRef">Appendix D. </a><a href="#name-zcash-serialization-format-" class="section-name selfRef">ZCash serialization format for BLS12_381{#ZCashSerial}</a>
+      </h2>
+<p id="appendix-D-1">This section describes the serialization format defined by <span>[<a href="#ZCashRep" class="cite xref">ZCashRep</a>]</span>.
+It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers.
+This format applies to points on the BLS12_381 elliptic curves <code>E</code> and <code>E'</code>, whose parameters are given in <span>[<a href="#BLS12-381" class="cite xref">BLS12-381</a>]</span>.
+Note that this serialization method is based on the representation shown in <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> and it is a tiny tweak so as to apply to <code>GF(p^m)</code>.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-2">At a high level, the serialization format is defined as follows:<a href="#appendix-D-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-3.1">Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's <code>y</code>-coordinate.<a href="#appendix-D-3.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-D-3.2">Points on <code>E</code> are serialized into 48 bytes (compressed) or 96 bytes (uncompressed). Points on <code>E'</code> are serialized into 96 bytes (compressed) or 192 bytes (uncompressed).<a href="#appendix-D-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-D-3.3">The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.<a href="#appendix-D-3.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-D-3.4">The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.<a href="#appendix-D-3.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-D-3.5">The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.<a href="#appendix-D-3.5" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="appendix-D-4">Below, we give detailed serialization and de-serialization procedures. The following notation is used in the rest of this section:<a href="#appendix-D-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-5.1">Elements of <code>GF(p^2)</code> are represented as polynomial with <code>GF(p)</code> coefficients like (#RepConv).<a href="#appendix-D-5.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-D-5.2">For a byte string <code>str</code>, <code>str[0]</code> is defined as the first byte of str.<a href="#appendix-D-5.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-D-5.3">The function <code>sign_GF_p(y)</code> returns one bit representing the sign of an element of <code>GF(p)</code>. This function is defined as follows:<a href="#appendix-D-5.3" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="appendix-D-6"><code>
+    sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
+                   { 0 otherwise.
+</code><a href="#appendix-D-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-7.1">The function sign_GF_p^2(y') returns one bit representing the sign of an element in GF(p^2). This function is defined as follows:<a href="#appendix-D-7.1" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="appendix-D-8"><code>
+    sign_GF_p^2(y') := { sign_GF_p(y'_0) if y'_1 equals 0, else
+                      { 1 if y'_1 &gt; (p - 1) / 2, else
+                      { 0 otherwise.
+</code><a href="#appendix-D-8" class="pilcrow">¶</a></p>
+<div id="point-serialization-procedure">
+<section id="appendix-D.1">
+        <h3 id="name-point-serialization-procedu">
+<a href="#appendix-D.1" class="section-number selfRef">D.1. </a><a href="#name-point-serialization-procedu" class="section-name selfRef">Point Serialization Procedure</a>
+        </h3>
+<p id="appendix-D.1-1">The serialization procedure is defined as follows for a point <code>P</code> = <code>(x, y)</code>.
+This procedure uses the I2OSP function defined in <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span>.<a href="#appendix-D.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.1-2">Compute the metadata bits <code>C_bit</code>, <code>I_bit</code>, and <code>S_bit</code>, as follows:<a href="#appendix-D.1-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-D.1-3">
+<li id="appendix-D.1-3.1">
+            <p id="appendix-D.1-3.1.1">C_bit is 1 if point compression should be used, otherwise it is 0.<a href="#appendix-D.1-3.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D.1-3.1.2.1">
+                <code>I_bit</code> is 1 if <code>P</code> is the point at infinity, otherwise it is 0.<a href="#appendix-D.1-3.1.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.1-3.1.2.2">
+                <code>S_bit</code> is 0 if P is the point at infinity or if point compression is not used. Otherwise (i.e., when point compression is used and <code>P</code> is not the point at infinity), if <code>P</code> is a point on <code>E</code>, <code>S_bit</code> = <code>sign_GF_p(y)</code>, else if <code>P</code> is a point on <code>E'</code>, <code>S_bit</code> = <code>sign_GF_p^2(y)</code>.<a href="#appendix-D.1-3.1.2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li id="appendix-D.1-3.2">Let <code>m_byte</code> = <code>(C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5)</code>.<a href="#appendix-D.1-3.2" class="pilcrow">¶</a>
+</li>
+          <li id="appendix-D.1-3.3">
+            <p id="appendix-D.1-3.3.1">Let <code>x_string</code> be the serialization of <code>x</code>, which is defined as follows:<a href="#appendix-D.1-3.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D.1-3.3.2.1">If <code>P</code> is the point at infinity on <code>E</code>, let <code>x_string</code> = <code>I2OSP(0, 48)</code>.<a href="#appendix-D.1-3.3.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.1-3.3.2.2">If <code>P</code> is a point on <code>E</code> other than the point at infinity, then <code>x</code> is an element of <code>GF(p)</code>, i.e., an integer in the inclusive range <code>[0, p - 1]</code>. In this case, let <code>x_string</code> = <code>I2OSP(x, 48)</code>.<a href="#appendix-D.1-3.3.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.1-3.3.2.3">If <code>P</code> is the point at infinity on <code>E'</code>, let <code>x_string</code> = <code>I2OSP(0, 96)</code>.<a href="#appendix-D.1-3.3.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.1-3.3.2.4">If <code>P</code> is a point on E' other than the point at infinity, then x can be represented as <code>(x_0, x_1)</code> where <code>x_0</code> and <code>x_1</code> are elements of <code>GF(p)</code>, i.e., integers in the inclusive range <code>[0, p - 1]</code> (see discussion of vector representations above). In this case, let <code>x_string</code> = <code>I2OSP(x_1, 48)</code> || <code>I2OSP(x_0, 48)</code>.<a href="#appendix-D.1-3.3.2.4" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+        </ol>
+<p id="appendix-D.1-4">Notice that in all of the above cases, the 3 most significant bits of <code>x_string[0]</code> are guaranteed to be 0.<a href="#appendix-D.1-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-D.1-5">
+<li id="appendix-D.1-5.1">If point compression is used, let <code>y_string</code> be the empty string. Otherwise (i.e., when point compression is not used), let <code>y_string</code> be the serialization of <code>y</code>, which is defined in Step 3.<a href="#appendix-D.1-5.1" class="pilcrow">¶</a>
+</li>
+          <li id="appendix-D.1-5.2">Let <code>s_string</code> = <code>x_string</code> || <code>y_string</code>.<a href="#appendix-D.1-5.2" class="pilcrow">¶</a>
+</li>
+          <li id="appendix-D.1-5.3">Set <code>s_string[0]</code> = <code>x_string[0]</code> OR <code>m_byte</code>, where OR is computed bitwise. After this operation, the most significant bit of <code>s_string[0]</code> equals <code>C_bit</code>, the next bit equals <code>I_bit</code>, and the next equals <code>S_bit</code>. (This is true because the three most significant bits of <code>x_string[0]</code> are guaranteed to be zero, as discussed above.)<a href="#appendix-D.1-5.3" class="pilcrow">¶</a>
+</li>
+          <li id="appendix-D.1-5.4">Output s_string.<a href="#appendix-D.1-5.4" class="pilcrow">¶</a>
+</li>
+        </ol>
+</section>
+</div>
+<div id="point-deserialization-procedure">
+<section id="appendix-D.2">
+        <h3 id="name-point-deserialization-proce">
+<a href="#appendix-D.2" class="section-number selfRef">D.2. </a><a href="#name-point-deserialization-proce" class="section-name selfRef">Point deserialization procedure</a>
+        </h3>
+<p id="appendix-D.2-1">The deserialization procedure is defined as follows for a string <code>s_string</code>. This procedure uses the OS2IP function defined in <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span>.<a href="#appendix-D.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="appendix-D.2-2">
+<li id="appendix-D.2-2.1">
+            <p id="appendix-D.2-2.1.1">Let <code>m_byte</code> = <code>s_string[0]</code> AND <code>0xE0</code>, where AND is computed bitwise. In other words, the three most significant bits of <code>m_byte</code> equal the three most significant bits of <code>s_string[0]</code>, and the remaining bits are 0.<a href="#appendix-D.2-2.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-D.2-2.1.2">
+If m_byte equals any of 0x20, 0x60, or 0xE0, output INVALID and stop decoding.<a href="#appendix-D.2-2.1.2" class="pilcrow">¶</a></p>
+<p id="appendix-D.2-2.1.3">
+Otherwise:
+ * Let <code>C_bit</code> equal the most significant bit of <code>m_byte</code>,
+ * Let <code>I_bit</code> equal the second most significant bit of <code>m_byte</code>, and
+ * Let <code>S_bit</code> equal the third most significant bit of <code>m_byte</code>.<a href="#appendix-D.2-2.1.3" class="pilcrow">¶</a></p>
+</li>
+          <li id="appendix-D.2-2.2">
+            <p id="appendix-D.2-2.2.1">If <code>C_bit</code> is 1:<a href="#appendix-D.2-2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D.2-2.2.2.1">If <code>s_string</code> has length 48 bytes, the output point is on the curve <code>E</code>.<a href="#appendix-D.2-2.2.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.2.2.2">If <code>s_string</code> has length 96 bytes, the output point is on the curve <code>E'</code>.<a href="#appendix-D.2-2.2.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.2.2.3">If <code>s_string</code> has any other length, output INVALID and stop decoding.
+ If <code>C_bit</code> is 0:<a href="#appendix-D.2-2.2.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.2.2.4">If <code>s_string</code> has length 96 bytes, the output point is on <code>E</code>.<a href="#appendix-D.2-2.2.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.2.2.5">If <code>s_string</code> has length 192 bytes, the output point is on <code>E'</code>.<a href="#appendix-D.2-2.2.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.2.2.6">If <code>s_string</code> has any other length, output INVALID and stop decoding.<a href="#appendix-D.2-2.2.2.6" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li id="appendix-D.2-2.3">Let <code>s_string[0]</code> = <code>s_string[0]</code> AND <code>0x1F</code>, where AND is computed bitwise. In other words, set the three most significant bits of <code>s_string[0]</code> to 0.<a href="#appendix-D.2-2.3" class="pilcrow">¶</a>
+</li>
+          <li id="appendix-D.2-2.4">
+            <p id="appendix-D.2-2.4.1">If <code>I_bit</code> is 1:<a href="#appendix-D.2-2.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D.2-2.4.2.1">If <code>s_string</code> is not the all zeros string, output INVALID and stop decoding.<a href="#appendix-D.2-2.4.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.4.2.2">Otherwise (i.e., if <code>s_string</code> is the all zeros string), output the point at infinity on the curve that was determined in step 2 and stop decoding.
+ Otherwise, <code>I_bit</code> must be 0. Continue decoding.<a href="#appendix-D.2-2.4.2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li id="appendix-D.2-2.5">
+            <p id="appendix-D.2-2.5.1">If <code>C_bit</code> is 0:<a href="#appendix-D.2-2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D.2-2.5.2.1">Let <code>x_string</code> be the first half of <code>s_string</code>.<a href="#appendix-D.2-2.5.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.5.2.2">Let <code>y_string</code> be the last half of <code>s_string</code>.<a href="#appendix-D.2-2.5.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.5.2.3">Let <code>x</code> = <code>OS2IP(x_string)</code>.<a href="#appendix-D.2-2.5.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.5.2.4">Let <code>y</code> = <code>OS2IP(y_string)</code>.<a href="#appendix-D.2-2.5.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.5.2.5">If the point <code>P</code> = <code>(x, y)</code> is not a valid point on the curve that was determined in step 2, output INVALID and stop decoding.<a href="#appendix-D.2-2.5.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.5.2.6">Otherwise, output the point <code>P</code> = <code>(x, y)</code> and stop decoding.
+ Otherwise, <code>C_bit</code> must be 1. Continue decoding.<a href="#appendix-D.2-2.5.2.6" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li id="appendix-D.2-2.6">Let <code>x</code> = <code>OS2IP(s_string)</code>.<a href="#appendix-D.2-2.6" class="pilcrow">¶</a>
+</li>
+          <li id="appendix-D.2-2.7">
+            <p id="appendix-D.2-2.7.1">If the curve that was determined in step 2 is <code>E</code>:<a href="#appendix-D.2-2.7.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D.2-2.7.2.1">Let <code>y2 = x^3 + 4</code> in <code>GF(p)</code>.<a href="#appendix-D.2-2.7.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.7.2.2">If <code>y2</code> is not square in <code>GF(p)</code>, output INVALID and stop decoding.<a href="#appendix-D.2-2.7.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.7.2.3">Otherwise, let <code>y</code> = <code>sqrt(y2)</code> in <code>GF(p)</code> and let <code>Y_bit</code> = <code>sign_GF_p(y)</code>.
+ Otherwise, (i.e., when the curve that was determined in step 2 is <code>E'</code>):<a href="#appendix-D.2-2.7.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.7.2.4">Let <code>y2</code> = <code>x^3 + 4 * (u + 1)</code> in <code>GF(p^2)</code>.<a href="#appendix-D.2-2.7.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.7.2.5">If <code>y2</code> is not square in <code>GF(p^2)</code>, output INVALID and stop decoding.<a href="#appendix-D.2-2.7.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="appendix-D.2-2.7.2.6">Otherwise, let <code>y</code> = <code>sqrt(y2)</code> in <code>GF(p^2)</code> and let <code>Y_bit</code> = <code>sign_GF_p^2(y)</code>.<a href="#appendix-D.2-2.7.2.6" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li id="appendix-D.2-2.8">If <code>S_bit</code> equals <code>Y_bit</code>, output <code>P = (x, y)</code> and stop decoding. Otherwise, output <code>P</code> = <code>(x, -y)</code> and stop decoding.<a href="#appendix-D.2-2.8" class="pilcrow">¶</a>
+</li>
+        </ol>
+</section>
+</div>
+</section>
+</div>
+<div id="adoption-status-of-pairing-friendly-curves-with-the-100-bit-security-level">
+<section id="appendix-E">
+      <h2 id="name-adoption-status-of-pairing-">
+<a href="#appendix-E" class="section-number selfRef">Appendix E. </a><a href="#name-adoption-status-of-pairing-" class="section-name selfRef">Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level</a>
+      </h2>
+<p id="appendix-E-1">BN curves including BN254 that were estimated as the 128-bit security level before exTNFS ensure no more than the 100-bit security level by the effect of exTNFS. (#adoption) summarizes the adoption status of the parameters with a security level lower than the "Arnd 128-bit" range.
+Please refer the (#selection_pfc) for the naming conventions for each curve listed in (#adoption).<a href="#appendix-E-1" class="pilcrow">¶</a></p>
+<p id="appendix-E-2">Category | Name | Supported 100-bit Curves
+---------|------|-------------------------:
+Standard | ISO/IEC | BN256I
+^         | TCG |  BN256I
+^         | FIDO/W3C | BN256I
+^          | ^        | BN256D
+Library | mcl | BN254N
+^       | ^   | BN_SNARK1
+^       | TEPLA | BN254B
+^       | ^     | BN254N
+^       | RELIC | BN254N
+^       | ^      | BN256D
+^       | AMCL | BN254N
+^       | ^      | BN254CX
+^       | ^      | BN256I
+^       | Intel IPP | BN256I
+^       | MIRACL | BN254N
+^       | ^      | BN254CX
+^       | ^      | BN256I
+^       | Adjoint | BN_SNARK1
+^       | ^      | BN254B
+^       | ^      | BN254N
+^       | ^      | BN254S1
+^       | ^      | BN254S2
+Application | Zcash | BN_SNARK1
+^       | DFINITY | BN254N
+^       | ^      | BN_SNARK1
+Table: Adoption Status of Pairing-Friendly Curves with 100-bit Security Level(Legacy) {#adoption}<a href="#appendix-E-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-F">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yumi Sakemi</span></div>
+<div dir="auto" class="left"><span class="org">Infours</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:yumi.sakemi@infours.co.jp" class="email">yumi.sakemi@infours.co.jp</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Riad S. Wahby</span></div>
+<div dir="auto" class="left"><span class="org">Stanford University</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:rsw@cs.stanford.edu" class="email">rsw@cs.stanford.edu</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
