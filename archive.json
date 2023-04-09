@@ -1,0 +1,2529 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-04-09T01:05:35.935747+00:00",
+  "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "MDU6SXNzdWU2MjcxMjI2MjY=",
+      "title": "Editorial comments for section 1.1 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/1",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer) \r\n\r\n- sentence 1: recent -> currently deployed\r\n- sentence 3: variant -> subfield; the attention for -> attention due to; applicable -> 'easily applicable' or 'practical'\r\n- sentence 4: defined over -> defined using\r\n- sentence 5: 'Thanks to the characteristics of pairing, it can be applied to construct' -> 'Pairings are fundamental in the construction of'\r\n- sentence 6: 'now' -> 'already' or 'currently'",
+      "createdAt": "2020-05-29T09:13:10Z",
+      "updatedAt": "2020-06-04T10:27:12Z",
+      "closedAt": "2020-06-04T10:27:12Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK! \r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:24:42Z",
+          "updatedAt": "2020-06-04T07:24:42Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your check the issue :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:27:12Z",
+          "updatedAt": "2020-06-04T10:27:12Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "MDU6SXNzdWU2MjcxMjUxNzU=",
+      "title": "Editorial comments for section 1.2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/2",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer) \r\n\r\n- sen 1: are -> have already been; implemented -> deployed\r\n- sen 2: We show example -> 'We list here some examples of'\r\n- sen 8: 'M-Pin protocol' -> 'The M-Pin protocol'; 'pairing is' -> 'pairings are'\r\n- sen 9: 'Trusted Platform Module' -> 'a Trusted Platform Module'\r\n- sen 11: 'Pairing is used for constructing' -> 'Pairings are used in the construction of'\r\n- sen 12: 'ECDAA algorithm' -> 'an ECDAA algorithm'\r\n- sen 13: 'as a functionality' -> 'as part of the functionality'\r\n- sen 15: 'has been' -> 'was'\r\n- sen 17: 'privacy' -> 'the privacy'\r\n- sen 18: 'pairing' -> 'pairings'\r\n- sen 19: 'the subset' -> 'a subset'\r\n- sen 20: 'pairing takes' -> 'pairings take'\r\n- sen 23: is this 'recently' or 'currently'? There are two tenses in this sentence so I'm not sure if it's past or resent.",
+      "createdAt": "2020-05-29T09:17:08Z",
+      "updatedAt": "2020-06-04T10:28:57Z",
+      "closedAt": "2020-06-04T10:28:57Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fixed the following comments when we updated from version 03 to 04.\r\n- sen 12: 'ECDAA algorithm' -> 'an ECDAA algorithm'\r\n- sen 17: 'privacy' -> 'the privacy'",
+          "createdAt": "2020-06-03T03:25:04Z",
+          "updatedAt": "2020-06-03T03:25:04Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:25:15Z",
+          "updatedAt": "2020-06-04T07:25:15Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:28:57Z",
+          "updatedAt": "2020-06-04T10:28:57Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "MDU6SXNzdWU2MjcxMjY1MzM=",
+      "title": "About CIRCL's explanation (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/3",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer) \r\n\r\n- sen 22: the meaning here is unclear. Do you mean 'They plan to include secure pairing implementations in CIRCL' or 'They plan to include securely implemented subroutines for pairing computations on certain paring-friendly curves in CIRCL'?",
+      "createdAt": "2020-05-29T09:19:23Z",
+      "updatedAt": "2020-06-04T10:29:13Z",
+      "closedAt": "2020-06-04T10:29:13Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We revised the sentence according to the following blog post by Cloudflare.\r\n \r\nhttps://blog.cloudflare.com/introducing-circl/",
+          "createdAt": "2020-06-04T05:08:47Z",
+          "updatedAt": "2020-06-04T05:08:47Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:53:20Z",
+          "updatedAt": "2020-06-04T07:53:20Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:29:13Z",
+          "updatedAt": "2020-06-04T10:29:13Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "MDU6SXNzdWU2MjcxMjc1NDQ=",
+      "title": "Editorial comments for section 1.3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/4",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments form Chloe (Expert Reviewer) \r\n\r\n- sen 1: 'introduce' -> 'record' (they were introduced in the research papers that you cite); 'pairing-friendly curves' -> 'some pairing-friendly curves'.\r\n- sen 2: 'recent attack' ->'most recent attacks' (can 4 years ago still be considered recent?)",
+      "createdAt": "2020-05-29T09:20:56Z",
+      "updatedAt": "2020-06-04T10:29:29Z",
+      "closedAt": "2020-06-04T10:29:29Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We revised section 1.3 when we updated from version 03 to 04.",
+          "createdAt": "2020-06-03T03:27:25Z",
+          "updatedAt": "2020-06-03T03:27:25Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:27:30Z",
+          "updatedAt": "2020-06-04T07:27:30Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:29:29Z",
+          "updatedAt": "2020-06-04T10:29:29Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "MDU6SXNzdWU2MjcxMjk4MDE=",
+      "title": "Editorial comments for section 1.3 (from Expert Review) 2",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/5",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 3: I would split this up into two sentences, one covering 128, 192, and 256-bit security, and one saying that you will also comment on 100-bit security as this is the (not secure) security level of the pairing-friendly curves that are/were in most common use.",
+      "createdAt": "2020-05-29T09:24:43Z",
+      "updatedAt": "2020-06-04T10:29:52Z",
+      "closedAt": "2020-06-04T10:29:51Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We have revised this sentence when we update from 03 to 04.",
+          "createdAt": "2020-06-04T05:25:34Z",
+          "updatedAt": "2020-06-04T05:25:34Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:35:39Z",
+          "updatedAt": "2020-06-04T07:35:39Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:29:51Z",
+          "updatedAt": "2020-06-04T10:29:51Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "MDU6SXNzdWU2MjcxMzE3NTY=",
+      "title": "Comments about security levels for sec. 1.3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/6",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 3: 'We show how to evaluate the security' -> 'We list the security levels of certain pairing-friendly curves, and motivate our choices of curves'. (Or something similar. The issue here is that you do not show how to evaluate the security, nor should you since that is a whole paper on its own, namely [BD18]. What you do is give a Table where people can look up options for pairing-friendly curves of a given security level).",
+      "createdAt": "2020-05-29T09:28:01Z",
+      "updatedAt": "2020-06-04T10:30:09Z",
+      "closedAt": "2020-06-04T10:30:09Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In addition to section 1.3, we also reflect this comment to abstract.",
+          "createdAt": "2020-06-04T05:44:43Z",
+          "updatedAt": "2020-06-04T05:44:43Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:39:27Z",
+          "updatedAt": "2020-06-04T07:39:27Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:30:09Z",
+          "updatedAt": "2020-06-04T10:30:09Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "MDU6SXNzdWU2MjcxMzM4NDU=",
+      "title": "Comments about definition of terminology (from Expert Review) ",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/7",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- title: Curve -> Curves\r\n- sen 3-4: replace the full stop after 'elliptic curve' by a colon; remove 'where x and y are in F_q' (this is incorrect).\r\n- sen 5: 'Weierstrass' -> 'the Weierstrass'\r\n- sen 6-12 are both inprecise and insufficient to define the groups needed later. \r\nProblems:\r\n*O_E is not defined in any meaningful way\r\n*We need F_(q^m) rational points, not just F_q-rational points. (e.g. m = k for G2).\r\n*'opposite point' is not defined.\r\n*there are three points of intersection so 'the point of intersection' could be misinterpreted.\r\n*'Similarly, we can define 2P = P+P', I think it would not be obvious to a newcomer that this means taking the tangent line.\r\n*r and BP should be part of the terminology\r\n*Unless you plan an unconventional pairing, r should be the largest prime divisor (not just any).\r\n",
+      "createdAt": "2020-05-29T09:31:31Z",
+      "updatedAt": "2020-06-05T02:54:24Z",
+      "closedAt": "2020-06-05T02:54:23Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fixed the following comments when we updated from version 03 to 04.\r\n- sen 5: 'Weierstrass' -> 'the Weierstrass'\r\n",
+          "createdAt": "2020-06-03T03:28:11Z",
+          "updatedAt": "2020-06-03T03:28:11Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:46:44Z",
+          "updatedAt": "2020-06-04T11:46:44Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:54:23Z",
+          "updatedAt": "2020-06-05T02:54:23Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "MDU6SXNzdWU2MjcxMzQ2OTE=",
+      "title": "Editorial comments for section 2.2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/8",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- title: Pairing -> Pairings\r\n- sen 2: Weil -> the Weil; Tate -> the Tate; optimal -> the optimal\r\n- sen 3: optimal -> the optimal; to be efficient -> to be the most efficient; and mainly used -> is the one that is most commonly used\r\n- sen 4-7: this is incorrect, rewrite as\r\n'Let E be an elliptic curve defined over a prime field F_p. Let k be the minimum integer for which r is a divisor of p^k-1; this is called the embedding degree. Let G_1 be a cyclic subgroup of E(F_p) of order r, there also exists cyclic subgroup of E(F_p^k) of order r, define this to be G_2. Let G_T be an order r subgroup of the multiplicative group (F_p^k)^*; this exists by definition of k.'\r\n- sen 8: Pairing -> A pairing\r\n- points 1 and 2 are ok.\r\n- point 3 is not part of the definition of a pairing. Remove point 3 and end this section with the sentence\r\n'In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable'.",
+      "createdAt": "2020-05-29T09:32:59Z",
+      "updatedAt": "2020-06-05T02:54:35Z",
+      "closedAt": "2020-06-05T02:54:34Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:48:03Z",
+          "updatedAt": "2020-06-04T11:48:03Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:54:34Z",
+          "updatedAt": "2020-06-05T02:54:34Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "MDU6SXNzdWU2MjcxMzYxNzc=",
+      "title": "Comments about explanation of pairing (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/9",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 1: A pairing is defined on an elliptic curve, not two different ones, just different groups of rational points of *the same curve*. This sentence could be rewritten as 'A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve'.",
+      "createdAt": "2020-05-29T09:35:34Z",
+      "updatedAt": "2020-06-05T02:54:48Z",
+      "closedAt": "2020-06-05T02:54:47Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:18:43Z",
+          "updatedAt": "2020-06-04T12:18:43Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:54:47Z",
+          "updatedAt": "2020-06-05T02:54:47Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "MDU6SXNzdWU2MjcxMzY4NTk=",
+      "title": "Comments about explanation of twist techniques (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/10",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\nTo help with the discussion later, you may want to add something about twists here, and something along the lines of 'it can sometimes be convenient for efficiency to do the computations of G2 in the twist Et, and so consider G2 to instead be a subgroup of Et.'",
+      "createdAt": "2020-05-29T09:36:46Z",
+      "updatedAt": "2020-06-05T02:55:02Z",
+      "closedAt": "2020-06-05T02:55:02Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:18:35Z",
+          "updatedAt": "2020-06-04T12:18:35Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:55:02Z",
+          "updatedAt": "2020-06-05T02:55:02Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "MDU6SXNzdWU2MjcxMzgyODg=",
+      "title": "Comments about BN curves (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/11",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n2.3 may no longer be necessary to include in my opinion if you take my advice on 4.3.1.",
+      "createdAt": "2020-05-29T09:39:11Z",
+      "updatedAt": "2020-06-05T12:25:10Z",
+      "closedAt": "2020-06-05T12:25:09Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "After discussing with Chloe, we decided to leave BN462 in consideration of use on the future Internet.\r\nSo, section 2.3 which explains BN curves is needed again.",
+          "createdAt": "2020-06-04T09:42:39Z",
+          "updatedAt": "2020-06-04T09:42:39Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into issue #47.",
+          "createdAt": "2020-06-05T12:25:09Z",
+          "updatedAt": "2020-06-05T12:25:09Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "MDU6SXNzdWU2MjcxMzg4MDk=",
+      "title": "Editorial comments for section 2.3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/12",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n2.3 unify with all the corrections from 2.1 and 2.2.",
+      "createdAt": "2020-05-29T09:40:06Z",
+      "updatedAt": "2020-06-05T02:56:43Z",
+      "closedAt": "2020-06-05T02:56:43Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:48:38Z",
+          "updatedAt": "2020-06-04T11:48:38Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:56:43Z",
+          "updatedAt": "2020-06-05T02:56:43Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "MDU6SXNzdWU2MjcxMzk0OTU=",
+      "title": "Editorial comments for section 2.4 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/13",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n2.4 unify with all the corrections from 2.1 and 2.2.",
+      "createdAt": "2020-05-29T09:41:18Z",
+      "updatedAt": "2020-06-05T02:56:31Z",
+      "closedAt": "2020-06-05T02:56:31Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:49:36Z",
+          "updatedAt": "2020-06-04T11:49:36Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:56:31Z",
+          "updatedAt": "2020-06-05T02:56:31Z"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "MDU6SXNzdWU2MjcxNDAxMzU=",
+      "title": "Editorial comments for section 2.5 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/14",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- paragraph 2: 'and F_p^d be an .. of indeterminate i' -> 'and F_p^d = F_p(i) be an extension field of F_p of degree d' \r\n- paragraph 3: 'for s_0' -> ', where s_0'; 'a basefield' -> 'the basefield'; \r\n- paragraph 4: 'Let...of indeterminate j' -> 'Let F_p^d' = F_p^d(j) be an extension field of F_p^d of degree d'/d.'\r\n- paragraph 5: 'a basefield' -> 'the basefield'; 'for s'_0' -> ', where s'_0'\r\n- paragraph 7: 'octet stream' -> either 'an octet stream' or 'octet streams'",
+      "createdAt": "2020-05-29T09:42:22Z",
+      "updatedAt": "2020-06-04T10:32:03Z",
+      "closedAt": "2020-06-04T10:32:03Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:50:19Z",
+          "updatedAt": "2020-06-04T07:50:19Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:32:03Z",
+          "updatedAt": "2020-06-04T10:32:03Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "MDU6SXNzdWU2MjcxNDEzMTE=",
+      "title": "Comments about wording \"octet string\" (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/15",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- paragraph 3: is this really called a octet string even when d != 8?",
+      "createdAt": "2020-05-29T09:44:22Z",
+      "updatedAt": "2020-06-08T04:39:02Z",
+      "closedAt": "2020-06-08T04:39:02Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Our draft uses the data conversion method for an element in extension fields in the following draft, and the term \"octet string\" is used, so we followed this representation.\r\n\r\nhttps://tools.ietf.org/html/draft-ietf-lwig-curve-representations-09",
+          "createdAt": "2020-06-04T09:51:04Z",
+          "updatedAt": "2020-06-04T09:51:04Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-06T06:30:30Z",
+          "updatedAt": "2020-06-06T06:30:30Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-08T04:39:02Z",
+          "updatedAt": "2020-06-08T04:39:02Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "MDU6SXNzdWU2MjcxNDIwNjk=",
+      "title": "Editorial comments for section 3.1 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/16",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 1 should end in a colon not a full stop\r\n- in the list of hard problems, each one should be preceded by 'the'\r\n- par 2: the grammar here is strange. You could write 'Although it would be sufficient to attack any of these problems to attack paiting-based crytography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.'\r\n- par 3: 'The well-known algorithms for solving\r\n   the discrete logarithm problems include Pollard's rho algorithm\r\n   [Pollard78], Index Calculus [HR83] and so on.'\r\n ->'The best known algorithms for solving\r\n   the discrete logarithm problems are based on Pollard's rho algorithm\r\n   [Pollard78] and Index Calculus [HR83].'",
+      "createdAt": "2020-05-29T09:45:44Z",
+      "updatedAt": "2020-06-05T02:56:06Z",
+      "closedAt": "2020-06-05T02:56:06Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:51:05Z",
+          "updatedAt": "2020-06-04T11:51:05Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:56:06Z",
+          "updatedAt": "2020-06-05T02:56:06Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "MDU6SXNzdWU2MjcxNDI2MDI=",
+      "title": "Editorial comments for section 3.2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/17",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- title should be 'Impact of Recent Attacks'\r\n- 'the security level of pairing-friendly curves asymptotically dropped down' -> 'the security level of certain pairing-friendly curves asymptotically dropped down' (their attacks apply differently to different families)\r\n- paragraph 2: 'Some papers showed the' -> 'There has since been research into the'.",
+      "createdAt": "2020-05-29T09:46:40Z",
+      "updatedAt": "2020-06-05T02:55:49Z",
+      "closedAt": "2020-06-05T02:55:49Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:52:21Z",
+          "updatedAt": "2020-06-04T11:52:21Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:55:49Z",
+          "updatedAt": "2020-06-05T02:55:49Z"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "MDU6SXNzdWU2MjcxNDMzNjA=",
+      "title": "Editorial comments for section 4 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/18",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 'we introduce secure pairing-friendly curves' -> 'we introduce some of the known secure pairing-friendly curves'\r\n- 'widely use' -> 'in wide use' or 'widely used' (twice)\r\n- 'peer-reviews paper' -> 'a peer-reviewed paper' or 'peer-reviewed papers'\r\n- 'greatly depending' -> 'greatly dependant'\r\n- 'so we consder that viewpoint...': grammar here is strange. Suggestion: 'so we choose to prioritize \"security\" and \"widely used\" over \"efficiency\" in consideration of future interconnections and interoperability over the internet.'",
+      "createdAt": "2020-05-29T09:47:57Z",
+      "updatedAt": "2020-06-05T02:55:30Z",
+      "closedAt": "2020-06-05T02:55:30Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fixed the following comments when we updated from version 03 to 04.\r\n- 'widely use' -> 'in wide use' or 'widely used' (twice)\r\n- 'peer-reviews paper' -> 'a peer-reviewed paper' or 'peer-reviewed papers'",
+          "createdAt": "2020-06-03T03:29:21Z",
+          "updatedAt": "2020-06-03T03:29:21Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:53:20Z",
+          "updatedAt": "2020-06-04T11:53:20Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:55:30Z",
+          "updatedAt": "2020-06-05T02:55:30Z"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "MDU6SXNzdWU2MjcxNDM4ODg=",
+      "title": "Editorial comments for section 4.1 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/19",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 1: 'selected by existed standards' -> 'that have been selected by existing standards'\r\n- sen 3: 'described as' -> 'described in'\r\n- sen 5: 'since 2016 in which exTNFS was proposed' -> 'since the 2016 exTNFS attacks'; 'curves that had security levels below 128 bits' -> 'curves that have had security levels below 128 bits'\r\n- sen 6: 'Table1' -> 'Table 1'\r\n- sen 7: ''security level' -> 'the security level'",
+      "createdAt": "2020-05-29T09:48:53Z",
+      "updatedAt": "2020-06-04T10:30:38Z",
+      "closedAt": "2020-06-04T10:30:38Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fixed the following comments when we updated from version 03 to 04.\r\n\r\n- sen 6: 'Table1' -> 'Table 1'\r\n- sen 7: ''security level' -> 'the security level'",
+          "createdAt": "2020-06-03T03:30:02Z",
+          "updatedAt": "2020-06-03T03:30:02Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T07:28:59Z",
+          "updatedAt": "2020-06-04T07:28:59Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-04T10:30:38Z",
+          "updatedAt": "2020-06-04T10:30:38Z"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "MDU6SXNzdWU2MjcxNDQ2NzA=",
+      "title": "Editorial comments for Table 1 #1 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/20",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- In your preamble you say that you only consider curves whose implementations have been maintained since 2016, are resistant to exTNFS attacks, and are peer-reviewed. I think these are all good choices, but then why have you included any curves marked (*) in the table? I understand the necessity of including curves with less than 128-bit secuity, for easy reference to see that they are not secure, but including curves for which the security is unknown seems unnecessary.",
+      "createdAt": "2020-05-29T09:50:18Z",
+      "updatedAt": "2020-06-09T01:58:24Z",
+      "closedAt": "2020-06-09T01:58:24Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T00:23:34Z",
+          "updatedAt": "2020-06-09T00:23:34Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you, Tsunekazu!\r\nI close this issue.",
+          "createdAt": "2020-06-09T01:58:24Z",
+          "updatedAt": "2020-06-09T01:58:24Z"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "MDU6SXNzdWU2MjcxNDcxOTc=",
+      "title": "Editorial comments for Table 1 #2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/21",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- the label of the fourth column is strangely formatted.\r\n",
+      "createdAt": "2020-05-29T09:54:27Z",
+      "updatedAt": "2020-06-09T01:58:44Z",
+      "closedAt": "2020-06-09T01:58:44Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We add the explanation of format of Table 1.\r\nIn detail, the definition of the label '~' is added.",
+          "createdAt": "2020-06-08T11:57:56Z",
+          "updatedAt": "2020-06-08T11:57:56Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T00:16:52Z",
+          "updatedAt": "2020-06-09T00:16:52Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-09T01:58:44Z",
+          "updatedAt": "2020-06-09T01:58:44Z"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "id": "MDU6SXNzdWU2MjcxNDc3ODA=",
+      "title": "Editorial comments for Table 1 #3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/22",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- Why the word 'Ard' before 128, 192, and 256?",
+      "createdAt": "2020-05-29T09:55:28Z",
+      "updatedAt": "2020-06-09T01:59:01Z",
+      "closedAt": "2020-06-09T01:59:01Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The word 'Ard' was used as an abbreviation for 'Around'.\r\nHowever, as Chloe pointed out, the word 'Ard' is hard to understand, so I changed it to 'Arnd'.\r\nFurthermore, I added a description of 'Arnd'.\r\n",
+          "createdAt": "2020-06-08T12:10:13Z",
+          "updatedAt": "2020-06-08T12:10:13Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T00:17:01Z",
+          "updatedAt": "2020-06-09T00:17:01Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-09T01:59:01Z",
+          "updatedAt": "2020-06-09T01:59:01Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "MDU6SXNzdWU2MjcxNDgzNjU=",
+      "title": "Editorial comments for Table 1 #4 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/23",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- I would like more informative labels for the columns currently marked ~. Does this mean signficantly less than the next column/more than the previous column? How much so?",
+      "createdAt": "2020-05-29T09:56:27Z",
+      "updatedAt": "2020-06-08T07:44:34Z",
+      "closedAt": "2020-06-08T07:44:34Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into issue #21",
+          "createdAt": "2020-06-08T07:44:34Z",
+          "updatedAt": "2020-06-08T07:44:34Z"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "MDU6SXNzdWU2MjcxNDkwNDY=",
+      "title": "Editorial comments for Table 1 #5 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/24",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- Explain the suffices 'D', 'I' etc. in the preamble (on eg. BN256I) or at least say that they are distinguishing suffices and will be explained in more detail later (I you do).",
+      "createdAt": "2020-05-29T09:57:32Z",
+      "updatedAt": "2020-06-09T01:59:18Z",
+      "closedAt": "2020-06-09T01:59:18Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I added the explanation of the suffices.",
+          "createdAt": "2020-06-08T09:40:54Z",
+          "updatedAt": "2020-06-08T09:40:54Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T00:17:12Z",
+          "updatedAt": "2020-06-09T00:17:12Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-09T01:59:18Z",
+          "updatedAt": "2020-06-09T01:59:18Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "MDU6SXNzdWU2MjcxNDk3MjE=",
+      "title": "Editorial comments for Table 1 #6 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/25",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- From which source do you get 128-bit security for BN384, BN382? I think the attacks of [BD18] give a security level of much less than 128 for these examples. ",
+      "createdAt": "2020-05-29T09:58:39Z",
+      "updatedAt": "2020-06-09T01:59:38Z",
+      "closedAt": "2020-06-09T01:59:38Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The curves categorized into 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level.\r\nSo, as Chloe pointed out, the security level of BN384 and BN382 are less than 128-bit but they are categorized into 'Arnd 128-bit'.",
+          "createdAt": "2020-06-08T12:16:32Z",
+          "updatedAt": "2020-06-08T12:16:32Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T00:17:23Z",
+          "updatedAt": "2020-06-09T00:17:23Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-09T01:59:38Z",
+          "updatedAt": "2020-06-09T01:59:38Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "MDU6SXNzdWU2MjcxNTA0ODc=",
+      "title": "Editorial comments for section 4.1.2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/26",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- paragraph 4, sen 1: 'that include' -> 'including'",
+      "createdAt": "2020-05-29T09:59:57Z",
+      "updatedAt": "2020-06-05T02:59:07Z",
+      "closedAt": "2020-06-05T02:59:07Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:55:03Z",
+          "updatedAt": "2020-06-04T11:55:03Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:59:07Z",
+          "updatedAt": "2020-06-05T02:59:07Z"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "MDU6SXNzdWU2MjcxNTE2Mzc=",
+      "title": "Editorial comments for section 4.1.3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/27",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- first paragraph is confusing, maybe just remove it\r\n- par 2: 'implements' -> 'uses'; \r\n   'After exTNFS, they propose a new parameter of BLS12 as\r\n   BLS12_381 [BLS12-381] and publish its experimental implementation\r\n   [zkcrypto].'\r\n -> 'In response to the exTNFS attacks, they proposed new parameters using\r\n   BLS12_381 [BLS12-381] and published its experimental implementation\r\n   [zkcrypto].'\r\n- par 3: \r\n   Ethereum 2.0 *adopted* BLS12_381 and uses *the* implementation by\r\n   Meyer[pureGo-bls].  Chia Network *published* their implementation\r\n   [Chia] by integrating the RELIC toolkit [RELIC].  DFINITY uses mcl\r\n   and Algorand *published an* implementation which supports BLS12_381.",
+      "createdAt": "2020-05-29T10:01:53Z",
+      "updatedAt": "2020-06-05T02:59:28Z",
+      "closedAt": "2020-06-05T02:59:27Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:55:43Z",
+          "updatedAt": "2020-06-04T11:55:43Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:59:27Z",
+          "updatedAt": "2020-06-05T02:59:27Z"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "MDU6SXNzdWU2MjcxNTIyNzY=",
+      "title": "Comments about parameters for 100-bits of security (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/28",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- since you are allowing 100-bits of security for certain applications, it would be relevant to include a '100-bits of security' column in Table 1.",
+      "createdAt": "2020-05-29T10:02:58Z",
+      "updatedAt": "2020-06-05T02:59:45Z",
+      "closedAt": "2020-06-05T02:59:45Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We thought that allowing the parameter of 100-bit security level would confuse the reader, so we removed the parameters when we update from draft 03 to 04.",
+          "createdAt": "2020-06-04T10:18:22Z",
+          "updatedAt": "2020-06-04T10:18:22Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:57:43Z",
+          "updatedAt": "2020-06-04T11:57:43Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:59:45Z",
+          "updatedAt": "2020-06-05T02:59:45Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "MDU6SXNzdWU2MjcxNTMzOTQ=",
+      "title": "Editorial comments for section 4.2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/29",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- par 1: 'Before exTNFS' -> 'Before the exTNFS attacks'; 'BN curves with 256-bit size of underlying finite field' -> 'BN curves defined over 256-bit finite fields'; 'the security level of BN curves with 256-bit size of underlying finite field' -> 'the security level of BN256 curves'; 'fell into' -> 'fell to'\r\n- par 2: 'who will newly develop the' -> 'who are currently developing the'  or 'who will develop new'\r\n- par 3: 'There exists applications which already implemented' -> 'There exist applications which intentionally use'; 'In such a case' -> 'In such cases'",
+      "createdAt": "2020-05-29T10:04:58Z",
+      "updatedAt": "2020-06-05T03:00:18Z",
+      "closedAt": "2020-06-05T03:00:18Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Because we does not recommend the parameters of 100-bit security level, we removed section 4.2.\r\n",
+          "createdAt": "2020-06-03T03:33:17Z",
+          "updatedAt": "2020-06-03T03:33:17Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:57:15Z",
+          "updatedAt": "2020-06-04T11:57:15Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:00:18Z",
+          "updatedAt": "2020-06-05T03:00:18Z"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "MDU6SXNzdWU2MjcxNTQyMTU=",
+      "title": "Editorial comments for section 4.3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/30",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 1: 'that a lot of pairing-friendly curves whose curve types are BN curves and BLS curves are adopted as curves'\r\n -> 'a lot of cases of adopting BN and BLS curves'\r\n- 'widely use' -> 'widely used' or 'in wide use'\r\n",
+      "createdAt": "2020-05-29T10:06:26Z",
+      "updatedAt": "2020-06-05T03:00:30Z",
+      "closedAt": "2020-06-05T03:00:30Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fixed the following comments when we updated from version 03 to 04.\r\n\r\n- 'widely use' -> 'widely used' or 'in wide use'\r\n",
+          "createdAt": "2020-06-03T03:34:19Z",
+          "updatedAt": "2020-06-03T03:34:19Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T11:58:58Z",
+          "updatedAt": "2020-06-04T11:58:58Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:00:30Z",
+          "updatedAt": "2020-06-05T03:00:30Z"
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "MDU6SXNzdWU2MjcxNTQ5NTk=",
+      "title": "Comments about BN462 for section 4.3  (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/31",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- Why is BN462 the one that best matches your selection policy? This is unclear to me.",
+      "createdAt": "2020-05-29T10:07:52Z",
+      "updatedAt": "2020-06-05T12:23:12Z",
+      "closedAt": "2020-06-05T12:23:12Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into #47.",
+          "createdAt": "2020-06-05T12:22:52Z",
+          "updatedAt": "2020-06-05T12:22:52Z"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "MDU6SXNzdWU2MjcxNTU3ODM=",
+      "title": "Comments about BLS12-381 for section 4.3 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/32",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 'it is not published as a curve of 128-bit\r\n   security level in peer-reviewed papers' : \r\n   it is published in this peer-reviewed article \r\n   https://link.springer.com/article/10.1007%2Fs10623-020-00727-w\r\n   (granted of 126-bit security).",
+      "createdAt": "2020-05-29T10:09:25Z",
+      "updatedAt": "2020-06-05T12:23:40Z",
+      "closedAt": "2020-06-05T12:23:40Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into #47.",
+          "createdAt": "2020-06-05T12:23:40Z",
+          "updatedAt": "2020-06-05T12:23:40Z"
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "MDU6SXNzdWU2MjcxNTY0ODE=",
+      "title": "Editorial comments for section 4.4 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/33",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 'candidates of pairing-friendly curves for the\r\n   security level 192 bits are only two curves BLS24_477 and BLS24_479'\r\n -> 'there are only two candidates of pairing-friendly curves for the\r\n   192-bit security level, BLS24_477 and BLS24_479'\r\n- 'in peer-reviewed paper' -> 'in any peer-reviewed paper'\r\n- 'because none' -> 'because neither'\r\n- 'couldn't' -> 'do not'",
+      "createdAt": "2020-05-29T10:10:39Z",
+      "updatedAt": "2020-06-05T03:00:47Z",
+      "closedAt": "2020-06-05T03:00:47Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:00:44Z",
+          "updatedAt": "2020-06-04T12:00:44Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:00:47Z",
+          "updatedAt": "2020-06-05T03:00:47Z"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "MDU6SXNzdWU2MjcxNTc3NjQ=",
+      "title": "Editorial comments for section 4.5 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/34",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 1: 'candidats' -> 'candidates'\r\n- sen 2: 'which is the most' -> 'as it is the most widely'\r\n- sen 3: 'a parameter' -> 'the parameter'\r\n- Paragraph 3: mention here that p is 581 bits.\r\n- par 4: 'its twisted curve E' ' -> 'its twist E' ' (or Et if you choose to use this notation earlier).\r\n- par 4: Just refer to earlier, no need to redefine the pairing. Delete from 'A pairing' until the end of the paragraph. (This is the first mention of D-type. If you want to discuss it it needs to be defined in the earlier sections).\r\n\r\n- point on G_1: Problems:\r\n  -'G_1 defined over E' does not mean anything. \r\n  -You defined E above so you do not need to repeat it here (and it is inconsistent with your definition here unless b=1). I'll assume you want b=1.\r\n  -Above you say that G_1 is of order r. Is G_1 of order r or does r divide the order of G_1? The corrected version of the pairing intro I wrote above defines G_1 as the largest prime-order subgroup of E(F_p), I'll assume this is what you want here as well.\r\n",
+      "createdAt": "2020-05-29T10:12:52Z",
+      "updatedAt": "2020-06-05T03:01:07Z",
+      "closedAt": "2020-06-05T03:01:07Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fixed the following comments when we updated from version 03 to 04.\r\n\r\n- sen 1: 'candidats' -> 'candidates'\r\n",
+          "createdAt": "2020-06-03T03:35:27Z",
+          "updatedAt": "2020-06-03T03:35:27Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:01:36Z",
+          "updatedAt": "2020-06-04T12:01:36Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:01:07Z",
+          "updatedAt": "2020-06-05T03:01:07Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "MDU6SXNzdWU2MjcxNTg3NzA=",
+      "title": "Editorial comments for section 5 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/35",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- the parameters for 100 bits of security are not given explictly (just 'less than 128'), but I think it would be good to indeed do this (as I mentioned above).",
+      "createdAt": "2020-05-29T10:14:40Z",
+      "updatedAt": "2020-06-05T03:01:24Z",
+      "closedAt": "2020-06-05T03:01:23Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We thought that allowing the parameter of 100-bit security level would confuse the reader, so we removed the parameters when we update from draft 03 to 04.",
+          "createdAt": "2020-06-04T10:19:52Z",
+          "updatedAt": "2020-06-04T10:19:52Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:02:04Z",
+          "updatedAt": "2020-06-04T12:02:04Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:01:23Z",
+          "updatedAt": "2020-06-05T03:01:23Z"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "MDU6SXNzdWU2MjcxNTk1MjM=",
+      "title": "Editorial comments for Appendix (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/36",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- title: 'Computing Optimal Ate Pairing' -> 'Computing the Optimal Ate Pairing' or 'Computing Optimal Ate Pairings'\r\n- sen 1: optimal -> the optimal; subfunctions -> the subfunctions\r\n- par 3: 'its twisted curve' -> 'its twist'; 'such isomorphism' -> 'such an isomorphism'\r\n- par 4: 'Computation of optimal Ate pairing for BN curves uses Frobenius map'\r\n -> 'The computation of the optimal Ate pairing for BN curves uses the Frobenius map'\r\n- last sentence: 'Let a Frobenius' -> 'The p-power Frobenius'; 'be' -> 'is'",
+      "createdAt": "2020-05-29T10:16:02Z",
+      "updatedAt": "2020-06-05T03:01:47Z",
+      "closedAt": "2020-06-05T03:01:47Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:02:56Z",
+          "updatedAt": "2020-06-04T12:02:56Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:01:47Z",
+          "updatedAt": "2020-06-05T03:01:47Z"
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "MDU6SXNzdWU2MjcxNjAxNjg=",
+      "title": "Editorial comments for section A.1 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/37",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- A.1 could be removed in light of my comments on 4.3.1.",
+      "createdAt": "2020-05-29T10:17:09Z",
+      "updatedAt": "2020-06-05T12:24:20Z",
+      "closedAt": "2020-06-05T12:24:19Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into issue #47.",
+          "createdAt": "2020-06-05T12:24:19Z",
+          "updatedAt": "2020-06-05T12:24:19Z"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "id": "MDU6SXNzdWU2MjcxNjA3MjM=",
+      "title": "Editorial comments for section A.2 (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/38",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 'of optimal Ate pairing over' -> 'of the optimal Ate pairing on'; 'an order r' -> 'a prime r' or 'the order r of G_1'",
+      "createdAt": "2020-05-29T10:18:05Z",
+      "updatedAt": "2020-06-05T03:02:05Z",
+      "closedAt": "2020-06-05T03:02:04Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:08:00Z",
+          "updatedAt": "2020-06-04T12:08:00Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T03:02:04Z",
+          "updatedAt": "2020-06-05T03:02:04Z"
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "MDU6SXNzdWU2MjcxNjEyOTk=",
+      "title": "Editorial comments for section B (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/39",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- sen 1: 'Optiomal Ate Pairing' -> 'the optimal Ate pairing'\r\n- replace BN462 by BLS12_381 (in light of comments on 4.3.1).",
+      "createdAt": "2020-05-29T10:19:06Z",
+      "updatedAt": "2020-06-05T02:58:46Z",
+      "closedAt": "2020-06-05T02:58:46Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The following comment became another issue #46 \r\n- replace BN462 by BLS12_381 (in light of comments on 4.3.1).\r\n",
+          "createdAt": "2020-06-02T07:58:10Z",
+          "updatedAt": "2020-06-02T07:58:29Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author. \r\n",
+          "createdAt": "2020-06-04T12:15:43Z",
+          "updatedAt": "2020-06-04T12:15:43Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:58:46Z",
+          "updatedAt": "2020-06-05T02:58:46Z"
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "MDU6SXNzdWU2MjcxNjE5MjI=",
+      "title": "Editorial comments for section C (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/40",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- adapt grammar and mathematical definitions in the same way as section 4.5.",
+      "createdAt": "2020-05-29T10:20:12Z",
+      "updatedAt": "2020-06-05T02:58:31Z",
+      "closedAt": "2020-06-05T02:58:31Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:09:20Z",
+          "updatedAt": "2020-06-04T12:09:20Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:58:31Z",
+          "updatedAt": "2020-06-05T02:58:31Z"
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "id": "MDU6SXNzdWU2MjcxNjMwODg=",
+      "title": "Editorial comments throughout the draft (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/41",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 'security level n bits' -> 'n-bit security level'",
+      "createdAt": "2020-05-29T10:22:17Z",
+      "updatedAt": "2020-06-05T02:58:05Z",
+      "closedAt": "2020-06-05T02:58:05Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "fix this issue when we update from version 03 to 04.",
+          "createdAt": "2020-06-03T03:22:04Z",
+          "updatedAt": "2020-06-03T03:22:04Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:08:40Z",
+          "updatedAt": "2020-06-04T12:08:40Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-05T02:58:05Z",
+          "updatedAt": "2020-06-05T02:58:05Z"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "MDU6SXNzdWU2MjcxNjY5Mzk=",
+      "title": "Comments  about sub-group security (from CFRG members)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/42",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Request from Armand\r\n\r\n-  add description about subgroup security shown in the following paper\r\n\r\n[BD18] Barbulescu, R. and S. Duquesne, \"Updating Key Size Estimations\r\nfor Pairings\"\r\n       https://eprint.iacr.org/2017/334",
+      "createdAt": "2020-05-29T10:29:08Z",
+      "updatedAt": "2020-06-08T04:40:43Z",
+      "closedAt": "2020-06-08T04:40:43Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into issue #44.\u3000",
+          "createdAt": "2020-06-08T04:40:38Z",
+          "updatedAt": "2020-06-08T04:40:38Z"
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "id": "MDU6SXNzdWU2MjcxNjgxMjc=",
+      "title": "Comments about equivalent security (from CFRG members)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/43",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Request from Watson\r\n\r\n- add a description of equivalent security",
+      "createdAt": "2020-05-29T10:31:12Z",
+      "updatedAt": "2020-06-09T02:00:12Z",
+      "closedAt": "2020-06-09T02:00:12Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T00:22:55Z",
+          "updatedAt": "2020-06-09T00:22:55Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you, Tsunekazu!\r\nI close this issue.",
+          "createdAt": "2020-06-09T02:00:12Z",
+          "updatedAt": "2020-06-09T02:00:12Z"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "MDU6SXNzdWU2MjcxNjkwNzQ=",
+      "title": "Comments about security considerations (from CFRG members)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/44",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Request from Watson\r\n\r\n- update the description of the security considerations by\r\nadding the following.\r\n-Checking whether elements exist in an appropriate group\r\n-Checking for side channel attack resistance\r\n-Checking whether range of coefficient is appropriate",
+      "createdAt": "2020-05-29T10:32:48Z",
+      "updatedAt": "2020-06-08T07:37:14Z",
+      "closedAt": "2020-06-08T07:37:14Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-08T06:38:43Z",
+          "updatedAt": "2020-06-08T06:38:43Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-08T07:37:14Z",
+          "updatedAt": "2020-06-08T07:37:14Z"
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "MDU6SXNzdWU2MjcxNzAwOTE=",
+      "title": "Comments about Table1 (from CFRG members)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/45",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "For request from Watson\r\n\r\n- Table 1 is very large, and it reduces the readability of the draft,\r\nso we will consider whether we can devise an expression.\r\n(For example, we move Table1 to Appendix and refer it)",
+      "createdAt": "2020-05-29T10:34:33Z",
+      "updatedAt": "2020-06-10T01:08:48Z",
+      "closedAt": "2020-06-10T01:08:48Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Based on the comment from Watson, we considered whether Table1 is removed or moved to Appendix about handling of Table1, however we found that it is so difficult to do.\r\n\r\nOne of our selection policies is \"widely used\".\r\nTable 1 shows the adoption status of pairing-friendly curves and it is referred as an evidence to show that the selected curves matches the policy \"widely used\".\r\nTherefore, Table1 is indispensable as a component of our draft, and if Table1 is excluded, the validity of the draft will be lost.\r\nWe're very grateful for the comments from Watson, but we decided to leave Table 1 in the main texts for readability of the draft.\r\n",
+          "createdAt": "2020-06-09T12:27:43Z",
+          "updatedAt": "2020-06-09T12:27:43Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "We discussed whether to leave this table 1. Then we decided like above.",
+          "createdAt": "2020-06-10T01:00:10Z",
+          "updatedAt": "2020-06-10T01:00:10Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking!\r\nI close this issue.",
+          "createdAt": "2020-06-10T01:08:48Z",
+          "updatedAt": "2020-06-10T01:08:48Z"
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "MDU6SXNzdWU2Mjg5ODU4Mjg=",
+      "title": "Editorial comments for test vectors (from Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/46",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n-replace BN462 by BLS12_381 (in light of comments on 4.3.1).",
+      "createdAt": "2020-06-02T07:56:41Z",
+      "updatedAt": "2020-06-05T12:24:53Z",
+      "closedAt": "2020-06-05T12:24:53Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-04T12:16:47Z",
+          "updatedAt": "2020-06-04T12:16:47Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is unified into issue #47.",
+          "createdAt": "2020-06-05T12:24:53Z",
+          "updatedAt": "2020-06-05T12:24:53Z"
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "id": "MDU6SXNzdWU2MzE1NDc0NDY=",
+      "title": "Comments about the parameters of 128-bit security level",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/47",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Discussing with Chloe (Expert Reviewer), we recommend both BLS12_381 and BN462 as parameters of 128-bit security level in considerations of the use of the future internet and the safety side.\r\nOther related issues are summarized in this issue.",
+      "createdAt": "2020-06-05T12:18:14Z",
+      "updatedAt": "2020-06-08T04:38:43Z",
+      "closedAt": "2020-06-08T04:38:43Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-06T06:31:15Z",
+          "updatedAt": "2020-06-06T06:31:15Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue.",
+          "createdAt": "2020-06-08T04:38:43Z",
+          "updatedAt": "2020-06-08T04:38:43Z"
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "id": "MDU6SXNzdWU2MzUxNjUyNDY=",
+      "title": "Add ZCash Representation for BLS12-381 (from author of draft BLS signatures)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/48",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Request from Riad (he is one of author of draft \"BLS signature\"):\r\n- Add chapter of ZCash representation for BLS12-381 to draft \"pairing-friendly curves\"",
+      "createdAt": "2020-06-09T07:00:26Z",
+      "updatedAt": "2020-06-09T11:14:58Z",
+      "closedAt": "2020-06-09T11:14:58Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We added the ZCash serialization format for BLS12-381 to our draft.\r\nRiad joined the authors and he prepared the basic draft.\r\nRiad, thanks for joining and we appreciate your contribution :-)",
+          "createdAt": "2020-06-09T08:49:51Z",
+          "updatedAt": "2020-06-09T08:49:51Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-09T11:07:12Z",
+          "updatedAt": "2020-06-09T11:07:12Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-09T11:14:58Z",
+          "updatedAt": "2020-06-09T11:14:58Z"
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "id": "MDU6SXNzdWU2MzkzMjIwNjY=",
+      "title": "Comments about  Abstract (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/49",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- Pairing is a special map -> Pairings are special maps OR A pairing is a special map",
+      "createdAt": "2020-06-16T02:30:06Z",
+      "updatedAt": "2020-06-16T05:05:47Z",
+      "closedAt": "2020-06-16T05:05:47Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:25:00Z",
+          "updatedAt": "2020-06-16T04:25:00Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:05:47Z",
+          "updatedAt": "2020-06-16T05:05:47Z"
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "id": "MDU6SXNzdWU2MzkzMjI3MzE=",
+      "title": "Comments about  section 1 (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/50",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n- 1.1: 'Pairing is a special map' -> 'Pairings are special maps OR A pairing is a special map'\r\n- 1.1: 'importance of pairing' -> 'importance of pairings'\r\n- 1.1: 'pairing is efficiently computable' -> 'pairings are efficiently computable'.\r\n- 1.2:  pairins -> pairings\r\n- 1.3: (NSF) -> (NFS)\r\n- 1.3: Barbulescu et. al. -> Barbulescu and Duquesne. (Authors are alphabetical).",
+      "createdAt": "2020-06-16T02:32:02Z",
+      "updatedAt": "2020-06-16T05:05:58Z",
+      "closedAt": "2020-06-16T05:05:58Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:24:53Z",
+          "updatedAt": "2020-06-16T04:24:53Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:05:58Z",
+          "updatedAt": "2020-06-16T05:05:58Z"
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "id": "MDU6SXNzdWU2MzkzMjM0NDg=",
+      "title": "Comments about section 2  (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/51",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 2.2: 'The optimal Ate pairing is considered to be the most efficient to compute is the one that is most commonly used for practical implementation.' -> 'The optimal Ate pairing is considered to be the most efficient to compute and is the one that is most commonly used for practical implementation.'\r\n- 2.2: Choose G_2 or G2 (probably G_2 is easier since there are many instances also of G_1 and G_T)\r\n- 2.2: 'There also exists cyclic subgroup' -> 'There also exists a cyclic subgroup'\r\n- 2.3: 'b is an element of multiplicative group of order p' -> 'b is a nonzero element of F_p' OR 'b is an element of a multiplicative group (F_p)^* of order p-1' OR 'b is an element of the multiplicative group of F_p'\r\n- 2.3: 'embedded degree' -> 'embeddiing degree'\r\n- 2.4: 'r-torsions' -> 'r-torsion'\r\n- 2.5: (paragraph 2): of degree d' -> of degree d",
+      "createdAt": "2020-06-16T02:34:18Z",
+      "updatedAt": "2020-06-16T05:06:09Z",
+      "closedAt": "2020-06-16T05:06:08Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "A word G2 is my mistake and G_2 is correct. I replaced G2 with G_2.",
+          "createdAt": "2020-06-16T03:31:45Z",
+          "updatedAt": "2020-06-16T03:31:45Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:24:46Z",
+          "updatedAt": "2020-06-16T04:24:46Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:06:08Z",
+          "updatedAt": "2020-06-16T05:06:08Z"
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "id": "MDU6SXNzdWU2MzkzMjM4NzQ=",
+      "title": "Comments about  section 4.2 (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/52",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- This sentence has slightly weird grammar so I don't fully understand what you want to say: 'Therefore, the curve of the 128-bit security level\r\n   is often used at current, so this memo recommends both BLS12-381 and\r\n   BN462 in consideration of the future use and the safety side.'\r\n\r\nDo you mean:\r\n'As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.'",
+      "createdAt": "2020-06-16T02:35:39Z",
+      "updatedAt": "2020-06-16T05:06:22Z",
+      "closedAt": "2020-06-16T05:06:22Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm sorry for my weird grammar.\r\nI adopted it because Chloe's expression is more appropriate.\r\n",
+          "createdAt": "2020-06-16T03:29:48Z",
+          "updatedAt": "2020-06-16T03:29:48Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:24:30Z",
+          "updatedAt": "2020-06-16T04:24:30Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:06:22Z",
+          "updatedAt": "2020-06-16T05:06:22Z"
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "id": "MDU6SXNzdWU2MzkzMjQyODQ=",
+      "title": "Comments about section 4.2.1  (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/53",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- This comment is maybe a bit misleading:\r\n'We have to note that, according to [BD18], the bit length of p for\r\n   BLS12 to achieve 128-bit security is calculated as 461 bits and more,\r\n   which BLS12_381 does not satisfy.'\r\nThe 461-bit figure in [BD18] is based on a rough estimate which varies a lot between different examples (as is necessary when giving a broad overview). The exact complexity of [BD18]'s attack depends on the specific polynomial used to construct the family and can change the complexity of the attack by up to about 12 bits. The proposed construction of BLS12_381 you refer to here has been specially chosen to minimize the impact of the exTNFS attack. It would in my opinion be more precise to say:\r\n'We have to note that the security level of this pairing is expected to be 126 rather than 128 bits [GMT19]'.",
+      "createdAt": "2020-06-16T02:36:55Z",
+      "updatedAt": "2020-06-16T05:06:36Z",
+      "closedAt": "2020-06-16T05:06:36Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I adopted it because Chloe's expression is more appropriate.",
+          "createdAt": "2020-06-16T03:42:18Z",
+          "updatedAt": "2020-06-16T03:42:18Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:24:22Z",
+          "updatedAt": "2020-06-16T04:24:22Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:06:36Z",
+          "updatedAt": "2020-06-16T05:06:36Z"
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "id": "MDU6SXNzdWU2MzkzMjQ2ODY=",
+      "title": "Comments about section 4.2.2  (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/54",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- This comment could be more clearly worded:\r\n'We have to note that the BN462 becomes slower compared to BLS12_381,\r\n   although the BN462 is suitable for the parameters of the 128-bit\r\n   security level for the use of the future internet.'\r\nHow about instead:\r\n'We have to note that BN462 is significantly slower than BLS12_381,\r\n   but has 134-bit security level [GMT19],\r\n   so may be more resistant to future small improvements to the exTNFS attack.'\r\n\r\nThis would be a good place to also add a remark along the lines of:\r\n'We note also that CP8_544 is more efficient than BN462, has 131-bit security level,\r\nand that due to its construction will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.'",
+      "createdAt": "2020-06-16T02:38:10Z",
+      "updatedAt": "2020-06-16T05:06:48Z",
+      "closedAt": "2020-06-16T05:06:48Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I adopted Chloe's comments because it is more appropriate.",
+          "createdAt": "2020-06-16T03:54:27Z",
+          "updatedAt": "2020-06-16T03:54:27Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:24:05Z",
+          "updatedAt": "2020-06-16T04:24:05Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:06:48Z",
+          "updatedAt": "2020-06-16T05:06:48Z"
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "id": "MDU6SXNzdWU2MzkzMjUwMDI=",
+      "title": "Comments about section 5  (from 2nd Expert Review)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/55",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Chloe (Expert Reviewer)\r\n\r\n- 'BLS curves of embedding degree 12 require' -> 'BLS curves of embedding degree typically require' (cf. my comment on 4.2.1)",
+      "createdAt": "2020-06-16T02:39:07Z",
+      "updatedAt": "2020-06-16T05:07:04Z",
+      "closedAt": "2020-06-16T05:07:04Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-16T04:23:45Z",
+          "updatedAt": "2020-06-16T04:23:45Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking :-)\r\nI close this issue!",
+          "createdAt": "2020-06-16T05:07:03Z",
+          "updatedAt": "2020-06-16T05:07:03Z"
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "id": "MDU6SXNzdWU2NDA4NzA3NDQ=",
+      "title": "Comments about some attacks for pairing-based cryptography",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/57",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comments from Sean Bowe:\r\n\r\n- it's worth considering Cheon's attack and twist security -- not sure if the paper you got these parameters from did that.",
+      "createdAt": "2020-06-18T03:05:28Z",
+      "updatedAt": "2020-06-19T04:56:06Z",
+      "closedAt": "2020-06-19T04:56:06Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks to his comments, I noticed that the description of the Cheon's\r\nattack was missing from the security consideration in our draft.\r\nThe recommended curves are affected by the Cheon's attack, so I added \r\nit to the security consideration.\r\n\r\nRegarding the twist security, in the case of pairing, since the\r\ntwisted curve itself is used as a G_2, the security of DLP in G_2 is\r\nalso considered.",
+          "createdAt": "2020-06-18T03:55:48Z",
+          "updatedAt": "2020-06-18T03:55:48Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-06-19T04:48:43Z",
+          "updatedAt": "2020-06-19T04:48:43Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking, Tsunekazu!\r\nI'll close this issue.",
+          "createdAt": "2020-06-19T04:55:59Z",
+          "updatedAt": "2020-06-19T04:55:59Z"
+        }
+      ]
+    },
+    {
+      "number": 58,
+      "id": "MDU6SXNzdWU2OTU3MjgzNzE=",
+      "title": "Add bls12377js libraies to Table1",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/58",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We plan to refer Kobi's OSS (which is published in the following GitHub page) in the version 08 of our draft as one of the adoption results of pairing-friendly curves according to Kobi's comments*1.\r\n\r\nhttps://github.com/celo-org/bls12377js\r\n\r\n*1: https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/56\r\n",
+      "createdAt": "2020-09-08T09:54:14Z",
+      "updatedAt": "2020-09-30T05:19:11Z",
+      "closedAt": "2020-09-30T05:19:11Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-17T14:29:35Z",
+          "updatedAt": "2020-09-17T14:29:35Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for your checking, Tsunekazu!\r\nI'll close this issue.",
+          "createdAt": "2020-09-30T05:19:07Z",
+          "updatedAt": "2020-09-30T05:19:07Z"
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "id": "MDU6SXNzdWU2OTU3NTY5MzU=",
+      "title": "Comments from Armando during the RGLC (Minor Comments)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/59",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Minor comments from Armando (CFRG members) are shown as follows.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/cfrg/5R3YzUekQTqpJxatVVsrksNDoms/",
+      "createdAt": "2020-09-08T10:34:10Z",
+      "updatedAt": "2021-01-29T11:03:11Z",
+      "closedAt": "2021-01-29T11:03:11Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-17T14:29:15Z",
+          "updatedAt": "2020-09-17T14:29:15Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n> Section 2.2: You can start by defining what a bilinear pairing is and its properties with respect to abstract groups. \r\n After that you can describe how these groups are instantiated using the torsion-r subgroups of elliptic curves.\r\n  \r\n >Note the distinction between:\r\n F_q-rational points are those with coordinates in F_q.\r\n and F_q^k-rational points are those with coordinates in F_q^k.\r\n \r\n  >E(F_q^k): the group of rational points of E.\r\n  #E(F_q^k): the number of rational points of E.\r\n\r\nThank you for your suggestion!\r\nI'm sorry, but I think there is not a big problem because this part has passed Expert Review.\r\n",
+          "createdAt": "2020-09-30T05:23:20Z",
+          "updatedAt": "2020-09-30T05:23:20Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>Both BN, BLS, and KSS are families of pairing-friendly curves. Consider to rewrite sentences like this one: \"A BN curve [BN05] is one of the instantiations of pairing-friendly curves proposed in 2005\".\r\n\r\nThank you for your comments.\r\nWe revised the part pointed out according to your comments.",
+          "createdAt": "2020-09-30T05:24:22Z",
+          "updatedAt": "2020-09-30T05:24:22Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>This sentence is redundant as p is prime.\r\n  \" b is an element of a multiplicative group (F_p)^* of order (p - 1)\"\r\n\r\nThanks for your comment.\r\nA similar comment was also made by Rene, which we have revised based on that as well.",
+          "createdAt": "2020-09-30T05:25:37Z",
+          "updatedAt": "2020-09-30T05:25:37Z"
+        },
+        {
+          "author": "armfazh",
+          "authorAssociation": "NONE",
+          "body": "All of these comments were already addressed in v08, fell free to close this issue.",
+          "createdAt": "2020-11-01T09:09:11Z",
+          "updatedAt": "2020-11-01T09:09:11Z"
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "id": "MDU6SXNzdWU2OTU3NTc3MDI=",
+      "title": "Comments from Armando during the RGLC (Editorial Comments)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/60",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial comments from Armando (CFRG members) are shown as follows.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/cfrg/5R3YzUekQTqpJxatVVsrksNDoms/",
+      "createdAt": "2020-09-08T10:35:28Z",
+      "updatedAt": "2021-01-29T11:02:57Z",
+      "closedAt": "2021-01-29T11:02:57Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-17T14:29:00Z",
+          "updatedAt": "2020-09-17T14:29:00Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-28T07:54:56Z",
+          "updatedAt": "2020-09-28T07:54:56Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>order 6 twists. -> order-6 twists.\r\n\r\nThank you for your comment!\r\nWe changed the whole sentence because other members also pointed out the problem with this sentence.",
+          "createdAt": "2020-09-30T05:28:11Z",
+          "updatedAt": "2020-09-30T05:28:11Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>embeddiing -> embedding\r\n>paiting-based crytography -> pairing-based cryptography\r\n>Armand -> Armando\r\n\r\nThank you for your comment!\r\nWe revised the part pointed out according to your comments.\r\nIn particular, I would like to apologize for my mistyping on your name.\r\nWe have carefully fixed it.\r\n",
+          "createdAt": "2020-09-30T05:30:38Z",
+          "updatedAt": "2020-09-30T05:30:38Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>rewrite: the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.\r\n\r\n>rewrite: There has since been research into the minimum bit length of the parameters of pairing-friendly curves\r\n\r\nThank you for your comments.\r\nSince no specific points of view for the \"rewrite\" were shown, the authors reviewed this description throughout our draft.\r\nAs a result, we have kept the description because we did not think there were any discomfort or major problems.\r\n",
+          "createdAt": "2020-09-30T05:32:16Z",
+          "updatedAt": "2020-09-30T05:32:16Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>In Appendix A, make explicit the isomorphism between E and E' as this helps implementers. There is a subtle distinction when computing the pairing entirely with both points on the twist.\r\n (see Theorem 1 of https://eprint.iacr.org/2009/615).\r\n\r\nThanks for the suggestion!\r\nSince the isomorphism of twist needs to be written for each curve, the algorithm needs to be written for each curve accordingly.\r\nAs a result, we concerned that the draft will be very complicated.\r\nOn the other hand, as you pointed out, we understand that not showing specific twist technique usage would be unhelpful for the implementers.\r\nSo we've added some references for the twist technique including your recommended reference.",
+          "createdAt": "2020-09-30T05:32:59Z",
+          "updatedAt": "2020-09-30T05:32:59Z"
+        },
+        {
+          "author": "armfazh",
+          "authorAssociation": "NONE",
+          "body": "Thanks for addressing these comments, most of them are editiorial, in version v08. This issue can be closed.",
+          "createdAt": "2020-11-01T09:15:10Z",
+          "updatedAt": "2020-11-01T09:15:10Z"
+        }
+      ]
+    },
+    {
+      "number": 61,
+      "id": "MDU6SXNzdWU2OTU3NjE4NTQ=",
+      "title": "Comments from Rene during the RGLC (Detaild Comments)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/61",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Detailed comments from Rene (CFRG members) are shown as follows.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/cfrg/pW71h3yUETnqedHsH0m3rwzPnm4/",
+      "createdAt": "2020-09-08T10:42:02Z",
+      "updatedAt": "2021-01-29T11:02:44Z",
+      "closedAt": "2021-01-29T11:02:44Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-17T14:29:42Z",
+          "updatedAt": "2020-09-17T14:29:42Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-28T07:55:16Z",
+          "updatedAt": "2020-09-28T07:55:16Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n> 1) Section 1.2 (and also elsewhere) seems to conflate standardization of parameters, availability of libraries, and actual deployment, where there is an unusual prominence (for an IRTF document) of company names. Wouldn't it make more sense to describe potential applications of pairing based cryptography in more technical terms, e.g., in terms of facilitating aggregate signatures, remote attestation, etc., and provide a brief description (and a technical reference)?\r\n\r\nThank you for your comment!\r\nWe think no problem that there is no special intention to promote the company names in the draft, and they are shown to indicate the actual adaptive status of the pairing-friendly curves.\r\nIf need, we expect that it will be pointed out again in the future standardization process (e.g., IRSG Reviews), so we would like to discuss how to update it with the reviewer at that time.",
+          "createdAt": "2020-09-30T05:39:29Z",
+          "updatedAt": "2020-09-30T05:39:29Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>2) Section 1.3: the main point of the extTNFS attack is that it tries and solve the DLP in low-degree extension field GF(p^t) for small composite t>1 faster. To bring this point accross, I suggest changing reference to \"by the attack\" (l. 5 of Section 1.3) by something more closely reflecting this.\r\n\r\nThank you for your suggestion!\r\nWe agreed with your comments and added an explanation of the attack.",
+          "createdAt": "2020-09-30T05:40:12Z",
+          "updatedAt": "2020-09-30T05:40:12Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>3) Section 2.3, 4th para (top of p. 8): elaborate on the \"BN curves always have order 6 twists\" remark (this seemed to have been copied ad verbatim from the [BD18] paper).\r\n\r\nI greatly appreciate the pointing out.\r\nI couldn't find that it was a copy because it was written by the previous author.\r\nI have rewritten the entirety of the relevant sentence.",
+          "createdAt": "2020-09-30T05:41:01Z",
+          "updatedAt": "2020-09-30T05:41:01Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>4) Section 2.4, 4th para: it would be good to mention that parameter t must be 1 (mod 3), since otherwise p is not an integer.\r\n\r\nThank you for your suggestion!\r\nWe revised the part pointed out according to your comments.\r\n",
+          "createdAt": "2020-09-30T05:41:59Z",
+          "updatedAt": "2020-09-30T05:41:59Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>5) Section 2.5: the representation conventions are highly confusing, esp. for extension fields. Why not define everything in terms of a prime field GF(p) and extension field GF(p^t), with fixed irreducible polynomial f(z) of degree t over GF(p)? This has been successfully used with elliptic curve specifications (NIST, ISO, ANSI, BSI) not tailored to pairing based crypto. This would also avoids questions that now immediately come up (such as whether defining GF(p^{d'}) in terms of GF(p^{d}) and \"inductively applying the above convention\" does yield an unambigous definition. Since all finite fields of fixed size are isomorphic, it would be much easier to stick to the standard way of doing this. This would also avoid messy tower of extension field arguments and messy representations of elements hereof (e.g., in Section 4.4). See also Appendix J on data conversions of the lwig draft referenced in this draft. As final note, the data conversions in that lwig draft require specifying bit/octet encodings (which, in the pairing case, seem to be most-significant-byte-first (MSB) and most-significant-bit-first (msb).\r\n\r\nThanks for your comments.\r\nYour proposed extension field seems to be simple, but there are many different ways to construct an extension field GF(p^12).\r\nSince BN254 with the embedding degree 12 was a major parameter, efficient construction methods for GF(p^12) have been researched.\r\n\r\nFrom the viewpoint of practical use, we adopted the construction method with (Fp-Fp2-Fp6-Fp12) using tower fields , which has also been used in implementations such as mcl library.\r\nIn addition, we use MSB-first (the big-endian encoding), so we've written that.",
+          "createdAt": "2020-09-30T05:55:22Z",
+          "updatedAt": "2020-09-30T11:45:12Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>6) Section 3.1, 4th para: it is unclear what the meaning of \"best known\" is: is this \"best-known\" (i.e., most well-known) or \"simply the best\"? Given the description, the first meaning should be the correct one\u2026\r\n\r\nThank you for your comments!\r\nWe revised the part pointed out according to your comments.",
+          "createdAt": "2020-09-30T05:56:25Z",
+          "updatedAt": "2020-09-30T05:56:25Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>7) Section 3.2: what is missing is a section that actually describes the attack, rather than simply plugging in some implied numbers based on a paper (presumably [BD18]). Why not add some verbiage that explains this in simple but roughly accurate terms (\"The exTNFS Attack\", or, better, \"Attacks on DLP over Low-Degree Extension Fields\", or even better, \"Solving the DLP in Finite Fields\" (there has been lots of progress there for mid-size base fields too)). This is a CFRG document, so one would expect something that provides insight, rather than simply a bombardment of tables, some selection criteria, and a filtered list. Wouldn't the objective of this whole effort be to educate the CFRG audience on pairing-based crypto, rather than (say, obtaining an RFC number from an SDO and marketing this as an implied \"authoritative\" approval stamp)?\r\n\r\nThank you for your suggestion!\r\nWe agreed with your comments and added an explanation of the attack.",
+          "createdAt": "2020-09-30T05:57:04Z",
+          "updatedAt": "2020-09-30T05:57:04Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>8) Section 3.2: I remember that Francisco Rodriguez-Henriquez (fix name in references) presented attacks at the CHES 2013 rump sessions, where question was whether this spelled trouble for pairing-based crypto. While I do not have his presentation then on file, it may be good to dig this up or ask him, and contemplate on wider implications of DLP progress in general (see also first general review remark).\r\n\r\nThanks for the reference information.\r\nOn the other hand, the rump session is not a peer-reviewed presentation, so it is difficult for us to refer to it.\r\nAlso, since CHES 2013 is before exTNFS (Kim's attack) was proposed, we believe that if the impact of Francisco's presentation is significant, it would be carried over into the research of exTNFS.",
+          "createdAt": "2020-09-30T05:58:18Z",
+          "updatedAt": "2020-09-30T05:58:18Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>9) Section 3.2, 2nd para: A natural question is what one could say about DLP complexity for GF(p^k), in terms of dependency on p and k. Unfortunately, this section does not provide any insight on this (it only provides a single numerical value for BLS48 curves, without any context). I would suspect the reader audience would appreciate such insight, without need to wed through a whole forest (6 1/2 pages: far too much reference stuffing!) of references by himself without any guidance as to whether this would be time well-spent or lost.\r\n\r\nThank you for your comment.\r\nAs you point out, there are a lot of citations, but we would like to summarize based on a fact shown in related papers.\r\nThe reason is to avoid mistakes and misleading for the readers by re-writing the content of the paper.\r\nTherefore, we believe that a description of the impact of the attack, which is a fact shown in [BD18], is sufficient for the draft.",
+          "createdAt": "2020-09-30T05:59:13Z",
+          "updatedAt": "2020-09-30T05:59:13Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>10) Section 4: as stated before, the selection criteria seem somewhat arbitrary, since conflate specification text, libraries, with actual deployment. Moreover, the most important criteria should probably be security and speed given particular security strength, and potential support for finite field arithmetic on platforms (speaking of which: why not devote a section on whether one can actually implement GF(p^k) securely using finite field libraries, including modular reductions, side channels, etc.?). The term \"adoption status\" seems, in any event, misleading.\r\n\r\nThanks for your comment.\r\nThis comment has already been answered as General Remarks by e-mail.",
+          "createdAt": "2020-09-30T06:00:12Z",
+          "updatedAt": "2020-09-30T06:00:12Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>11) Section 4.1, Table on pp. 12-15: if one strikes out domain parms rendered immediately suspect by the exTNFS paper on DLP, this kills off 8 out of 10 entries on p. 12 (and far more if one stikes out suspect values accross the entire table). This makes me wonder what the technical reason is for including this entire table. To the casual reader it now suggests that there are huge numbers of implementations out there, whereas - perhaps - most of those should be switched off immediately...\r\n\r\nThanks for the suggestion!\r\nBased on your suggestion, we have removed the parameters of the 100-bit security level from Table 1.\r\nOn the other hand, we have summarized the parameters removed from Table1 as a separate table and showed them in the appendix, because we believe that it would be a useful information for implementers to indicate in which libraries the parameters of the 100-bit security level are in.\r\n\r\nThe problem with the size of Table1 has been pointed out by other CFRG members, but we haven't found a solution to it.\r\nWe feel that your suggestions have made more readable and we greatly appreciate you.\r\n\r\n\r\n",
+          "createdAt": "2020-09-30T06:01:20Z",
+          "updatedAt": "2020-09-30T06:01:20Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>13) Section 4.2.1: The extension field GF(p^{12}) can also be described via GF(p) and degree-12 polynomial f(w):=(w^6-1)^2+1. This would allow using simple conventions used in Lidl et al's finite field book [2]. It also allows description of an element x of GF(p^{12}) as vector (x_{11}, ..., x_1, x_0) of coefficients of GF(p) with this irreducible polynomial. Note here that u+1:=w^6 and v:=w^2, so one can easily internally use the more complex tower field stuff in the draft, while sticking to simple and easy to maintain standard constructions (known for 2 centuries) for specifications (so, nobody looses out if one has a slim interface that does this conversion back and forth, if necessary).\r\n\r\nThanks for your suggestion.\r\nPlease refer to the answer to the fifth technical comment regarding the reasons for adopting the construction of the extension fields.",
+          "createdAt": "2020-09-30T06:01:53Z",
+          "updatedAt": "2020-09-30T06:01:53Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>14) Section 4.2.1, bottom of p. 18: shouldn't the cofactor h be such that h*r= # E'(GF(p^2))? {please also fix Et and use E' notation as elsewhere in the draft}\r\n\r\nThank you for your comment!\r\nWe revised the part pointed out.",
+          "createdAt": "2020-09-30T06:03:07Z",
+          "updatedAt": "2020-09-30T06:03:07Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>15) Section 4.2.1, parameter b' (bottom of p. 19): if one uses the complicated tower construction, why then not also mention the value of u in the enumeration? Is one actually sure this value is uniquely defined (e.g., I did not check but wondered what would happen if one replaces u by -u in the tower construction)? Same with end of Section 4.2.2...\r\n\r\nThanks for your question.\r\nIn our draft, the parameter u is given as a polynomial, because it is the element in the extension field.\r\nThat is, it does not have a numerical value.\r\n",
+          "createdAt": "2020-09-30T06:03:53Z",
+          "updatedAt": "2020-09-30T06:03:53Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>16) Section 4.2.2, 5th para: the statement \"CP8_544 is more efficient\" is hard to interpret without context (e.g., half the cost, cost-1, cost - o(log log log n)).\r\n\r\nThanks for pointing out.\r\nWe have added the results of comparing the performance between BN462 and CP8_544, based on the paper.",
+          "createdAt": "2020-09-30T06:04:26Z",
+          "updatedAt": "2020-09-30T06:04:26Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>17) Section 4.2.2, bottom of p. 20: with parms BN462, why not simply introduce base point G, parameter n, h, etc., once and for all in Section 2.1, without trying to repeat their definition in Section 4.2.2 (and later sections)?\r\n\r\nThanks for your suggestion!\r\nBased on the suggestion, we modified the description of terminology and deleted the apparently repeat definitions, such as parameter n, h, etc.\r\n",
+          "createdAt": "2020-09-30T06:05:23Z",
+          "updatedAt": "2020-09-30T06:05:23Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>18) Section 4.2.2, top of p. 21: the formula for h seems incorrect (G2 is defined over GF(p^2), whereas the formula refers to a curve defined over GF(p^8).\r\n\r\nThank you for your comments!\r\nWe revised the part pointed out.",
+          "createdAt": "2020-09-30T06:06:10Z",
+          "updatedAt": "2020-09-30T06:06:10Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>19) The security consideration section (Section 5) is rather slim: (speculation on my side) is the reason to label this draft as \"experimental\" that design strength vs. actual strength is somewhat in limbo due to progress on DLP problem? Why suddenly squeeze in a point validation routine if no context is given at all of where and how pairing based crypto is used? Wit point validation, what if an octet representation is outside GF(p) boundary? (while the forelast para seems to imply an attack one is completely left in the dark what is at stake here). Not sure whether it is the role of CFRG documents to legitimize \"BN254 use ... to keep interoperability\". The end of the first para (\"as of 2020, as far as we know, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS\") is entirely non-reassuring to me: it is only four years after the DLP attack that necessitated to strike out half of the entries in the table earlier on in the paper, not that many people work on pairing-based algorithmic cryptanalysis in the first place, etc., etc. Where does this confidence come from (shouldn't one be more modest here, technically speaking???). The Cheon attack is not explained and cannot be evaluated at all, since no context on elliptic arithmetic is given at all in the draft.\r\n\r\nThanks for your comments!\r\nThere are multiple items in the comment, and we will answer below.\r\n\r\n- Regarding the comments related to the draft type \"experimental\", please be assured that we will discuss the change to \"informational\" with the CFRG chairs.\r\n\r\n- The application of pairing is shown in Section 1, so we have added a citation of Section 1.\r\n\r\n- As you pointed out, the description allowing the use of BN254 is inappropriate as an IRTF draft, so we have removed that statement.\r\n\r\n- As for attacks outside GF(P) boundary of the octet string, there are fears of the signature forgery.\r\n\r\n- Since you concerned about the description of \"as far as we know...\", we revised it more properly.\r\nWe write our draft based on the investigation result of the conference papers, so we revised it as \"as far as we've investigated the top cryptographic conferences in the past...\".\r\n\r\n- We added the explanation of the Cheon algorithm.\r\n",
+          "createdAt": "2020-09-30T06:07:47Z",
+          "updatedAt": "2020-09-30T06:07:47Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>20) Secion 5, 3rd-last para: Why would the Montgomery ladder suddenly come to the rescue to salvage side channel resistance? Why refer to RFC 7748: whereas pairing-friendly curves are all Weierstrass curves, the curves in RFC 7748 are all Montgomery curves with completely different underlying detail on differential-addition chains). It seems that an entire section should be devoted to how implementations coul avoid SCA attacks, esp. since some operations take place in huge extension fields GF(p^t)...\r\n\r\nThanking for pointing that out!\r\nThanks to your point,  we found that the readers may not immediately understand by RFC 7748 that the montgomery ladder can be applied to Weierstrass curves.\r\nSo we decided to refer to another reference that specifies the detailed algorithm of montgomery ladder.",
+          "createdAt": "2020-09-30T06:08:47Z",
+          "updatedAt": "2020-09-30T06:08:47Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>21) Appendix C seems to convey a particular encoding used by ZCash. I don't think it is the role of CFRG to make those the standard way of doing things. This being said, technically that representation is a tiny tweak of what the SECG1 specification already stipulated in 2001 (with SEC1, one can extract the affine/compressed encoding of an affine point and whether this relates to the point at infinity from the leftmost octet (0x04, 0x02 or 0x03, vs. 0x00), which more or less 1-1 corresponds to the (C_bit, I_bit, S_bit) combinations. If so, reinventing yet another representation is hard to defend.\r\n\r\n>22) The parity bit notation for finite fields is highly non-standard, compared to, e.g., what has been standard usage with compressed points for curves over prime fields or binary extension fields. Even if this would have some uses, why not defining things once and for all for all extension fields of an odd prime field, so that this is a simple extension. See also Appendix H of [1] (parity function for any field GF(p^k), where p odd). This should also help in limiting side channel leakage from the first-half vs. last-half of [0,p-1] test.\r\n\r\nThanks for your comments!\r\nWe do not wish to propose the ZCash representation as a new convention in our draft.\r\nOur motivation is to describe the ZCash representation as a reference to implementers because it is the data convention that has been adopted by many BLS signature implementations.\r\n\r\nTherefore, to avoid any misunderstanding to the reader, we have clearly written that ZCash representation is a tiny tweak of SEC1 representation.\r\nIn addition, for your reference, we would like to mention that the parity bit representation is not entirely non-standard, as it is proposed in the IEEE document.\r\nIEEE Std 1363a-2004 gives serialization and deserialization procedures for curves over GF(p^m), and the ZCash spec is also very roughly similar to those.\r\n",
+          "createdAt": "2020-09-30T06:09:36Z",
+          "updatedAt": "2020-09-30T06:09:36Z"
+        }
+      ]
+    },
+    {
+      "number": 62,
+      "id": "MDU6SXNzdWU2OTU3NjI3Nzg=",
+      "title": "Comments from Rene during the RGLC (Editorial Comments)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/62",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial comments from Rene (CFRG members) are shown as follows.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/cfrg/pW71h3yUETnqedHsH0m3rwzPnm4/",
+      "createdAt": "2020-09-08T10:43:34Z",
+      "updatedAt": "2021-01-29T11:02:16Z",
+      "closedAt": "2021-01-29T11:02:16Z",
+      "comments": [
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2020-09-17T14:28:53Z",
+          "updatedAt": "2020-09-17T14:28:53Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>1) Section 2.1, first para: replace \"F_q\" by GF(q), stipulate that extension degree n>0.\r\n\r\nThank you for your comments!\r\nWe revised the part pointed out according to your comments.",
+          "createdAt": "2020-09-30T05:43:33Z",
+          "updatedAt": "2020-09-30T05:43:33Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>2) Section 2.1, first para: with defining equation, use more common domain parameters a and b (i.e., lowercase instead of upper case). Elsewhere, do use common nomenclature used with NIST, ANSI, SECG, ISO for 2 decades, including n for prime-order subgroup, h for co-factor, mention irreducible polynomial f(z) with extension field, denote fixed base point by P (instead of BP), etc. If one wishes, refer to Appendix B.1 of [1].\r\n\r\nThanks for your suggestions.\r\nAccording to your comment, we changed the domain parameters \"A\" and \"B\" to \"a\" and \"b\" because a lot of documents related to ECC use \"a\" and \"b\".\r\nThe \"a\" was used to represent an another parameter, so we also changed the related parts.\r\nOn the other hand, we are sorry, but we did not change the parameter \"BP\" that represents the base point BP to P, because we would like to use P as a variable to represent an arbitrary rational point.\r\n",
+          "createdAt": "2020-09-30T05:44:53Z",
+          "updatedAt": "2020-09-30T05:44:53Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>3) Section 2.1, 2nd para: \"point on\" should be \"point of\".\r\n\r\nThank you for pointing out.\r\nI'm sorry, but some standard specifications and textbooks use \"on\", so I would like to follow them.\r\n\r\n- RFC6090: Fundamental Elliptic Curve Cryptography Algorithms\r\n  https://tools.ietf.org/html/rfc6090\r\n\r\n- Hashing to Elliptic Curves\r\n  https://tools.ietf.org/pdf/draft-irtf-cfrg-hash-to-curve-09.pdf\r\n\r\n- SEC 1: Elliptic Curve Cryptography\r\n  https://www.secg.org/sec1-v2.pdf\r\n\r\n- Rational Points on Elliptic Curves (Undergraduate Texts in Mathematics) \r\n  J. H. Silverman, J. T. Tate\r\nhttps://www.amazon.co.jp/Rational-Elliptic-Undergraduate-Mathematics-English-ebook/dp/B00YPPBZYG\r\n\r\n- Handbook of Elliptic and Hyperelliptic Curve Cryptography \r\n  H. Cohen et al.\r\n  https://www.amazon.co.jp/dp/B00I60LZPA/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1",
+          "createdAt": "2020-09-30T05:45:46Z",
+          "updatedAt": "2020-09-30T05:45:46Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>4) Section 2.1, first/3rd para: isn't it simpler to define curve over GF(q) and then introduce curve with same domain parms, but then defined over extension field GF(q^k)?\r\n\r\nThank you for your suggestion!\r\nI'm sorry, but I think there is not a big problem because this part has passed Expert Review.\r\n",
+          "createdAt": "2020-09-30T05:47:01Z",
+          "updatedAt": "2020-09-30T05:47:01Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n\r\n>5) Section 2.1, 3rd para: \"group law which\" should be \"group law that\", \"reflection about x-axis\" should be \"reflection around x-axis\", with \"unique third point of intersection [R]\" (i.e., give this a name, here R), with [a]P, stipulate that [0]P is the identity element and that [-a]P=-([a]P), etc.\r\n\r\n>6) Section 2.1, terminology: fix E(F_{q^k}) (i.e., add paranthesis), fix that this refers to GF(q^k)-rational points (rather than GF(q)-rational points, same with cardinalities.\r\n\r\n>7) Section 2.1, terminology: with co-factor h, doesn't one need gcd(h,n)=1 (so, as to ensure unique order-n subgroup)?\r\n\r\n>8) Sectioon 2.2, 2nd para \"is called embedding degree of E over GF(q)\" (i.e., add curve and field over which this is defined)\r\n\r\n> 9) Section 2.2, 2nd para: the term \"twist\" is not defined (but often used elsewhere in the draft), neither is the term GF(p^k)* (nonzero elements of GF(p^k).\r\n\r\n>10) Section 2.3, 2nd para: replace \"prime p\" by \"prime number p (where p at least five)\".\r\n\r\n>11) Section 2.3, 3rd para (top of p. 8): write \"the multiplicative group...\" or, better still, simply state that b is a primitive element of GF(p) (and add this to terminology).\r\n\r\n>12) Section 2.4, 4th para: \"parameterized\" should read \"parameters\".\r\n\r\n>13) Section 3.1, 3rd para: \"paiting-based\" should be \"pairing-based\" (i.e., fix the typo \"t\" --> \"r\").\r\n\r\n>14) Section 3.1, 4th para: \"to solve\" should read \"for solving\".\r\n\r\n>15) Section 3.2, 1st para: \"the security level(s)\" (i.e., make plural), \"... correspond\" (i.e., use corresponding verb conjugation).\r\n\r\n>17) Section 4.2.1, 4th para: \"categorized as M-type\" (\"as\" instead of \"into\").\r\n\r\nThank you for your comments!\r\nWe revised the part pointed out according to your comments.",
+          "createdAt": "2020-09-30T05:51:18Z",
+          "updatedAt": "2020-09-30T05:51:18Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Reply Comments)\r\n>16) Section 4.2, 2nd para: reword \"more prudent option\" as \"more conservative option\".\r\n\r\nThanks for your comment.\r\nI'm sorry, but this sentence was suggested by the Expert Reviewer, so I'd like to keep this expression.",
+          "createdAt": "2020-09-30T05:52:08Z",
+          "updatedAt": "2020-09-30T05:52:08Z"
+        }
+      ]
+    },
+    {
+      "number": 63,
+      "id": "MDU6SXNzdWU3MjEyMjY4Nzc=",
+      "title": "Snarks applications",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/63",
+      "state": "CLOSED",
+      "author": "mratsim",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "A significant amount of work is done toward researching and efficiently implementing pairing friendly curve for Snarks:\r\n\r\n- @yelhousni BW6-761: https://eprint.iacr.org/2020/351 is implemented in\r\n  - Celo: https://github.com/celo-org/celo-blockchain/pull/1157\r\n  - Gnark and Gurvy: https://github.com/ConsenSys/gurvy\r\n  - Zexe: https://github.com/scipr-lab/zexe/tree/85cac177/algebra/src\r\n  - Constantine (WIP): https://github.com/mratsim/constantine/blob/244f5835/constantine/config/curves_declaration.nim#L167-L190\r\n\r\n- BLS12-377 from Zexe (https://eprint.iacr.org/2018/962 cc @Pratyush) is implemented in all those libraries and also\r\n  - https://github.com/saitima/eip1962 (@kilic)\r\n  - https://github.com/matter-labs/eip1962 (@shamatar)\r\n  - is a standardization target for Ethereum: https://eips.ethereum.org/EIPS/eip-1962\r\n  - Note that the main appeal of this curve is its high order and field modulus 2-adicity for FFT in Snarks applications.\r\n\r\nIn general there is a use-case for lower security efficient zero-knowledge proofs that is the main focus of pairing implementers:\r\n- @kobigurk WASM Snarks: https://github.com/iden3/wasmsnark\r\n- @jon-chuang Proposal for BLS24, BLS27 and BLS48 curves to explore in Zexe: https://github.com/scipr-lab/zexe/issues/156 https://github.com/scipr-lab/zexe/issues/156\r\n- Aztec protocol zk-rollups using BN254_Snarks in Barrentenberg: https://github.com/AztecProtocol/barretenberg.\r\n  The Ethereum blockchain currently has too much demand and techniques that allow bundling a batch of transactions together are called rollups. This is the main scaling solution, with zk-Snarks being one possible rollup technique explored at the moment hence [EIP1962](https://github.com/matter-labs/eip1962).\r\n\r\nI think the 1.2 section about applications of pairing friendly curves can be significantly enhanced by expanding on this area of both research and actual application.\r\n\r\nhttps://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-08.html#name-applications-of-pairing-bas\r\n\r\nSome examples:\r\n- Decentralized private computations: https://github.com/scipr-lab/zexe\r\n- Decentralized identity:\r\n  - https://github.com/appliedzkp/semaphore,\r\n  - https://github.com/iden3/research\r\n- Spam protection/rate limiting for messaging: https://github.com/vacp2p/research/issues/2\r\n- Transaction bundlings (rollups) for blockchain scalability: https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698",
+      "createdAt": "2020-10-14T07:47:15Z",
+      "updatedAt": "2021-01-29T11:02:01Z",
+      "closedAt": "2021-01-29T11:02:01Z",
+      "comments": [
+        {
+          "author": "kobigurk",
+          "authorAssociation": "NONE",
+          "body": "Just to give proper credit, https://github.com/iden3/wasmsnark is by @jbaylina, not me :slightly_smiling_face: \r\n\r\n",
+          "createdAt": "2020-10-15T06:37:01Z",
+          "updatedAt": "2020-10-15T06:37:01Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "To @mratsim \r\n\r\nI'm so sorry for the late reply.\r\n\r\nThank you for providing the information of the use cases and implementation status of the pairing.\r\nI think it's very valuable and I will refer to them in the section 1 and Table 1 in the next update.",
+          "createdAt": "2020-11-04T08:15:32Z",
+          "updatedAt": "2020-11-04T08:15:32Z"
+        }
+      ]
+    },
+    {
+      "number": 64,
+      "id": "MDU6SXNzdWU5NTM3ODgxODA=",
+      "title": "Comments from Rene (based on reply letter on April 30)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/64",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Update target for Rene\u2019s comments is shown as follows.\r\nhttps://mailarchive.ietf.org/arch/msg/cfrg/-1nTbbVRlkP5wV2odEYFac-jK08/",
+      "createdAt": "2021-07-27T11:33:28Z",
+      "updatedAt": "2021-07-28T00:15:06Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Commit logs related above comments are as follows.\r\n\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/49efed2bcb505d42aceac5e6ce9a93c7743cb05c\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/10581350e2f5599e9218596851f6c6b0b47892c1\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/576219693948b02e69564562bfd15be32afef658\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/39b83a4e0e7c1370714c9b292ae9bcbde1ebb9a2\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/0f3a6550648465c74e5a5383e5e24257cdb40358\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/ab5a7ae97a18bc4319fb7388d8cd2e2acea4d718\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/4e715318cd66c8d4e10f38e51d5f70ef01c91a7d\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/03e935d0c0c468db7a8c5cf2640c369627770d18\r\nhttps://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/commit/537eafd0d7397794f6e0637a4c059b435790e86e\r\n",
+          "createdAt": "2021-07-27T11:39:08Z",
+          "updatedAt": "2021-07-27T11:39:08Z"
+        },
+        {
+          "author": "Tsune3110",
+          "authorAssociation": "NONE",
+          "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
+          "createdAt": "2021-07-28T00:15:06Z",
+          "updatedAt": "2021-07-28T00:15:06Z"
+        }
+      ]
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOD8wsds49Mggs",
+      "title": "Feedback",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/67",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Intro and abstract: Too much attack details \u2014 omit entirely and refer reader to the paper, noting implications. Maybe merge with section 3?\r\n- Preliminaries: Are all details for curves necessary? Example: point at infinity, twists, etc?\r\n- Section 4: choosing \u201cwidely used\u201d over \u201cefficiency\u201d is interesting, as it may impede use cases that would consider adopting pairings but don\u2019t due to the cost. How would some of the recommendations change if \u201cefficiency\u201d were prioritized over \u201cwidely used\u201d? (Would BLS12-381 still stand on top?)\r\n- Section 4: 192-bit security is mentioned into the intro, but there is no matching recommendation. Recommend removing from intro. \r\n- Section 4: move adoption status to an appendix?\r\n- Section 4: link to application table points to a blog post. Consider removing?\r\n- Section 4.1.2: lots of libraries mentioned here \u2014 do any of them have formally verified implementations? Adding new curve support to a library is a tall order, but easier if, say, that code can be generated and formally verified.\r\n- Section 4.2: 128-bit security level: interesting that we\u2019re recommending things with less than 128 bits of security. At what rate does the security of this curve deteriorate? Generally: unclear if the CFRG has or will ever draw the line somewhere beneath this bound. \r\n- Section 4.2: Unclear what the security level of BN462 is \u2014 is it 128 bits?\r\n- Reference to I-D.ietf-lwig-curve-representations is unclear. What is the status of that draft?\r\n- Generally: parameters for curves are provided, but there\u2019s no safe implementable pairing specification. (The appendix code is not constant time, it seems. Is that important?) Unclear what the target audience is for. If this is for implementers deciding how to implement one of these curves, would they not need to know the corresponding pairing details? If it\u2019s for applications choosing curves, do they need to know all these curve details? (Same goes for encoding and decoding, which has some text in the security considerations section and then has one serialization format for BLS12_381. What about other curves? Do we want to recommend one serialization format so things are interoperable? Should the serialization format be something that applications decide?)\r\n- Appendix D: can this be dropped? ",
+      "createdAt": "2021-10-14T18:21:21Z",
+      "updatedAt": "2021-10-15T10:04:08Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood \r\nThank you for your comments.\r\nI will check your feedback with my co-authors.",
+          "createdAt": "2021-10-15T10:04:08Z",
+          "updatedAt": "2021-10-15T10:04:08Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 56,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDM1OTAwNjQz",
+      "title": "Adds BLS12-377",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/56",
+      "state": "OPEN",
+      "author": "kobigurk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hello Yumi Sakemi, Tetsutaro Kobayashi, Tsunekazu Saito and Riad S. Wahby,\r\n\r\nI'd like to propose to add BLS12-377 - a pairing friendly curve gaining adoption in the last year.\r\n\r\nBLS12-377 has been introduced in the [Zexe paper](https://eprint.iacr.org/2018/962.pdf), for the case where both the scalar and the base fields have high 2-adicity. This makes BLS12-377 efficient for creating SNARK over and for creating SNARKs with statement involving BLS12-377 operations.\r\n\r\nThese properties made it highly interesting for a few projects, some of which are running in production - [Celo](https://celo.org), [EY Nightfall](https://github.com/EYBlockchain/nightfall) among others.\r\n\r\nHaving it standardized would be beneficial for all the projects involved.\r\n\r\nPlease let me know what you think and what could be done to improve it!",
+      "createdAt": "2020-06-17T14:45:16Z",
+      "updatedAt": "2020-06-23T07:11:39Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "b4127ae3e40609b6e7b19446e3e4d663be8846be",
+      "headRepository": "celo-org/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "master",
+      "headRefOid": "9590834402349b12c45bd4fbf0c1790ce64829d8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi,  Kobi!\r\n\r\nI am so sorry for my late reply.\r\nThank you for your interest in our draft and I appreciate your suggestions.\r\n\r\nIn our draft, we select the recommended pairing-friendly curves that match two selection policies: \"widely-used\" and \"security (the curves are shown in peer-reviewed papers)\".\r\nFrom a viewpoint of \"widely-used\", in our understanding, the BLS12-377 has fewer adoptions than the BLS12-381.\r\n\r\nAlso, as Riad pointed out by e-mail, if both BLS12-377 and BLS12-381 were proposed in the same draft, there is a possibility that the draft could confuse the readers.\r\nFor these reasons, we consider that it is difficult to add the BLS12-377 to our draft as the recommended parameter.\r\n\r\nOn the other hand, I feel that your activities that promote the use of pairing are so great, and I appreciate for your contribution.\r\nSo, we plan to refer your OSS (which is published in the following GitHub page) in the version 08 of our draft as one of the adoption results of pairing-friendly curves.\r\n\r\nhttps://github.com/celo-org/bls12377js\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+          "createdAt": "2020-06-23T07:11:39Z",
+          "updatedAt": "2020-06-23T07:11:39Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 68,
+      "id": "PR_kwDOD8wsds4vTy0T",
+      "title": "Remove junk",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/68",
+      "state": "MERGED",
+      "author": "wbl",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This removes a lot of the cruft from the draft. Let's land it with the XML changes, and then I'll work on the algorithm details to avoid big merge conflicts.",
+      "createdAt": "2021-12-02T13:52:51Z",
+      "updatedAt": "2022-01-13T14:49:22Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "55606e95fde8127dcbf89ea5e1382c973cac2226",
+      "headRepository": "wbl/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "watson/major-revision",
+      "headRefOid": "e9778f0210ac51799b720e98334b222add648f2d",
+      "closedAt": "2022-01-13T14:47:40Z",
+      "mergedAt": "2022-01-13T14:47:40Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "7839866a4537fc3f45c910e3bdfbfef6646f02f4"
+      },
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@yumi-sakemi can you please take a look at this?",
+          "createdAt": "2021-12-20T18:51:22Z",
+          "updatedAt": "2021-12-20T18:51:22Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@wbl @chris-wood \r\nI'm so sorry for late reply.\r\nI confirmed Watson's PR.",
+          "createdAt": "2022-01-13T14:49:22Z",
+          "updatedAt": "2022-01-13T14:49:22Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 69,
+      "id": "PR_kwDOD8wsds4y4Wm-",
+      "title": "Typo: frinedly",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/69",
+      "state": "OPEN",
+      "author": "mratsim",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Btw I went over the applications,\r\n\r\nCurrently most Ethereum clients use BLST https://github.com/supranational/blst, which was co-sponsored with the Filecoin blockchain which is now targeting GPU implementation (https://research.protocol.ai/sites/snarks/).\r\n\r\nSome also use MCL and Miracl as historical fallback before BLST was developed. BLST undergoes formal verification as well: https://github.com/GaloisInc/BLST-Verification",
+      "createdAt": "2022-02-15T19:37:03Z",
+      "updatedAt": "2022-02-15T19:43:26Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "5611bbde3717817c6c578462c99d8805fda7c401",
+      "headRepository": "mratsim/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "patch-1",
+      "headRefOid": "a58a22bcaf0b8475a64d69c27cf65c630ff86d03",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "mratsim",
+          "authorAssociation": "NONE",
+          "body": "I also forgot a benchmark of state-of-the-art pairing libraries: https://hackmd.io/@gnark/eccbench for BN254-Snarks, BLS12-381, BLS12-377, BW6-761\r\n\r\nNote: those benchmarks are over a year old, numbers have likely improved significantly since then (at least they did for my own library).",
+          "createdAt": "2022-02-15T19:41:05Z",
+          "updatedAt": "2022-02-15T19:43:26Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
