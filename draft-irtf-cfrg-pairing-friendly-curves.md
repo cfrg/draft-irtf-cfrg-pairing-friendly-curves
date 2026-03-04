@@ -131,6 +131,49 @@ Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being specified {{?I-D
 
 {::boilerplate bcp14-tagged}
 
+## Group abstraction {#group-abstraction}
+
+The presentation in the following uses additive notation for elliptic-curve groups. For prime-order subgroups of residue classes, all notation needs to be changed to multiplicative, and references to elliptic curves (e.g., curve) need to be replaced by their respective counterparts over residue classes.
+
+For elliptic curves in this memo, we assume the following operations are available. Example choices can be found in {{?I-D.irtf-cfrg-hash-to-curve}}.
+
+We use the following symbols:
+
+- `E1`, `E2`: elliptic curve groups defined over finite fields. This document assumes `E1` has a more compact representation than `E2`, e.g., because `E1` is defined over a smaller field than `E2`.
+- `G1`, `G2`: subgroups of `E1` and `E2` (respectively) having prime order `r`.
+- `G_T`: a subgroup, of prime order `r`, of the multiplicative group of a field extension.
+- `e : G1 x G2 -> G_T`: a non-degenerate bilinear map.
+- `r`: the prime order of the `G1` and `G2` subgroups.
+- `BP1`, `BP2`: base (constant) points on the `G1` and `G2` subgroups respectively.
+- `Identity_G1`, `Identity_G2`, `Identity_G_T`: the identity element for the `G1`, `G2`, and `G_T` subgroups respectively.
+
+For a pairing-friendly curve, this document denotes operations in `E1` and `E2` in additive notation, i.e., `P + Q` denotes point addition and `x * P` denotes scalar multiplication.
+
+### Group {#group}
+
+- `identity()`, returns the neutral element in the group.
+- `generator()`, returns the generator of the prime-order elliptic-curve subgroup used for cryptographic operations.
+- `order()`: returns the order of the group `r`.
+- `hash_to_curve(ostr, dst) -> P`: a cryptographic hash function that takes an arbitrary octet string as input and returns a point in the subgroup, using the hash_to_curve operation defined in {{?I-D.irtf-cfrg-hash-to-curve}} and using `dst` as the domain separation tag.
+- `point_to_octets()`, returns the canonical representation of a group element as an octet string. This operation is also known as serialization.
+- `octets_to_point(ostr)`, returns the group element corresponding to the canonical representation `ostr`, or INVALID if `ostr` is not valid for the subgroup. This operation is also known as deserialization. This function can raise a `DeserializeError` if deserialization fails.
+- `add(element: Group)`, implements elliptic curve addition for the two group elements.
+- `equal(element: Group)`, returns `true` if the two elements are the same and `false` otherwise.
+- `scalar_mul(scalar: Scalar)`, implements scalar multiplication for a group element by an element in its respective scalar field.
+
+In this spec, instead of `add` we will use `+` with infix notation; instead of `equal` we will use `==`, and instead of `scalar_mul` we will use `*`. A similar behavior can be achieved using operator overloading.
+
+### Scalar
+
+- `identity()`: outputs the (additive) identity element in the scalar field.
+- `add(scalar: Scalar)`: implements field addition for the elements in the field.
+- `mul(scalar: Scalar)`, implements field multiplication.
+- `random(rng)`: samples a scalar from the RNG. Securely decoding random bytes into a random scalar is described in Section 9.1.4 of the Fiat-Shamir specification.
+- `serialize(scalars: list[Scalar; N])`: serializes a list of scalars and returns their canonical representation of fixed length `Ns * N`.
+- `deserialize(buffer)`, attempts to map a byte array `buffer` of size `Ns * N` into `[Scalar; N]`, and fails if the input is not the valid canonical byte representation of an array of elements of the scalar field. This function can raise a `DeserializeError` if deserialization fails.
+
+In this spec, instead of `add` we will use `+` with infix notation; instead of `equal` we will use `==`, and instead of `mul` we will use `*`. A similar behavior can be achieved using operator overloading.
+
 # Preliminaries
 
 ## Elliptic Curves
