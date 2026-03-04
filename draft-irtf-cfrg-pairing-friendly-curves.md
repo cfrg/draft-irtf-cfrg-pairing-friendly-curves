@@ -417,6 +417,55 @@ We give the following parameters for BN462.
 * `b'`: `-u + 2`
 
 
+## For 192-bit Security
+
+Recent work has examined multiple candidates for 192-bit security. According to {{!AFG24=DOI.10.62056/angyl86bm}}, we select BLS24_509 as the most efficient curve across a number of performance metrics. It is implemented in RELIC and in efficient-rust-pairings (https://github.com/kamel78/efficient-rust-pairings), and was carefully peer-reviewed at https://eprint.iacr.org/2024/1223.
+
+```
+    t = -1 + 2^11 - 2^28 - 2^51.
+```
+
+In this case, the size of `p` becomes 509-bit.
+
+For the finite field `GF(p)`, the towers of extension field `GF(p^2)`, `GF(p^4)`, `GF(p^8)`, and `GF(p^24)` are defined by indeterminates `u`, `v`, `w`, and `z` as follows:
+
+```
+    GF(p^2) = GF(p)[u] / (u^2 + 1)
+    GF(p^4) = GF(p^2)[v] / (v^2 - u - 1)
+    GF(p^8) = GF(p^4)[w] / (w^2 - v)
+    GF(p^24) = GF(p^8)[z] / (z^3 - w)
+```
+
+The elliptic curve `E` and its twist `E'` are represented by `E`: `y^2 = x^3 + 1` and `E': y^2 = x^3 + 1 / v`.
+BLS24_509 is categorized as D-type.
+
+We then give the parameters for BLS24_509 as follows.
+
+* `G_1` is the largest prime-order subgroup of `E(GF(p))`
+    * `BP` = `(x,y)` : a 'base point', i.e., a generator of `G_1`
+* `G_2` is an `r`-order subgroup of `E'(GF(p^4))`
+    * `BP'` = `(x',y')` : a 'base point', i.e., a generator of `G_2` (encoded with {{I-D.ietf-lwig-curve-representations}})
+        * `x'` = `x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v` (`x'_0`, ..., `x'_3` in `GF(p)`)
+        * `y'` = `y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v` (`y'_0`, ..., `y'_3` in `GF(p)`)
+    * `h'` : the cofactor `#E'(GF(p^4))/r`
+* `p`: `0x155556ffff39ca9bfcedf2b4f9c0ecf6cb8ac8495d187e8c32ea0103e01090bb626e85bf7c18a0f0cfcb5c6071bad3d2ee63bd076e8d9300a13d118db8bfd2ab`
+* `r`: `0x100000ffff870ff91ce195db5b6f3ebd1e08c94c9e193b724ed58b907ff7c311a80d7cabc647746ae3ecb627c943998457fe001`
+* `x`: `0x1b28c3bec45cd9c234f465962ece64778e165478a23196ab96fdcc96158db382d54a07059a286b6c1e55b96c4a8c618f47a6a36a26c99e3e1fe8bc25d74e1498`
+* `y`: `0xba2c88f672b5a4b486e8a86442b9b1a41917db750072e398fc106020c3adecc12a87cb01f0d19b1803a97c300d97545941dade18cb8a648a79f3bb0744f9f8c`
+* `x'_0`: `0x0927879267500f31e123685dfe56521992d6d0eede96f7efa385466503c9ac6bb88ba1fa43b53e8b98e9e7834feb83e1854ef3dc869fc9d41939ff7a1a3b90bb`
+* `x'_1`: `0x11382fdd19d128c8c8c5cee368ef3897d40035d21bc430b57262479dc3ea06277c7680ace462dc3780e9140845d431e550106f15748785d7796a1063cff2ca7f`
+* `x'_2`: `0x122dbc587bbf831b166c137a1d87a5b3236f3a14022bbf90ca7ed890d3fd516e5b5196c7cbb4d77f10ceb26e17a6c9b6bb259bdb5dccf3a5c4bd8cda65154e75`
+* `x'_3`: `0x0eff036115647bc93867f07af4b118021e1a6f14b13133571643b1066e1528811644e97e22cc6b9da44b6bba7d573230e4744d30aa22dd5c826606f4770590b2`
+* `y'_0`: `0x083eec575faaca96314a20b6f0304968ddb92c3e2547797b366a74c633c9d35bc52ca825cb1f026e5ea2f022db7d391cf0eeebde10be091bb957691d86fcf59c`
+* `y'_1`: `0x0e2d3654331c73f199d85b944aba15483c7af9777aa75eb71883281ccb50b06c87cdb93717be728509dbc323191747996d4373e80c9a86e84bd094d3f07a6222`
+* `y'_2`: `0x02524e0f4325868a6ddca6ad2bbab86de591215578610d034c30474ed2ef75c8a24b6c1fa06796bff421ffbb99039ac007977b29c657836fe0560a5377ffbf9f`
+* `y'_3`: `0x0ea98163611e033550f5221eecc454cb6ad046bd547c25d4b75ada44137c794b8a9b2f2d908c573ea3568fc3467c28960fab660e49df297363f3dca0c7e1d77b`
+* `h`: `0x155555aaaa805fffaac0154aac`
+* `b`: 1
+* `h'`: `0x32916e9e0188e2252da44f42f6dc0e90a66e8c7afa49d50688a07f362ba18a01f6d9317009d55daf8cfa9159e35e2736da6417b31c8550dfc6cd766340d92ab85d629676e78e12d5e76ab9fac536661eea6615242264e5f6b46eba0f95191cd226b0cb144cec686a846de323cbe0244a3b6e5ffe49bd01599f13ad869ff3da2e5551fd9c2d885ef8fb95eb7ffd5460ec84fa36a569bcb5bbbc5a21b025ceceead08540c0accb87d9136ecb9c2cedc2d465831d76ac3551ee87bca06b751c18699a1424ff71e791eb953fa79`
+* `b'`: `1 / v`
+
+
 ## For 256-bit Security
 
 There are three candidates of pairing-friendly curves for 256-bit security. According to our selection policy, we select BLS48_581, as it is the most widely adopted by cryptographic libraries.
@@ -599,6 +648,7 @@ It takes `P` in `G_1`, `Q` in `G_2`, an integer `c`, `c_0, ...,c_L` in `{-1,0,1}
 # Test Vectors of Optimal Ate Pairing
 
 We provide test vectors for Optimal Ate Pairing `e(P, Q)` given in (#OptimalAtePairing) for the curves BLS12_381, BN462 and BLS48_581 given in (#selection_pfc).
+In addition, we provide test vectors for BLS24_509 given in (#selection_pfc).
 Here, the inputs `P` = `(x, y)` and `Q` = `(x', y')` are the corresponding base points `BP` and `BP'` given in (#selection_pfc).
 
 For BLS12_381 and BN462, `Q` = `(x', y')` is given by
@@ -609,6 +659,15 @@ For BLS12_381 and BN462, `Q` = `(x', y')` is given by
 ```
 
 where `u` is an indeterminate and `x'_0`, `x'_1`, `y'_0`, `y'_1` are elements of `GF(p)`.
+
+For BLS24_509, `Q` = `(x', y')` is given by
+
+```
+    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v and
+    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v,
+```
+
+where `u` and `v` are indeterminates and `x'_0`, ..., `x'_3` and `y'_0`, ..., `y'_3` are elements of `GF(p)`.
 
 For BLS48_581, `Q` = `(x', y')` is given by
 
@@ -668,6 +727,45 @@ Input `y'_1` value: `0x073ef0cbd438cbe0172c8ae37306324d44d5e6b0c69ac57b393f1ab37
 `e_9`: `0x17fa0c7fa60c9a6d4d8bb9897991efd087899edc776f33743db921a689720c82257ee3c788e8160c112f18e841a3dd9a79a6f8782f771d542ee5`
 `e_10`: `0x0c901397a62bb185a8f9cf336e28cfb0f354e2313f99c538cdceedf8b8aa22c23b896201170fc915690f79f6ba75581f1b76055cd89b7182041c`
 `e_11`: `0x20f27fde93cee94ca4bf9ded1b1378c1b0d80439eeb1d0c8daef30db0037104a5e32a2ccc94fa1860a95e39a93ba51187b45f4c2c50c16482322`
+
+
+BLS24_509:
+
+Input `x` value: `0x1b28c3bec45cd9c234f465962ece64778e165478a23196ab96fdcc96158db382d54a07059a286b6c1e55b96c4a8c618f47a6a36a26c99e3e1fe8bc25d74e1498`
+Input `y` value: `0xba2c88f672b5a4b486e8a86442b9b1a41917db750072e398fc106020c3adecc12a87cb01f0d19b1803a97c300d97545941dade18cb8a648a79f3bb0744f9f8c`
+
+`x'_0`: `0x0927879267500f31e123685dfe56521992d6d0eede96f7efa385466503c9ac6bb88ba1fa43b53e8b98e9e7834feb83e1854ef3dc869fc9d41939ff7a1a3b90bb`
+`x'_1`: `0x11382fdd19d128c8c8c5cee368ef3897d40035d21bc430b57262479dc3ea06277c7680ace462dc3780e9140845d431e550106f15748785d7796a1063cff2ca7f`
+`x'_2`: `0x122dbc587bbf831b166c137a1d87a5b3236f3a14022bbf90ca7ed890d3fd516e5b5196c7cbb4d77f10ceb26e17a6c9b6bb259bdb5dccf3a5c4bd8cda65154e75`
+`x'_3`: `0x0eff036115647bc93867f07af4b118021e1a6f14b13133571643b1066e1528811644e97e22cc6b9da44b6bba7d573230e4744d30aa22dd5c826606f4770590b2`
+`y'_0`: `0x083eec575faaca96314a20b6f0304968ddb92c3e2547797b366a74c633c9d35bc52ca825cb1f026e5ea2f022db7d391cf0eeebde10be091bb957691d86fcf59c`
+`y'_1`: `0x0e2d3654331c73f199d85b944aba15483c7af9777aa75eb71883281ccb50b06c87cdb93717be728509dbc323191747996d4373e80c9a86e84bd094d3f07a6222`
+`y'_2`: `0x02524e0f4325868a6ddca6ad2bbab86de591215578610d034c30474ed2ef75c8a24b6c1fa06796bff421ffbb99039ac007977b29c657836fe0560a5377ffbf9f`
+`y'_3`: `0x0ea98163611e033550f5221eecc454cb6ad046bd547c25d4b75ada44137c794b8a9b2f2d908c573ea3568fc3467c28960fab660e49df297363f3dca0c7e1d77b`
+`e_0`: `0x07a0cf86a61681fc6020c9e9c3d464b8a3726f198c4337c8d0e9da0eee4590ddf859479a93a189c61068a35d2b98e6e6fd8cfb917de46da5e4934a0d0e12c247`
+`e_1`: `0x0c7bfdc2b829faec98f82432b6b41eacc5d8b8aa950d6d3b9ad2a46d3285c84317e3b17b345c5136260882e05fb62800a11c17df59c5369654cda2531b1a1239`
+`e_2`: `0x0906138bb6be4ba2871b838afe7465ae2c9bae7f79a845709ca5dd8edb88b7798fe7da9a4062fe09c686f965ba9c668766be4a70e0e7db2318b0d8dec62e2845`
+`e_3`: `0x007490f5e435c15982a344a2ce33ee37c5ddd1fd3425137ed388e4682f64675317c291c6f7aff877240308d9ecc712aa36380bbea3fe33a7384814436b47494d`
+`e_4`: `0x01bd6615a8ae4a7cfe94bcb625d1d94c551f34e1e5ae95d04f6dc9aaf497f882536797d9053ca2128f6e0f8c2463272799a58ed93d253ff03869cf08e21d86aa`
+`e_5`: `0x00c6500cbe03584a52c13ca4fe08f9bc9b5830600e6c52f59c16c61969e46cb72c6fbbad7602750fc4dab37ec5d0069ce96c0b27337dea6e959d7b8fd02fba34`
+`e_6`: `0x03fce88022e40f87a26e4f3776d8bbcd4d1dbebdcc8a602232ecd60696a6bca4e2faab588656a583e7dcbe17626bd67ef4df686f08b572fabaf014022f2a49ed`
+`e_7`: `0x0ab1105ea9b58e5df118870a9a995a1eb611533d5d8242df9d346b1154d11ad834094e7c8a2ff5aa3416213f8b7619a7a9916c249e3201f18f5f7599706a01bc`
+`e_8`: `0x0d9db91784aec8b5c7cf4cb9f5f6f3449da4ee6acb252f15e168ae230d540cf0badd181a9f8d396afd3f9fa475a633a83afcadc9971b0ced5bb13c77baf0b8c6`
+`e_9`: `0x002e55ba567e589e486b7a0858f0c9c600adfb34261304d9a7db627092d29e175da04c3d394b4bd33baa187ea9b517026a1d22f134a686ed8b5f60b1e0e23d72`
+`e_10`: `0x10b2ef1976fa626718510a4719ff4d7c06caa3c067fa558812e6e79a5be11b3f48567bd4d1a351f4361aaf13cb0ceac2a10e14dac03edcbf6d2b2eb41354cb35`
+`e_11`: `0x01a3e1784bf934995bc976c2aebedbf742fe9627cb937cfb8cb6d98856a295f1ec090709d21c9532aa61ec7e1e1a64b7339651cf669064cdd6f504bd28bb44e3`
+`e_12`: `0x0bc67d6d5e0493a46572eca10cd2a4035205d88fae1939ff5b54600777f616886817fff445ec03821bbe8f7bc98df2f220991e3184658d34f5254e69b619eccf`
+`e_13`: `0x0536381e3117d4918598adb91a4abee56932701ee0724a56b5054a8a051bfe5dacb88790ebbfaf617a99a76893d192df77953c71cb738767b6c20f1aef95748f`
+`e_14`: `0x02b774dafac6ecb1a46ef5fd24482b28eea8e80ff956d2c8bf95a1fd6c88e92c4f6bd5ec7351e5b60c369c8ca44861009266cf613ba10b4f778112fbd72de512`
+`e_15`: `0x036c0b926af94b6536afb0fa461a8944b03161d84067813b8e40af0df9fbb2a9a60eb12d8b04120ae8b30e9ee376f8a9564945d41a195fe22ac799f80717db4c`
+`e_16`: `0x089b76b9e338cb4d961d1f9aba55dfbd36aa1fbcacaf6dc2c2d691d53fc95936dc9ff0145d61ab364fe201da47957352a3ebf37590b0504f9572d5d21dbff0c8`
+`e_17`: `0x0ff29bd937bc3e4a026e74005949733b18e1abd42bb4caf5bd358fdda3b9f02b48d8a91d03d2e403efa09c0a0d9c0f95820a0f93d06d699bf600487538c18cc0`
+`e_18`: `0x06e13af35cac57954273dc3b730af8a9ceb266ca3365ceb6ccb4cf6e790f23f3fb59a0411526eba73b84d0f3048fcb9e399ff5ad4e04bafb4491ed5f12fd67a6`
+`e_19`: `0x1471683dde7455e6072875cb3de0090abfe21d3e5b3388a087148075bc54111837b5a3c47526b9e567c2469f961b5f7f460c06a75a81acc456a8d01c4dbabbd0`
+`e_20`: `0x087b3fe1ede91656a427832c9a9e8365a992b4c9de8a6a1854318e781992bfbc212882869527fc5af708f5af08691e88500dd0355d460cf343442d0bb8383291`
+`e_21`: `0x00fc8f67e43cf09adb34f6af03404a336f67547052ce86e354d393d074e214edeab45231403f93def9cd18b9cc4f5cdee3bcdcbd1c5031833e075537ac0bf512`
+`e_22`: `0x13fd04f3cb63921ab6ebd10af5c24f66e5b6b69829365e620c99cd88b01fa47f3d8323374a2a6468204f1f5c3ffd842824e209779833ab8a2e9c6974eb4ac97c`
+`e_23`: `0x01430f463c07e004c675927a39b3eee7d4ac3bf8ca3fcee05533d26f428a7165954535839281b57edb9ba74bb8cf7cdc44910fda99d71ffaf919a10fdcb3b1c6`
 
 
 BLS48_581:
