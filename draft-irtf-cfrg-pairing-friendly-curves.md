@@ -1,6 +1,6 @@
 ---
 title: "Pairing-Friendly Curves"
-docname: draft-irtf-cfrg-pairing-friendly-curves-12
+docname: draft-irtf-cfrg-pairing-friendly-curves-latest
 category: info
 ipr: trust200902
 area: IRTF
