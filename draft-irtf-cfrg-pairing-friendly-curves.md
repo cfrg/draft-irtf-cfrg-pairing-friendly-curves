@@ -315,7 +315,7 @@ The BLS12_381 curve is shown in {{BLS12_381}} and it is defined by the parameter
 
 ~~~~~~~~~~
 
-    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16 
+    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 
 ~~~~~~~~~~
 
@@ -386,7 +386,7 @@ A BN curve with the 128-bit security level is shown in {{BD18}}, which we call B
 
 ~~~~~~~~~~
 
-    t = 2^114 + 2^101 - 2^14 - 1 
+    t = 2^114 + 2^101 - 2^14 - 1
 
 ~~~~~~~~~~
 
@@ -457,7 +457,7 @@ The selected BLS48 curve is shown in {{KIK17}} and it is defined by the paramete
 
 ~~~~~~~~~~
 
-    t = -1 + 2^7 - 2^10 - 2^30 - 2^32. 
+    t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
 
 ~~~~~~~~~~
 
@@ -730,7 +730,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6539.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6509.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8017.xml" />
-        
+
         <reference anchor="CF06">
           <front>
             <title>Handbook of Elliptic and Hyperelliptic Curve Cryptography</title>
@@ -772,7 +772,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2020" />
           </front>
         </reference>
-        
+
         <reference anchor="bls12377js" target="https://github.com/celo-org/bls12377js">
           <front>
             <title>bls12377js</title>
@@ -978,7 +978,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date>n.d.</date>
           </front>
         </reference>
-        
+
 <reference anchor="IEEE1363">
   <front>
     <title>IEEE Standard Specifications for Public-Key Cryptography</title>
@@ -1048,7 +1048,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="1983" />
           </front>
         </reference>
-        
+
         <reference anchor="mcl" target="https://github.com/herumi/mcl">
           <front>
             <title>mcl - A portable and fast pairing-based cryptography library</title>
@@ -1087,7 +1087,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2019" />
           </front>
         </reference>
-        
+
         <reference anchor="libsnark" target="https://github.com/zcash/libsnark">
           <front>
             <title>libsnark: a C++ library for zkSNARK proofs</title>
@@ -1152,7 +1152,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2013" />
           </front>
         </reference>
-        
+
         <reference anchor="AMCL" target="https://github.com/apache/incubator-milagro-crypto">
           <front>
             <title>The Apache Milagro Cryptographic Library (AMCL)</title>
@@ -1181,7 +1181,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2017" />
           </front>
         </reference>
-        
+
         <reference anchor="NASKM08">
           <front>
             <title>Integer Variable X-Based Ate Pairing</title>
@@ -1201,7 +1201,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             </author>
             <author initials="Y." surname="Morikawa" fullname="Yoshitaka Morikawa">
               <organization />
-            </author>  
+            </author>
             <date year="2008" />
           </front>
         </reference>
@@ -1486,7 +1486,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
 
       </references>
     </references>
-    
+
 {:/nomarkdown}
 
 # Computing the Optimal Ate Pairing  {#comp_pairing}
@@ -1585,9 +1585,9 @@ For BLS48_581, Q = (x', y') is given by
 
 ~~~~~~~~~~
 
-    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v 
-        + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and 
-    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v 
+    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
+        + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
+    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
         + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 
 ~~~~~~~~~~
