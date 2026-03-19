@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-04-09T01:05:35.935747+00:00",
+  "timestamp": "2026-03-19T02:29:28.235685+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2411,6 +2411,37 @@
           "updatedAt": "2021-10-15T10:04:08Z"
         }
       ]
+    },
+    {
+      "number": 72,
+      "id": "I_kwDOD8wsds7zjP_G",
+      "title": "Determine publication venue for the full Adoption Status table (formerly Table 1)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/72",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Background\n\nThe comprehensive \"Adoption Status of Pairing-Friendly Curves\" table (Table 1 in the v12 XML) has been removed from the I-D body in the Markdown migration. This table served as evidence that selected curves meet the \"widely used\" criterion in our selection policy (Section 4).\n\n### Reason for removal\n\n- CFRG members provided feedback that the table is too large for inclusion in the I-D body\n- The table contains complex multi-column layout with security level classifications that is difficult to maintain in kramdown-rfc Markdown format\n\n### Current status\n\n- The table data is preserved in `notes/table_adoption.xml` (raw XML, 410 lines) and `notes/table_adoption.md` (readable Markdown, 49 lines)\n- The prose descriptions in Section 4.1 (\u00a7impl) still describe the adoption status in detail\n- The 100-bit security level table (smaller) remains in the document as Appendix D\n\n### Options to consider\n\n1. **Companion document**: Publish the table as a separate resource (e.g., on the lepidum.co.jp blog, which already hosts a version)\n2. **Appendix**: Move to an appendix (similar to the 100-bit table) \u2014 but size may still be a concern\n3. **External reference**: Reference an external URL where the table is maintained\n4. **GitHub-only**: Keep in the repository's `notes/` directory as reference material\n\n### Action needed\n\n- Decide on the publication venue\n- If the table is to be included in any form, update the cross-references in the I-D text accordingly\n- Consider whether the table needs updating before publication (e.g., adding new libraries/applications)",
+      "createdAt": "2026-03-17T04:16:59Z",
+      "updatedAt": "2026-03-18T13:59:27Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "satokan",
+          "authorAssociation": "COLLABORATOR",
+          "body": "### Proposal: Update the Adoption Status table as a \"Before/After\" comparison (2020 vs 2026)\n\nBefore deciding on the publication venue, I think we should update the table content itself. The current data reflects the state as of ~2020, and six years have passed since then. This gives us a valuable opportunity to validate our curve selection criteria with real-world evidence.\n\n#### Proposed approach\n\nRestructure the table as a **2020 vs 2026 comparison** across all three categories (Standards, Libraries, Applications), documenting:\n\n1. **Continued adoption** \u2014 Which curves from the original table are still actively used?\n2. **New adoption** \u2014 Which libraries/applications have adopted the recommended curves since 2020?\n3. **Migration trends** \u2014 Notable shifts (e.g., BN254/BN256 \u2192 BLS12-381 in Ethereum and other ecosystems)\n\n#### Why this matters\n\nThis approach serves two purposes:\n\n- **Evidence for Section 4 (Selection Policy):** If curves we recommended in 2020 are even more widely deployed in 2026, this validates the \"widely used\" criterion and strengthens the draft's rationale.\n- **Data for the ongoing curve selection discussion (CFRG Open Question 2):** The December 2025 CFRG ML thread showed differing views on whether to narrow the curve set. Factual adoption data would help inform that discussion \u2014 for example, confirming BLS12-381's dominant position, assessing BN462's actual deployment, and understanding whether 192-bit or BLS48-family curves have seen real uptake.\n\n#### Specific areas to investigate\n\n- **Libraries**: Status of existing entries (mcl, RELIC, AMCL/MIRACL, Adjoint, etc.) + new major libraries (BLST, gnark-crypto, arkworks, constantine)\n- **Applications**: Status of existing entries (Zcash, Ethereum, Chia, DFINITY, Algorand) + new deployments (Filecoin, Aleo, BBS+/W3C Verifiable Credentials, EigenLayer)\n- **Standards**: ISO/IEC 15946-5:2022 revision status, W3C VC Data Integrity suite (BBS), any new standards body references\n- **Curve-specific**: BLS12-377 and BLS24-509 adoption (relevant to PR #56 and PR #70)\n\n#### Regarding the publication venue\n\nI suggest we accumulate the updated data in `notes/` first and decide the venue afterward \u2014 the same material can serve whether we publish it as an appendix, a companion document, or via GitHub Pages. Note that the lepidum.co.jp URL mentioned in option 1 now redirects to gmo-cybersecurity.com, so that specific venue is no longer available.\n\nI can start gathering this data. Thoughts?\n",
+          "createdAt": "2026-03-18T12:46:39Z",
+          "updatedAt": "2026-03-18T12:46:39Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @satokan \u2014 this is an excellent proposal.\n\nI fully agree that updating the table content should come before deciding on the publication venue. The \"Before/After\" (2020 vs 2026) comparison approach is a great idea \u2014 it directly serves both the selection policy validation and the ongoing curve set discussion on the CFRG list.\n\nA few thoughts:\n\n**On the proposed approach:**\nThe three-category structure (Continued adoption / New adoption / Migration trends) is well thought out. In particular, the migration data (e.g., BN254\u2192BLS12-381 in Ethereum) would provide concrete evidence for the curve simplification discussion raised in the December 2025 Open Questions thread.\n\n**On the investigation areas:**\nThe list of libraries and applications to check looks comprehensive. I'd add:\n- **py_ecc** and **noble-curves** (JavaScript) \u2014 widely used in Ethereum tooling\n- **Herumi/bls** \u2014 used in Ethereum consensus layer (validators)\n- Status of BN462 deployment specifically (relevant to the BN retention/removal discussion)\n\n**On the venue:**\nAgreed \u2014 accumulate in `notes/` first, decide venue afterward. Good catch on the lepidum.co.jp redirect; we'll need to update that reference regardless.\n\n**On next steps:**\nPlease go ahead and start gathering the data. I'll help with the review and cross-referencing against PR #70 (BLS24-509) and the curve set discussion.\n\nAlso \u2014 I've asked the CFRG chairs to add you as a collaborator on this repository so you can work directly on branches and issues. I'll update you once that's confirmed.",
+          "createdAt": "2026-03-18T13:59:27Z",
+          "updatedAt": "2026-03-18T13:59:27Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2523,6 +2554,177 @@
           "updatedAt": "2022-02-15T19:43:26Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 70,
+      "id": "PR_kwDOD8wsds7H50Ab",
+      "title": "chore: add parameters and test vectors for bls24-509",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/70",
+      "state": "OPEN",
+      "author": "mmaker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The latest version of the draft document does not give a set of parameters at the 192-bit security level.\r\nThe curve is implemented in a few libraries (RELIC, https://github.com/kamel78/efficient-rust-pairings) and carefully peer-reviewed at https://eprint.iacr.org/2024/1223\r\n",
+      "createdAt": "2026-03-04T15:06:10Z",
+      "updatedAt": "2026-03-04T15:06:10Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "25b1974cc1f01d8e7d34a75a59770b89c82c7858",
+      "headRepository": "mmaker/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "mu/192",
+      "headRefOid": "4366e5e3d681b71a3898604287e6b0fee453d0fb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 71,
+      "id": "PR_kwDOD8wsds7H6I8L",
+      "title": "add sketch interface for elliptic curves and scalars.",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/71",
+      "state": "OPEN",
+      "author": "mmaker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-04T15:26:22Z",
+      "updatedAt": "2026-03-11T17:18:18Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "25b1974cc1f01d8e7d34a75a59770b89c82c7858",
+      "headRepository": "mmaker/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "mu/def",
+      "headRefOid": "4cf5a963743d075bfb1f7d5beebe8497ecdddcc0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOD8wsds7qTSji",
+          "commit": {
+            "abbreviatedOid": "4cf5a96"
+          },
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "Hi, I've taken the liberty to review and add some comments. Feel free to ignore any comments :)",
+          "createdAt": "2026-03-11T16:34:10Z",
+          "updatedAt": "2026-03-11T17:18:18Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "I guess it's the elements of E1 which have a more compact representation rather than the curve itself :)\nThe language you use here is also widely understood. Have you considered not having a \"representation\" for curve elements at all, just for group elements?",
+              "createdAt": "2026-03-11T16:34:11Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "This somewhat duplicates the sentence below about `add` and `scalar_mul`",
+              "createdAt": "2026-03-11T16:35:15Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "Gramatically, this reads a bit like the curve was denoted `r`. Maybe reorder:\n\n> returns `r`, the order of the group.",
+              "createdAt": "2026-03-11T16:36:41Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 22,
+              "body": "I am a bit unsure whether the term `Group` refers to both the elliptic curve groups and the field extension serving as the target, or to the cyclic order `r` subgroups thereof.\n\nI think the latter would make sense for an interface, but clarification would be nice here.",
+              "createdAt": "2026-03-11T16:44:59Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 29,
+              "body": "Is there any particular reason to distinguish `INVALID` from a `DeserializeError`?",
+              "createdAt": "2026-03-11T16:46:22Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 30,
+              "body": "The subsection header has me thinking of these functions as members of a \"class\" `Gx`, being invoked as (e.g.) `G1.generator()`. Following this, the `add` function should take two parameters:\n`G1.add(e1,e2)`.\n\nThe same applies to `equal`, `scalar_mul`, and `point_to_octets`.",
+              "createdAt": "2026-03-11T16:50:20Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 6,
+              "body": "The current presentation (I know this is a draft :D) uses neither. You might want to touch on this later on after having defined the group's \"API\".",
+              "createdAt": "2026-03-11T16:52:16Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "The `In this spec` may be omitted, I think, since other specifications such as BBS signatures use this as well. For `scalar_mul`, it may be beneficial to canonically restrict oneself to \"scalar times group element\", not the other way around.\n\nThe sentence about operator overloading needs some qualification, since it only makes sense in certain programming languages rather than an RFC-to-be. This also seems like an implementation detail, which is less useful here than formally establishing notation for specs to rely on.",
+              "createdAt": "2026-03-11T16:57:19Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 39,
+              "body": "The same comment two-argument comment applies here.",
+              "createdAt": "2026-03-11T16:57:51Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 38,
+              "body": "All scalars for cyclic groups are residues mod some prime number, so perhaps calling it `zero` would be more direct.",
+              "createdAt": "2026-03-11T17:04:57Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 42,
+              "body": "Any reason why you specify this function (and the next) for many scalars? Concatenating scalars seems like a thing for protocols to do, since serializations could arbitrarily interleave scalars and group elements based on several protocol-specific factors.",
+              "createdAt": "2026-03-11T17:08:22Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 45,
+              "body": "Same as above",
+              "createdAt": "2026-03-11T17:08:33Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            },
+            {
+              "originalPosition": 41,
+              "body": "I'm not sure the dependence on FS is justified here and may hold up this document even further.\n\nIt would make sense to specify algorithms for each of the methods here, but depending on where you want to use this, it makes sense to either have a non-deterministic method without arguments `random()` or refer to, say, RFC 9380, section 5 for a deterministic method also used in BBS.",
+              "createdAt": "2026-03-11T17:16:03Z",
+              "updatedAt": "2026-03-11T17:18:18Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 73,
+      "id": "PR_kwDOD8wsds7LhGds",
+      "title": "Fix typo: pairing-frinedly -> pairing-friendly",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/73",
+      "state": "OPEN",
+      "author": "satokan",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix typo in Section 2.3 (Barreto-Lynn-Scott Curves):\n- `pairing-frinedly` \u2192 `pairing-friendly`\n- `is a another` \u2192 `is another` (remove duplicate article)\n\nThis supersedes #69.",
+      "createdAt": "2026-03-18T11:50:55Z",
+      "updatedAt": "2026-03-18T11:50:55Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "fc343266bc8cc6a6247f8e9682829dfde3c76848",
+      "headRepository": "satokan/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix-typo-frinedly",
+      "headRefOid": "66f6247d62bf3c4e6961475dc40ce703e4424ca9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
