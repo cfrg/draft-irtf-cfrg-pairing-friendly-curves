@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-19T02:29:28.235685+00:00",
+  "timestamp": "2026-04-16T02:50:42.565836+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2442,6 +2442,73 @@
           "updatedAt": "2026-03-18T13:59:27Z"
         }
       ]
+    },
+    {
+      "number": 74,
+      "id": "I_kwDOD8wsds794y-j",
+      "title": "Specify normative serialization at RFC 7748/8032 level of detail",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/74",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "### Summary\n\nMultiple participants in the [December 2025 Open Questions thread](https://mailarchive.ietf.org/arch/msg/cfrg/IC5u8A5XJvHVJpNFWJhovcn5xd0/) requested that the draft specify point encoding and decoding at the level of detail provided in RFC 7748 and RFC 8032, rather than referencing external sources.\n\nThis was identified as a priority area by the CFRG chairs ([Nick Sullivan, Feb 2026](https://mailarchive.ietf.org/arch/msg/cfrg/MHNkW3dt6FqhKLWUwraN11bQtZ0/)).\n\n### Background from the ML discussion\n\n**[Thomas Bellebaum](https://mailarchive.ietf.org/arch/msg/cfrg/Y8PiMjmr-KzWMjNCpW9jUvllvkw/)** (Fraunhofer AISEC, BBS implementor):\n- Advocates for **compressed-only format** (no uncompressed encoding) as the default\n- The cost of square root computation is negligible compared to pairing computation and hash-to-curve\n- If uncompressed is needed, define a separate curve identifier with dedicated de/serialization instructions\n- References RFC 7748 and RFC 8032 as the gold standard for serialization RFCs\n\n**[David Waite](https://mailarchive.ietf.org/arch/msg/cfrg/MzFgr2qShM6BBV15zLGxTfxTq-A/)** (Alkaline Solutions):\n- Multiple drafts currently duplicate or inconsistently reference the serialization:\n  - `draft-irtf-cfrg-bbs-signatures-09` Appendix B.2\n  - `draft-ietf-cose-bls-key-representations-08`\n  - `draft-irtf-cfrg-bls-signature-06` (references a historical Rust crate README)\n- The original `[ZCashRep]` reference is outdated\n- **Strong preference** for a single authoritative serialization in this document (or one normatively referenced by it)\n- Proposes: single encoding function per curve, fixed-length, compressed, non-identity elements; decoding function that fails on uncompressed and identity elements\n\n**[Jack Grigg](https://mailarchive.ietf.org/arch/msg/cfrg/-KRy4O7QNfDLklD7wbITxtQ3PA0/)** (Zcash developer):\n- Updated reference URLs for BLS12-381 serialization:\n  - Crate README: https://github.com/zkcrypto/bls12_381/blob/main/README.md#curve-description\n  - Serialization spec: https://docs.rs/bls12_381/latest/bls12_381/notes/serialization/index.html\n  - **Normative reference** should be the Zcash Protocol Specification, Section 5.4.9.2: https://zips.z.cash/protocol/protocol.pdf#blspairing\n- Confirms Zcash uses compressed-only for on-the-wire proofs (uncompressed only for static verification key storage)\n- Provides test vector location: https://github.com/zkcrypto/bls12_381/tree/main/src/tests\n- **Note**: Capitalization should be \"Zcash\" (not \"ZCash\")\n\n**[Watson Ladd](https://mailarchive.ietf.org/arch/msg/cfrg/TD9I44-qF7ucKwRetABWqC4TgHw/)**:\n- Agrees serialization should be included in this document\n- Notes that choosing uncompressed-only could also work (\"Choosing only uncompressed could be fine\")\n\n### Proposed scope for this issue\n\n1. **Define compressed encoding as the RECOMMENDED format** for all curves in the draft\n2. **Provide explicit encode/decode algorithms** at RFC 7748/8032 level of detail\n3. **Update the Zcash reference** to the normative Zcash Protocol Specification URL\n4. **Fix capitalization**: \"ZCash\" \u2192 \"Zcash\" throughout\n5. **Incorporate or reference Zcash test vectors** for G1/G2 encodings\n6. **Decide whether uncompressed encoding is needed** \u2014 if so, define it as a separate, clearly marked option with its own decode algorithm\n7. **Identity point handling** is tracked separately in #75\n\n### Related\n\n- Identity point serialization: #75\n- PR #71 (interface sketch by Michele Orr\u00f9) \u2014 may overlap on serialization API\n- `draft-irtf-cfrg-bbs-signatures` Appendix B.2 (current consumer of this serialization)\n- `draft-irtf-cfrg-bls-signature` (references outdated Zcash README)",
+      "createdAt": "2026-04-14T04:38:08Z",
+      "updatedAt": "2026-04-15T08:04:39Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "Sounds good \ud83d\udc4d \nOne more idea: It may be useful to specify the en-/decoding of a scalar as well. I have seen this in PR #71 . Comparatively, these are very simple: Encoding is I2OSP with a fixed encoding length and decoding is OS2IP with the same length, the latter followed by a comparison with the group order to enforce a unique encoding of equivalence classes.\nHowever, there is the zero scalar which one might not want to deserialize for the same reasons (and roughly in the same circumstances and with the same exceptions) as the identity elements of the elliptic curve subgroups.",
+          "createdAt": "2026-04-14T09:15:20Z",
+          "updatedAt": "2026-04-14T09:15:20Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for raising this \u2014 scalar serialization is a useful addition, and I agree it fits naturally within the scope of this issue.\n\nThe specific design (scope of scalar serialization, exact encoding convention, canonical-form enforcement, zero-scalar handling) is closely coupled with the other open items under this issue \u2014 the canonical byte layout for points, alignment with existing consumers such as the BBS and BLS signature drafts, and the identity-point question tracked in #75. I'd rather work those through together than fix individual pieces in isolation.\n\nPlan:\n\n1. Fold scalar (de)serialization into the design work for this issue, to be resolved alongside the point-encoding items.\n2. Target the next draft revision for a consolidated proposal covering both point and scalar serialization, planned for late May ahead of the June Crypto Panel review.\n\nIf you have further input on any of the sub-questions \u2014 preferred alignment with existing conventions in the BBS/BLS drafts, opinions on how closely this should follow RFC 7748 / RFC 8032 / RFC 9380 conventions, or other considerations \u2014 it'd be welcome ahead of the design write-up.",
+          "createdAt": "2026-04-15T08:04:39Z",
+          "updatedAt": "2026-04-15T08:04:39Z"
+        }
+      ]
+    },
+    {
+      "number": 75,
+      "id": "I_kwDOD8wsds794zXA",
+      "title": "Define policy for identity point (de)serialization",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/75",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "### Summary\n\nThe handling of the identity element (point at infinity) in serialization was discussed in the [December 2025 Open Questions thread](https://mailarchive.ietf.org/arch/msg/cfrg/IC5u8A5XJvHVJpNFWJhovcn5xd0/). This was identified as a priority area by the CFRG chairs.\n\nThe core question: should the default serialization API accept/produce the identity element?\n\n### Positions from the ML discussion\n\n**[Thomas Bellebaum](https://mailarchive.ietf.org/arch/msg/cfrg/gorMiOCYlpyPSDGOEOP-gZkwf3U/)** (Fraunhofer AISEC, BBS implementor):\n- **Strongly against** allowing identity in the default API\n- \"In no realistic scenario should an identity ever be serialized or deserialized (assuming access to unbiased random bits)\"\n- BBS `deserialize_and_validate_commit` returns `Identity_G1` deliberately to reuse code paths \u2014 but this is a special case, not general-purpose\n- Identified a potential **subgroup check bug in BBS blind signatures** related to identity point handling (details in the [Dec 16 CFRG ML post](https://mailarchive.ietf.org/arch/msg/cfrg/sg23wpZS8fbafbXeTNxAnosnkWE/))\n- Concerns about timing leaks from identity-checking branches\n\n**[Ian Goldberg](https://mailarchive.ietf.org/arch/msg/cfrg/1J8Zx5VQI7Z8MdGetClfQz6P-WE/)** (University of Waterloo):\n- **For ZKP use cases**, it would be helpful to be _able_ to (de)serialize the identity\n- Use case: serializing the _statement_ to be proved (e.g., hashing it into a transcript for the challenge) \u2014 the statement itself may contain an identity element even if the proof does not\n- Proposes: \"a different API call that explicitly allows it\"\n- Notes: \"This is true for pairing and non-pairing curves alike\"\n\n**[David Waite](https://mailarchive.ietf.org/arch/msg/cfrg/MzFgr2qShM6BBV15zLGxTfxTq-A/)** (Alkaline Solutions):\n- Agrees with default disallow: \"a single encoding function per curve that produces fixed-length, compressed, non-identity elements \u2014 and a decoding function that fails on uncompressed and identity elements\"\n- Applications requiring identity should define their own handling\n\n**[Jack Grigg](https://mailarchive.ietf.org/arch/msg/cfrg/-KRy4O7QNfDLklD7wbITxtQ3PA0/)** (Zcash):\n- Confirms Zcash does not use identity in on-the-wire proofs\n\n### Proposed resolution\n\nDefine **two levels of API**:\n\n1. **Default `deserialize` / `serialize`**: Rejects identity element. This is the RECOMMENDED API for protocol implementations.\n2. **Extended `deserialize_allow_identity` / `serialize_allow_identity`**: Permits identity. Clearly marked as for advanced use cases (ZKP transcript serialization, etc.). Implementations SHOULD log or flag usage.\n\nAlternatively, if two APIs are considered too complex:\n- Default API rejects identity\n- Document the identity encoding format in an informative appendix for protocols that need it\n- Downstream specs (e.g., ZKP frameworks) can define their own identity handling by reference\n\n### Related\n\n- #74 \u2014 Normative serialization guidance (parent issue for serialization format)\n- BBS blind signatures subgroup check concern (Bellebaum, Dec 16) \u2014 may warrant a separate advisory to BBS authors",
+      "createdAt": "2026-04-14T04:38:37Z",
+      "updatedAt": "2026-04-14T04:38:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 76,
+      "id": "I_kwDOD8wsds7-SZJB",
+      "title": "Evaluate curve set against Section 4 selection criteria",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/76",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Background\n\nFollowing the chairs' confirmation that **IETF 126 is the target for RGLC**, it would be helpful to bring structure to the ongoing curve set discussion.\n\nThe draft's Section 4 defines a clear selection policy:\n\n> *\"It is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. In addition, 'efficiency' is one of the important aspects but greatly dependant on implementations, so we choose to prioritize 'security' and 'widely used' over 'efficiency' in consideration of future interconnections and interoperability over the internet.\"*\n\nThis issue applies the Section 4 criteria to both the current curves and the proposed alternatives, to provide a shared factual basis for the discussion.\n\n### Evaluation table\n\nThe table below summarizes the status of each curve against the three Section 4 criteria. **Rows for proposed curves have placeholders** \u2014 we invite the proposers to supply the relevant references so the community can evaluate them on the same axis.\n\n#### 128-bit security level\n\n| Criterion | BLS12-381 (current) | BN462 (current) | BN446 (proposed) |\n|---|---|---|---|\n| **Peer-reviewed security analysis** | Barbulescu\u2013Duquesne [BD18]; Guillevic\u2013Masson\u2013Thom\u00e9 [GMT19] (~126-bit) | Barbulescu\u2013Duquesne [BD18] (134-bit); Guillevic\u2013Masson\u2013Thom\u00e9 [GMT19] | *(to be supplied by proposer)* |\n| **Widely used in cryptographic libraries** | mcl, RELIC, MIRACL, blst, zkcrypto, noble-curves, CIRCL, gnark, Adjoint, \u2026 | mcl, MIRACL, RELIC, Adjoint | RELIC |\n| **Deployed in applications / standards** | Ethereum, Zcash, Chia, Algorand, DFINITY, Filecoin; EIP-2537 | ISO/IEC 15946-5 (BN family) | *(none known \u2014 to be confirmed)* |\n| **Efficiency notes** | Most efficient at this level (381-bit *p*, *k*=12) | Slower than BLS12-381 (462-bit *p*, *k*=2), but higher security margin | *(to be supplied by proposer)* |\n\n#### 192-bit security level\n\n| Criterion | *(no current curve at this level)* | BLS24-509 (proposed) |\n|---|---|---|\n| **Peer-reviewed security analysis** | \u2014 | *(to be supplied by proposer)* |\n| **Widely used in cryptographic libraries** | \u2014 | *(to be confirmed \u2014 RELIC supports BLS24-477; proposer to clarify BLS24-509 status)* |\n| **Deployed in applications / standards** | \u2014 | *(none known \u2014 to be confirmed)* |\n| **Efficiency notes** | \u2014 | *(to be supplied by proposer)* |\n\nNote: The current draft does not include a 192-bit curve because \"there are no curves that match our selection policy\" (Section 4). Adding a curve at this level would be a scope expansion, which the proposer is welcome to justify.\n\n#### 256-bit security level\n\n| Criterion | BLS48-581 (current) | BLS48-575 (proposed) |\n|---|---|---|\n| **Peer-reviewed security analysis** | Kiyomura et al. [KIK17] | Meneghetti\u2013Guillevic et al. [MAF19] |\n| **Widely used in cryptographic libraries** | mcl (Kyushu Univ BLS48 library), MIRACL, RELIC | RELIC |\n| **Deployed in applications / standards** | ISO/IEC 15946-5 (BLS48 family) | *(none known \u2014 to be confirmed)* |\n| **Efficiency notes** | 581-bit *p*, *k*=48 | *(to be supplied by proposer \u2014 proposer has cited efficiency improvements)* |\n\n### What we are asking\n\n1. **Proposers** (Diego and collaborators): please fill in the placeholder cells with concrete references \u2014 peer-reviewed papers, library implementations, and any deployment or standardization status. This will allow the community to evaluate each proposal on the same objective basis.\n\n2. **Community members**: if you have additional data points for any row (existing or proposed), please share them here.\n\n### Timeline\n\nPer the chairs' guidance, the target is to close the curve set discussion **a few weeks before IETF 126** (July 2026) to allow time for Crypto Panel review. We propose the following milestones:\n\n- **May 1, 2026** \u2014 Evidence deadline: proposers supply references for each criterion\n- **May 22, 2026** \u2014 Discussion closes; authors summarize the outcome\n\n> **Update 2026-04-16:** The discussion close date was extended from May 15 to May 22 based on chair feedback, to provide a 3-week discussion window in line with typical RGLC/review practice.\n\nIf a proposed curve has not been shown to meet the Section 4 criteria by the deadline, the natural path forward would be to retain the current curve and leave revisits for a future revision of the document.\n\n---\n\n*Cross-references: This issue is related to the broader curve set discussion on the CFRG mailing list. Serialization (#74) and identity point (#75) issues proceed independently.*\n",
+      "createdAt": "2026-04-15T04:30:52Z",
+      "updatedAt": "2026-04-15T16:32:27Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
