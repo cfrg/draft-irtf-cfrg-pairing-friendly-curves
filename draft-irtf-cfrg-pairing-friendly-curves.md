@@ -1,6 +1,6 @@
 ---
 title: "Pairing-Friendly Curves"
-docname: draft-irtf-cfrg-pairing-friendly-curves-13
+docname: draft-irtf-cfrg-pairing-friendly-curves-latest
 category: info
 ipr: trust200902
 area: IRTF
@@ -321,6 +321,7 @@ The BLS12_381 curve is shown in {{BLS12_381}} and it is defined by the parameter
 
 where the size of p becomes 381-bit length.
 
+{: #tower_bls12_381}
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
 
 ~~~~~~~~~~
@@ -402,6 +403,7 @@ A BN curve with the 128-bit security level is shown in {{BD18}}, which we call B
 
 for the definition in {{BNdef}}.
 
+{: #tower_bn462}
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
 
 ~~~~~~~~~~
@@ -483,6 +485,7 @@ The selected BLS48 curve is shown in {{KIK17}} and it is defined by the paramete
 
 In this case, the size of p becomes 581-bit.
 
+{: #tower_bls48_581}
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:
 
 ~~~~~~~~~~
