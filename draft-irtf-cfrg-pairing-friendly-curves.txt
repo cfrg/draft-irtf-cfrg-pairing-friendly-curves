@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 18 September 2026                                      R. Wahby
+Expires: 22 October 2026                                        R. Wahby
                                                      Stanford University
-                                                           17 March 2026
+                                                           20 April 2026
 
 
                         Pairing-Friendly Curves
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 September 2026.
+   This Internet-Draft will expire on 22 October 2026.
 
 Copyright Notice
 
@@ -374,7 +374,7 @@ Table of Contents
 
 2.4.  Barreto-Lynn-Scott Curves
 
-   A BLS curve [BLS02] is a another family of pairing-frinedly curves
+   A BLS curve [BLS02] is another family of pairing-friendly curves
    proposed in 2002.  Similar to BN curves, a pairing over BLS curves
    constructs optimal Ate pairings.
 
