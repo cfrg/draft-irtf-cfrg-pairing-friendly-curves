@@ -168,7 +168,7 @@ A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 a
 
 ## Barreto-Lynn-Scott Curves  {#BLSdef}
 
-A BLS curve {{BLS02}} is a another family of pairing-frinedly curves proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.
+A BLS curve {{BLS02}} is another family of pairing-friendly curves proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal Ate pairings.
 
 A BLS curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t. E is defined over a finite field GF(p) by an equation of the form E: y^2 = x^3 + b, and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves. In contrast to BN curves, E(GF(p)) does not have a prime order. Instead, its order is divisible by a large parameterized prime r and denoted by h * r with cofactor h. The pairing is defined on the r-torsion points. In the same way as BN curves, BLS curves can be categorized as D-type and M-type.
 
