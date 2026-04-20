@@ -333,15 +333,15 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and G
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.
 
-The untwist isomorphism ψ : E'(GF(p^2)) → E(GF(p^12)) is given by
+The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
 
-    ψ(x', y') = (x' / w^2, y' / w^3)
+    psi(x', y') = (x' / w^2, y' / w^3)
 
 ~~~~~~~~~~
 
-where w^2 = v ∈ GF(p^6) and v^3 = u + 1, per the tower defined in {{tower_bls12_381}}.
+where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in {{tower_bls12_381}}.
 
 We have to note that the security level of this pairing is expected to be 126 rather than 128 bits {{GMT19}}.
 
@@ -414,15 +414,15 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and G
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.
 
-The untwist isomorphism ψ : E'(GF(p^2)) → E(GF(p^12)) is given by
+The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
 
-    ψ(x', y') = (x' · w^2, y' · w^3)
+    psi(x', y') = (x' * w^2, y' * w^3)
 
 ~~~~~~~~~~
 
-where w^2 = v ∈ GF(p^6) and v^3 = u + 2, per the tower defined in {{tower_bn462}}.
+where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in {{tower_bn462}}.
 
 We have to note that BN462 is significantly slower than BLS12_381, but has 134-bit security level {{GMT19}}, so may be more resistant to future small improvements to the exTNFS attack.
 
@@ -497,15 +497,15 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p
 
 The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48_581 is categorized as D-type.
 
-The untwist isomorphism ψ : E'(GF(p^8)) → E(GF(p^48)) is given by
+The untwist isomorphism psi : E'(GF(p^8)) -> E(GF(p^48)) is given by
 
 ~~~~~~~~~~
 
-    ψ(x', y') = (x' · ξ^2, y' · ξ^3)
+    psi(x', y') = (x' * xi^2, y' * xi^3)
 
 ~~~~~~~~~~
 
-where ξ = u · s ∈ GF(p^48) satisfies ξ^6 = -w (the twist coefficient), per the tower defined in {{tower_bls48_581}}. Concretely: u ∈ GF(p^2) satisfies u^2 = -1, so u^6 = -1; s ∈ GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence ξ^6 = u^6 · s^6 = (-1) · w = -w.
+where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per the tower defined in {{tower_bls48_581}}. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
 
 We then give the parameters for BLS48_581 as follows.
 
@@ -1600,7 +1600,7 @@ The following algorithm shows the computation of the optimal Ate pairing on Barr
 
 We provide test vectors for Optimal Ate Pairing e(P, Q) given in {{comp_pairing}} for the curves BLS12_381, BN462 and BLS48_581 given in {{secure_params}}. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in {{secure_params}}.
 
-Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, i.e., as coordinates over E'(GF(p^(k/d))), which gives a compact representation. The pseudocode in Appendix A operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism ψ defined in {{secure_params}} to lift Q from E' to E(GF(p^k)). Most production libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
+Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, i.e., as coordinates over E'(GF(p^(k/d))), which gives a compact representation. The pseudocode in Appendix A operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in {{secure_params}} to lift Q from E' to E(GF(p^k)). Most production libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
 
 For BLS12_381 and BN462, Q = (x', y') is given by
 
