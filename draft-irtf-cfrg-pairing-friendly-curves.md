@@ -269,13 +269,13 @@ We show the pairing-friendly curves that have been selected by existing standard
 
 The adoption status of pairing-friendly curves is surveyed in standards, libraries and applications. In this survey, "Arnd" is an abbreviation for "Around". The curves categorized as 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. Other labels shown with '~' mean that the security level of the categorized curve is outside the range of each security level. Specifically, the security level of the categorized curves is more than the previous column and is less than the next column. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
 
-This section omits parameters with security levels below the "Arnd 128-bit" range due to space limitations and viewpoints of secure usage of parameters. On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore {{adoption_status_100bit_security}} shows these parameters. In addition, the full version is available at [https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/](https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/).
+This section omits parameters with security levels below the "Arnd 128-bit" range due to space limitations and viewpoints of secure usage of parameters. On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore {{adoption_status_100bit_security}} shows these parameters.
 
 The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves and MNT curves are not included in this survey because {{BD18}} does not show the security levels of these curves.
 
 ### International Standards  {#standardization}
 
-ISO/IEC 15946 series specifies public-key cryptographic techniques based on elliptic curves. ISO/IEC 15946-5 {{ISOIEC15946-5}} shows numerical examples of MNT curves{{MNT01}} with 160-bit p and 256-bit p, Freeman curves {{Freeman06}} with 224-bit p and 256-bit p, and BN curves with 160-bit p, 192-bit p, 224-bit p, 256-bit p, 384-bit p, and 512-bit p. These parameters do not take into account the effects of the exTNFS. On the other hand, the parameters may be revised in future versions since ISO/IEC 15946-5 is currently under development. As described below, BN curves with 256-bit p and 512-bit p specified in ISO/IEC 15946-5 used by other standards and libraries, these curves are especially denoted as BN256I and BN512I. The suffix 'I' of BN256I and BN512I are given from the initials of the standard name ISO.
+ISO/IEC 15946 series specifies public-key cryptographic techniques based on elliptic curves. The third edition of ISO/IEC 15946-5 {{ISOIEC15946-5}} (published 2022) reorganized the numerical examples and extended coverage to include BLS12, BLS24, and BLS48 curves. The BN462 parameter in this document matches the numerical example in Annex D.2.3 of {{ISOIEC15946-5}} exactly (u = 2^114 + 2^101 - 2^14 - 1), and the BLS48_581 parameter matches Annex D.3.5 exactly (u = -2^32 - 2^30 - 2^10 + 2^7 - 1). The same edition introduces a post-exTNFS security guideline that the characteristic p of BN and BLS12 curves should be at least 461 bits for the 128-bit security level. As described below, BN curves with 256-bit p and 512-bit p from earlier editions of ISO/IEC 15946-5 are referenced by other standards and libraries; these curves are denoted as BN256I and BN512I, where the suffix 'I' is given from the initials of the standard name ISO.
 
 TCG adopts the BN256I and a BN curve with 638-bit p specified by their own{{TPM}}. FIDO Alliance {{FIDO}} and W3C {{W3C}} adopt BN256I, BN512I, the BN638 by TCG, and the BN curve with 256-bit p proposed by Devegili et al.{{DSD07}} (named BN256D). The suffix 'D' of BN256D is given from the initials of the first author's name of the paper which proposed the parameter.
 
@@ -283,13 +283,17 @@ TCG adopts the BN256I and a BN curve with 638-bit p specified by their own{{TPM}
 
 There are a lot of cryptographic libraries that support pairing calculations.
 
+blst {{blst}} is a high-performance pairing library maintained by Supranational. It supports BLS12_381 and is used in production by Ethereum consensus clients, Filecoin, and other applications.
+
+Several additional actively maintained libraries support BLS12_381. gnark-crypto {{gnark-crypto}}, developed by Consensys, supports BLS12_381, BN254, BLS12_377, BLS24_315, and BW6_761. noble-curves {{noble-curves}} is a JavaScript/TypeScript library by Paul Miller supporting BLS12_381. The arkworks ecosystem {{arkworks}} provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12_381 and BN254. constantine {{constantine}} is a cryptographic library written in Nim that supports BLS12_381, BN254, BLS12_377, and BW6_761. CIRCL {{CIRCL}} is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12_381. zkcrypto {{zkcrypto}} is a collection of Rust crates for zero-knowledge cryptography supporting BLS12_381.
+
 PBC is a library for pairing-based cryptography published by Stanford University that supports BN curves, MNT curves, Freeman curves, and supersingular curves {{PBC}}. Users can generate pairing parameters by using PBC and use pairing operations with the generated parameters.
 
-mcl{{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12_381 {{GMT19}}. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications{{libsnark}}, BN382M, and BN462. The suffix 'N' of BN256N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports the BLS48_581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
+mcl{{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12_381 {{GMT19}}. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications{{libsnark}}, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports the BLS48_581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
 
-RELIC {{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254R, BN256R, BN382R, BN446, and BN638), where BN254R, BN256R, and BN382R are RELIC specific parameters that are different from BN254N, BN254B, BN256I, BN256D, and BN382M. The suffix 'R' of BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12_381, BLS12_446, BLS12_445, BLS12_638, BLS24_477, and BLS48_575 {{MAF19}}), Cocks-Pinch curves of embedding degree 8 with 544-bit p{{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG19}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54_569){{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18_508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p(OT8_511), and a supersingular curve {{S86}} with 1536-bit p (SS_1536).
+RELIC {{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254R, BN256R, BN382R, BN446, and BN638), where BN254R, BN256R, and BN382R are RELIC specific parameters that are different from BN254N, BN254B, BN256I, BN256D, and BN382M. The suffix 'R' of BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12_381, BLS12_446, BLS12_455, BLS12_638, BLS24_477, and BLS48_575 {{MAF19}}), Cocks-Pinch curves of embedding degree 8 with 544-bit p{{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG19}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54_569){{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18_508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8_511), and a supersingular curve {{S86}} with 1536-bit p (SS_1536).
 
-Apache Milagro Crypto Library (AMCL){{AMCL}} supports four BLS curves (BLS12_381, BLS12_461, BLS24_479 and BLS48_556) and four BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, and BN512I). In addition to AMCL's supported curves, MIRACL {{MIRACL}} supports BN462 and BLS48_581.
+MIRACL Core {{MIRACL}} (the successor to the Apache Milagro Crypto Library (AMCL) {{AMCL}}) supports five BLS curves (BLS12_381, BLS12_461, BLS24_479, BLS48_556, and BLS48_581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).
 
 Adjoint published a library that supports the BLS12_381 and six BN curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462) {{AdjointLib}}, where BN254S1 and BN254S2 are BN curves adopted by an old version of AMCL {{AMCLv2}}. The suffix 'S' of BN254S1 and BN254S2 are given from the initials of developper's name because he proposed these parameters.
 
@@ -297,9 +301,9 @@ The Celo foundation published the bls12377js library {{bls12377js}}. The support
 
 ### Applications  {#applications}
 
-Zcash uses a BN curve (named BN128) in their library libsnark {{libsnark}}. In response to the exTNFS attacks, they proposed new parameters using BLS12_381 {{BLS12_381}} {{GMT19}}and published its experimental implementation {{zkcrypto}}.
+Zcash uses a BN curve (named BN128) in their library libsnark {{libsnark}}. In response to the exTNFS attacks, they proposed new parameters using BLS12_381 {{BLS12_381}} {{GMT19}} and published its implementation {{zkcrypto}}.
 
-Ethereum 2.0 adopted BLS12_381 and uses the implementation by Meyer {{pureGo-bls}}. Chia Network published their implementation {{Chia}} by integrating the RELIC toolkit {{RELIC}}. DFINITY uses mcl, and Algorand published an implementation which supports BLS12_381.
+Ethereum adopted BLS12_381 for its consensus layer. The BLS12_381 precompile is also specified as an Ethereum precompile contract in EIP-2537 {{EIP2537}}, enabling on-chain pairing operations. Filecoin {{Filecoin}} uses BLS12_381 via the blst library {{blst}}. Chia Network published their implementation {{Chia}} by integrating the RELIC toolkit {{RELIC}}. DFINITY uses mcl, and Algorand published an implementation which supports BLS12_381.
 
 ## For 128-bit Security  {#for-128-bits-of-security}
 
@@ -1069,12 +1073,12 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
         </reference>
         <reference anchor="ISOIEC15946-5">
           <front>
-            <title>ISO/IEC 15946-5:2017</title>
+            <title>ISO/IEC 15946-5:2022</title>
             <seriesInfo name="ISO/IEC" value="Information technology -- Security techniques -- Cryptographic techniques based on elliptic curves -- Part 5: Elliptic curve generation" />
             <author>
               <organization>ISO/IEC</organization>
             </author>
-            <date year="2017" />
+            <date year="2022" />
           </front>
         </reference>
 
@@ -1481,6 +1485,76 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
               <organization>The Apache Software Foundation</organization>
             </author>
             <date year="2016" />
+          </front>
+        </reference>
+
+        <reference anchor="blst" target="https://github.com/supranational/blst">
+          <front>
+            <title>blst: BLS12-381 signature library</title>
+            <author>
+              <organization>Supranational LLC</organization>
+            </author>
+            <date year="2020" />
+          </front>
+        </reference>
+
+        <reference anchor="gnark-crypto" target="https://github.com/consensys/gnark-crypto">
+          <front>
+            <title>gnark-crypto: Elliptic curve cryptography and pairing library</title>
+            <author>
+              <organization>Consensys Software Inc.</organization>
+            </author>
+            <date year="2020" />
+          </front>
+        </reference>
+
+        <reference anchor="noble-curves" target="https://github.com/paulmillr/noble-curves">
+          <front>
+            <title>noble-curves: Audited &amp; minimal JS implementation of elliptic curve cryptography</title>
+            <author initials="P." surname="Miller">
+              <organization />
+            </author>
+            <date year="2022" />
+          </front>
+        </reference>
+
+        <reference anchor="arkworks" target="https://github.com/arkworks-rs">
+          <front>
+            <title>arkworks: A Rust ecosystem for zkSNARK programming</title>
+            <author>
+              <organization>arkworks contributors</organization>
+            </author>
+            <date year="2020" />
+          </front>
+        </reference>
+
+        <reference anchor="constantine" target="https://github.com/mratsim/constantine">
+          <front>
+            <title>Constantine: Constant-time cryptographic library</title>
+            <author initials="M." surname="Ratsimbazafy">
+              <organization />
+            </author>
+            <date year="2020" />
+          </front>
+        </reference>
+
+        <reference anchor="Filecoin" target="https://filecoin.io">
+          <front>
+            <title>Filecoin: A Decentralized Storage Network</title>
+            <author>
+              <organization>Protocol Labs</organization>
+            </author>
+            <date year="2017" />
+          </front>
+        </reference>
+
+        <reference anchor="EIP2537" target="https://eips.ethereum.org/EIPS/eip-2537">
+          <front>
+            <title>EIP-2537: Precompile for BLS12-381 curve operations</title>
+            <author initials="A." surname="Vlasov">
+              <organization />
+            </author>
+            <date year="2020" />
           </front>
         </reference>
 
