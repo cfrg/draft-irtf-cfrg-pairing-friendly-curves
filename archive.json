@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-16T02:50:42.565836+00:00",
+  "timestamp": "2026-04-21T02:47:08.657051+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2362,15 +2362,15 @@
       "id": "MDU6SXNzdWU5NTM3ODgxODA=",
       "title": "Comments from Rene (based on reply letter on April 30)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/64",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Update target for Rene\u2019s comments is shown as follows.\r\nhttps://mailarchive.ietf.org/arch/msg/cfrg/-1nTbbVRlkP5wV2odEYFac-jK08/",
       "createdAt": "2021-07-27T11:33:28Z",
-      "updatedAt": "2021-07-28T00:15:06Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T01:10:15Z",
+      "closedAt": "2026-04-20T08:24:40Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -2385,6 +2385,20 @@
           "body": "OK!\r\n\r\nThis is a cross-check as a co-author.",
           "createdAt": "2021-07-28T00:15:06Z",
           "updatedAt": "2021-07-28T00:15:06Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "All items from Rene's comments have been addressed in the commits listed above, and co-author @Tsune3110 confirmed the cross-check above. Closing as resolved.",
+          "createdAt": "2026-04-20T08:24:36Z",
+          "updatedAt": "2026-04-20T08:24:36Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "All items from Rene's comments have been addressed in the commits listed above, and co-author @Tsune3110 confirmed the cross-check above. Closing as resolved.",
+          "createdAt": "2026-04-21T01:10:15Z",
+          "updatedAt": "2026-04-21T01:10:15Z"
         }
       ]
     },
@@ -2393,15 +2407,15 @@
       "id": "I_kwDOD8wsds49Mggs",
       "title": "Feedback",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/67",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "- Intro and abstract: Too much attack details \u2014 omit entirely and refer reader to the paper, noting implications. Maybe merge with section 3?\r\n- Preliminaries: Are all details for curves necessary? Example: point at infinity, twists, etc?\r\n- Section 4: choosing \u201cwidely used\u201d over \u201cefficiency\u201d is interesting, as it may impede use cases that would consider adopting pairings but don\u2019t due to the cost. How would some of the recommendations change if \u201cefficiency\u201d were prioritized over \u201cwidely used\u201d? (Would BLS12-381 still stand on top?)\r\n- Section 4: 192-bit security is mentioned into the intro, but there is no matching recommendation. Recommend removing from intro. \r\n- Section 4: move adoption status to an appendix?\r\n- Section 4: link to application table points to a blog post. Consider removing?\r\n- Section 4.1.2: lots of libraries mentioned here \u2014 do any of them have formally verified implementations? Adding new curve support to a library is a tall order, but easier if, say, that code can be generated and formally verified.\r\n- Section 4.2: 128-bit security level: interesting that we\u2019re recommending things with less than 128 bits of security. At what rate does the security of this curve deteriorate? Generally: unclear if the CFRG has or will ever draw the line somewhere beneath this bound. \r\n- Section 4.2: Unclear what the security level of BN462 is \u2014 is it 128 bits?\r\n- Reference to I-D.ietf-lwig-curve-representations is unclear. What is the status of that draft?\r\n- Generally: parameters for curves are provided, but there\u2019s no safe implementable pairing specification. (The appendix code is not constant time, it seems. Is that important?) Unclear what the target audience is for. If this is for implementers deciding how to implement one of these curves, would they not need to know the corresponding pairing details? If it\u2019s for applications choosing curves, do they need to know all these curve details? (Same goes for encoding and decoding, which has some text in the security considerations section and then has one serialization format for BLS12_381. What about other curves? Do we want to recommend one serialization format so things are interoperable? Should the serialization format be something that applications decide?)\r\n- Appendix D: can this be dropped? ",
       "createdAt": "2021-10-14T18:21:21Z",
-      "updatedAt": "2021-10-15T10:04:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T01:10:06Z",
+      "closedAt": "2026-04-20T08:44:50Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -2409,6 +2423,27 @@
           "body": "@chris-wood \r\nThank you for your comments.\r\nI will check your feedback with my co-authors.",
           "createdAt": "2021-10-15T10:04:08Z",
           "updatedAt": "2021-10-15T10:04:08Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I sincerely apologize for the very late response to your feedback \u2014 thank you for your patience.\n\nThank you, @chris-wood, for this detailed review \u2014 it has been very helpful in improving the document.\n\nHere is a summary of how each item has been addressed since this issue was opened:\n\n**Addressed in subsequent revisions:**\n- (1) Abstract/intro: attack details have been substantially condensed.\n- (4) 192-bit security: the draft now explicitly states \"we do not show parameters for 192-bit security because there are no curves that match our selection policy.\"\n- (8) 128-bit security margin: an explicit note now explains BLS12-381's security margin and why both BLS12-381 and BN462 are recommended together.\n- (9) BN462 security level: the draft now explicitly states \"134-bit security level.\"\n- (12) Appendix D: the appendices were reorganized by named sections; no \"Appendix D\" remains.\n\n**Intentional design choices confirmed at IETF 124:**\n- (2) Preliminaries: the scope was confirmed as parameter-centric; some implementation-supporting detail is intentional.\n- (3) \"Widely used\" policy: this remains the selection criterion; the curve-set discussion is ongoing under #76.\n- (11) Pairing algorithm detail: pairing computation is provided in an appendix as reference; the normative scope is parameter specification.\n\n**Tracked in other open issues / ongoing:**\n- (5) Adoption status table: multiple community members noted the table is too large for the I-D. We are considering publishing it in a separate medium (e.g., a companion document or web page) and referencing it from the draft. This is tracked in #80.\n- (6) Blog post reference: the referenced site is no longer available. We plan to move the full adoption table to the same external medium as item (5) above and update the reference accordingly.\n- (7) Formally verified implementations: we have not published this information, but it is available upon request.\n\n**Tracked in other open issues:**\n- Serialization specification: tracked under #74.\n\nClosing this issue as the main actionable items are resolved. Thank you again.",
+          "createdAt": "2026-04-20T08:44:46Z",
+          "updatedAt": "2026-04-20T08:44:46Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you, @chris-wood, for this detailed review \u2014 it has been very helpful in improving the document.\n\nHere is a summary of how each item has been addressed since this issue was opened:\n\n**Addressed in subsequent revisions:**\n- (1) Abstract/intro: attack details have been substantially condensed.\n- (4) 192-bit security: the draft now explicitly states \"we do not show parameters for 192-bit security because there are no curves that match our selection policy.\"\n- (8) 128-bit security margin: an explicit note now explains BLS12-381's security margin and why both BLS12-381 and BN462 are recommended together.\n- (9) BN462 security level: the draft now explicitly states \"134-bit security level.\"\n- (12) Appendix D: the appendices were reorganized by named sections; no \"Appendix D\" remains.\n\n**Intentional design choices confirmed at IETF 124:**\n- (2) Preliminaries: the scope was confirmed as parameter-centric; some implementation-supporting detail is intentional.\n- (3) \"Widely used\" policy: this remains the selection criterion; the curve-set discussion is ongoing under #76.\n- (11) Pairing algorithm detail: pairing computation is provided in an appendix as reference; the normative scope is parameter specification.\n\n**Tracked in other open issues:**\n- (5) Adoption status placement: the libraries/adoption section has been updated in PR #83 (closes #80).\n- Serialization specification (separate comment): tracked under #74.\n\n**Minor item resolved:**\n- (6) Blog post reference: the lepidum.co.jp link has been removed in PR #83.\n\nClosing this issue as the main actionable items are resolved. Thank you again.",
+          "createdAt": "2026-04-20T11:39:45Z",
+          "updatedAt": "2026-04-20T11:39:45Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you, @chris-wood, for this detailed review \u2014 it has been very helpful in improving the document.\n\nHere is a summary of how each item has been addressed since this issue was opened:\n\n**Addressed in subsequent revisions:**\n- (1) Abstract/intro: attack details have been substantially condensed.\n- (4) 192-bit security: the draft now explicitly states \"we do not show parameters for 192-bit security because there are no curves that match our selection policy.\"\n- (8) 128-bit security margin: an explicit note now explains BLS12-381's security margin and why both BLS12-381 and BN462 are recommended together.\n- (9) BN462 security level: the draft now explicitly states \"134-bit security level.\"\n- (12) Appendix D: the appendices were reorganized by named sections; no \"Appendix D\" remains.\n\n**Intentional design choices confirmed at IETF 124:**\n- (2) Preliminaries: the scope was confirmed as parameter-centric; some implementation-supporting detail is intentional.\n- (3) \"Widely used\" policy: this remains the selection criterion; the curve-set discussion is ongoing under #76.\n- (11) Pairing algorithm detail: pairing computation is provided in an appendix as reference; the normative scope is parameter specification.\n\n**Tracked in other open issues:**\n- (5) Adoption status placement: the libraries/adoption section is being updated in #80.\n- Serialization specification (separate comment): tracked under #74.\n\n**Minor item deferred:**\n- (6) Blog post reference: the lepidum.co.jp link will be reviewed in the next editorial pass.\n\nClosing this issue as the main actionable items are resolved. Thank you again.",
+          "createdAt": "2026-04-21T01:10:06Z",
+          "updatedAt": "2026-04-21T01:10:06Z"
         }
       ]
     },
@@ -2457,7 +2492,7 @@
       ],
       "body": "### Summary\n\nMultiple participants in the [December 2025 Open Questions thread](https://mailarchive.ietf.org/arch/msg/cfrg/IC5u8A5XJvHVJpNFWJhovcn5xd0/) requested that the draft specify point encoding and decoding at the level of detail provided in RFC 7748 and RFC 8032, rather than referencing external sources.\n\nThis was identified as a priority area by the CFRG chairs ([Nick Sullivan, Feb 2026](https://mailarchive.ietf.org/arch/msg/cfrg/MHNkW3dt6FqhKLWUwraN11bQtZ0/)).\n\n### Background from the ML discussion\n\n**[Thomas Bellebaum](https://mailarchive.ietf.org/arch/msg/cfrg/Y8PiMjmr-KzWMjNCpW9jUvllvkw/)** (Fraunhofer AISEC, BBS implementor):\n- Advocates for **compressed-only format** (no uncompressed encoding) as the default\n- The cost of square root computation is negligible compared to pairing computation and hash-to-curve\n- If uncompressed is needed, define a separate curve identifier with dedicated de/serialization instructions\n- References RFC 7748 and RFC 8032 as the gold standard for serialization RFCs\n\n**[David Waite](https://mailarchive.ietf.org/arch/msg/cfrg/MzFgr2qShM6BBV15zLGxTfxTq-A/)** (Alkaline Solutions):\n- Multiple drafts currently duplicate or inconsistently reference the serialization:\n  - `draft-irtf-cfrg-bbs-signatures-09` Appendix B.2\n  - `draft-ietf-cose-bls-key-representations-08`\n  - `draft-irtf-cfrg-bls-signature-06` (references a historical Rust crate README)\n- The original `[ZCashRep]` reference is outdated\n- **Strong preference** for a single authoritative serialization in this document (or one normatively referenced by it)\n- Proposes: single encoding function per curve, fixed-length, compressed, non-identity elements; decoding function that fails on uncompressed and identity elements\n\n**[Jack Grigg](https://mailarchive.ietf.org/arch/msg/cfrg/-KRy4O7QNfDLklD7wbITxtQ3PA0/)** (Zcash developer):\n- Updated reference URLs for BLS12-381 serialization:\n  - Crate README: https://github.com/zkcrypto/bls12_381/blob/main/README.md#curve-description\n  - Serialization spec: https://docs.rs/bls12_381/latest/bls12_381/notes/serialization/index.html\n  - **Normative reference** should be the Zcash Protocol Specification, Section 5.4.9.2: https://zips.z.cash/protocol/protocol.pdf#blspairing\n- Confirms Zcash uses compressed-only for on-the-wire proofs (uncompressed only for static verification key storage)\n- Provides test vector location: https://github.com/zkcrypto/bls12_381/tree/main/src/tests\n- **Note**: Capitalization should be \"Zcash\" (not \"ZCash\")\n\n**[Watson Ladd](https://mailarchive.ietf.org/arch/msg/cfrg/TD9I44-qF7ucKwRetABWqC4TgHw/)**:\n- Agrees serialization should be included in this document\n- Notes that choosing uncompressed-only could also work (\"Choosing only uncompressed could be fine\")\n\n### Proposed scope for this issue\n\n1. **Define compressed encoding as the RECOMMENDED format** for all curves in the draft\n2. **Provide explicit encode/decode algorithms** at RFC 7748/8032 level of detail\n3. **Update the Zcash reference** to the normative Zcash Protocol Specification URL\n4. **Fix capitalization**: \"ZCash\" \u2192 \"Zcash\" throughout\n5. **Incorporate or reference Zcash test vectors** for G1/G2 encodings\n6. **Decide whether uncompressed encoding is needed** \u2014 if so, define it as a separate, clearly marked option with its own decode algorithm\n7. **Identity point handling** is tracked separately in #75\n\n### Related\n\n- Identity point serialization: #75\n- PR #71 (interface sketch by Michele Orr\u00f9) \u2014 may overlap on serialization API\n- `draft-irtf-cfrg-bbs-signatures` Appendix B.2 (current consumer of this serialization)\n- `draft-irtf-cfrg-bls-signature` (references outdated Zcash README)",
       "createdAt": "2026-04-14T04:38:08Z",
-      "updatedAt": "2026-04-15T08:04:39Z",
+      "updatedAt": "2026-04-21T01:19:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -2473,6 +2508,41 @@
           "body": "Thanks for raising this \u2014 scalar serialization is a useful addition, and I agree it fits naturally within the scope of this issue.\n\nThe specific design (scope of scalar serialization, exact encoding convention, canonical-form enforcement, zero-scalar handling) is closely coupled with the other open items under this issue \u2014 the canonical byte layout for points, alignment with existing consumers such as the BBS and BLS signature drafts, and the identity-point question tracked in #75. I'd rather work those through together than fix individual pieces in isolation.\n\nPlan:\n\n1. Fold scalar (de)serialization into the design work for this issue, to be resolved alongside the point-encoding items.\n2. Target the next draft revision for a consolidated proposal covering both point and scalar serialization, planned for late May ahead of the June Crypto Panel review.\n\nIf you have further input on any of the sub-questions \u2014 preferred alignment with existing conventions in the BBS/BLS drafts, opinions on how closely this should follow RFC 7748 / RFC 8032 / RFC 9380 conventions, or other considerations \u2014 it'd be welcome ahead of the design write-up.",
           "createdAt": "2026-04-15T08:04:39Z",
           "updatedAt": "2026-04-15T08:04:39Z"
+        },
+        {
+          "author": "mratsim",
+          "authorAssociation": "NONE",
+          "body": "A quite important use-case is that often the serialized encoding is used for adding EC point to Fiat-Shamir transcripts in zkVM so it must be unique.\n\nHaving more standardization helps limiting divergence across implementations of the same polynomial commitment that could not be verified across implementations because one used to serialize a EC point in little-endian and the other in big-endian.\n\n\nRegarding\n\n> The cost of square root computation is negligible compared to pairing computation and hash-to-curve\n\nI disagree that this is not a bottleneck. It is a real problem in Ethereum where we have millions of public keys. That said, this can be solved on the engineering side with caching the uncompressed signatures in databases.",
+          "createdAt": "2026-04-20T08:45:56Z",
+          "updatedAt": "2026-04-20T09:53:00Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you @mratsim for the concrete use case. The uniqueness requirement for EC point serialization in Fiat-Shamir transcripts is exactly the kind of cross-implementation interoperability concern that motivates this issue. We plan to incorporate this use case in the motivation section of the upcoming consolidated PR for #74.",
+          "createdAt": "2026-04-20T09:51:39Z",
+          "updatedAt": "2026-04-20T09:51:39Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you all for the detailed feedback. I would like to share our current thinking and invite further input.\n\n## Proposed direction: make Appendix C normative for BLS12-381 only\n\nGiven BLS12-381's dominant adoption across deployed protocols (BBS signatures, COSE BLS key representations, Zcash, Ethereum, etc.), we propose to normativize the Zcash serialization format in Appendix C, scoped to BLS12-381 only. BN462 and BLS48-581 would retain informative treatment.\n\n## Background\n\nAs discussed at IETF 124, the primary scope of this draft is parameter standardization, and we have been cautious about expanding into algorithm specification. However, the consistent community demand \u2014 and the fact that downstream drafts are already referencing Appendix C normatively in practice \u2014 makes this a pragmatic step.\n\nA uniform extension to all three curves is technically not straightforward: BN462 G2 (Fp2) has only 2 spare bits, which is insufficient for the C/I/S flag encoding used by the Zcash format. Scoping to BLS12-381 avoids overstating the generality of the format.\n\n## Test vectors and request for input\n\nMaking Appendix C normative will require test vectors. We plan to compute these ourselves, but independent cross-validation is needed. We are currently considering the serialization tests in the `bls12_381` crate (zkcrypto) as one reference. Does anyone have recommendations for a second independent implementation suitable for cross-checking?\n\nWe have also shared this direction on the CFRG mailing list for broader visibility.",
+          "createdAt": "2026-04-20T15:29:03Z",
+          "updatedAt": "2026-04-20T15:29:03Z"
+        },
+        {
+          "author": "mratsim",
+          "authorAssociation": "NONE",
+          "body": "> We are currently considering the serialization tests in the bls12_381 crate (zkcrypto) as one reference. Does anyone have recommendations for a second independent implementation suitable for cross-checking?\n\nI suggest blst and gnark-crypto as those are the reference libraries used in Ethereum, Filecoin, Algorand, Tezos and many others and also distributed in several Linux distributions as well as having a port to GPUs. They also have been audited and securing billions of dollars.\n\nFurthermore, it would be helpful to have Fp12 serialization standardization if only just for fuzzing, this has come up in the community in the past, see my comment: https://github.com/supranational/blst/issues/101#issuecomment-1015511522.\n\nThere can be many sources of differences:\n- Towering Fp2 -> Fp4 -> Fp12 (Miracl, Constantine) vs Fp2 -> Fp6 -> Fp12 (Gnark-crypto, blst, Arkworks, Constantine) vs no towering (py_ecc)\n- BigEndian vs Little-Endian\n- Power orders (say  [1, z, z\u00b2, z\u00b3, z\u2074, z\u2075] )\n- Field extension order (say [1, \ud835\udc56] )\n\nI can share this to the blockchain and ZK communities as well as the biggest users of those curves",
+          "createdAt": "2026-04-20T20:55:55Z",
+          "updatedAt": "2026-04-20T20:55:55Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you @mratsim \u2014 this is very helpful.\n\n**Reference implementations**: We will adopt blst and gnark-crypto as the second and third reference implementations for cross-checking test vectors, alongside zkcrypto/bls12_381. Their widespread deployment, audit history, and use across Ethereum, Filecoin, Algorand, and Tezos make them an excellent choice for independent validation.\n\n**Fp12 serialization**: The sources of divergence you listed are real and well-documented \u2014 towering order, endianness, and field extension ordering are all known interoperability hazards. That said, Fp12 serialization is outside the current scope of this issue, which is focused on G1/G2 point encoding for BLS12-381. We would suggest opening a separate issue to track Fp12 serialization as future work, where the community can weigh in on scope and prioritization.\n\n**Community outreach**: We would very much welcome your sharing this direction with the blockchain and ZK communities. Broader awareness of the normative serialization proposal and the test vector effort would be valuable, especially as we approach the IETF 126 timeline.",
+          "createdAt": "2026-04-21T01:19:46Z",
+          "updatedAt": "2026-04-21T01:19:46Z"
         }
       ]
     },
@@ -2504,9 +2574,82 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "### Background\n\nFollowing the chairs' confirmation that **IETF 126 is the target for RGLC**, it would be helpful to bring structure to the ongoing curve set discussion.\n\nThe draft's Section 4 defines a clear selection policy:\n\n> *\"It is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. In addition, 'efficiency' is one of the important aspects but greatly dependant on implementations, so we choose to prioritize 'security' and 'widely used' over 'efficiency' in consideration of future interconnections and interoperability over the internet.\"*\n\nThis issue applies the Section 4 criteria to both the current curves and the proposed alternatives, to provide a shared factual basis for the discussion.\n\n### Evaluation table\n\nThe table below summarizes the status of each curve against the three Section 4 criteria. **Rows for proposed curves have placeholders** \u2014 we invite the proposers to supply the relevant references so the community can evaluate them on the same axis.\n\n#### 128-bit security level\n\n| Criterion | BLS12-381 (current) | BN462 (current) | BN446 (proposed) |\n|---|---|---|---|\n| **Peer-reviewed security analysis** | Barbulescu\u2013Duquesne [BD18]; Guillevic\u2013Masson\u2013Thom\u00e9 [GMT19] (~126-bit) | Barbulescu\u2013Duquesne [BD18] (134-bit); Guillevic\u2013Masson\u2013Thom\u00e9 [GMT19] | *(to be supplied by proposer)* |\n| **Widely used in cryptographic libraries** | mcl, RELIC, MIRACL, blst, zkcrypto, noble-curves, CIRCL, gnark, Adjoint, \u2026 | mcl, MIRACL, RELIC, Adjoint | RELIC |\n| **Deployed in applications / standards** | Ethereum, Zcash, Chia, Algorand, DFINITY, Filecoin; EIP-2537 | ISO/IEC 15946-5 (BN family) | *(none known \u2014 to be confirmed)* |\n| **Efficiency notes** | Most efficient at this level (381-bit *p*, *k*=12) | Slower than BLS12-381 (462-bit *p*, *k*=2), but higher security margin | *(to be supplied by proposer)* |\n\n#### 192-bit security level\n\n| Criterion | *(no current curve at this level)* | BLS24-509 (proposed) |\n|---|---|---|\n| **Peer-reviewed security analysis** | \u2014 | *(to be supplied by proposer)* |\n| **Widely used in cryptographic libraries** | \u2014 | *(to be confirmed \u2014 RELIC supports BLS24-477; proposer to clarify BLS24-509 status)* |\n| **Deployed in applications / standards** | \u2014 | *(none known \u2014 to be confirmed)* |\n| **Efficiency notes** | \u2014 | *(to be supplied by proposer)* |\n\nNote: The current draft does not include a 192-bit curve because \"there are no curves that match our selection policy\" (Section 4). Adding a curve at this level would be a scope expansion, which the proposer is welcome to justify.\n\n#### 256-bit security level\n\n| Criterion | BLS48-581 (current) | BLS48-575 (proposed) |\n|---|---|---|\n| **Peer-reviewed security analysis** | Kiyomura et al. [KIK17] | Meneghetti\u2013Guillevic et al. [MAF19] |\n| **Widely used in cryptographic libraries** | mcl (Kyushu Univ BLS48 library), MIRACL, RELIC | RELIC |\n| **Deployed in applications / standards** | ISO/IEC 15946-5 (BLS48 family) | *(none known \u2014 to be confirmed)* |\n| **Efficiency notes** | 581-bit *p*, *k*=48 | *(to be supplied by proposer \u2014 proposer has cited efficiency improvements)* |\n\n### What we are asking\n\n1. **Proposers** (Diego and collaborators): please fill in the placeholder cells with concrete references \u2014 peer-reviewed papers, library implementations, and any deployment or standardization status. This will allow the community to evaluate each proposal on the same objective basis.\n\n2. **Community members**: if you have additional data points for any row (existing or proposed), please share them here.\n\n### Timeline\n\nPer the chairs' guidance, the target is to close the curve set discussion **a few weeks before IETF 126** (July 2026) to allow time for Crypto Panel review. We propose the following milestones:\n\n- **May 1, 2026** \u2014 Evidence deadline: proposers supply references for each criterion\n- **May 22, 2026** \u2014 Discussion closes; authors summarize the outcome\n\n> **Update 2026-04-16:** The discussion close date was extended from May 15 to May 22 based on chair feedback, to provide a 3-week discussion window in line with typical RGLC/review practice.\n\nIf a proposed curve has not been shown to meet the Section 4 criteria by the deadline, the natural path forward would be to retain the current curve and leave revisits for a future revision of the document.\n\n---\n\n*Cross-references: This issue is related to the broader curve set discussion on the CFRG mailing list. Serialization (#74) and identity point (#75) issues proceed independently.*\n",
+      "body": "### Background\n\nFollowing the chairs' confirmation that **IETF 126 is the target for RGLC**, it would be helpful to bring structure to the ongoing curve set discussion.\n\nThe draft's Section 4 defines a clear selection policy:\n\n> *\"It is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. In addition, 'efficiency' is one of the important aspects but greatly dependant on implementations, so we choose to prioritize 'security' and 'widely used' over 'efficiency' in consideration of future interconnections and interoperability over the internet.\"*\n\nThis issue applies the Section 4 criteria to both the current curves and the proposed alternatives, to provide a shared factual basis for the discussion.\n\n### Evaluation table\n\nThe table below summarizes the status of each curve against the three Section 4 criteria. **Rows for proposed curves have placeholders** \u2014 we invite the proposers to supply the relevant references so the community can evaluate them on the same axis.\n\n> **Update 2026-04-17:** The \"Deployed in applications / standards\" row has been refined with data from ISO/IEC 15946-5:2022 (third edition). The current draft's Informative reference to ISO/IEC 15946-5 is the 2017 (second) edition; the 2022 edition reorganised the numerical examples \u2014 notably, BLS curves were added as new numerical examples, and an explicit post-exTNFS security guideline (`|p| \u2265 461` bits for BN/BLS12) was introduced. The updated cells below reflect factual observations from the 2022 edition; any additional context from proposers is welcome.\n\n#### 128-bit security level\n\n| Criterion | BLS12-381 (current) | BN462 (current) | BN446 (proposed) |\n|---|---|---|---|\n| **Peer-reviewed security analysis** | Barbulescu\u2013Duquesne [BD18]; Guillevic\u2013Masson\u2013Thom\u00e9 [GMT19] (~126-bit) | Barbulescu\u2013Duquesne [BD18] (134-bit); Guillevic\u2013Masson\u2013Thom\u00e9 [GMT19] | *(to be supplied by proposer)* |\n| **Widely used in cryptographic libraries** | mcl, RELIC, MIRACL, blst, zkcrypto, noble-curves, CIRCL, gnark, Adjoint, \u2026 | mcl, MIRACL, RELIC, Adjoint | RELIC |\n| **Deployed in applications / standards** | Ethereum, Zcash, Chia, Algorand, DFINITY, Filecoin; EIP-2537 | **ISO/IEC 15946-5:2022** \u2014 includes a BN462 numerical example | ISO/IEC 15946-5:2022 includes a 446-bit BN numerical example (Pereira et al. 2011). For context, this predates the Kim\u2013Barbulescu exTNFS attack (2016) and the post-exTNFS guideline of `|p| \u2265 461` bits for BN/BLS12 introduced in the same edition. *Proposer references welcome.* |\n| **Efficiency notes** | Most efficient at this level (381-bit *p*, *k*=12) | Slower than BLS12-381 (462-bit *p*, *k*=2), but higher security margin | *(to be supplied by proposer)* |\n\n#### 192-bit security level\n\n| Criterion | *(no current curve at this level)* | BLS24-509 (proposed) |\n|---|---|---|\n| **Peer-reviewed security analysis** | \u2014 | *(to be supplied by proposer)* |\n| **Widely used in cryptographic libraries** | \u2014 | *(to be confirmed \u2014 RELIC supports BLS24-477; proposer to clarify BLS24-509 status)* |\n| **Deployed in applications / standards** | \u2014 | Not listed in ISO/IEC 15946-5:2022. The 2022 edition includes a BLS24 numerical example at 559-bit *p*. *Proposer references welcome.* |\n| **Efficiency notes** | \u2014 | *(to be supplied by proposer)* |\n\nNote: The current draft does not include a 192-bit curve because \"there are no curves that match our selection policy\" (Section 4). Adding a curve at this level would be a scope expansion, which the proposer is welcome to justify.\n\n#### 256-bit security level\n\n| Criterion | BLS48-581 (current) | BLS48-575 (proposed) |\n|---|---|---|\n| **Peer-reviewed security analysis** | Kiyomura et al. [KIK17] | Meneghetti\u2013Guillevic et al. [MAF19] |\n| **Widely used in cryptographic libraries** | mcl (Kyushu Univ BLS48 library), MIRACL, RELIC | RELIC |\n| **Deployed in applications / standards** | **ISO/IEC 15946-5:2022** \u2014 includes a BLS48-581 numerical example | Not listed in ISO/IEC 15946-5:2022 (the standard's BLS48 numerical example at this security level is BLS48-581). *Proposer references welcome.* |\n| **Efficiency notes** | 581-bit *p*, *k*=48 | *(to be supplied by proposer \u2014 proposer has cited efficiency improvements)* |\n\n### What we are asking\n\n1. **Proposers** (Diego and collaborators): please fill in the placeholder cells with concrete references \u2014 peer-reviewed papers, library implementations, and any deployment or standardization status. This will allow the community to evaluate each proposal on the same objective basis.\n\n2. **Community members**: if you have additional data points for any row (existing or proposed), please share them here.\n\n### Timeline\n\nPer the chairs' guidance, the target is to close the curve set discussion **a few weeks before IETF 126** (July 2026) to allow time for Crypto Panel review. We propose the following milestones:\n\n- **May 1, 2026** \u2014 Evidence deadline: proposers supply references for each criterion\n- **May 22, 2026** \u2014 Discussion closes; authors summarize the outcome\n\n> **Update 2026-04-16:** The discussion close date was extended from May 15 to May 22 based on chair feedback, to provide a 3-week discussion window in line with typical RGLC/review practice.\n\nIf a proposed curve has not been shown to meet the Section 4 criteria by the deadline, the natural path forward would be to retain the current curve and leave revisits for a future revision of the document.\n\n---\n\n*Cross-references: This issue is related to the broader curve set discussion on the CFRG mailing list. Serialization (#74) and identity point (#75) issues proceed independently.*\n",
       "createdAt": "2026-04-15T04:30:52Z",
-      "updatedAt": "2026-04-15T16:32:27Z",
+      "updatedAt": "2026-04-20T11:50:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 77,
+      "id": "I_kwDOD8wsds7_xU-H",
+      "title": "Add explicit untwist isomorphism \u03c8 to Section 4.x and clarify Appendix B G2 representation",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/77",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "### Summary\n\nFollowing Emil Lundberg's feedback (CFRG mailing list, 2026-04-17) on\nimplementing the optimal Ate pairing from scratch, we propose two small\neditorial additions to the draft body:\n\n1. Add the explicit untwist isomorphism `\u03c8 : E'(GF(p^(k/d))) \u2192 E(GF(p^k))`\n   in each curve's Section 4.x (where the twist coefficient is defined).\n2. Add a one-paragraph note at the start of Appendix B clarifying that\n   `G_2` base points are given in twisted form for compactness, and\n   pointing to \u03c8 for implementations that need the untwisted form.\n\n### Motivation\n\nThe current draft:\n- Mentions that an isomorphism between `E'` and `E(GF(p^k))` exists\n  (Section 2.2 \"Pairings\", line 347).\n- Gives the twist equation per curve (e.g., for BLS12-381:\n  `E': y\u00b2 = x\u00b3 + 4(u+1)` at line 947; BN462: `E': y\u00b2 = x\u00b3 - u + 2` at\n  line 1070; BLS48-581: `E': y\u00b2 = x\u00b3 - 1/w` at line 1182).\n- Says \"implementers should consider the isomorphism\" in Appendix A\n  (line 1935), but provides no explicit formula.\n\nImplementers must therefore derive the explicit form of \u03c8 themselves. For\nthe single-tower curves (BLS12-381, BN462), this is a few lines of\nalgebra. For BLS48-581 (multi-level tower Fp \u2192 Fp\u00b2 \u2192 Fp\u2074 \u2192 Fp\u2078 \u2192 Fp\u00b2\u2074 \u2192\nFp\u2074\u2078), this is non-trivial: in our verification work we found that\n`\u03c8 = (x'\u00b7\u03be\u00b2, y'\u00b7\u03be\u00b3)` with `\u03be = u\u00b7s \u2208 GF(p^48)` (and *not* e.g. `\u03be = w^(1/6)`\nor `\u03be = s^k` alone, which appear natural but are incorrect in multi-tower\nconstructions). Documenting \u03c8 explicitly removes this trap.\n\nThis proposal is consistent with the parameter-centric scope agreed at\nIETF 124, since \u03c8 is a structural fact derived from the parameters\n(twist coefficient + tower spec), not an algorithm choice. The current\ndraft's \"implementers should consider the isomorphism\" already obligates\nimplementers to use \u03c8; we are merely making the unique formula explicit.\n\n### Proposed change to Section 4.1.1 (BLS12-381)\n\nAfter the existing twist equation (around line 947), add:\n\n```\nThe untwist isomorphism \u03c8 : E'(GF(p^2)) \u2192 E(GF(p^12)) is given by\n    \u03c8(x', y') = (x' / w^2, y' / w^3)\nwhere w^2 = v \u2208 GF(p^6) and v^3 = u + 1, per the tower in Section 2.5.\n```\n\n### Proposed change to Section 4.2.1 (BN462)\n\nAfter the existing twist equation (around line 1070), add:\n\n```\nThe untwist isomorphism \u03c8 : E'(GF(p^2)) \u2192 E(GF(p^12)) is given by\n    \u03c8(x', y') = (x' \u00b7 w^2, y' \u00b7 w^3)\nwhere w^2 = v \u2208 GF(p^6) and v^3 = u + 2, per the tower in Section 2.5.\n```\n\n### Proposed change to Section 4.3 (BLS48-581)\n\nAfter the existing twist equation (around line 1182), add:\n\n```\nThe untwist isomorphism \u03c8 : E'(GF(p^8)) \u2192 E(GF(p^48)) is given by\n    \u03c8(x', y') = (x' \u00b7 \u03be^2, y' \u00b7 \u03be^3)\nwhere \u03be = u \u00b7 s \u2208 GF(p^48) satisfies \u03be^6 = -w (the twist coefficient).\n\nVerification:\n  u \u2208 GF(p^2), u^2 = -1, so u^6 = (u^2)^3 = -1.\n  s \u2208 GF(p^48), s^2 = -z, z^3 = -w, so s^6 = (s^2)^3 = w.\n  Hence \u03be^6 = u^6 \u00b7 s^6 = (-1) \u00b7 w = -w.\n```\n\n### Proposed change to Appendix B (intro)\n\nAdd a short note at the start of Appendix B (before the per-curve TV):\n\n```\nNote: G_2 base points in this Appendix are presented in twisted form\n(coordinates over E'(GF(p^(k/d)))), giving a compact representation.\nThe pseudocode in Appendix A defines Line_function on points of the\nuntwisted curve E(GF(p^k)). Implementations need to apply the untwist\nisomorphism \u03c8 defined in Section 4.x to lift twisted G_2 to E(GF(p^k))\nbefore invoking Line_function as written. (Most production libraries\nperform this lifting implicitly by working with twisted-form Line_function\nvariants, which are mathematically equivalent and more efficient.)\n```\n\n### Out of scope\n\n- The pseudocode in Appendix A: **no change** proposed\n- Numerical test vector values for BLS12-381 and BN462: **no change**\n- Numerical test vector values for BLS48-581: separate issue #79\n- Cofactor / final exp / addition chain implementation guidance:\n  separate informative appendix in issue #78\n\n### Trigger\n\n- Original feedback: Emil Lundberg, [CFRG] Feedback on\n  draft-irtf-cfrg-pairing-friendly-curves-12, 2026-04-17 (CFRG mailing list).\n- Authors' verification work: 2026-04-18 to 2026-04-19.\n\n\n",
+      "createdAt": "2026-04-19T14:29:08Z",
+      "updatedAt": "2026-04-19T15:34:57Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 78,
+      "id": "I_kwDOD8wsds7_xVif",
+      "title": "Add an informative \"Implementation Notes\" Appendix (production library cofactors, final exponentiation decomposition)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/78",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "### Summary\n\nFollowing Emil Lundberg's feedback (CFRG mailing list, 2026-04-17) and\nour subsequent verification work, we propose adding an **informative**\nappendix that documents practical implementation considerations not\naddressable by editorial fixes to the draft body alone \u2014 most importantly,\nthe systematic discrepancy between Appendix B test vectors and the output\nof production-grade pairing libraries (mcl, noble-curves, blst).\n\nThis proposal **does not standardize any algorithm**. It provides\ndocumentation and literature pointers for implementers, in the spirit of\nthe IETF 124 rough consensus on a parameter-centric draft.\n\n### Verification finding driving this proposal\n\nThrough bottom-up unit tests at each tower layer (Fp / Fp2 / Fp6 / Fp12),\nwe confirmed:\n\n1. Tower spec is identical between draft and mcl (and other production\n   libraries). The discrepancy is not in tower convention.\n2. For BLS12-381 and BN462, an implementation that follows Appendix A\n   pseudocode literally produces values that match Appendix B test\n   vectors **exactly** (12/12).\n3. Production libraries return `e_pseudocode^k` for a curve-specific\n   cofactor `k`:\n   - **BLS12-381**: `k = 3`\n     ([Cyclotomic Structure paper, eprint 2020/875][cyclo])\n   - **BN462**: `k = 2u(6u\u00b2 + 3u + 1) mod r`\n     ([Fuentes-Casta\u00f1eda-Knapp-Rodr\u00edguez 2011, \"Faster Hashing to G2\"][fchr])\n\nThese cofactors are coprime to `r`, preserving bilinearity, but cause a\nbyte-level mismatch with Appendix B values. This is a major source of\nconfusion for implementers (e.g., Emil's #4) and warrants explicit\ndocumentation.\n\n### Proposed Appendix structure\n\n#### X.1 Production library cofactors (informative)\n\nImplementations using the standard fast-final-exponentiation optimizations\nin the cited literature compute pairings that differ from the literal\noutput of Appendix A pseudocode by a curve-specific exponent in `G_T`:\n\n  e_lib(P, Q) = e_pseudocode(P, Q)^k\n\nwhere `k` is as listed above.\n\nBecause `gcd(k, r) = 1` (verified for BLS12-381 and BN462), the\nfollowing properties hold:\n\n- Bilinearity is preserved: `e_lib([a]P, [b]Q) = e_lib(P, Q)^(ab)`.\n- Verification equations of the form `e(A, B) = e(C, D)` hold using\n  `e_lib` if and only if they hold using `e_pseudocode`.\n- Direct byte-comparison between `e_lib` output and Appendix B test\n  vectors will not match. Implementations seeking byte-level\n  reproducibility of Appendix B values should evaluate Appendix A\n  pseudocode literally (without applying the cofactor optimization).\n\n#### X.2 Final exponentiation decomposition (informative pointer)\n\nAppendix A writes `f := f^((p^k - 1) / r)` as a single line. In practice,\nthis is implemented via easy/hard split:\n\n- Easy part: `(p^(k/2) - 1) \u00b7 ...` \u2014 computed cheaply via Frobenius\n- Hard part: `(p^(k/d/2) - p^(k/d) + 1) / r` \u2014 computed via addition chain\n  over the curve parameter `u`\n\nStandard references for the addition chain:\n\n- [Scott-Benger-Charlemagne-Perez-Dominguez 2009] \u2014 original BLS approach\n- [Aranha-Karabina-Longa-Gebotys-L\u00f3pez 2010][aklgl] \u2014 BN curves\n- [Fuentes-Casta\u00f1eda-Knapp-Rodr\u00edguez 2011][fchr] \u2014 BN cofactor variant used by mcl\n- [Cyclotomic Structure paper, eprint 2020/875][cyclo] \u2014 modern BLS12-381 with cofactor 3\n\n### Proposed placement\n\nBetween Appendix A (pseudocode) and Appendix B (test vectors), so\nimplementers transitioning from algorithm to test-vector reproduction\nencounter this guidance in reading order.\n\n### Out of scope\n\n- \u03c8 explicit form per curve: covered by separate normative editorial\n  issue #77\n- BLS48-581 Appendix B test vector update: covered in separate issue #79\n- Standardization of any new pairing algorithm or final exponentiation\n  variant\n\n### Trigger\n\n- Original feedback: Emil Lundberg, [CFRG] Feedback on\n  draft-irtf-cfrg-pairing-friendly-curves-12, 2026-04-17 (CFRG mailing list).\n- Authors' verification: 2026-04-18 to 2026-04-19.\n- Companion issues:\n  - #77: \u03c8 explicit form in body (normative editorial)\n\n[cyclo]: https://eprint.iacr.org/2020/875\n[fchr]: https://link.springer.com/chapter/10.1007/978-3-642-28496-0_25\n[aklgl]: http://dx.doi.org/10.1007/978-3-642-20465-4_5\n\n",
+      "createdAt": "2026-04-19T14:30:02Z",
+      "updatedAt": "2026-04-19T15:34:58Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 79,
+      "id": "I_kwDOD8wsds7_x4z9",
+      "title": "Align BLS48-581 Appendix B test vector with the convention used for BLS12-381 and BN462",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/79",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "### Summary\n\nThe Appendix B test vector for BLS48-581 appears to have been computed\nusing a BLS-specific implementation technique, rather than a literal\nevaluation of the Appendix A pseudocode. The Appendix B test vectors for\nBLS12-381 and BN462 follow the pseudocode-literal convention.\n\nWe propose updating the BLS48-581 test vector so that all three curves\nshare the same convention (pseudocode-literal).\n\n### Proposed change\n\nA follow-up pull request will replace the 48 `e_i` values in Appendix B\nfor BLS48-581 with values produced by a literal evaluation of the\nAppendix A pseudocode. The values are reproducible from a naive Python\nimplementation and are bit-for-bit consistent with the Kyushu University\nBLS48 library (cited in the draft).\n\n### Related issues\n\n- #77: explicit \u03c8 in Section 4.x and Appendix B intro note\n- #78: informative Implementation Notes appendix\n\nVerification details are available on request.\n",
+      "createdAt": "2026-04-19T15:34:06Z",
+      "updatedAt": "2026-04-19T15:34:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 80,
+      "id": "I_kwDOD8wsds7_x6vn",
+      "title": "Refresh the \"Adoption Status / Cryptographic Libraries\" survey (Section \u00a7impl)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/80",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "documentation",
+        "enhancement"
+      ],
+      "body": "### Summary\n\nThe Cryptographic Libraries subsection under Section \"Adoption Status of\nPairing-friendly Curves\" (\u00a7impl) enumerates specific libraries supporting\npairing-friendly curves. Since the current survey appears to predate a\nnumber of widely-used implementations that have emerged or become\ndominant in the past few years, it may be worth refreshing.\n\n### Examples of libraries not currently listed\n\n- [py_ecc](https://github.com/ethereum/py_ecc) (Python, BLS12-381, BN128)\n- [noble-curves](https://github.com/paulmillr/noble-curves) (TypeScript, BLS12-381)\n- [blst](https://github.com/supranational/blst) (C/Asm, BLS12-381)\n- [gnark-crypto](https://github.com/Consensys/gnark-crypto) (Go)\n- [arkworks](https://github.com/arkworks-rs/curves) (Rust)\n- [MIRACL Core](https://github.com/miracl/core) (multi-language; distinct from the older MIRACL)\n\n(Non-exhaustive; a fuller survey is available on request.)\n\n### Proposed change\n\nUpdate the Cryptographic Libraries subsection of \u00a7impl to reflect the\ncurrent implementation landscape, following the same style as the\nexisting prose.\n",
+      "createdAt": "2026-04-19T15:37:11Z",
+      "updatedAt": "2026-04-19T15:37:11Z",
       "closedAt": null,
       "comments": []
     }
@@ -2517,21 +2660,21 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDM1OTAwNjQz",
       "title": "Adds BLS12-377",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/56",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kobigurk",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Hello Yumi Sakemi, Tetsutaro Kobayashi, Tsunekazu Saito and Riad S. Wahby,\r\n\r\nI'd like to propose to add BLS12-377 - a pairing friendly curve gaining adoption in the last year.\r\n\r\nBLS12-377 has been introduced in the [Zexe paper](https://eprint.iacr.org/2018/962.pdf), for the case where both the scalar and the base fields have high 2-adicity. This makes BLS12-377 efficient for creating SNARK over and for creating SNARKs with statement involving BLS12-377 operations.\r\n\r\nThese properties made it highly interesting for a few projects, some of which are running in production - [Celo](https://celo.org), [EY Nightfall](https://github.com/EYBlockchain/nightfall) among others.\r\n\r\nHaving it standardized would be beneficial for all the projects involved.\r\n\r\nPlease let me know what you think and what could be done to improve it!",
       "createdAt": "2020-06-17T14:45:16Z",
-      "updatedAt": "2020-06-23T07:11:39Z",
+      "updatedAt": "2026-04-21T01:10:26Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "b4127ae3e40609b6e7b19446e3e4d663be8846be",
       "headRepository": "celo-org/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "master",
       "headRefOid": "9590834402349b12c45bd4fbf0c1790ce64829d8",
-      "closedAt": null,
+      "closedAt": "2026-04-20T08:46:31Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -2542,6 +2685,20 @@
           "body": "Hi,  Kobi!\r\n\r\nI am so sorry for my late reply.\r\nThank you for your interest in our draft and I appreciate your suggestions.\r\n\r\nIn our draft, we select the recommended pairing-friendly curves that match two selection policies: \"widely-used\" and \"security (the curves are shown in peer-reviewed papers)\".\r\nFrom a viewpoint of \"widely-used\", in our understanding, the BLS12-377 has fewer adoptions than the BLS12-381.\r\n\r\nAlso, as Riad pointed out by e-mail, if both BLS12-377 and BLS12-381 were proposed in the same draft, there is a possibility that the draft could confuse the readers.\r\nFor these reasons, we consider that it is difficult to add the BLS12-377 to our draft as the recommended parameter.\r\n\r\nOn the other hand, I feel that your activities that promote the use of pairing are so great, and I appreciate for your contribution.\r\nSo, we plan to refer your OSS (which is published in the following GitHub page) in the version 08 of our draft as one of the adoption results of pairing-friendly curves.\r\n\r\nhttps://github.com/celo-org/bls12377js\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
           "createdAt": "2020-06-23T07:11:39Z",
           "updatedAt": "2020-06-23T07:11:39Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I sincerely apologize for the very late response \u2014 thank you for your patience.\n\nThank you @kobigurk for this contribution and for your patience.\n\nWe have appreciated the work on BLS12-377 and the Celo/EY Nightfall deployments. As noted in the earlier comment, our selection criteria in Section 4 prioritize curves that are (1) shown in peer-reviewed security analyses and (2) widely used across the cryptographic ecosystem. BLS12-377's primary use case is SNARK-specific (high 2-adicity for Zexe-style circuits), which makes it complementary to rather than a replacement for BLS12-381.\n\nAs promised, the `bls12377js` library (https://github.com/celo-org/bls12377js) has been cited in the current draft (Section 4.1.2) as an adoption example.\n\nWe are also currently in the middle of an active curve-set discussion (#76), where proposers are invited to supply references against the Section 4 criteria. If BLS12-377 meets those criteria and has gained broader adoption since this PR was opened, a new proposal in that issue would be the right venue.\n\nClosing this PR as the criteria have not changed and the discussion is now tracked in #76. Thank you again for your interest in pairing-friendly curve standardization.",
+          "createdAt": "2026-04-20T08:46:26Z",
+          "updatedAt": "2026-04-20T08:46:26Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you @kobigurk for this contribution and for your patience.\n\nWe have appreciated the work on BLS12-377 and the Celo/EY Nightfall deployments. As noted in the earlier comment, our selection criteria in Section 4 prioritize curves that are (1) shown in peer-reviewed security analyses and (2) widely used across the cryptographic ecosystem. BLS12-377's primary use case is SNARK-specific (high 2-adicity for Zexe-style circuits), which makes it complementary to rather than a replacement for BLS12-381.\n\nAs promised, the `bls12377js` library (https://github.com/celo-org/bls12377js) has been cited in the current draft (Section 4.1.2) as an adoption example.\n\nWe are also currently in the middle of an active curve-set discussion (#76), where proposers are invited to supply references against the Section 4 criteria. If BLS12-377 meets those criteria and has gained broader adoption since this PR was opened, a new proposal in that issue would be the right venue.\n\nClosing this PR as the criteria have not changed and the discussion is now tracked in #76. Thank you again for your interest in pairing-friendly curve standardization.",
+          "createdAt": "2026-04-21T01:10:26Z",
+          "updatedAt": "2026-04-21T01:10:26Z"
         }
       ],
       "reviews": []
@@ -2594,21 +2751,21 @@
       "id": "PR_kwDOD8wsds4y4Wm-",
       "title": "Typo: frinedly",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/69",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mratsim",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Btw I went over the applications,\r\n\r\nCurrently most Ethereum clients use BLST https://github.com/supranational/blst, which was co-sponsored with the Filecoin blockchain which is now targeting GPU implementation (https://research.protocol.ai/sites/snarks/).\r\n\r\nSome also use MCL and Miracl as historical fallback before BLST was developed. BLST undergoes formal verification as well: https://github.com/GaloisInc/BLST-Verification",
       "createdAt": "2022-02-15T19:37:03Z",
-      "updatedAt": "2022-02-15T19:43:26Z",
+      "updatedAt": "2026-04-20T04:32:50Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "5611bbde3717817c6c578462c99d8805fda7c401",
       "headRepository": "mratsim/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "patch-1",
       "headRefOid": "a58a22bcaf0b8475a64d69c27cf65c630ff86d03",
-      "closedAt": null,
+      "closedAt": "2026-04-20T04:32:50Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -2619,6 +2776,13 @@
           "body": "I also forgot a benchmark of state-of-the-art pairing libraries: https://hackmd.io/@gnark/eccbench for BN254-Snarks, BLS12-381, BLS12-377, BW6-761\r\n\r\nNote: those benchmarks are over a year old, numbers have likely improved significantly since then (at least they did for my own library).",
           "createdAt": "2022-02-15T19:41:05Z",
           "updatedAt": "2022-02-15T19:43:26Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for the fix! This typo has been addressed by #73, which also fixes the duplicate article ('is a another' \u2192 'is another') and targets the current source file. Closing this PR as superseded by #73.",
+          "createdAt": "2026-04-20T04:32:49Z",
+          "updatedAt": "2026-04-20T04:32:49Z"
         }
       ],
       "reviews": []
@@ -2773,20 +2937,100 @@
       "id": "PR_kwDOD8wsds7LhGds",
       "title": "Fix typo: pairing-frinedly -> pairing-friendly",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/73",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "satokan",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fix typo in Section 2.3 (Barreto-Lynn-Scott Curves):\n- `pairing-frinedly` \u2192 `pairing-friendly`\n- `is a another` \u2192 `is another` (remove duplicate article)\n\nThis supersedes #69.",
       "createdAt": "2026-03-18T11:50:55Z",
-      "updatedAt": "2026-03-18T11:50:55Z",
+      "updatedAt": "2026-04-20T04:32:40Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "fc343266bc8cc6a6247f8e9682829dfde3c76848",
       "headRepository": "satokan/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "fix-typo-frinedly",
       "headRefOid": "66f6247d62bf3c4e6961475dc40ce703e4424ca9",
+      "closedAt": "2026-04-20T04:32:40Z",
+      "mergedAt": "2026-04-20T04:32:40Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "48c75b394c50d3a47e17f878567662c6099d245c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 81,
+      "id": "PR_kwDOD8wsds7T0Wcx",
+      "title": "Add explicit untwist isomorphism \u03c8 to Section 4.x and Appendix B note (#77)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/81",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n\nAddresses #77.\n\nFollowing Emil Lundberg's feedback (CFRG mailing list, 2026-04-17), this PR adds the explicit untwist isomorphism \u03c8 after the twist equation in each curve's section, and a clarifying note at the start of Appendix B.\n\n### Changes\n\n**Section 4.1.1 (BLS12_381, M-type)**\n```\n\u03c8(x', y') = (x' / w^2, y' / w^3)\n```\nwhere w^2 = v \u2208 GF(p^6) and v^3 = u + 1.\n\n**Section 4.2.1 (BN462, D-type)**\n```\n\u03c8(x', y') = (x' \u00b7 w^2, y' \u00b7 w^3)\n```\nwhere w^2 = v \u2208 GF(p^6) and v^3 = u + 2.\n\n**Section 4.3 (BLS48_581, D-type)**\n```\n\u03c8(x', y') = (x' \u00b7 \u03be^2, y' \u00b7 \u03be^3),  \u03be = u \u00b7 s\n```\nwith \u03be^6 = -w (the twist coefficient). Derivation included inline.\n\n**Appendix B (intro)**\nAdded a note clarifying that G_2 base points are given in twisted form, and pointing to \u03c8 for implementations that need the untwisted form.\n\n### Verification\n\nAll three \u03c8 formulas verified independently by direct curve equation substitution (not via bilinearity):\n- BLS12_381: Y\u00b2 = X\u00b3 + 4 in GF(p^12) \u2713, r\u00b7Q = O \u2713\n- BN462: Y\u00b2 = X\u00b3 + 5 in GF(p^12) \u2713, r\u00b7Q = O \u2713\n- BLS48_581: Y\u00b2 = X\u00b3 + 1 in GF(p^48) \u2713, r\u00b7Q = O \u2713\n\n### Scope\n\n- No change to pseudocode in Appendix A\n- No change to test vector values\n- Normative editorial only",
+      "createdAt": "2026-04-20T04:46:41Z",
+      "updatedAt": "2026-04-20T10:14:37Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix/issue-77-psi-untwist",
+      "headRefOid": "6694d84dee1352a57ea590f784b8e5220119f845",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 82,
+      "id": "PR_kwDOD8wsds7T0x4C",
+      "title": "fix(bls48-tv): replace e_0..e_47 with naive implementation values",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/82",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #79.\n\n## Problem\n\nThe BLS48-581 pairing test vector (`e_0`\u2013`e_47`) in Appendix B was computed via an implementation-specific technique (cofactor-optimized shortcut) that yields a value differing from the naive Miller loop output. Specifically, the old TV satisfies `TV^3 * naive = 1` in Fp48, meaning the two are related by a cube root of unity \u2014 valid pairings, but different from the naive convention.\n\nTwo independent implementations agree on the corrected values:\n- Naive Python reference (implemented in `notes/verification/naive_bls48/`)\n- Kyushu library (`mcl` BLS48 pairing)\n\n## Changes\n\n- Replace all 48 Fp coefficients in the BLS48-581 pairing test vector (Appendix B) with values from the naive/Kyushu-consistent computation.\n- All values are zero-padded to 146 hex characters (the byte length of p for BLS48-581).\n- G1 and G2 base points are unchanged.\n\n## Verification\n\n```\n# naive Python\ncd notes/verification/naive_bls48\npython3 -m pytest tests/test_draft_input_match.py -v\n```\n\nThe two independent implementations produce identical output, satisfying the CFRG requirement for two consistent implementations.",
+      "createdAt": "2026-04-20T05:18:47Z",
+      "updatedAt": "2026-04-20T05:18:47Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix/issue-79-bls48-tv",
+      "headRefOid": "e777b22a7b2ffc5f07cf93fc77af557169c1e588",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 83,
+      "id": "PR_kwDOD8wsds7T7MAC",
+      "title": "Update adoption status with 2022 survey (closes #80)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/83",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n\n- **ISO/IEC 15946-5**: Updated to the 2022 (3rd edition). The BN462 parameter matches Annex D.2.3 exactly (u = 2^114 + 2^101 \u2212 2^14 \u2212 1); BLS48-581 matches Annex D.3.5 exactly (u = \u22122^32 \u2212 2^30 \u2212 2^10 + 2^7 \u2212 1). The same edition introduces a post-exTNFS guideline that |p| \u2265 461 bits for BN/BLS12 at 128-bit security.\n- **Cryptographic Libraries**: Added blst (Supranational), gnark-crypto (Consensys), noble-curves (Paul Miller), arkworks, constantine (mratsim), and noted CIRCL (Cloudflare) and zkcrypto. Updated AMCL + MIRACL \u2192 MIRACL Core with consolidated curve list. Fixed BLS12_445 \u2192 BLS12_455 in RELIC paragraph. Fixed BN256N typo \u2192 BN254N in mcl paragraph.\n- **Applications**: Added Filecoin (Protocol Labs, via blst) and EIP-2537 (Ethereum BLS12-381 precompile). Replaced the stale pureGo-bls Ethereum reference.\n- **Removed** defunct lepidum.co.jp blog link.\n- Added references for all new entries (blst, gnark-crypto, noble-curves, arkworks, constantine, EIP-2537, Filecoin); updated ISO/IEC 15946-5 reference to 2022 edition.\n- Updated `notes/table_adoption.md` with comprehensive library \u00d7 curve survey (methodology, per-library table, summary table comparing draft curves vs. proposed alternatives).\n\n## Survey methodology (documented in notes/table_adoption.md)\n\nAll major pairing libraries were surveyed \u2014 not filtered to those supporting draft curves. Identification used: (1) known major implementations, (2) GitHub searches (\"optimal ate pairing\", \"miller loop\", \"pairing-friendly curves\") with Bluetooth-pairing false-positives filtered by checking for bilinearity / G1/G2/GT / Miller loop keywords. For each library, supported curves were confirmed from documentation or source code.\n\n## Test plan\n\n- [ ] Build CI passes (kramdown-rfc + xml2rfc)\n- [ ] All new `{{anchor}}` references resolve to entries in the references section\n- [ ] Verify lepidum.co.jp link is gone\n- [ ] Confirm ISO 2022 wording matches the Annex D u-values documented in notes/table_adoption.md\n\nCloses #80\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
+      "createdAt": "2026-04-20T11:20:22Z",
+      "updatedAt": "2026-04-20T11:20:22Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix/issue-80-adoption-update",
+      "headRefOid": "a812b3d8f607e802e5ea1822cad6689fe33433b6",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
