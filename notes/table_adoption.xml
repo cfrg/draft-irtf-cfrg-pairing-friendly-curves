@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<table anchor="adoption" align="center">
+
+        <name>Adoption Status of Pairing-Friendly Curves</name>
+        <thead>
+          <tr>
+            <th align="center" rowspan="2">Category</th>
+            <th align="center" rowspan="2">Name</th>
+            <th align="center" rowspan="2">Curve Type</th>
+            <th align="center" colspan="5">Security Levels (bit)</th>
+          </tr>
+          <tr>
+            <td align="left"> Arnd 128 </td>
+            <td align="left"> ~ </td>
+            <td align="left"> Arnd 192 </td>
+            <td align="left"> ~ </td>
+            <td align="left"> Arnd 256 </td>            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td align="left" rowspan="5">Standard</td>
+            <td align="left" rowspan="2">ISO/IEC</td>
+            <td align="left">BN384</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+           <tr>
+            <td align="left">BN512I</td>
+            <td align="left" />
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>         
+          <tr>
+            <td align="left">TCG</td>
+            <td align="left">BN638</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">FIDO/W3C</td>
+            <td align="left">BN512I</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BN638</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="34">Library</td>
+            <td align="left" rowspan="3">mcl</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+         <tr>
+            <td align="left">BN382M</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BN462</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="13">RELIC</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_446</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_455</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_638</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS24_477</td>
+            <td align="left"> </td>
+            <td align="left" />
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS48_575</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+          </tr>
+          <tr>
+            <td align="left">BN382R</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>    
+          <tr>
+            <td align="left">BN446</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr> 
+          <tr>
+            <td align="left">BN638</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr> 
+          <tr>
+            <td align="left">CP8_544</td>
+            <td align="left">X</td>
+            <td align="left" />
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr> 
+          <tr>
+            <td align="left">K54_569</td>
+            <td align="left"> </td>
+            <td align="left" />
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+          </tr> 
+          <tr>
+            <td align="left">KSS18_508</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr> 
+          <tr>
+            <td align="left">OT8_511</td>
+            <td align="left">X</td>
+            <td align="left" />
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr> 
+          <tr>
+            <td align="left" rowspan="6">AMCL</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_383</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_461</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS24_479</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS48_556</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+          </tr>
+          <tr>
+            <td align="left">BN512I</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">Kyushu Univ.</td>
+            <td align="left">BLS48_581</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="8">MIRACL</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_383</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS12_461</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS24_479</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BLS48_556</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+          </tr>
+          <tr>
+            <td align="left">BLS48_581</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+          </tr>
+          <tr>
+            <td align="left">BN462</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BN512I</td>
+            <td align="left"> </td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">Adjoint</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BN462</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">bls12377js</td>
+            <td align="left">BLS12_377</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="7">Application</td>
+            <td align="left">Zcash</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">Ethereum</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">Chia Network</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="3">DFINITY</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BN382M</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">BN462</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+          <tr>
+            <td align="left">Algorand</td>
+            <td align="left">BLS12_381</td>
+            <td align="left">X</td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+            <td align="left"> </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      

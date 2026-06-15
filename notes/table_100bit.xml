@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<table anchor="table_100-bit" align="center">
+        <name> Adoption Status of Pairing-Friendly Curves with 100-bit Security Level(Legacy)</name>
+        <thead>
+          <tr>
+            <th align="center">Category</th>
+            <th align="center">Name</th>
+            <th align="center">Supported 100-bit Curves</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td align="left" rowspan="4">Standard</td>
+            <td align="left">ISO/IEC</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left">TCG</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">FIDO/W3C</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left">BN256D</td>
+          </tr>
+           <tr>
+            <td align="left" rowspan="18">Library</td>
+            <td align="left" rowspan="2">mcl</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">TEPLA</td>
+            <td align="left">BN254B</td>
+          </tr>
+          <tr>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">RELIC</td>
+            <td align="left">BN254N</td>
+          </tr>    
+          <tr>
+            <td align="left">BN256D</td>
+          </tr> 
+          <tr>
+            <td align="left" rowspan="3">AMCL</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN254CX</td>
+          </tr>
+          <tr>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left">Intel IPP</td>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="3">MIRACL</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN254CX</td>
+          </tr>
+          <tr>
+            <td align="left">BN256I</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="5">Adjoint</td>
+            <td align="left">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td align="left">BN254B</td>
+          </tr>
+          <tr>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN254S1</td>
+          </tr>
+          <tr>
+            <td align="left">BN254S2</td>
+          </tr>
+           <tr>
+            <td align="left" rowspan="3">Application</td>
+            <td align="left">Zcash</td>
+           <td align="left">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td align="left" rowspan="2">DFINITY</td>
+            <td align="left">BN254N</td>
+          </tr>
+          <tr>
+            <td align="left">BN_SNARK1</td>
+          </tr>
+        </tbody>
+      </table>
+
+
