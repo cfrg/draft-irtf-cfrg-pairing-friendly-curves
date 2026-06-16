@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-10T03:31:02.320990+00:00",
+  "timestamp": "2026-06-16T04:23:05.097532+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2875,18 +2875,26 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-03-04T15:26:22Z",
-      "updatedAt": "2026-03-11T17:18:18Z",
+      "updatedAt": "2026-06-15T19:43:05Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
-      "baseRefOid": "25b1974cc1f01d8e7d34a75a59770b89c82c7858",
+      "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
       "headRepository": "mmaker/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "mu/def",
-      "headRefOid": "4cf5a963743d075bfb1f7d5beebe8497ecdddcc0",
+      "headRefOid": "1b6687f211f25e295fe77d16729dee4acde6ceba",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "mmaker",
+          "authorAssociation": "NONE",
+          "body": "@yumi-sakemi (cc @dfaranha):  this PR is still open and blocking sigma-proofs. \r\nBesides @bellebaum's feeedback,  is there anything preventing it from being merged on your end? I can get this done for the next IETF.",
+          "createdAt": "2026-06-15T19:43:05Z",
+          "updatedAt": "2026-06-15T19:43:05Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOD8wsds7qTSji",
