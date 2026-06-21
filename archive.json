@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-16T04:23:05.097532+00:00",
+  "timestamp": "2026-06-21T04:23:34.957007+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2700,6 +2700,22 @@
       "body": "### Summary\n\nThe Cryptographic Libraries subsection under Section \"Adoption Status of\nPairing-friendly Curves\" (\u00a7impl) enumerates specific libraries supporting\npairing-friendly curves. Since the current survey appears to predate a\nnumber of widely-used implementations that have emerged or become\ndominant in the past few years, it may be worth refreshing.\n\n### Examples of libraries not currently listed\n\n- [py_ecc](https://github.com/ethereum/py_ecc) (Python, BLS12-381, BN128)\n- [noble-curves](https://github.com/paulmillr/noble-curves) (TypeScript, BLS12-381)\n- [blst](https://github.com/supranational/blst) (C/Asm, BLS12-381)\n- [gnark-crypto](https://github.com/Consensys/gnark-crypto) (Go)\n- [arkworks](https://github.com/arkworks-rs/curves) (Rust)\n- [MIRACL Core](https://github.com/miracl/core) (multi-language; distinct from the older MIRACL)\n\n(Non-exhaustive; a fuller survey is available on request.)\n\n### Proposed change\n\nUpdate the Cryptographic Libraries subsection of \u00a7impl to reflect the\ncurrent implementation landscape, following the same style as the\nexisting prose.\n",
       "createdAt": "2026-04-19T15:37:11Z",
       "updatedAt": "2026-04-19T15:37:11Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 84,
+      "id": "I_kwDOD8wsds8AAAABF-sqhw",
+      "title": "Specify scalar field serialization and deserialization function",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/84",
+      "state": "OPEN",
+      "author": "mmaker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "One of the fundamental operations needed for non-interactive sigma protocols is the ability of serializing and deserializing scalar field elements. Somehow this doesn't seem to be present in the specification right now. \n\nThis should be pretty easy to do: base field elements are encoded with I2OSP (and deserialized via O2ISP) and field extensions proceed similarly: encoding each coordinate of the base field element.\n\nCan this please be added to the spec?",
+      "createdAt": "2026-06-18T22:01:12Z",
+      "updatedAt": "2026-06-18T22:01:12Z",
       "closedAt": null,
       "comments": []
     }
