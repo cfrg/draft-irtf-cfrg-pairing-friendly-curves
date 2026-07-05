@@ -6,6 +6,7 @@ ipr: trust200902
 area: IRTF
 workgroup: CFRG
 keyword: Internet-Draft
+submissiontype: IRTF
 
 stand_alone: yes
 pi: [toc, sortrefs, symrefs]
@@ -271,7 +272,7 @@ The adoption status of pairing-friendly curves is surveyed in standards, librari
 
 This section omits parameters with security levels below the "Arnd 128-bit" range due to space limitations and viewpoints of secure usage of parameters. On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore {{adoption_status_100bit_security}} shows these parameters.
 
-The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves and MNT curves are not included in this survey because {{BD18}} does not show the security levels of these curves.
+The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves {{Freeman06}} and MNT curves {{MNT01}} are not included in this survey because {{BD18}} does not show the security levels of these curves.
 
 ### International Standards  {#standardization}
 
@@ -1170,16 +1171,6 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2013" />
           </front>
         </reference>
-        <reference anchor="pureGo-bls" target="https://github.com/phoreproject/bls">
-          <front>
-            <title>Pure GO bls library</title>
-            <author initials="J." surname="Meyer">
-              <organization />
-            </author>
-            <date year="2019" />
-          </front>
-        </reference>
-
         <reference anchor="TEPLA" target="http://www.cipher.risk.tsukuba.ac.jp/tepla/index_e.html">
           <front>
             <title>TEPLA: University of Tsukuba Elliptic Curve and Pairing Library</title>
@@ -1357,11 +1348,11 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
-        <reference anchor="MAF19" target="https://www.researchgate.net/publication/337011283_Computing_the_Optimal_Ate_Pairing_over_Elliptic_Curves_with_Embedding_Degrees_54_and_48_at_the_256-bit_security_level">
+        <reference anchor="MAF19" target="https://doi.org/10.1504/IJACT.2020.107167">
           <front>
             <title>Computing the Optimal Ate Pairing over Elliptic Curves with Embedding Degrees 54 and 48 at the 256-bit security level</title>
-            <seriesInfo name="International Journal of Applied Cryptography" value="to appear" />
-            <author initials="N.B." surname="Mbiang">
+            <seriesInfo name="International Journal of Applied Cryptography" value="vol. 4, no. 1, pp. 45-59" />
+            <author initials="N.B." surname="Mbang">
               <organization />
             </author>
             <author initials="D.F." surname="Aranha">
@@ -1370,7 +1361,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <author initials="E." surname="Fouotsa">
               <organization />
             </author>
-            <date year="2019" />
+            <date year="2020" />
           </front>
         </reference>
 
