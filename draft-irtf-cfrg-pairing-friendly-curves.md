@@ -1582,6 +1582,86 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
+        <reference anchor="HHT20" target="https://eprint.iacr.org/2020/875">
+          <front>
+            <title>Efficient Final Exponentiation via Cyclotomic Structure for Pairings over Families of Elliptic Curves</title>
+            <author initials="D." surname="Hayashida">
+              <organization />
+            </author>
+            <author initials="K." surname="Hayasaka">
+              <organization />
+            </author>
+            <author initials="T." surname="Teruya">
+              <organization />
+            </author>
+            <date year="2020" />
+          </front>
+          <seriesInfo name="Cryptology ePrint Archive" value="Paper 2020/875" />
+        </reference>
+
+        <reference anchor="SBCK09" target="https://doi.org/10.1007/978-3-642-03298-1_6">
+          <front>
+            <title>On the Final Exponentiation for Calculating Pairings on Ordinary Elliptic Curves</title>
+            <author initials="M." surname="Scott">
+              <organization />
+            </author>
+            <author initials="N." surname="Benger">
+              <organization />
+            </author>
+            <author initials="M." surname="Charlemagne">
+              <organization />
+            </author>
+            <author initials="L.J." surname="Dominguez Perez">
+              <organization />
+            </author>
+            <author initials="E.J." surname="Kachisa">
+              <organization />
+            </author>
+            <date year="2009" />
+          </front>
+          <seriesInfo name="Pairing 2009, LNCS" value="vol. 5671, pp. 78-88" />
+        </reference>
+
+        <reference anchor="AKLGL11" target="https://eprint.iacr.org/2010/526">
+          <front>
+            <title>Faster Explicit Formulas for Computing Pairings over Ordinary Curves</title>
+            <author initials="D.F." surname="Aranha">
+              <organization />
+            </author>
+            <author initials="K." surname="Karabina">
+              <organization />
+            </author>
+            <author initials="P." surname="Longa">
+              <organization />
+            </author>
+            <author initials="C.H." surname="Gebotys">
+              <organization />
+            </author>
+            <author initials="J." surname="López">
+              <organization />
+            </author>
+            <date year="2011" />
+          </front>
+          <seriesInfo name="EUROCRYPT" value="2011" />
+        </reference>
+
+        <reference anchor="FCKR11" target="https://doi.org/10.1007/978-3-642-28496-0_25">
+          <front>
+            <title>Faster Hashing to G2</title>
+            <author initials="L." surname="Fuentes-Castañeda">
+              <organization />
+            </author>
+            <author initials="E." surname="Knapp">
+              <organization />
+            </author>
+            <author initials="F." surname="Rodríguez-Henríquez">
+              <organization />
+            </author>
+            <date year="2011" />
+          </front>
+          <seriesInfo name="SAC 2011, LNCS" value="vol. 7118, pp. 412-430" />
+        </reference>
+
       </references>
     </references>
 
@@ -1663,6 +1743,35 @@ The following algorithm shows the computation of the optimal Ate pairing on Barr
 
 ~~~~~~~~~~
 
+
+# Implementation Notes  {#implementation-notes}
+
+This appendix is informative. It documents implementation considerations discovered through verification of this memo's pseudocode against production-grade pairing libraries (mcl, noble-curves, blst), and does not standardize any algorithm.
+
+## Production Library Cofactors  {#production-library-cofactors}
+
+Implementations using the fast final-exponentiation optimizations described in the literature cited below compute pairings that differ from the literal output of the pseudocode in {{comp_pairing}} by a curve-specific exponent in G_T:
+
+~~~~~~~~~~
+    e_lib(P, Q) = e_pseudocode(P, Q)^k
+~~~~~~~~~~
+
+where k is:
+
+- BLS12_381: k = 3 {{HHT20}}
+- BN462: k = 2u(6u^2 + 3u + 1) mod r {{FCKR11}}
+
+Because gcd(k, r) = 1 for both curves, the following properties hold:
+
+- Bilinearity is preserved: e_lib([a]P, [b]Q) = e_lib(P, Q)^(ab).
+- Verification equations of the form e(A, B) = e(C, D) hold using e_lib if and only if they hold using e_pseudocode.
+- Direct byte-comparison between e_lib output and the test vectors in {{test-vectors-of-optimal-ate-pairing}} will not match. Implementations seeking byte-level reproducibility of those test vectors should evaluate the pseudocode in {{comp_pairing}} literally, without applying the cofactor optimization.
+
+## Final Exponentiation Decomposition  {#final-exponentiation-decomposition}
+
+The pseudocode in {{comp_pairing}} writes the final exponentiation as a single step, f := f^((p^k - 1) / r). In practice, implementations compute this via an easy/hard split: an easy part computed cheaply via the Frobenius endomorphism, and a hard part computed via an addition chain over the curve parameter u.
+
+Standard references for the hard-part addition chain include {{SBCK09}} (the original approach for BLS curves), {{AKLGL11}} (for BN curves), {{FCKR11}} (the BN cofactor variant used by mcl), and {{HHT20}} (a more recent, general treatment via cyclotomic structure, used for BLS12_381 above).
 
 # Test Vectors of Optimal Ate Pairing  {#test-vectors-of-optimal-ate-pairing}
 
