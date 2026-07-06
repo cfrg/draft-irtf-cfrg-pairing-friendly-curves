@@ -6,6 +6,7 @@ ipr: trust200902
 area: IRTF
 workgroup: CFRG
 keyword: Internet-Draft
+submissiontype: IRTF
 
 stand_alone: yes
 pi: [toc, sortrefs, symrefs]
@@ -271,7 +272,7 @@ The adoption status of pairing-friendly curves is surveyed in standards, librari
 
 This section omits parameters with security levels below the "Arnd 128-bit" range due to space limitations and viewpoints of secure usage of parameters. On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore {{adoption_status_100bit_security}} shows these parameters.
 
-The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves and MNT curves are not included in this survey because {{BD18}} does not show the security levels of these curves.
+The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves {{Freeman06}} and MNT curves {{MNT01}} are not included in this survey because {{BD18}} does not show the security levels of these curves.
 
 ### International Standards  {#standardization}
 
@@ -391,7 +392,7 @@ h':
 b':
 :   4 * (u + 1)
 
-As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, {{zcash_rep_bls12_381}} shows the serialization format of points on an elliptic curve as useful information. This serialization format is also adopted in {{I-D.boneh-bls-signature}} {{zkcrypto}}.
+As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, {{point-serialization}} defines a normative point serialization format for it (with test vectors in {{point-serialization-test-vectors}}). This serialization format is also adopted in {{I-D.boneh-bls-signature}} {{zkcrypto}}.
 
 In addition, many pairing-based cryptographic applications use a hashing to an elliptic curve procedure that outputs a rational point on an elliptic curve from an arbitrary input. A standard specification of ciphersuites for a hashing to an elliptic curve, including BLS12_381, is under discussion in the IETF {{I-D.irtf-cfrg-hash-to-curve}} and it will be valuable information for implementers.
 
@@ -591,6 +592,126 @@ h':
 b':
 :   -1 / w
 
+{{point-serialization}} defines a normative point serialization format for BLS48_581 (with test vectors in {{point-serialization-test-vectors}}), extending the format defined by {{ZCashRep}} for BLS12_381 as specified in {{I-D.ietf-cose-bls-key-representations}}.
+
+# Point Serialization  {#point-serialization}
+
+This section defines a normative point encoding and decoding procedure for BLS12_381 and BLS48_581. The format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
+
+At a high level, the serialization format is defined as follows:
+
+- Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.
+- For a curve with characteristic p represented in n = ceil(len(p) / 8) bytes, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in {{point-serialization-params}}, are serialized into m*n bytes (compressed) or 2*m*n bytes (uncompressed).
+- The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.
+- The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.
+- The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.
+
+## Parameters by Curve  {#point-serialization-params}
+
+| Curve | n (bytes) | E' field | m | Compressed (E / E') | Uncompressed (E / E') |
+|---|---|---|---|---|---|
+| BLS12_381 | 48 | GF(p^2) | 2 | 48 / 96 bytes | 96 / 192 bytes |
+| BLS48_581 | 73 | GF(p^8) | 8 | 73 / 584 bytes | 146 / 1168 bytes |
+
+Below, we give detailed serialization and de-serialization procedures, applicable to both curves using the parameters above. The following notation is used in the rest of this section:
+
+- Elements of GF(p^m) are represented as a vector of m coefficients in GF(p), (y_0, ..., y_{m-1}), using the basis and coefficient ordering already defined for each curve in {{secure_params}}.
+- For a byte string str, str[0] is defined as the first byte of str.
+- The function sign_GF_p(y) returns one bit representing the sign of an element of GF(p). This function is defined as follows:
+
+~~~~~~~~~~
+
+    sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
+                   { 0 otherwise.
+
+~~~~~~~~~~
+
+- The function sign_GF_p^m(y), for an element y = (y_0, ..., y_{m-1}) of GF(p^m), returns one bit computed as follows: let i be the largest index in {0, ..., m-1} such that y_i is nonzero, or i = 0 if all coefficients are zero; return sign_GF_p(y_i). For BLS12_381 (m=2), this specializes to: sign_GF_p^2(y') = sign_GF_p(y'_0) if y'_1 equals 0, else sign_GF_p(y'_1). For BLS48_581 (m=8), this is the same function specified as sign_GF_p^8 in {{I-D.ietf-cose-bls-key-representations}}, evaluated over the coefficient ordering (y'_0, ..., y'_7) given in {{secure_params}}.
+
+## Point Serialization Procedure  {#point-serialization-procedure}
+
+The serialization procedure is defined as follows for a point P = (x, y) on a curve with parameters n and m as given in {{point-serialization-params}}. This procedure uses the I2OSP function defined in {{RFC8017}}.
+
+1. Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
+   - C_bit is 1 if point compression should be used, otherwise it is 0.
+   - I_bit is 1 if P is the point at infinity, otherwise it is 0.
+   - S_bit is 0 if P is the point at infinity or if point compression is not used. Otherwise (i.e., when point compression is used and P is not the point at infinity), if P is a point on E, S_bit = sign_GF_p(y), else if P is a point on E', S_bit = sign_GF_p^m(y).
+2. Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
+3. Let x_string be the serialization of x, which is defined as follows:
+   - If P is the point at infinity on E, let x_string = I2OSP(0, n).
+   - If P is a point on E other than the point at infinity, then x is an element of GF(p), i.e., an integer in the inclusive range [0, p - 1]. In this case, let x_string = I2OSP(x, n).
+   - If P is the point at infinity on E', let x_string = I2OSP(0, m*n).
+   - If P is a point on E' other than the point at infinity, then x can be represented as (x_0, ..., x_{m-1}) where each x_i is an element of GF(p). In this case, let x_string = I2OSP(x_{m-1}, n) concatenated with I2OSP(x_{m-2}, n), ..., concatenated with I2OSP(x_0, n) (i.e., coefficients in decreasing index order). Notice that in all of the above cases, the 3 most significant bits of x_string[0] are guaranteed to be 0.
+4. If point compression is used, let y_string be the empty string. Otherwise (i.e., when point compression is not used), let y_string be the serialization of y, which is defined in Step 3.
+5. Let s_string be the concatenation of x_string and y_string.
+6. Set s_string[0] = x_string[0] OR m_byte, where OR is computed bitwise. After this operation, the most significant bit of s_string[0] equals C_bit, the next bit equals I_bit, and the next equals S_bit. (This is true because the three most significant bits of x_string[0] are guaranteed to be zero, as discussed above.)
+7. Output s_string.
+
+## Point Deserialization Procedure  {#point-deserialization-procedure}
+
+The deserialization procedure is defined as follows for a string s_string, for a curve with parameters n and m as given in {{point-serialization-params}}. This procedure uses the OS2IP function defined in {{RFC8017}}.
+
+1. Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0. If m_byte equals any of 0x20, 0x60, or 0xE0, output INVALID and stop decoding. Otherwise:
+   - Let C_bit equal the most significant bit of m_byte,
+   - Let I_bit equal the second most significant bit of m_byte, and
+   - Let S_bit equal the third most significant bit of m_byte.
+2. If C_bit is 1:
+   - If s_string has length n bytes, the output point is on the curve E.
+   - If s_string has length m*n bytes, the output point is on the curve E'.
+   - If s_string has any other length, output INVALID and stop decoding.
+
+   If C_bit is 0:
+   - If s_string has length 2n bytes, the output point is on E.
+   - If s_string has length 2*m*n bytes, the output point is on E'.
+   - If s_string has any other length, output INVALID and stop decoding.
+3. Let s_string[0] = s_string[0] AND 0x1F, where AND is computed bitwise. In other words, set the three most significant bits of s_string[0] to 0.
+4. If I_bit is 1:
+   - If s_string is not the all zeros string, output INVALID and stop decoding.
+   - Otherwise (i.e., if s_string is the all zeros string), output the point at infinity on the curve that was determined in step 2 and stop decoding.
+
+   Otherwise, I_bit must be 0. Continue decoding.
+5. If C_bit is 0:
+   - Let x_string be the first half of s_string.
+   - Let y_string be the last half of s_string.
+   - Let x = OS2IP(x_string).
+   - Let y = OS2IP(y_string).
+   - If the point P = (x, y) is not a valid point on the curve that was determined in step 2, output INVALID and stop decoding.
+   - Otherwise, output the point P = (x, y) and stop decoding.
+
+   Otherwise, C_bit must be 1. Continue decoding.
+6. Let x = OS2IP(s_string).
+7. If the curve that was determined in step 2 is E:
+   - Let y2 = the right-hand side of the curve equation for E (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p).
+   - If y2 is not square in GF(p), output INVALID and stop decoding.
+   - Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit = sign_GF_p(y).
+
+   Otherwise, (i.e., when the curve that was determined in step 2 is E'):
+   - Let y2 = the right-hand side of the curve equation for E' (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p^m).
+   - If y2 is not square in GF(p^m), output INVALID and stop decoding.
+   - Otherwise, let y = sqrt(y2) in GF(p^m) and let Y_bit = sign_GF_p^m(y).
+8. If S_bit equals Y_bit, output P = (x, y) and stop decoding. Otherwise, output P = (x, -y) and stop decoding.
+
+## Scalar Serialization  {#scalar-serialization}
+
+This section defines a serialization format for elements of the scalar field GF(r), where r is the order of G_1 and G_2 as given for each curve in {{secure_params}}. Unlike point serialization, this format applies to all three curves in this document (BLS12_381, BN462, and BLS48_581), since no metadata bits are required.
+
+For a curve with scalar field order r represented in n_s = ceil(len(r) / 8) bytes:
+
+| Curve | n_s (bytes) |
+|---|---|
+| BLS12_381 | 32 |
+| BN462 | 58 |
+| BLS48_581 | 65 |
+
+Serialization: a scalar k in the range [0, r - 1] is serialized as I2OSP(k, n_s).
+
+Deserialization: given a byte string s_string of length n_s, let k = OS2IP(s_string). If k >= r, output INVALID and stop decoding. Otherwise, output k.
+
+This enforces a unique (canonical) encoding for each equivalence class, per the recommendation raised in issue #74 of the GitHub repository for this document. This document does not define a distinct encoding for the zero scalar; whether zero is accepted is intended to follow the same policy as the identity point for the curve in question (tracked in issue #75 of the GitHub repository for this document) and is otherwise left to the calling protocol.
+
+## Applicability to BN462  {#bn462-not-applicable}
+
+The point serialization format defined in {{point-serialization-procedure}} and {{point-deserialization-procedure}} is not applicable to BN462. (Scalar serialization, defined in {{scalar-serialization}}, is unaffected and applies to BN462 as well.) BN462 has a 462-bit characteristic p, requiring n = 58 bytes for its canonical GF(p) representation (58 * 8 = 464 bits). This leaves only 2 spare bits in the leading byte of a serialized x-coordinate -- one bit short of the 3 bits (C_bit, I_bit, S_bit) required by the metadata scheme defined above. Consequently, this document does not define a point serialization format for BN462. Doing so would require a different metadata encoding, for example a dedicated leading byte following the general pattern of {{SEC1}} rather than bit-packing into the coordinate representation; designing such an encoding is out of scope for this document, whose primary purpose is parameter specification rather than encoding algorithm design.
 
 # Security Considerations  {#security-considerations}
 
@@ -978,6 +1099,8 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-lwig-curve-representations-08.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-boneh-bls-signature-00.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-hash-to-curve-09.xml" />
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-10.xml" />
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-cose-bls-key-representations-08.xml" />
 
         <reference anchor="Ethereum" target="https://medium.com/prysmatic-labs/ethereum-2-0-development-update-17-prysmatic-labs-ed5bcf82ec00">
           <front>
@@ -1170,16 +1293,6 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2013" />
           </front>
         </reference>
-        <reference anchor="pureGo-bls" target="https://github.com/phoreproject/bls">
-          <front>
-            <title>Pure GO bls library</title>
-            <author initials="J." surname="Meyer">
-              <organization />
-            </author>
-            <date year="2019" />
-          </front>
-        </reference>
-
         <reference anchor="TEPLA" target="http://www.cipher.risk.tsukuba.ac.jp/tepla/index_e.html">
           <front>
             <title>TEPLA: University of Tsukuba Elliptic Curve and Pairing Library</title>
@@ -1357,11 +1470,11 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
-        <reference anchor="MAF19" target="https://www.researchgate.net/publication/337011283_Computing_the_Optimal_Ate_Pairing_over_Elliptic_Curves_with_Embedding_Degrees_54_and_48_at_the_256-bit_security_level">
+        <reference anchor="MAF19" target="https://doi.org/10.1504/IJACT.2020.107167">
           <front>
             <title>Computing the Optimal Ate Pairing over Elliptic Curves with Embedding Degrees 54 and 48 at the 256-bit security level</title>
-            <seriesInfo name="International Journal of Applied Cryptography" value="to appear" />
-            <author initials="N.B." surname="Mbiang">
+            <seriesInfo name="International Journal of Applied Cryptography" value="vol. 4, no. 1, pp. 45-59" />
+            <author initials="N.B." surname="Mbang">
               <organization />
             </author>
             <author initials="D.F." surname="Aranha">
@@ -1370,7 +1483,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <author initials="E." surname="Fouotsa">
               <organization />
             </author>
-            <date year="2019" />
+            <date year="2020" />
           </front>
         </reference>
 
@@ -1591,6 +1704,86 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
+        <reference anchor="HHT20" target="https://eprint.iacr.org/2020/875">
+          <front>
+            <title>Efficient Final Exponentiation via Cyclotomic Structure for Pairings over Families of Elliptic Curves</title>
+            <author initials="D." surname="Hayashida">
+              <organization />
+            </author>
+            <author initials="K." surname="Hayasaka">
+              <organization />
+            </author>
+            <author initials="T." surname="Teruya">
+              <organization />
+            </author>
+            <date year="2020" />
+          </front>
+          <seriesInfo name="Cryptology ePrint Archive" value="Paper 2020/875" />
+        </reference>
+
+        <reference anchor="SBCK09" target="https://doi.org/10.1007/978-3-642-03298-1_6">
+          <front>
+            <title>On the Final Exponentiation for Calculating Pairings on Ordinary Elliptic Curves</title>
+            <author initials="M." surname="Scott">
+              <organization />
+            </author>
+            <author initials="N." surname="Benger">
+              <organization />
+            </author>
+            <author initials="M." surname="Charlemagne">
+              <organization />
+            </author>
+            <author initials="L.J." surname="Dominguez Perez">
+              <organization />
+            </author>
+            <author initials="E.J." surname="Kachisa">
+              <organization />
+            </author>
+            <date year="2009" />
+          </front>
+          <seriesInfo name="Pairing 2009, LNCS" value="vol. 5671, pp. 78-88" />
+        </reference>
+
+        <reference anchor="AKLGL11" target="https://eprint.iacr.org/2010/526">
+          <front>
+            <title>Faster Explicit Formulas for Computing Pairings over Ordinary Curves</title>
+            <author initials="D.F." surname="Aranha">
+              <organization />
+            </author>
+            <author initials="K." surname="Karabina">
+              <organization />
+            </author>
+            <author initials="P." surname="Longa">
+              <organization />
+            </author>
+            <author initials="C.H." surname="Gebotys">
+              <organization />
+            </author>
+            <author initials="J." surname="López">
+              <organization />
+            </author>
+            <date year="2011" />
+          </front>
+          <seriesInfo name="EUROCRYPT" value="2011" />
+        </reference>
+
+        <reference anchor="FCKR11" target="https://doi.org/10.1007/978-3-642-28496-0_25">
+          <front>
+            <title>Faster Hashing to G2</title>
+            <author initials="L." surname="Fuentes-Castañeda">
+              <organization />
+            </author>
+            <author initials="E." surname="Knapp">
+              <organization />
+            </author>
+            <author initials="F." surname="Rodríguez-Henríquez">
+              <organization />
+            </author>
+            <date year="2011" />
+          </front>
+          <seriesInfo name="SAC 2011, LNCS" value="vol. 7118, pp. 412-430" />
+        </reference>
+
       </references>
     </references>
 
@@ -1672,6 +1865,35 @@ The following algorithm shows the computation of the optimal Ate pairing on Barr
 
 ~~~~~~~~~~
 
+
+# Implementation Notes  {#implementation-notes}
+
+This appendix is informative. It documents implementation considerations discovered through verification of this memo's pseudocode against production-grade pairing libraries (mcl, noble-curves, blst), and does not standardize any algorithm.
+
+## Production Library Cofactors  {#production-library-cofactors}
+
+Implementations using the fast final-exponentiation optimizations described in the literature cited below compute pairings that differ from the literal output of the pseudocode in {{comp_pairing}} by a curve-specific exponent in G_T:
+
+~~~~~~~~~~
+    e_lib(P, Q) = e_pseudocode(P, Q)^k
+~~~~~~~~~~
+
+where k is:
+
+- BLS12_381: k = 3 {{HHT20}}
+- BN462: k = 2u(6u^2 + 3u + 1) mod r {{FCKR11}}
+
+Because gcd(k, r) = 1 for both curves, the following properties hold:
+
+- Bilinearity is preserved: e_lib([a]P, [b]Q) = e_lib(P, Q)^(ab).
+- Verification equations of the form e(A, B) = e(C, D) hold using e_lib if and only if they hold using e_pseudocode.
+- Direct byte-comparison between e_lib output and the test vectors in {{test-vectors-of-optimal-ate-pairing}} will not match. Implementations seeking byte-level reproducibility of those test vectors should evaluate the pseudocode in {{comp_pairing}} literally, without applying the cofactor optimization.
+
+## Final Exponentiation Decomposition  {#final-exponentiation-decomposition}
+
+The pseudocode in {{comp_pairing}} writes the final exponentiation as a single step, f := f^((p^k - 1) / r). In practice, implementations compute this via an easy/hard split: an easy part computed cheaply via the Frobenius endomorphism, and a hard part computed via an addition chain over the curve parameter u.
+
+Standard references for the hard-part addition chain include {{SBCK09}} (the original approach for BLS curves), {{AKLGL11}} (for BN curves), {{FCKR11}} (the BN cofactor variant used by mcl), and {{HHT20}} (a more recent, general treatment via cyclotomic structure, used for BLS12_381 above).
 
 # Test Vectors of Optimal Ate Pairing  {#test-vectors-of-optimal-ate-pairing}
 
@@ -2018,103 +2240,71 @@ e_47:
 :   0x0f2a3120c31e22b435ccbc3b4cb67776fd4f9b24fb0361ea147a0f44b9356f94417c030893c8bdc2d205e61f4c41e74be9561f03009056e5b8e9a12c5b8b90cb89375433dbc3f2df3f
 
 
-# ZCash serialization format for BLS12_381  {#zcash_rep_bls12_381}
+# Test Vectors for Point Serialization  {#point-serialization-test-vectors}
 
-This section describes the serialization format defined by {{ZCashRep}}. It is not officially standardized by the standards organization, however we show it in this appendix as a useful reference for implementers. This format applies to points on the BLS12_381 elliptic curves E and E', whose parameters are given in {{parameter-BLS12_381}}. Note that this serialization method is based on the representation shown in {{SEC1}} and it is a tiny tweak so as to apply to GF(p^m).
+This appendix gives test vectors for the point serialization procedure defined in {{point-serialization}}, computed for the base points BP and BP' given in {{secure_params}}, using compressed encoding (C_bit = 1).
 
-At a high level, the serialization format is defined as follows:
+## BLS12_381
 
-- Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.
-- Points on E are serialized into 48 bytes (compressed) or 96 bytes (uncompressed). Points on E' are serialized into 96 bytes (compressed) or 192 bytes (uncompressed).
-- The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.
-- The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.
-- The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.
-
-Below, we give detailed serialization and de-serialization procedures. The following notation is used in the rest of this section:
-
-- Elements of GF(p^2) are represented as polynomial with GF(p) coefficients like .
-- For a byte string str, str[0] is defined as the first byte of str.
-- The function sign_GF_p(y) returns one bit representing the sign of an element of GF(p). This function is defined as follows:
+G1 (BP):
 
 ~~~~~~~~~~
-
-    sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
-                   { 0 otherwise.
-
+97f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac5
+86c55e83ff97a1aeffb3af00adb22c6bb
 ~~~~~~~~~~
 
-- The function sign_GF_p^2(y') returns one bit representing the sign of an element in GF(p^2). This function is defined as follows:
+G2 (BP'):
 
 ~~~~~~~~~~
-
-    sign_GF_p^2(y') := { sign_GF_p(y'_0) if y'_1 equals 0, else
-                      { 1 if y'_1 > (p - 1) / 2, else
-                      { 0 otherwise.
-
+93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f504
+9334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc510
+51c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121b
+db8
 ~~~~~~~~~~
 
-## Point Serialization Procedure  {#zcash_rep_bls12_381_seri_procedure}
+Identity (G1, 48 bytes): a string of 48 zero bytes with the leading byte set to 0xc0 (C_bit=1, I_bit=1).
 
-The serialization procedure is defined as follows for a point P = (x, y). This procedure uses the I2OSP function defined in {{RFC8017}}.
+Identity (G2, 96 bytes): a string of 96 zero bytes with the leading byte set to 0xc0.
 
-1. Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
-   - C_bit is 1 if point compression should be used, otherwise it is 0.
-   - I_bit is 1 if P is the point at infinity, otherwise it is 0.
-   - S_bit is 0 if P is the point at infinity or if point compression is not used. Otherwise (i.e., when point compression is used and P is not the point at infinity), if P is a point on E, S_bit = sign_GF_p(y), else if P is a point on E', S_bit = sign_GF_p^2(y).
-2. Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
-3. Let x_string be the serialization of x, which is defined as follows:
-   - If P is the point at infinity on E, let x_string = I2OSP(0, 48).
-   - If P is a point on E other than the point at infinity, then x is an element of GF(p), i.e., an integer in the inclusive range [0, p - 1]. In this case, let x_string = I2OSP(x, 48).
-   - If P is the point at infinity on E', let x_string = I2OSP(0, 96).
-   - If P is a point on E' other than the point at infinity, then x can be represented as (x_0, x_1) where x_0 and x_1 are elements of GF(p), i.e., integers in the inclusive range [0, p - 1] (see discussion of vector representations above). In this case, let x_string = I2OSP(x_1, 48) concatenated with I2OSP(x_0, 48). Notice that in all of the above cases, the 3 most significant bits of x_string[0] are guaranteed to be 0.
-4. If point compression is used, let y_string be the empty string. Otherwise (i.e., when point compression is not used), let y_string be the serialization of y, which is defined in Step 3.
-5. Let s_string be the concatenation of x_string and y_string.
-6. Set s_string[0] = x_string[0] OR m_byte, where OR is computed bitwise. After this operation, the most significant bit of s_string[0] equals C_bit, the next bit equals I_bit, and the next equals S_bit. (This is true because the three most significant bits of x_string[0] are guaranteed to be zero, as discussed above.)
-7. Output s_string.
+## BLS48_581
 
-## Point deserialization procedure  {#zcash_rep_bls12_381_deseri_procedure}
+G1 (BP):
 
-The deserialization procedure is defined as follows for a string s_string. This procedure uses the OS2IP function defined in {{RFC8017}}.
+~~~~~~~~~~
+a2af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f
+7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e
+6d8c3bce8732315af640
+~~~~~~~~~~
 
-1. Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0. If m_byte equals any of 0x20, 0x60, or 0xE0, output INVALID and stop decoding. Otherwise:
-   - Let C_bit equal the most significant bit of m_byte,
-   - Let I_bit equal the second most significant bit of m_byte, and
-   - Let S_bit equal the third most significant bit of m_byte.
-2. If C_bit is 1:
-   - If s_string has length 48 bytes, the output point is on the curve E.
-   - If s_string has length 96 bytes, the output point is on the curve E'.
-   - If s_string has any other length, output INVALID and stop decoding.
+G2 (BP'):
 
-   If C_bit is 0:
-   - If s_string has length 96 bytes, the output point is on E.
-   - If s_string has length 192 bytes, the output point is on E'.
-   - If s_string has any other length, output INVALID and stop decoding.
-3. Let s_string[0] = s_string[0] AND 0x1F, where AND is computed bitwise. In other words, set the three most significant bits of s_string[0] to 0.
-4. If I_bit is 1:
-   - If s_string is not the all zeros string, output INVALID and stop decoding.
-   - Otherwise (i.e., if s_string is the all zeros string), output the point at infinity on the curve that was determined in step 2 and stop decoding.
+~~~~~~~~~~
+8827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a
+7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c
+3f84e19da00fbc6ae340b9b7951c6061ee3f0197a498908aee660dea41b39d1
+3852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe432
+4c22d63334b5b0e205c3354e41607e60750e0570c96c7797eb0738603f1311e
+4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b4
+0b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a038b
+91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699
+981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb
+739c3a1c53f8cce50be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5
+821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c20
+0ca52310b8cb4e80bc3f09a7033cbb7feafe01fccc70198f1334e1b2ea1853a
+d83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0
+d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a07c4973
+ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943
+a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f166
+9b36676b47c5705d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7
+de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510
+317b79766322154dec34fd0b4ace8bfab
+~~~~~~~~~~
 
-   Otherwise, I_bit must be 0. Continue decoding.
-5. If C_bit is 0:
-   - Let x_string be the first half of s_string.
-   - Let y_string be the last half of s_string.
-   - Let x = OS2IP(x_string).
-   - Let y = OS2IP(y_string).
-   - If the point P = (x, y) is not a valid point on the curve that was determined in step 2, output INVALID and stop decoding.
-   - Otherwise, output the point P = (x, y) and stop decoding.
+Identity (G1, 73 bytes): a string of 73 zero bytes with the leading byte set to 0xc0.
 
-   Otherwise, C_bit must be 1. Continue decoding.
-6. Let x = OS2IP(s_string).
-7. If the curve that was determined in step 2 is E:
-   - Let y2 = x^3 + 4 in GF(p).
-   - If y2 is not square in GF(p), output INVALID and stop decoding.
-   - Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit = sign_GF_p(y).
+Identity (G2, 584 bytes): a string of 584 zero bytes with the leading byte set to 0xc0.
 
-   Otherwise, (i.e., when the curve that was determined in step 2 is E'):
-   - Let y2 = x^3 + 4 * (u + 1) in GF(p^2).
-   - If y2 is not square in GF(p^2), output INVALID and stop decoding.
-   - Otherwise, let y = sqrt(y2) in GF(p^2) and let Y_bit = sign_GF_p^2(y).
-8. If S_bit equals Y_bit, output P = (x, y) and stop decoding. Otherwise, output P = (x, -y) and stop decoding.
+> Note: the BLS12_381 values above are independently confirmed against multiple third-party implementations (e.g. zkcrypto/bls12_381, arkworks). The BLS48_581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
 
 
 # Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level  {#adoption_status_100bit_security}
