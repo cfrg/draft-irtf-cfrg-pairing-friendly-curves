@@ -567,7 +567,12 @@ Table of Contents
 4.1.  Adoption Status of Pairing-friendly Curves
 
    We show the pairing-friendly curves that have been selected by
-   existing standards, cryptographic libraries, and applications.
+   existing standards, cryptographic libraries, and applications.  A
+   comprehensive curve-by-curve comparison, including proposed
+   alternatives that were not selected, is maintained at
+   https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/
+   adoption-status.html (https://cfrg.github.io/draft-irtf-cfrg-pairing-
+   friendly-curves/adoption-status.html).
 
    The adoption status of pairing-friendly curves is surveyed in
    standards, libraries and applications.  In this survey, "Arnd" is an
