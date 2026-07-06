@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 6 January 2027                                         R. Wahby
+Expires: 7 January 2027                                         R. Wahby
                                                      Stanford University
-                                                             5 July 2026
+                                                             6 July 2026
 
 
                         Pairing-Friendly Curves
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2027.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -73,10 +73,7 @@ Copyright Notice
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
-   and restrictions with respect to this document.  Code Components
-   extracted from this document must include Revised BSD License text as
-   described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Revised BSD License.
+   and restrictions with respect to this document.
 
 Table of Contents
 
@@ -103,20 +100,29 @@ Table of Contents
        4.2.1.  BLS Curves for the 128-bit security level (BLS12_381)
        4.2.2.  BN Curves for the 128-bit security level (BN462)
      4.3.  For 256-bit Security
-   5.  Security Considerations
-   6.  IANA Considerations
-   7.  Acknowledgements
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+   5.  Point Serialization
+     5.1.  Parameters by Curve
+     5.2.  Point Serialization Procedure
+     5.3.  Point Deserialization Procedure
+     5.4.  Scalar Serialization
+     5.5.  Applicability to BN462
+   6.  Security Considerations
+   7.  IANA Considerations
+   8.  Acknowledgements
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Appendix A.  Computing the Optimal Ate Pairing
      A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
      A.2.  Optimal Ate Pairings over Barreto-Lynn-Scott Curves
-   Appendix B.  Test Vectors of Optimal Ate Pairing
-   Appendix C.  ZCash serialization format for BLS12_381
-     C.1.  Point Serialization Procedure
-     C.2.  Point deserialization procedure
-   Appendix D.  Adoption Status of Pairing-Friendly Curves with the
+   Appendix B.  Implementation Notes
+     B.1.  Production Library Cofactors
+     B.2.  Final Exponentiation Decomposition
+   Appendix C.  Test Vectors of Optimal Ate Pairing
+   Appendix D.  Test Vectors for Point Serialization
+     D.1.  BLS12_381
+     D.2.  BLS48_581
+   Appendix E.  Adoption Status of Pairing-Friendly Curves with the
            100-bit Security Level
    Authors' Addresses
 
@@ -565,31 +571,30 @@ Table of Contents
    128-bit" range due to space limitations and viewpoints of secure
    usage of parameters.  On the other hand, indicating which standards,
    libraries, and applications use these lower security level parameters
-   would be useful information for implementers, therefore Appendix D
-   shows these parameters.  In addition, the full version is available
-   at https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/
-   (https://lepidum.co.jp/blog/2020-03-27/ietf-draft-pfc/).
+   would be useful information for implementers, therefore Appendix E
+   shows these parameters.
 
    The security level for each curve is evaluated in accordance with
    [BD18], [GMT19], [MAF19] and [FK18].  Note that the Freeman curves
-   and MNT curves are not included in this survey because [BD18] does
-   not show the security levels of these curves.
+   [Freeman06] and MNT curves [MNT01] are not included in this survey
+   because [BD18] does not show the security levels of these curves.
 
 4.1.1.  International Standards
 
    ISO/IEC 15946 series specifies public-key cryptographic techniques
-   based on elliptic curves.  ISO/IEC 15946-5 [ISOIEC15946-5] shows
-   numerical examples of MNT curves[MNT01] with 160-bit p and 256-bit p,
-   Freeman curves [Freeman06] with 224-bit p and 256-bit p, and BN
-   curves with 160-bit p, 192-bit p, 224-bit p, 256-bit p, 384-bit p,
-   and 512-bit p.  These parameters do not take into account the effects
-   of the exTNFS.  On the other hand, the parameters may be revised in
-   future versions since ISO/IEC 15946-5 is currently under development.
-   As described below, BN curves with 256-bit p and 512-bit p specified
-   in ISO/IEC 15946-5 used by other standards and libraries, these
-   curves are especially denoted as BN256I and BN512I.  The suffix 'I'
-   of BN256I and BN512I are given from the initials of the standard name
-   ISO.
+   based on elliptic curves.  The third edition of ISO/IEC 15946-5
+   [ISOIEC15946-5] (published 2022) reorganized the numerical examples
+   and extended coverage to include BLS12, BLS24, and BLS48 curves.  The
+   BN462 parameter in this document matches the numerical example in
+   Annex D.2.3 of [ISOIEC15946-5] exactly (u = 2^114 + 2^101 - 2^14 -
+   1), and the BLS48_581 parameter matches Annex D.3.5 exactly (u =
+   -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition introduces a post-
+   exTNFS security guideline that the characteristic p of BN and BLS12
+   curves should be at least 461 bits for the 128-bit security level.
+   As described below, BN curves with 256-bit p and 512-bit p from
+   earlier editions of ISO/IEC 15946-5 are referenced by other standards
+   and libraries; these curves are denoted as BN256I and BN512I, where
+   the suffix 'I' is given from the initials of the standard name ISO.
 
    TCG adopts the BN256I and a BN curve with 638-bit p specified by
    their own[TPM].  FIDO Alliance [FIDO] and W3C [W3C] adopt BN256I,
@@ -603,6 +608,23 @@ Table of Contents
    There are a lot of cryptographic libraries that support pairing
    calculations.
 
+   blst [blst] is a high-performance pairing library maintained by
+   Supranational.  It supports BLS12_381 and is used in production by
+   Ethereum consensus clients, Filecoin, and other applications.
+
+   Several additional actively maintained libraries support BLS12_381.
+   gnark-crypto [gnark-crypto], developed by Consensys, supports
+   BLS12_381, BN254, BLS12_377, BLS24_315, and BW6_761. noble-curves
+   [noble-curves] is a JavaScript/TypeScript library by Paul Miller
+   supporting BLS12_381.  The arkworks ecosystem [arkworks] provides
+   Rust crates for pairing-friendly curves used in zero-knowledge proof
+   systems, including BLS12_381 and BN254. constantine [constantine] is
+   a cryptographic library written in Nim that supports BLS12_381,
+   BN254, BLS12_377, and BW6_761.  CIRCL [CIRCL] is the Cloudflare
+   Interoperable, Reusable Cryptographic Library and includes support
+   for BLS12_381. zkcrypto [zkcrypto] is a collection of Rust crates for
+   zero-knowledge cryptography supporting BLS12_381.
+
    PBC is a library for pairing-based cryptography published by Stanford
    University that supports BN curves, MNT curves, Freeman curves, and
    supersingular curves [PBC].  Users can generate pairing parameters by
@@ -612,7 +634,7 @@ Table of Contents
    four BN curves and BLS12_381 [GMT19].  These BN curves include BN254
    proposed by Nogami et al.  [NASKM08] (named BN254N), BN_SNARK1
    suitable for SNARK applications[libsnark], BN382M, and BN462.  The
-   suffix 'N' of BN256N and the suffix 'M' of BN382M are respectively
+   suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively
    given from the initials of the first author's name of the proposed
    paper and the library's name mcl.  Kyushu University published a
    library that supports the BLS48_581 [BLS48].  The University of
@@ -629,20 +651,19 @@ Table of Contents
    are different from BN254N, BN254B, BN256I, BN256D, and BN382M.  The
    suffix 'R' of BN382R is given from the initials of the library's name
    RELIC.  In addition, RELIC supports six BLS curves (BLS12_381,
-   BLS12_446, BLS12_445, BLS12_638, BLS24_477, and BLS48_575 [MAF19]),
+   BLS12_446, BLS12_455, BLS12_638, BLS24_477, and BLS48_575 [MAF19]),
    Cocks-Pinch curves of embedding degree 8 with 544-bit p[GMT19],
    pairing-friendly curves constructed by Scott et al.  [SG19] based on
    Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p
    (named K54_569)[MAF19], a KSS curve [KSS08] of embedding degree 18
    with 508-bit p (named KSS18_508) [AFKMR12], Optimal TNFS-secure curve
-   [FM19] of embedding degree 8 with 511-bit p(OT8_511), and a
+   [FM19] of embedding degree 8 with 511-bit p (OT8_511), and a
    supersingular curve [S86] with 1536-bit p (SS_1536).
 
-   Apache Milagro Crypto Library (AMCL)[AMCL] supports four BLS curves
-   (BLS12_381, BLS12_461, BLS24_479 and BLS48_556) and four BN curves
-   (BN254N, BN254CX proposed by CertiVox, BN256I, and BN512I).  In
-   addition to AMCL's supported curves, MIRACL [MIRACL] supports BN462
-   and BLS48_581.
+   MIRACL Core [MIRACL] (the successor to the Apache Milagro Crypto
+   Library (AMCL) [AMCL]) supports five BLS curves (BLS12_381,
+   BLS12_461, BLS24_479, BLS48_556, and BLS48_581) and five BN curves
+   (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).
 
    Adjoint published a library that supports the BLS12_381 and six BN
    curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462)
@@ -659,13 +680,16 @@ Table of Contents
 
    Zcash uses a BN curve (named BN128) in their library libsnark
    [libsnark].  In response to the exTNFS attacks, they proposed new
-   parameters using BLS12_381 [BLS12_381] [GMT19]and published its
-   experimental implementation [zkcrypto].
+   parameters using BLS12_381 [BLS12_381] [GMT19] and published its
+   implementation [zkcrypto].
 
-   Ethereum 2.0 adopted BLS12_381 and uses the implementation by Meyer
-   [pureGo-bls].  Chia Network published their implementation [Chia] by
-   integrating the RELIC toolkit [RELIC].  DFINITY uses mcl, and
-   Algorand published an implementation which supports BLS12_381.
+   Ethereum adopted BLS12_381 for its consensus layer.  The BLS12_381
+   precompile is also specified as an Ethereum precompile contract in
+   EIP-2537 [EIP2537], enabling on-chain pairing operations.  Filecoin
+   [Filecoin] uses BLS12_381 via the blst library [blst].  Chia Network
+   published their implementation [Chia] by integrating the RELIC
+   toolkit [RELIC].  DFINITY uses mcl, and Algorand published an
+   implementation which supports BLS12_381.
 
 4.2.  For 128-bit Security
 
@@ -758,8 +782,8 @@ Table of Contents
 
    As mentioned above, BLS12_381 is adopted in a lot of applications.
    Since it is expected that BLS12_381 will continue to be widely used
-   more and more in the future, Appendix C shows the serialization
-   format of points on an elliptic curve as useful information.  This
+   more and more in the future, Section 5 defines a normative point
+   serialization format for it (with test vectors in Appendix D).  This
    serialization format is also adopted in [I-D.boneh-bls-signature]
    [zkcrypto].
 
@@ -943,7 +967,292 @@ Table of Contents
 
    b':  -1 / w
 
-5.  Security Considerations
+   Section 5 defines a normative point serialization format for
+   BLS48_581 (with test vectors in Appendix D), extending the format
+   defined by [ZCashRep] for BLS12_381 as specified in
+   [I-D.ietf-cose-bls-key-representations].
+
+5.  Point Serialization
+
+   This section defines a normative point encoding and decoding
+   procedure for BLS12_381 and BLS48_581.  The format is based on the
+   one originally defined by [ZCashRep] for BLS12_381 and is, in turn,
+   based on the representation shown in [SEC1] with a small tweak to
+   apply to GF(p^m).  It is already relied upon, directly or indirectly,
+   by [I-D.irtf-cfrg-bbs-signatures] and
+   [I-D.ietf-cose-bls-key-representations]; the latter extends it to
+   BLS48_581, and the extension is adopted here.  Applicability to BN462
+   is discussed in Section 5.5.
+
+   At a high level, the serialization format is defined as follows:
+
+   *  Serialized points include three metadata bits that indicate
+      whether a point is compressed or not, whether a point is the point
+      at infinity or not, and (for compressed points) the sign of the
+      point's y-coordinate.
+
+   *  For a curve with characteristic p represented in n = ceil(len(p) /
+      8) bytes, points on E are serialized into n bytes (compressed) or
+      2n bytes (uncompressed).  Points on E', represented over GF(p^m)
+      for the m given in Section 5.1, are serialized into m_n bytes
+      (compressed) or 2_m*n bytes (uncompressed).
+
+   *  The serialization of a point at infinity comprises a string of
+      zero bytes, except that the metadata bits may be nonzero.
+
+   *  The serialization of a compressed point other than the point at
+      infinity comprises a serialized x-coordinate.
+
+   *  The serialization of an uncompressed point other than the point at
+      infinity comprises a serialized x-coordinate followed by a
+      serialized y-coordinate.
+
+5.1.  Parameters by Curve
+
+   +===========+===========+==========+===+============+==============+
+   | Curve     | n (bytes) | E' field | m | Compressed | Uncompressed |
+   |           |           |          |   | (E / E')   | (E / E')     |
+   +===========+===========+==========+===+============+==============+
+   | BLS12_381 | 48        | GF(p^2)  | 2 | 48 / 96    | 96 / 192     |
+   |           |           |          |   | bytes      | bytes        |
+   +-----------+-----------+----------+---+------------+--------------+
+   | BLS48_581 | 73        | GF(p^8)  | 8 | 73 / 584   | 146 / 1168   |
+   |           |           |          |   | bytes      | bytes        |
+   +-----------+-----------+----------+---+------------+--------------+
+
+                                 Table 1
+
+   Below, we give detailed serialization and de-serialization
+   procedures, applicable to both curves using the parameters above.
+   The following notation is used in the rest of this section:
+
+   *  Elements of GF(p^m) are represented as a vector of m coefficients
+      in GF(p), (y_0, ..., y_{m-1}), using the basis and coefficient
+      ordering already defined for each curve in Section 4.
+
+   *  For a byte string str, str[0] is defined as the first byte of str.
+
+   *  The function sign_GF_p(y) returns one bit representing the sign of
+      an element of GF(p).  This function is defined as follows:
+
+       sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
+                      { 0 otherwise.
+
+   *  The function sign_GF_p^m(y), for an element y = (y_0, ...,
+      y_{m-1}) of GF(p^m), returns one bit computed as follows: let i be
+      the largest index in {0, ..., m-1} such that y_i is nonzero, or i
+      = 0 if all coefficients are zero; return sign_GF_p(y_i).  For
+      BLS12_381 (m=2), this specializes to: sign_GF_p^2(y') =
+      sign_GF_p(y'_0) if y'_1 equals 0, else sign_GF_p(y'_1).  For
+      BLS48_581 (m=8), this is the same function specified as
+      sign_GF_p^8 in [I-D.ietf-cose-bls-key-representations], evaluated
+      over the coefficient ordering (y'_0, ..., y'_7) given in
+      Section 4.
+
+5.2.  Point Serialization Procedure
+
+   The serialization procedure is defined as follows for a point P = (x,
+   y) on a curve with parameters n and m as given in Section 5.1.  This
+   procedure uses the I2OSP function defined in [RFC8017].
+
+   1.  Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
+
+       *  C_bit is 1 if point compression should be used, otherwise it
+          is 0.
+
+       *  I_bit is 1 if P is the point at infinity, otherwise it is 0.
+
+       *  S_bit is 0 if P is the point at infinity or if point
+          compression is not used.  Otherwise (i.e., when point
+          compression is used and P is not the point at infinity), if P
+          is a point on E, S_bit = sign_GF_p(y), else if P is a point on
+          E', S_bit = sign_GF_p^m(y).
+
+   2.  Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
+
+   3.  Let x_string be the serialization of x, which is defined as
+       follows:
+
+       *  If P is the point at infinity on E, let x_string = I2OSP(0,
+          n).
+
+       *  If P is a point on E other than the point at infinity, then x
+          is an element of GF(p), i.e., an integer in the inclusive
+          range [0, p - 1].  In this case, let x_string = I2OSP(x, n).
+
+       *  If P is the point at infinity on E', let x_string = I2OSP(0,
+          m*n).
+
+       *  If P is a point on E' other than the point at infinity, then x
+          can be represented as (x_0, ..., x_{m-1}) where each x_i is an
+          element of GF(p).  In this case, let x_string = I2OSP(x_{m-1},
+          n) concatenated with I2OSP(x_{m-2}, n), ..., concatenated with
+          I2OSP(x_0, n) (i.e., coefficients in decreasing index order).
+          Notice that in all of the above cases, the 3 most significant
+          bits of x_string[0] are guaranteed to be 0.
+
+   4.  If point compression is used, let y_string be the empty string.
+       Otherwise (i.e., when point compression is not used), let
+       y_string be the serialization of y, which is defined in Step 3.
+
+   5.  Let s_string be the concatenation of x_string and y_string.
+
+   6.  Set s_string[0] = x_string[0] OR m_byte, where OR is computed
+       bitwise.  After this operation, the most significant bit of
+       s_string[0] equals C_bit, the next bit equals I_bit, and the next
+       equals S_bit.  (This is true because the three most significant
+       bits of x_string[0] are guaranteed to be zero, as discussed
+       above.)
+
+   7.  Output s_string.
+
+5.3.  Point Deserialization Procedure
+
+   The deserialization procedure is defined as follows for a string
+   s_string, for a curve with parameters n and m as given in
+   Section 5.1.  This procedure uses the OS2IP function defined in
+   [RFC8017].
+
+   1.  Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise.
+       In other words, the three most significant bits of m_byte equal
+       the three most significant bits of s_string[0], and the remaining
+       bits are 0.  If m_byte equals any of 0x20, 0x60, or 0xE0, output
+       INVALID and stop decoding.  Otherwise:
+
+       *  Let C_bit equal the most significant bit of m_byte,
+
+       *  Let I_bit equal the second most significant bit of m_byte, and
+
+       *  Let S_bit equal the third most significant bit of m_byte.
+
+   2.  If C_bit is 1:
+
+       *  If s_string has length n bytes, the output point is on the
+          curve E.
+
+       *  If s_string has length m*n bytes, the output point is on the
+          curve E'.
+
+       *  If s_string has any other length, output INVALID and stop
+          decoding.
+
+       If C_bit is 0: - If s_string has length 2n bytes, the output
+       point is on E. - If s_string has length 2_m_n bytes, the output
+       point is on E'. - If s_string has any other length, output
+       INVALID and stop decoding.
+
+   3.  Let s_string[0] = s_string[0] AND 0x1F, where AND is computed
+       bitwise.  In other words, set the three most significant bits of
+       s_string[0] to 0.
+
+   4.  If I_bit is 1:
+
+       *  If s_string is not the all zeros string, output INVALID and
+          stop decoding.
+
+       *  Otherwise (i.e., if s_string is the all zeros string), output
+          the point at infinity on the curve that was determined in step
+          2 and stop decoding.
+
+       Otherwise, I_bit must be 0.  Continue decoding.
+
+   5.  If C_bit is 0:
+
+       *  Let x_string be the first half of s_string.
+
+       *  Let y_string be the last half of s_string.
+
+       *  Let x = OS2IP(x_string).
+
+       *  Let y = OS2IP(y_string).
+
+       *  If the point P = (x, y) is not a valid point on the curve that
+          was determined in step 2, output INVALID and stop decoding.
+
+       *  Otherwise, output the point P = (x, y) and stop decoding.
+
+       Otherwise, C_bit must be 1.  Continue decoding.
+
+   6.  Let x = OS2IP(s_string).
+
+   7.  If the curve that was determined in step 2 is E:
+
+       *  Let y2 = the right-hand side of the curve equation for E
+          (given in Section 4 for the curve in question), evaluated at
+          x, in GF(p).
+
+       *  If y2 is not square in GF(p), output INVALID and stop
+          decoding.
+
+       *  Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit =
+          sign_GF_p(y).
+
+       Otherwise, (i.e., when the curve that was determined in step 2 is
+       E'): - Let y2 = the right-hand side of the curve equation for E'
+       (given in Section 4 for the curve in question), evaluated at x,
+       in GF(p^m). - If y2 is not square in GF(p^m), output INVALID and
+       stop decoding. - Otherwise, let y = sqrt(y2) in GF(p^m) and let
+       Y_bit = sign_GF_p^m(y).
+
+   8.  If S_bit equals Y_bit, output P = (x, y) and stop decoding.
+       Otherwise, output P = (x, -y) and stop decoding.
+
+5.4.  Scalar Serialization
+
+   This section defines a serialization format for elements of the
+   scalar field GF(r), where r is the order of G_1 and G_2 as given for
+   each curve in Section 4.  Unlike point serialization, this format
+   applies to all three curves in this document (BLS12_381, BN462, and
+   BLS48_581), since no metadata bits are required.
+
+   For a curve with scalar field order r represented in n_s =
+   ceil(len(r) / 8) bytes:
+
+                        +===========+=============+
+                        | Curve     | n_s (bytes) |
+                        +===========+=============+
+                        | BLS12_381 | 32          |
+                        +-----------+-------------+
+                        | BN462     | 58          |
+                        +-----------+-------------+
+                        | BLS48_581 | 65          |
+                        +-----------+-------------+
+
+                                  Table 2
+
+   Serialization: a scalar k in the range [0, r - 1] is serialized as
+   I2OSP(k, n_s).
+
+   Deserialization: given a byte string s_string of length n_s, let k =
+   OS2IP(s_string).  If k >= r, output INVALID and stop decoding.
+   Otherwise, output k.
+
+   This enforces a unique (canonical) encoding for each equivalence
+   class, per the recommendation raised in issue #74 of the GitHub
+   repository for this document.  This document does not define a
+   distinct encoding for the zero scalar; whether zero is accepted is
+   intended to follow the same policy as the identity point for the
+   curve in question (tracked in issue #75 of the GitHub repository for
+   this document) and is otherwise left to the calling protocol.
+
+5.5.  Applicability to BN462
+
+   The point serialization format defined in Section 5.2 and Section 5.3
+   is not applicable to BN462.  (Scalar serialization, defined in
+   Section 5.4, is unaffected and applies to BN462 as well.)  BN462 has
+   a 462-bit characteristic p, requiring n = 58 bytes for its canonical
+   GF(p) representation (58 * 8 = 464 bits).  This leaves only 2 spare
+   bits in the leading byte of a serialized x-coordinate -- one bit
+   short of the 3 bits (C_bit, I_bit, S_bit) required by the metadata
+   scheme defined above.  Consequently, this document does not define a
+   point serialization format for BN462.  Doing so would require a
+   different metadata encoding, for example a dedicated leading byte
+   following the general pattern of [SEC1] rather than bit-packing into
+   the coordinate representation; designing such an encoding is out of
+   scope for this document, whose primary purpose is parameter
+   specification rather than encoding algorithm design.
+
+6.  Security Considerations
 
    The recommended pairing-friendly curves are selected by considering
    the exTNFS proposed by Kim et al. in 2016 [KB16] and they are
@@ -961,7 +1270,7 @@ Table of Contents
    381-bit characteristic is used [BD18] [GMT19].
 
    BN254 is used in most of the existing implementations as shown in
-   Section 4.1 and Appendix D, however, BN curves that were estimated as
+   Section 4.1 and Appendix E, however, BN curves that were estimated as
    the 128-bit security level before exTNFS including BN254 ensure no
    more than the 100-bit security level by the effect of exTNFS.
 
@@ -1009,11 +1318,11 @@ Table of Contents
    Cheon's attack by carefully setting the maximum number of queries
    which corresponds to the parameter n.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document has no actions for IANA.
 
-7.  Acknowledgements
+8.  Acknowledgements
 
    The authors would like to appreciate a lot of authors including
    Akihiro Kato for their significant contribution to early versions of
@@ -1022,9 +1331,9 @@ Table of Contents
    Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Satoru
    Kanno for their valuable comments.
 
-8.  References
+9.  References
 
-8.1.  Normative References
+9.1.  Normative References
 
    [BD18]     Barbulescu, R. and S. Duquesne, "Updating Key Size
               Estimations for Pairings", DOI 10.1007/s00145-018-9280-5,
@@ -1080,7 +1389,7 @@ Table of Contents
               Information Theory Vol. 56, pp. 455-461, January 2010,
               <https://doi.org/10.1109/tit.2009.2034881>.
 
-8.2.  Informative References
+9.2.  Informative References
 
    [AdjointLib]
               Adjoint Inc., "Optimised bilinear pairings over elliptic
@@ -1093,6 +1402,11 @@ Table of Contents
               177-195, 2012,
               <https://doi.org//10.1007/978-3-642-36334-4_11>.
 
+   [AKLGL11]  Aranha, D.F., Karabina, K., Longa, P., Gebotys, C.H., and
+              J. López, "Faster Explicit Formulas for Computing Pairings
+              over Ordinary Curves", EUROCRYPT 2011, 2011,
+              <https://eprint.iacr.org/2010/526>.
+
    [Algorand] Gorbunov, S., "Efficient and Secure Digital Signatures for
               Proof-of-Stake Blockchains", <https://medium.com/algorand/
               digital-signatures-for-blockchains-5820e15fbe95>.
@@ -1104,6 +1418,10 @@ Table of Contents
    [AMCLv2]   The Apache Software Foundation, "Old version of the Apache
               Milagro Cryptographic Library", 2016,
               <https://github.com/miracl/amcl/tree/master/version22>.
+
+   [arkworks] arkworks contributors, "arkworks: A Rust ecosystem for
+              zkSNARK programming", 2020,
+              <https://github.com/arkworks-rs>.
 
    [BCGMMW20] Bowe, S., Chiesa, A., Green, M., Miers, I., Mishra, P.,
               and H. Wu, "ZEXE: Enabling Decentralized Private
@@ -1143,6 +1461,9 @@ Table of Contents
               The Celo Foundation, "bls12377js", 2019,
               <https://github.com/celo-org/bls12377js>.
 
+   [blst]     Supranational LLC, "blst: BLS12-381 signature library",
+              2020, <https://github.com/supranational/blst>.
+
    [CCS07]    Chen, L., Cheng, Z., and N. Smart, "Identity-based key
               agreement protocols from pairings",
               DOI 10.1007/s10207-006-0011-9, International Journal of
@@ -1176,6 +1497,11 @@ Table of Contents
               <https://blog.cloudflare.com/geo-key-manager-how-it-
               works/>.
 
+   [constantine]
+              Ratsimbazafy, M., "Constantine: Constant-time
+              cryptographic library", 2020,
+              <https://github.com/mratsim/constantine>.
+
    [DFINITY]  Williams, D., "DFINITY Technology Overview Series
               Consensus System Rev. 1", n.d., <https://dfinity.org/pdf-
               viewer/library/dfinity-consensus.pdf>.
@@ -1189,6 +1515,10 @@ Table of Contents
    [ECRYPT]   ECRYPT, "Final Report on Main Computational Assumptions in
               Cryptography".
 
+   [EIP2537]  Vlasov, A., "EIP-2537: Precompile for BLS12-381 curve
+              operations", 2020,
+              <https://eips.ethereum.org/EIPS/eip-2537>.
+
    [EPID]     Intel Corporation, "Intel (R) SGX: Intel (R) EPID
               Provisioning and Attestation Services",
               <https://software.intel.com/en-us/download/intel-sgx-
@@ -1199,10 +1529,18 @@ Table of Contents
               ethereum-2-0-development-update-17-prysmatic-labs-
               ed5bcf82ec00>.
 
+   [FCKR11]   Fuentes-Castañeda, L., Knapp, E., and F. Rodríguez-
+              Henríquez, "Faster Hashing to G2", SAC 2011, LNCS vol.
+              7118, pp. 412-430, 2011,
+              <https://doi.org/10.1007/978-3-642-28496-0_25>.
+
    [FIDO]     Lindemann, R., "FIDO ECDAA Algorithm - FIDO Alliance
               Review Draft 02", <https://fidoalliance.org/specs/fido-
               v2.0-rd-20180702/fido-ecdaa-algorithm-v2.0-rd-
               20180702.html>.
+
+   [Filecoin] Protocol Labs, "Filecoin: A Decentralized Storage
+              Network", 2017, <https://filecoin.io>.
 
    [FK18]     Fotiadis, G. and E. Konstantinou, "TNFS Resistant Families
               of Pairing-Friendly Elliptic Curves", Cryptology ePrint
@@ -1227,6 +1565,17 @@ Table of Contents
               Computer Science pp. 187-205, 2010,
               <https://doi.org/10.1007/978-3-642-17455-1_12>.
 
+   [gnark-crypto]
+              Consensys Software Inc., "gnark-crypto: Elliptic curve
+              cryptography and pairing library", 2020,
+              <https://github.com/consensys/gnark-crypto>.
+
+   [HHT20]    Hayashida, D., Hayasaka, K., and T. Teruya, "Efficient
+              Final Exponentiation via Cyclotomic Structure for Pairings
+              over Families of Elliptic Curves", Cryptology ePrint
+              Archive Paper 2020/875, 2020,
+              <https://eprint.iacr.org/2020/875>.
+
    [HR83]     Hellman, M. and J. Reyneri, "Fast Computation of Discrete
               Logarithms in GF (q)", DOI 10.1007/978-1-4757-0602-4_1,
               Advances in Cryptology pp. 3-13, 1983,
@@ -1239,12 +1588,27 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-boneh-bls-
               signature-00>.
 
+   [I-D.ietf-cose-bls-key-representations]
+              Looker, T. and M. B. Jones, "Barreto-Lynn-Scott Elliptic
+              Curve Key Representations for JOSE and COSE", Work in
+              Progress, Internet-Draft, draft-ietf-cose-bls-key-
+              representations-08, 4 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
+              bls-key-representations-08>.
+
    [I-D.ietf-lwig-curve-representations]
               Struik, R., "Alternative Elliptic Curve Representations",
               Work in Progress, Internet-Draft, draft-ietf-lwig-curve-
               representations-08, 24 July 2019,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lwig-
               curve-representations-08>.
+
+   [I-D.irtf-cfrg-bbs-signatures]
+              Looker, T., Kalos, V., Whitehead, A., and M. Lodder, "The
+              BBS Signature Scheme", Work in Progress, Internet-Draft,
+              draft-irtf-cfrg-bbs-signatures-10, 8 January 2026,
+              <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
+              bbs-signatures-10>.
 
    [I-D.irtf-cfrg-hash-to-curve]
               Faz-Hernandez, A., Scott, S., Sullivan, N., Wahby, R. S.,
@@ -1271,10 +1635,10 @@ Table of Contents
               Part 3: Mechanisms using asymmetric techniques, 2015.
 
    [ISOIEC15946-5]
-              ISO/IEC, "ISO/IEC 15946-5:2017", ISO/IEC Information
+              ISO/IEC, "ISO/IEC 15946-5:2022", ISO/IEC Information
               technology -- Security techniques -- Cryptographic
               techniques based on elliptic curves -- Part 5: Elliptic
-              curve generation, 2017.
+              curve generation, 2022.
 
    [Joux00]   Joux, A., "A One Round Protocol for Tripartite Diffie-
               Hellman", DOI 10.1007/10722028_23, Lecture Notes in
@@ -1295,12 +1659,12 @@ Table of Contents
               <https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-
               zero-knowledge-authentication-protocol>.
 
-   [MAF19]    Mbiang, N.B., Aranha, D.F., and E. Fouotsa, "Computing the
+   [MAF19]    Mbang, N.B., Aranha, D.F., and E. Fouotsa, "Computing the
               Optimal Ate Pairing over Elliptic Curves with Embedding
               Degrees 54 and 48 at the 256-bit security level",
-              International Journal of Applied Cryptography to appear,
-              2019, <https://www.researchgate.net/
-              publication/337011283_Computing_the_Optimal_Ate_Pairing_over_Elliptic_Curves_with_Embedding_Degrees_54_and_48_at_the_256-bit_security_level>.
+              International Journal of Applied Cryptography vol. 4, no.
+              1, pp. 45-59, 2020,
+              <https://doi.org/10.1504/IJACT.2020.107167>.
 
    [mcl]      Mitsunari, S., "mcl - A portable and fast pairing-based
               cryptography library", 2016,
@@ -1331,6 +1695,11 @@ Table of Contents
               178-191, 2008,
               <https://doi.org/10.1007/978-3-540-85538-5_13>.
 
+   [noble-curves]
+              Miller, P., "noble-curves: Audited & minimal JS
+              implementation of elliptic curve cryptography", 2022,
+              <https://github.com/paulmillr/noble-curves>.
+
    [PBC]      Lynn, B., "PBC Library - The Pairing-Based Cryptography
               Library", 2006, <https://crypto.stanford.edu/pbc/>.
 
@@ -1339,10 +1708,6 @@ Table of Contents
               $({\rm mod}\ p)$", DOI 10.1090/s0025-5718-1978-0491431-9,
               Mathematics of Computation Vol. 32, pp. 918-918, September
               1978, <https://doi.org/10.1090/s0025-5718-1978-0491431-9>.
-
-   [pureGo-bls]
-              Meyer, J., "Pure GO bls library", 2019,
-              <https://github.com/phoreproject/bls>.
 
    [RELIC]    Gouvea, C.P.L., "RELIC is an Efficient LIbrary for
               Cryptography", 2013,
@@ -1378,6 +1743,12 @@ Table of Contents
 
    [SAKKE]    3GPP, "Security of the mission critical service (Release
               15)", 3GPP TS 33.180 15.3.0, 2018.
+
+   [SBCK09]   Scott, M., Benger, N., Charlemagne, M., Dominguez Perez,
+              L.J., and E.J. Kachisa, "On the Final Exponentiation for
+              Calculating Pairings on Ordinary Elliptic Curves", Pairing
+              2009, LNCS vol. 5671, pp. 78-88, 2009,
+              <https://doi.org/10.1007/978-3-642-03298-1_6>.
 
    [SEC1]     Standards for Efficient Cryptography Group (SECG), "SEC 1:
               Elliptic Curve Cryptography", 2009,
@@ -1494,7 +1865,56 @@ A.2.  Optimal Ate Pairings over Barreto-Lynn-Scott Curves
        f := f^{(p^k - 1) / r};
        return f;
 
-Appendix B.  Test Vectors of Optimal Ate Pairing
+Appendix B.  Implementation Notes
+
+   This appendix is informative.  It documents implementation
+   considerations discovered through verification of this memo's
+   pseudocode against production-grade pairing libraries (mcl, noble-
+   curves, blst), and does not standardize any algorithm.
+
+B.1.  Production Library Cofactors
+
+   Implementations using the fast final-exponentiation optimizations
+   described in the literature cited below compute pairings that differ
+   from the literal output of the pseudocode in Appendix A by a curve-
+   specific exponent in G_T:
+
+       e_lib(P, Q) = e_pseudocode(P, Q)^k
+
+   where k is:
+
+   *  BLS12_381: k = 3 [HHT20]
+
+   *  BN462: k = 2u(6u^2 + 3u + 1) mod r [FCKR11]
+
+   Because gcd(k, r) = 1 for both curves, the following properties hold:
+
+   *  Bilinearity is preserved: e_lib([a]P, [b]Q) = e_lib(P, Q)^(ab).
+
+   *  Verification equations of the form e(A, B) = e(C, D) hold using
+      e_lib if and only if they hold using e_pseudocode.
+
+   *  Direct byte-comparison between e_lib output and the test vectors
+      in Appendix C will not match.  Implementations seeking byte-level
+      reproducibility of those test vectors should evaluate the
+      pseudocode in Appendix A literally, without applying the cofactor
+      optimization.
+
+B.2.  Final Exponentiation Decomposition
+
+   The pseudocode in Appendix A writes the final exponentiation as a
+   single step, f := f^((p^k - 1) / r).  In practice, implementations
+   compute this via an easy/hard split: an easy part computed cheaply
+   via the Frobenius endomorphism, and a hard part computed via an
+   addition chain over the curve parameter u.
+
+   Standard references for the hard-part addition chain include [SBCK09]
+   (the original approach for BLS curves), [AKLGL11] (for BN curves),
+   [FCKR11] (the BN cofactor variant used by mcl), and [HHT20] (a more
+   recent, general treatment via cyclotomic structure, used for
+   BLS12_381 above).
+
+Appendix C.  Test Vectors of Optimal Ate Pairing
 
    We provide test vectors for Optimal Ate Pairing e(P, Q) given in
    Appendix A for the curves BLS12_381, BN462 and BLS48_581 given in
@@ -1649,299 +2069,173 @@ Appendix B.  Test Vectors of Optimal Ate Pairing
 
    y'_7:  0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6
 
-   e_0:  0x0e26c3fcb8ef67417814098de5111ffcccc1d003d15b367bad07cef2291a93d31db03e3f03376f3beae2bd877bcfc22a25dc51016eda1ab56ee3033bc4b4fec5962f02dffb3af5e38e
+   e_0:  0x0728370dfbe5b77483ce4be9cba465ce0a624407b17be0d4a68ce60f7bece07aedee994e4ee9c5b4970136ab4d09e1957538037f290fdb875f137cce19812172f171694f9ae7aadbda
 
-   e_1:  0x069061b8047279aa5c2d25cdf676ddf34eddbc8ec2ec0f03614886fa828e1fc066b26d35744c0c38271843aa4fb617b57fa9eb4bd256d17367914159fc18b10a1085cb626e5bedb145
+   e_1:  0x08153d69faf7476a66dc870abb71cff7e2d90cd6b5969bb92eb04c282d83e528d796faf28497114ce34c60130b48e03fd06681555b2ef9ec654f4a5fb9a2ce4b49ddb80c0fc9f845ab
 
-   e_2:  0x02b9bece645fbf9d8f97025a1545359f6fe3ffab3cd57094f862f7fb9ca01c88705c26675bcc723878e943da6b56ce25d063381fcd2a292e0e7501fe572744184fb4ab4ca071a04281
+   e_2:  0x0394a48406ac0d6583a9b7c1b43eae6e32fea940f9b24eb03bcba914f99998e9fb698ebec6ef1f9abcce67a15c812e01541e73fcba359babf5e8830e313dbb6716de23fb074ccc8bd3
 
-   e_3:  0x0080d267bf036c1e61d7fc73905e8c630b97aa05ef3266c82e7a111072c0d2056baa8137fba111c9650dfb18cb1f43363041e202e3192fced29d2b0501c882543fb370a56bfdc2435b
+   e_3:  0x063b8c23ade1f4674806b55661e57ef6d749e791560b38e55d2aa746ebf75799bb2e16e6d33117b9553e232c43872951b20efdaa0c7b93fc2e20c30a841b1b985aca97e720d814e87f
 
-   e_4:  0x03c6b4c12f338f9401e6a493a405b33e64389338db8c5e592a8dd79eac7720dd83dd6b0c189eeda20809160cd57cdf3e2edc82db15f553c1f6c953ea27114cb6bd8a38e273f407dae0
+   e_4:  0x10244cbd679f194c45965a50869479062301721b57429930fc8ba3b3149f4204a3ff91181afa8fcd22b718e56a72d9b2b0c164ce32956ca3506b8210c3a8e4724d08a1baaf4464958e
 
-   e_5:  0x016e46224f28bfd8833f76ac29ee6e406a9da1bde55f5e82b3bd977897a9104f18b9ee41ea9af7d4183d895102950a12ce9975669db07924e1b432d9680f5ce7e5c67ed68f381eba45
+   e_5:  0x0e9258fbc8e42fd5d0226dad77384b51ebeb58b7419bbf350369eb84a5089f06a2c4a5849a379ad7d11680699ade3288f0086616e93213d473b709e3f6edf1967eb94442a45c90ebbb
 
-   e_6:  0x008ddce7a4a1b94be5df3ceea56bef0077dcdde86d579938a50933a47296d337b7629934128e2457e24142b0eeaa978fd8e70986d7dd51fccbbeb8a1933434fec4f5bc538de2646e90
+   e_6:  0x06e134492deb4396f6c9c80738d0af481dc5b181d718ed56155cb6c8599a18b93b58e9fb782a392b9e571277cd89c8de5a3d0a93628e2a2b1b7edbe94cb84dcf7b1f090ca39bd6f364
 
-   e_7:  0x060ef6eae55728e40bd4628265218b24b38cdd434968c14bfefb87f0dcbfc76cc473ae2dc0cac6e69dfdf90951175178dc75b9cc08320fcde187aa58ea047a2ee00b1968650eec2791
+   e_7:  0x07de5e32e7289ac7873a933c4708466a99f117c61a2ee14f94327cd73af436318c2032dc75545cdfa271347ab7cbcdf2dad37b672130c0342984a5f197b4093088e411273f3dfe417e
 
-   e_8:  0x0c3943636876fd4f9393414099a746f84b2633dfb7c36ba6512a0b48e66dcb2e409f1b9e150e36b0b4311165810a3c721525f0d43a021f090e6a27577b42c7a57bed3327edb98ba8f8
+   e_8:  0x0de32640097a9acce11fa2ae92b4d9372e114bc8bfd31d2aec38a1cc75565ca1926142ce8bed385cd72e1c60b7aef66a337279682f832c7309fcb29fa84b459cbe65240cdc1af3e6c7
 
-   e_9:  0x02d31eb8be0d923cac2a8eb6a07556c8951d849ec53c2848ee78c5eed40262eb21822527a8555b071f1cd080e049e5e7ebfe2541d5b42c1e414341694d6f16d287e4a8d28359c2d2f9
+   e_9:  0x06d3acae2d679917ecf0e8216e14e8bf4f24e0fb5673b4247056f84b7da26960d36db96b704075d01e807e1b971a47905c95b4d0667f9319e97614dc246716bd202152420f32dd768b
 
-   e_10:  0x07f19673c5580d6a10d09a032397c5d425c3a99ff1dd0abe5bec40a0d47a6b8daabb22edb6b06dd8691950b8f23faefcdd80c45aa3817a840018965941f4247f9f97233a84f58b262e
+   e_10:  0x046e7f9077ace54376cab916b83d3b30dd8114ef02cc443c259f8b904ec21bfe7964f4ea6c65c181e41cfe368def11874dcdba6eb7299359a2d213c2e444bdec4cbaa79c5cadc7ea92
 
-   e_11:  0x0d3fe01f0c114915c3bdf8089377780076c1685302279fd9ab12d07477aac03b69291652e9f179baa0a99c38aa8851c1d25ffdb4ded2c8fe8b30338c14428607d6d822610d41f51372
+   e_11:  0x0b371eeb284afe2b375c899589a3141f51c40c52fce2c166a493f4c403ffd4cc5d4e0d4d27dc60923613f39288b4aab576719555e2b14e52888c76cd70297fb398a0a64852a5bfd40d
 
-   e_12:  0x0662eefd5fab9509aed968866b68cff3bc5d48ecc8ac6867c212a2d82cee5a689a3c9c67f1d611adac7268dc8b06471c0598f7016ca3d1c01649dda4b43531cffc4eb41e691e27f2eb
+   e_12:  0x0a2bd6b1b811c704e258eefb47fce7172ffc3277f710da2ab13257b0d02addf3a65757058edb746e18cecccbfc17bc4376ce8031ba12d871aa8e0debede2d497bef0e00a5c0e706a3e
 
-   e_13:  0x0aad8f4a8cfdca8de0985070304fe4f4d32f99b01d4ea50d9f7cd2abdc0aeea99311a36ec6ed18208642cef9e09b96795b27c42a5a744a7b01a617a91d9fb7623d636640d61a6596ec
+   e_13:  0x0fd0ff5e67cc61f810c9babd05b3693472da111df2f66479f4f076ebedfebfc854a6642288cb82c65ee44a67af11b1855756704aefc25453327e0692f480bc9a4a46e9128d06d38af0
 
-   e_14:  0x0ffcf21d641fd9c6a641a749d80cab1bcad4b34ee97567d905ed9d5cfb74e9aef19674e2eb6ce3dfb706aa814d4a228db4fcd707e571259435393a27cac68b59a1b690ae8cde7a94c3
+   e_14:  0x02124bc2c807a8033e462a4f1352c6098ee56930953622e92e0d037da27258fbf67af6ad3a8a99a262c32f15bd90e90612b8cec6b20c1b374dbb932d1e9c43fbeeb61b02982899cde2
 
-   e_15:  0x0cbe92a53151790cece4a86f91e9b31644a86fc4c954e5fa04e707beb69fc60a858fed8ebd53e4cfd51546d5c0732331071c358d721ee601bfd3847e0e904101c62822dd2e4c7f8e5c
+   e_15:  0x080213072f8830aab2f299e808fc275b342acd465c16bc39c215c0f727f6f9ed81e6f7b927b6524dd7bb246e1332f21555fe9482d8f6b9781ef89b70b1b14b7eda497a9459204e9f0b
 
-   e_16:  0x0202db83b1ff33016679b6cfc8931deea6df1485c894dcd113bacf564411519a42026b5fda4e16262674dcb3f089cd7d552f8089a1fec93e3db6bca43788cdb06fc41baaa5c5098667
+   e_16:  0x015da7065c8d4a232746542a7ca008a46d65a777a86cffbd5c64e29c7ed25092aa0a13c5ca6789a064306264bb65b9cce72cb81b3229a805546c70a30abafb7484f4b482ea56ccc07e
 
-   e_17:  0x070a617ed131b857f5b74b625c4ef70cc567f619defb5f2ab67534a1a8aa72975fc4248ac8551ce02b68801703971a2cf1cb934c9c354cadd5cfc4575cde8dbde6122bd54826a9b3e9
+   e_17:  0x0eb3b6aa48b99bfb400d83252f1ccec395b564847e02fc31ef71abfaedd94193fc0fac3321ee8c7402948e128c87436da9bdbcb437350e5169771bc39f4af509c0800a69e5ef6913aa
 
-   e_18:  0x070e1ebce457c141417f88423127b7a7321424f64119d5089d883cb953283ee4e1f2e01ffa7b903fe7a94af4bb1acb02ca6a36678e41506879069cee11c9dcf6a080b6a4a7c7f21dc9
+   e_18:  0x0754210c9887c9416fa7c486f33d1ca06344f395537ef9cf8d39e2058f8f050437ee6d6e566ac3adfc9d9dd53fe48b440560e080291e439d29c4cfeb0a6fe0593c5700bbffa6c523b7
 
-   e_19:  0x058a06be5a36c6148d8a1287ee7f0e725453fa1bb05cf77239f235b417127e370cfa4f88e61a23ea16df3c45d29c203d04d09782b39e9b4037c0c4ac8e8653e7c533ad752a640b233e
+   e_19:  0x09a028b784dafdb4d0756d1020efe3c1500e40db3276bf5dc46d451b814aedbb03f4613b95174a32a326483970d3c4339bba5ba51d198d7c121abed82c3523162445a0276f48bf89ff
 
-   e_20:  0x0dfdfaaeb9349cf18d21b92ad68f8a7ecc509c35fcd4b8abeb93be7a204ac871f2195180206a2c340fccb69dbc30b9410ed0b122308a8fc75141f673ae5ec82b6a45fc2d664409c6b6
+   e_20:  0x116a0f7f6792d653084bb65e6e88db3cfbdea4e7e8b6ab6450ce59cf44a0e6e0b14965e3494a02c6839ada9b1eb54909ac295538e0f183c61f78524d894bb2a0da124b1fe9b83495db
 
-   e_21:  0x0d06c8adfdd81275da2a0ce375b8df9199f3d359e8cf50064a3dc10a592417124a3b705b05a7ffe78e20f935a08868ecf3fc5aba0ace7ce4497bb59085ca277c16b3d53dd7dae5c857
+   e_21:  0x0d7dad6094d2348e788664c42b558efd83abe5e0dd2974f71f5be2f91537544ee4f9361444786d28f69914b44208035d3d6fc2bb4ec6c246fa00fb4751c2599ea49e0cbfa063764466
 
-   e_22:  0x0708effd28c4ae21b6969cb9bdd0c27f8a3e341798b6f6d4baf27be259b4a47688b50cb68a69a917a4a1faf56cec93f69ac416512c32e9d5e69bd8836b6c2ba9c6889d507ad571dbc4
+   e_22:  0x0aaaa489911ca73b50ffa76b6c259661296dcd60c9fe0046890eca9e1347c7973e18cc517f2af15bda018a6fb31b5d2d274fc9cddb4dc9652cfe2141651325f4039819826724b4beaf
 
-   e_23:  0x09da7c7aa48ce571f8ece74b98431b14ae6fb4a53ae979cd6b2e82320e8d25a0ece1ca1563aa5aa6926e7d608358af8399534f6b00788e95e37ef1b549f43a58ad250a71f0b2fdb2bf
+   e_23:  0x0fb49f14ba49afa5d6f59a314a592e07f8d5bf177cb8210dcb6c778c757cb1b5dd78ca03ee84c5bbb445bd6273245eec49eeefef70b35afb1e2914f617c019291383a69ee210ae519e
 
-   e_24:  0x0a7150a14471994833d89f41daeaa999dfc24a9968d4e33d88ed9e9f07aa2432c53e486ba6e3b6e4f4b8d9c989010a375935c06e4b8d6c31239fad6a61e2647b84a0e3f76e57005ff7
+   e_24:  0x0aee140954f99c762830f952df644afa9b79ddbf340ee544dc3b8858b857715d7bd9822ef61baa1ab166bf263db8849048593c8caa6f129a488a359eeca33ee231231d14013958af23
 
-   e_25:  0x084696f31ff27889d4dccdc4967964a5387a5ae071ad391c5723c9034f16c2557915ada07ec68f18672b5b2107f785c15ddf9697046dc633b5a23cc0e442d28ef6eea9915d0638d4d8
+   e_25:  0x0acc6c4ea0c92d932c05a1f2e4e2db503b70d661ac395d64830f73726a7abebedfa44891a77302dd1864a6cd0d253ea08178a27bc2dbd0dd8066c022e9bd7946000dfa7d9614157925
 
-   e_26:  0x0398e76e3d2202f999ac0f73e0099fe4e0fe2de9d223e78fc65c56e209cdf48f0d1ad8f6093e924ce5f0c93437c11212b7841de26f9067065b1898f48006bcc6f2ab8fa8e0b93f4ba4
+   e_26:  0x050deec1fa36e12c4c4077859abd06b6220daf70f921e262283abf30b5aee64e6889b9b352339785c8d326abdb47f3dce0fa6afde2d15c3799fe82233f93971b1103ec74a4861acc6e
 
-   e_27:  0x06d683f556022368e7a633dc6fe319fd1d4fc0e07acff7c4d4177e83a911e73313e0ed980cd9197bd17ac45942a65d90e6cb9209ede7f36c10e009c9d337ee97c4068db40e34d0e361
+   e_27:  0x1230408a5e21add1ec9b1a80c48e11f93376d28790b46f20b5fc62eb4e65d61b92918e4d7363615e1c404bc4de4163f5662acb9853ea97802a3367a52dd18d0d2b80f5dcae12bfada1
 
-   e_28:  0x0d764075344b70818f91b13ee445fd8c1587d1c0664002180bbac9a396ad4a8dc1e695b0c4267df4a09081c1e5c256c53fd49a73ffc817e65217a44fc0b20ef5ee92b28d4bc3e38576
+   e_28:  0x0798bb2076792ef2c410c5d7d04cd8c23c6ae903a3036f89b6b95238a1da6340831bb4954ae0680e79fa168711436cd75fb59066d700461f09cd777efb21cfae7378de3ff104914e0e
 
-   e_29:  0x0aa6a32fdc4423b1c6d43e5104159bcd8e03a676d055d4496f7b1bc8761164a2908a3ff0e4c4d1f4362015c14824927011e2909531b8d87ee0acd676e7221a1ca1c21a33e2cf87dc51
+   e_29:  0x0e415108b64594f34071373b75a074e6a704f71d97a9297c96f6a496b2554cc37a0c0f593a98e5d450959144302e4b8928df6cef8e27dbda83812c5b4a5ca8dcb902151eff1eaf1935
 
-   e_30:  0x1147719959ac8eeab3fc913539784f1f947df47066b6c0c1beafecdb5fa784c3be9de5ab282a678a2a0cbef8714141a6c8aaa76500819a896b46af20509953495e2a85eff58348b38d
+   e_30:  0x04f59c80adb5919935615d23fa2d3a2edede7c37b4a4b40b867e69855426f820285a0ce2d3e42675ed3ea9945976627cd6730e8da68bb38a9add565fe442a584bed3ef4b6907875544
 
-   e_31:  0x11a377bcebd3c12702bb34044f06f8870ca712fb5caa6d30c48ace96898fcbcddbcf31f331c9e524684c02c90db7f30b9fc470d6e651a7e8b1f684383f3705d7a47a1b4fe463d623c8
+   e_31:  0x034ceeb2e39c61a5732ebee4e80714a97f82cd0cc174d5f4dfd19034f8c3dc0d25fc16112456345e7f22a02e898948798e18b297adc534072dad9ec6b6f57e3b85c598b45d860b0209
 
-   e_32:  0x0b8b4511f451ba2cc58dc28e56d5e1d0a8f557ecb242f4d994a627e07cf3fa44e6d83cb907deacf303d2f761810b5d943b46c4383e1435ec23fec196a70e33946173c78be3c75dfc83
+   e_32:  0x07c4a289d9f064dc9b9cb7e07345abcd341ebfe63ba33671563f73f3a1430f96767cad3c9b1c96216968f530e2a26afc67abc3cbd68d64d6ab924cd7b00e1dac94b6d334a1804e51ac
 
-   e_33:  0x090962d632ee2a57ce4208052ce47a9f76ea0fdad724b7256bb07f3944e9639a981d3431087241e30ae9bf5e2ea32af323ce7ed195d383b749cb25bc09f678d385a49a0c09f6d9efca
+   e_33:  0x04ba54ae9b7eff857175045310b4b5c1b12fb63bf89786bbf43963f615c347d9b86852c89b0f12d447d3c7ac0645dc34a08f2e40af5564ac16609da1c5a9155090ab4ea65ff1f395a5
 
-   e_34:  0x0931c7befc80acd185491c68af886fa8ee39c21ed3ebd743b9168ae3b298df485bfdc75b94f0b21aecd8dca941dfc6d1566cc70dc648e6ccc73e4cbf2a1ac83c8294d447c66e74784d
+   e_34:  0x088297a3f699e1920875ef0bb319312236e65d19ec729bbdaecdd78ad99332b3420ded29fb0c25d985f6032e946554fdc8e95b8126d08dd236504fc4f3cf43dc20ec76a9a54b56c08b
 
-   e_35:  0x020ac007bf6c76ec827d53647058aca48896916269c6a2016b8c06f0130901c8975779f1672e581e2dfdbcf504e96ecf6801d0d39aad35cf79fbe7fe193c6c882c15bce593223f0c7c
+   e_35:  0x1122ea6890e187b23e25041f49940a771373bc7b88154ccce6c9c2fa1e3e3d342abd03918c9741fa1712eadc42614a9de0466c459d92fbad01852a2199981f03f7ad75731cb65078c0
 
-   e_36:  0x0c0aed0d890c3b0b673bf4981398dcbf0d15d36af6347a39599f3a22584184828f78f91bbbbd08124a97672963ec313ff142c456ec1a2fc3909fd4429fd699d827d48777d3b0e0e699
+   e_36:  0x0e47723170a6efb1cfda14f5f1e733af065cbc55b52add250f9ffe92726c8bfabb24b3e7fcefe9c83dad6fe243a2eaea00f3556fcfc79cdf90d3947c9317fbee25490778e42a0db50a
 
-   e_37:  0x0ef7799241a1ba6baaa8740d5667a1ace50fb8e63accc3bc30dc07b11d78dc545b68910c027489a0d842d1ba3ac406197881361a18b9fe337ff22d730fa44afabb9f801f759086c8e4
+   e_37:  0x0b8a8b3d05b9826e28a3392bcb84d786ff40746c1ad9daf4da585f1a075c68e7a17ce525f8fd3f2d6e379bb67f4f89f8c0d42532c0065a9d23fa23efb9ff560515bf694de2b3ce2724
 
-   e_38:  0x016663c940d062f4057257c8f4fb9b35e82541717a34582dd7d55b41ebadf40d486ed74570043b2a3c4de29859fdeae9b6b456cb33bb401ecf38f9685646692300517e9b035d6665fc
+   e_38:  0x00a403cc73a4449a59995a0bcbd924b40f1d6bca65033acd6e7f71d3452a0843774b0d8f7948f5045db5aa81927a222ca411b63c763a88fdde8e150d0bb5b300f77c95f4281450575a
 
-   e_39:  0x1184a79510edf25e3bd2dc793a5082fa0fed0d559fa14a5ce9ffca4c61f17196e1ffbb84326272e0d079368e9a735be1d05ec80c20dc6198b50a22a765defdc151d437335f1309aced
+   e_39:  0x0881c6d9d3a2e972d2491f8d436d4c351fc02c33ad7d83ef14515a560041febc0a1a9a5ecaa987850dc5240fe0521ac611feb7a73a29915368ad73025dfe6a2823f833b18a9ec48ad9
 
-   e_40:  0x120e47a747d942a593d202707c936dafa6fed489967dd94e48f317fd3c881b1041e3b6bbf9e8031d44e39c1ab5ae41e487eac9acd90e869129c38a8e6c97cf55d6666d22299951f91a
+   e_40:  0x0d8fe3d94bd8e4927a1518dbacc7939d941b9547e5dc63ac1fdc84f806a933b93a537f5688a13931563c760487c8cfb2c16fd1ac6abc4f181d9b547ef8e48b7e45546c801afc0ec30c
 
-   e_41:  0x026b6e374108ecb2fe8d557087f40ab7bac8c5af0644a655271765d57ad71742aa331326d871610a8c4c30ccf5d8adbeec23cdff20d9502a5005fce2593caf0682c82e4873b89d6d71
+   e_41:  0x03d1bbb1efd04933769302a2cb1cf46f009aac17598036a24e350a622a84c54d42391e398c1454841913c5ebeb2a519219ea093368d7a6416d1806cd2edc7ddc647ece0809c24b96e9
 
-   e_42:  0x041be63a2fa643e5a66faeb099a3440105c18dca58d51f74b3bf281da4e689b13f365273a2ed397e7b1c26bdd4daade710c30350318b0ae9a9b16882c29fe31ca3b884c92916d6d07a
+   e_42:  0x0a436fb468257035cf1aacb2390c4a8c560c1411b72d8b3a14fc5cc7b7d9cd6a1c8447e8496ba1d859d539a284c6d988f9d291dfc18cedc7ddde66c0572531d3fe1a3eacf67065b4c2
 
-   e_43:  0x124018a12f0f0af881e6765e9e81071acc56ebcddadcd107750bd8697440cc16f190a3595633bb8900e6829823866c5769f03a306f979a3e039e620d6d2f576793d36d840b168eeedd
+   e_43:  0x0a0067f37999d6d9c6a4be4917cd723e26b7c51e204578a4fc4f68a253fb83e22c84f77189ccb151fb3b6cf9a7742817dbac70e5d10b55178210ac92fbee9a19924fa90fbe7505d8ce
 
-   e_44:  0x0d422de4a83449c535b4b9ece586754c941548f15d50ada6740865be9c0b066788b6078727c7dee299acc15cbdcc7d51cdc5b17757c07d9a9146b01d2fdc7b8c562002da0f9084bde5
+   e_44:  0x0b74c455ff1b2fb483d34ce165dd95cc3496dd2502278d3c29037184822c367fb58e65af3e2448f156e1bb455da57ec187eb809d5e3ba4541aa9685fa9f9a2805e45b4404169c7ac72
 
-   e_45:  0x1119f6c5468bce2ec2b450858dc073fea4fb05b6e83dd20c55c9cf694cbcc57fc0effb1d33b9b5587852d0961c40ff114b7493361e4cfdff16e85fbce667869b6f7e9eb804bcec46db
+   e_45:  0x0818fdfb70557e572d3b12b5fa4fd355b54aec27a4cb4a875d01401c1ea9d0ab3c4c758f6c26e0e79efc0fce3c1b9c0ec20d6c201e1f3ef5a45673bd29dd6d6ac01adb3e6be648413c
 
-   e_46:  0x061eaa8e9b0085364a61ea4f69c3516b6bf9f79f8c79d053e646ea637215cf6590203b275290872e3d7b258102dd0c0a4a310af3958165f2078ff9dc3ac9e995ce5413268d80974784
+   e_46:  0x042b061a336224d0435d40195c2994864df20cf62f2d08d0792ca250e46226f72cb8bec3f0ee38c5f263baa20de278f178d3c589bb23952a798ef778923b40c2e0b5d921efcbeb9036
 
-   e_47:  0x0add8d58e9ec0c9393eb8c4bc0b08174a6b421e15040ef558da58d241e5f906ad6ca2aa5de361421708a6b8ff6736efbac6b4688bf752259b4650595aa395c40d00f4417f180779985
+   e_47:  0x0f2a3120c31e22b435ccbc3b4cb67776fd4f9b24fb0361ea147a0f44b9356f94417c030893c8bdc2d205e61f4c41e74be9561f03009056e5b8e9a12c5b8b90cb89375433dbc3f2df3f
 
-Appendix C.  ZCash serialization format for BLS12_381
+Appendix D.  Test Vectors for Point Serialization
 
-   This section describes the serialization format defined by
-   [ZCashRep].  It is not officially standardized by the standards
-   organization, however we show it in this appendix as a useful
-   reference for implementers.  This format applies to points on the
-   BLS12_381 elliptic curves E and E', whose parameters are given in
-   Section 4.2.1.  Note that this serialization method is based on the
-   representation shown in [SEC1] and it is a tiny tweak so as to apply
-   to GF(p^m).
-
-   At a high level, the serialization format is defined as follows:
-
-   *  Serialized points include three metadata bits that indicate
-      whether a point is compressed or not, whether a point is the point
-      at infinity or not, and (for compressed points) the sign of the
-      point's y-coordinate.
-
-   *  Points on E are serialized into 48 bytes (compressed) or 96 bytes
-      (uncompressed).  Points on E' are serialized into 96 bytes
-      (compressed) or 192 bytes (uncompressed).
-
-   *  The serialization of a point at infinity comprises a string of
-      zero bytes, except that the metadata bits may be nonzero.
-
-   *  The serialization of a compressed point other than the point at
-      infinity comprises a serialized x-coordinate.
-
-   *  The serialization of an uncompressed point other than the point at
-      infinity comprises a serialized x-coordinate followed by a
-      serialized y-coordinate.
-
-   Below, we give detailed serialization and de-serialization
-   procedures.  The following notation is used in the rest of this
-   section:
-
-   *  Elements of GF(p^2) are represented as polynomial with GF(p)
-      coefficients like .
-
-   *  For a byte string str, str[0] is defined as the first byte of str.
-
-   *  The function sign_GF_p(y) returns one bit representing the sign of
-      an element of GF(p).  This function is defined as follows:
-
-       sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
-                      { 0 otherwise.
-
-   *  The function sign_GF_p^2(y') returns one bit representing the sign
-      of an element in GF(p^2).  This function is defined as follows:
-
-       sign_GF_p^2(y') := { sign_GF_p(y'_0) if y'_1 equals 0, else
-                         { 1 if y'_1 > (p - 1) / 2, else
-                         { 0 otherwise.
-
-C.1.  Point Serialization Procedure
-
-   The serialization procedure is defined as follows for a point P = (x,
-   y).  This procedure uses the I2OSP function defined in [RFC8017].
-
-   1.  Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
-
-       *  C_bit is 1 if point compression should be used, otherwise it
-          is 0.
-
-       *  I_bit is 1 if P is the point at infinity, otherwise it is 0.
-
-       *  S_bit is 0 if P is the point at infinity or if point
-          compression is not used.  Otherwise (i.e., when point
-          compression is used and P is not the point at infinity), if P
-          is a point on E, S_bit = sign_GF_p(y), else if P is a point on
-          E', S_bit = sign_GF_p^2(y).
-
-   2.  Let m_byte = (C_bit * 2^7) + (I_bit * 2^6) + (S_bit * 2^5).
-
-   3.  Let x_string be the serialization of x, which is defined as
-       follows:
-
-       *  If P is the point at infinity on E, let x_string = I2OSP(0,
-          48).
-
-       *  If P is a point on E other than the point at infinity, then x
-          is an element of GF(p), i.e., an integer in the inclusive
-          range [0, p - 1].  In this case, let x_string = I2OSP(x, 48).
-
-       *  If P is the point at infinity on E', let x_string = I2OSP(0,
-          96).
-
-       *  If P is a point on E' other than the point at infinity, then x
-          can be represented as (x_0, x_1) where x_0 and x_1 are
-          elements of GF(p), i.e., integers in the inclusive range [0, p
-          - 1] (see discussion of vector representations above).  In
-          this case, let x_string = I2OSP(x_1, 48) concatenated with
-          I2OSP(x_0, 48).  Notice that in all of the above cases, the 3
-          most significant bits of x_string[0] are guaranteed to be 0.
-
-   4.  If point compression is used, let y_string be the empty string.
-       Otherwise (i.e., when point compression is not used), let
-       y_string be the serialization of y, which is defined in Step 3.
-
-   5.  Let s_string be the concatenation of x_string and y_string.
-
-   6.  Set s_string[0] = x_string[0] OR m_byte, where OR is computed
-       bitwise.  After this operation, the most significant bit of
-       s_string[0] equals C_bit, the next bit equals I_bit, and the next
-       equals S_bit.  (This is true because the three most significant
-       bits of x_string[0] are guaranteed to be zero, as discussed
-       above.)
-
-   7.  Output s_string.
-
-C.2.  Point deserialization procedure
-
-   The deserialization procedure is defined as follows for a string
-   s_string.  This procedure uses the OS2IP function defined in
-   [RFC8017].
-
-   1.  Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise.
-       In other words, the three most significant bits of m_byte equal
-       the three most significant bits of s_string[0], and the remaining
-       bits are 0.  If m_byte equals any of 0x20, 0x60, or 0xE0, output
-       INVALID and stop decoding.  Otherwise:
-
-       *  Let C_bit equal the most significant bit of m_byte,
-
-       *  Let I_bit equal the second most significant bit of m_byte, and
-
-       *  Let S_bit equal the third most significant bit of m_byte.
-
-   2.  If C_bit is 1:
-
-       *  If s_string has length 48 bytes, the output point is on the
-          curve E.
-
-       *  If s_string has length 96 bytes, the output point is on the
-          curve E'.
-
-       *  If s_string has any other length, output INVALID and stop
-          decoding.
-
-       If C_bit is 0: - If s_string has length 96 bytes, the output
-       point is on E. - If s_string has length 192 bytes, the output
-       point is on E'. - If s_string has any other length, output
-       INVALID and stop decoding.
-
-   3.  Let s_string[0] = s_string[0] AND 0x1F, where AND is computed
-       bitwise.  In other words, set the three most significant bits of
-       s_string[0] to 0.
-
-   4.  If I_bit is 1:
-
-       *  If s_string is not the all zeros string, output INVALID and
-          stop decoding.
-
-       *  Otherwise (i.e., if s_string is the all zeros string), output
-          the point at infinity on the curve that was determined in step
-          2 and stop decoding.
-
-       Otherwise, I_bit must be 0.  Continue decoding.
-
-   5.  If C_bit is 0:
-
-       *  Let x_string be the first half of s_string.
-
-       *  Let y_string be the last half of s_string.
-
-       *  Let x = OS2IP(x_string).
-
-       *  Let y = OS2IP(y_string).
-
-       *  If the point P = (x, y) is not a valid point on the curve that
-          was determined in step 2, output INVALID and stop decoding.
-
-       *  Otherwise, output the point P = (x, y) and stop decoding.
-
-       Otherwise, C_bit must be 1.  Continue decoding.
-
-   6.  Let x = OS2IP(s_string).
-
-   7.  If the curve that was determined in step 2 is E:
-
-       *  Let y2 = x^3 + 4 in GF(p).
-
-       *  If y2 is not square in GF(p), output INVALID and stop
-          decoding.
-
-       *  Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit =
-          sign_GF_p(y).
-
-       Otherwise, (i.e., when the curve that was determined in step 2 is
-       E'): - Let y2 = x^3 + 4 * (u + 1) in GF(p^2). - If y2 is not
-       square in GF(p^2), output INVALID and stop decoding. - Otherwise,
-       let y = sqrt(y2) in GF(p^2) and let Y_bit = sign_GF_p^2(y).
-
-   8.  If S_bit equals Y_bit, output P = (x, y) and stop decoding.
-       Otherwise, output P = (x, -y) and stop decoding.
-
-Appendix D.  Adoption Status of Pairing-Friendly Curves with the 100-bit
+   This appendix gives test vectors for the point serialization
+   procedure defined in Section 5, computed for the base points BP and
+   BP' given in Section 4, using compressed encoding (C_bit = 1).
+
+D.1.  BLS12_381
+
+   G1 (BP):
+
+   97f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac5
+   86c55e83ff97a1aeffb3af00adb22c6bb
+
+   G2 (BP'):
+
+   93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f504
+   9334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc510
+   51c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121b
+   db8
+
+   Identity (G1, 48 bytes): a string of 48 zero bytes with the leading
+   byte set to 0xc0 (C_bit=1, I_bit=1).
+
+   Identity (G2, 96 bytes): a string of 96 zero bytes with the leading
+   byte set to 0xc0.
+
+D.2.  BLS48_581
+
+   G1 (BP):
+
+   a2af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f
+   7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e
+   6d8c3bce8732315af640
+
+   G2 (BP'):
+
+   8827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a
+   7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c
+   3f84e19da00fbc6ae340b9b7951c6061ee3f0197a498908aee660dea41b39d1
+   3852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe432
+   4c22d63334b5b0e205c3354e41607e60750e0570c96c7797eb0738603f1311e
+   4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b4
+   0b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a038b
+   91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699
+   981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb
+   739c3a1c53f8cce50be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5
+   821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c20
+   0ca52310b8cb4e80bc3f09a7033cbb7feafe01fccc70198f1334e1b2ea1853a
+   d83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0
+   d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a07c4973
+   ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943
+   a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f166
+   9b36676b47c5705d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7
+   de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510
+   317b79766322154dec34fd0b4ace8bfab
+
+   Identity (G1, 73 bytes): a string of 73 zero bytes with the leading
+   byte set to 0xc0.
+
+   Identity (G2, 584 bytes): a string of 584 zero bytes with the leading
+   byte set to 0xc0.
+
+      Note: the BLS12_381 values above are independently confirmed
+      against multiple third-party implementations (e.g. zkcrypto/
+      bls12_381, arkworks).  The BLS48_581 values are newly computed for
+      this document by applying the sign_GF_p^8 function of
+      [I-D.ietf-cose-bls-key-representations] to the BP' coordinates in
+      Section 4; independent cross-validation from COSE/BBS implementers
+      is welcome ahead of RGLC.
+
+Appendix E.  Adoption Status of Pairing-Friendly Curves with the 100-bit
              Security Level
 
    BN curves including BN254 that were estimated as the 128-bit security
@@ -2005,7 +2299,7 @@ Appendix D.  Adoption Status of Pairing-Friendly Curves with the 100-bit
           | Application |  DFINITY  |        BN_SNARK1         |
           +-------------+-----------+--------------------------+
 
-                                 Table 1
+                                 Table 3
 
 Authors' Addresses
 
