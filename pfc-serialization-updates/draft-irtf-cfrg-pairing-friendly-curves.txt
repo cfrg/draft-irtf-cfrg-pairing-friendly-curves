@@ -542,6 +542,20 @@ Table of Contents
    in consideration of future interconnections and interoperability over
    the internet.
 
+   Within this policy, when "widely used" does not by itself distinguish
+   between candidate curves at a given security level, we prefer the
+   curve that provides security margin above the nominal security level:
+   a margin advantage is a security consideration, and by the priority
+   above it outranks an efficiency advantage of a lower-margin
+   alternative.  BLS12-381 is the one exception to this preference for
+   margin: although its security level is estimated at approximately 126
+   bits [GMT19], slightly below the nominal 128-bit target, it is
+   retained because its adoption in production deployments (see
+   Section 4.1) decisively satisfies the "widely used" criterion.  Where
+   no candidate at a given security level satisfies "widely used" -- as
+   is currently the case at the 256-bit level -- this exception does not
+   apply, and the preference for margin governs without qualification.
+
    As a result, we recommend the BLS curve with 381-bit characteristic
    of embedding degree 12 and the BN curve with the 462-bit
    characteristic for the 128-bit security level, and the BLS curves of
