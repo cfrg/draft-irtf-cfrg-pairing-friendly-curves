@@ -809,11 +809,9 @@ Table of Contents
 
    In addition, many pairing-based cryptographic applications use a
    hashing to an elliptic curve procedure that outputs a rational point
-   on an elliptic curve from an arbitrary input.  A standard
-   specification of ciphersuites for a hashing to an elliptic curve,
-   including BLS12_381, is under discussion in the IETF
-   [I-D.irtf-cfrg-hash-to-curve] and it will be valuable information for
-   implementers.
+   on an elliptic curve from an arbitrary input.  [RFC9380] specifies
+   ciphersuites for hashing to an elliptic curve, including BLS12_381,
+   and is valuable information for implementers.
 
 4.2.2.  BN Curves for the 128-bit security level (BN462)
 
@@ -1659,9 +1657,9 @@ Table of Contents
    [I-D.ietf-lwig-curve-representations]
               Struik, R., "Alternative Elliptic Curve Representations",
               Work in Progress, Internet-Draft, draft-ietf-lwig-curve-
-              representations-08, 24 July 2019,
+              representations-23, 21 January 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lwig-
-              curve-representations-08>.
+              curve-representations-23>.
 
    [I-D.irtf-cfrg-bbs-signatures]
               Looker, T., Kalos, V., Whitehead, A., and M. Lodder, "The
@@ -1669,13 +1667,6 @@ Table of Contents
               draft-irtf-cfrg-bbs-signatures-10, 8 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
               bbs-signatures-10>.
-
-   [I-D.irtf-cfrg-hash-to-curve]
-              Faz-Hernandez, A., Scott, S., Sullivan, N., Wahby, R. S.,
-              and C. A. Wood, "Hashing to Elliptic Curves", Work in
-              Progress, Internet-Draft, draft-irtf-cfrg-hash-to-curve-
-              09, 29 June 2020, <https://datatracker.ietf.org/doc/html/
-              draft-irtf-cfrg-hash-to-curve-09>.
 
    [IEEE1363] "IEEE Standard Specifications for Public-Key
               Cryptography", IEEE standard,
@@ -1797,6 +1788,11 @@ Table of Contents
               "PKCS #1: RSA Cryptography Specifications Version 2.2",
               RFC 8017, DOI 10.17487/RFC8017, November 2016,
               <https://www.rfc-editor.org/info/rfc8017>.
+
+   [RFC9380]  Faz-Hernandez, A., Scott, S., Sullivan, N., Wahby, R. S.,
+              and C. A. Wood, "Hashing to Elliptic Curves", RFC 9380,
+              DOI 10.17487/RFC9380, August 2023,
+              <https://www.rfc-editor.org/info/rfc9380>.
 
    [S86]      Silverman, J. H., "The arithmetic of elliptic curves",
               Springer GTM 106, 1986.
