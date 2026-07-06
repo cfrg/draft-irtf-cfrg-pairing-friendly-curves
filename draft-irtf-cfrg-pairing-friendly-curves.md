@@ -707,7 +707,16 @@ Serialization: a scalar k in the range [0, r - 1] is serialized as I2OSP(k, n_s)
 
 Deserialization: given a byte string s_string of length n_s, let k = OS2IP(s_string). If k >= r, output INVALID and stop decoding. Otherwise, output k.
 
-This enforces a unique (canonical) encoding for each equivalence class, per the recommendation raised in issue #74 of the GitHub repository for this document. This document does not define a distinct encoding for the zero scalar; whether zero is accepted is intended to follow the same policy as the identity point for the curve in question (tracked in issue #75 of the GitHub repository for this document) and is otherwise left to the calling protocol.
+This enforces a unique (canonical) encoding for each equivalence class, per the recommendation raised in issue #74 of the GitHub repository for this document. This document does not define a distinct encoding for the zero scalar; whether zero is accepted follows the same protocol-dependent policy as the identity point, discussed in {{identity-point-handling}}.
+
+## Identity Point Handling  {#identity-point-handling}
+
+The procedures in {{point-serialization-procedure}} and {{point-deserialization-procedure}} define a byte representation for the identity element (point at infinity) of E and E', via the I_bit. Whether a calling protocol should accept the identity element as a valid deserialized point depends on that protocol's own semantics and threat model, not on the wire format itself: some protocols (e.g., certain zero-knowledge proof constructions) legitimately reference the identity element as part of a public statement, while others should never encounter it in normal operation, and accepting it unexpectedly has contributed to at least one documented issue in a deployed protocol.
+
+This document therefore defines two deserialization behaviors, and protocols using this document's serialization format SHOULD explicitly state which one they require, rather than relying on an implicit default:
+
+- **Reject identity (RECOMMENDED default)**: after running {{point-deserialization-procedure}}, if the resulting point is the identity element, treat the overall result as INVALID. This is the appropriate choice for protocols where the identity element is not an expected input in normal operation.
+- **Allow identity**: use the result of {{point-deserialization-procedure}} as-is, including when it is the identity element. This is appropriate for protocols with a specific, documented need to represent the identity element.
 
 ## Applicability to BN462  {#bn462-not-applicable}
 
@@ -728,6 +737,8 @@ In applications such as key agreement protocols, users exchange the elements in 
 The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G_2 and an exponentiation in G_3 with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementors should apply countermeasure techniques such as montgomery ladder {{Montgomery}} {{CF06}} when they implement modules of a scalar multiplication and an exponentiation. Please refer {{Montgomery}} and {{CF06}} for the detailed algorithms of montgomery ladder.
 
 When converting between an element in extension field and an octet string, implementors should check that the coefficient is within an appropriate range {{IEEE1363}}. If the coefficient is out of range, there is a possible that security vulnerabilities such as the signature forgery may occur.
+
+Protocol designers using the point serialization format in {{point-serialization}} should be deliberate about which of the two identity-point deserialization behaviors described in {{identity-point-handling}} their protocol requires, rather than assuming a default. Treating the identity element as an unremarkable, always-valid deserialization result -- when the calling protocol does not actually expect it -- can introduce timing side channels from identity-checking branches, and has contributed to at least one documented issue in a deployed protocol construction. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions.
 
 Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem {{Cheon06}}. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P, for i=1,...,n, then we find a secret K. Since the complexity of ECDLPwAI is given as O(sqrt((r-1)/n + sqrt(n)) where n divides r-1 by using Cheon's algorithm whereas the complexity of ECDLP is given as O(sqrt(r)), the complexity of ECDLPwAI with the ideal value n becomes dramatically smaller than that of ECDLP. Please refer {{Cheon06}} for the details of Cheon's algorithm. Therefore, implementers should be careful when they design cryptographic protocols based on the strong DH problem. For example, in the case of Short Signatures, they can prevent the Cheon's attack by carefully setting the maximum number of queries which corresponds to the parameter n.
 
