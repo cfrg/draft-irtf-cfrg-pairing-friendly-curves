@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Adoption Status Survey — Pairing-Friendly Curves</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <style type="text/css">/*<![CDATA[*/
+      body { font-family: "Helvetica Neue","Open Sans", Helvetica, Calibri,sans-serif; max-width: 900px; margin: 20px auto; padding: 0 16px; line-height: 1.5; }
+      h1, h2, h3, td, th { font-family: "Helvetica Neue", "Roboto Condensed", "Open Sans", Helvetica, Calibri, sans-serif; }
+      h1 { font-size: 22px; } h2 { font-size: 18px; margin-top: 2em; } h3 { font-size: 15px; }
+      table { border-collapse: collapse; margin: 1em 0; width: 100%; }
+      th, td { font-weight: normal; text-align: left; padding: 6px 10px; border: 1px solid #ccc; vertical-align: top; }
+      th { background: #f2f2f2; font-weight: bold; }
+      a:link { color: #00a; } a:visited { color: #558; }
+      code { background: #f5f5f5; padding: 1px 4px; }
+      .note { color: #555; font-size: 0.9em; }
+      .bold-curve { font-weight: bold; }
+    /*]]>*/</style>
+  </head>
+  <body>
+    <h1>Adoption Status Survey — Pairing-Friendly Curves</h1>
+    <p>This page supplements <a href="https://datatracker.ietf.org/doc/draft-irtf-cfrg-pairing-friendly-curves/">draft-irtf-cfrg-pairing-friendly-curves</a>'s Adoption Status section (§4.1) with the full curve-by-curve comparison, including candidates considered and not selected. See <a href="https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/72">Issue #72</a> for background on this page's scope and venue.</p>
+    <p class="note">Survey current as of July 2026. Curves selected in the draft (BLS12-381, BN462, BLS48-581) are shown in <span class="bold-curve">bold</span>.</p>
+
+    <h2>Summary: Draft Curves vs. Full Survey</h2>
+    <p>Comparison across all curves evaluated during the curve-set discussion (<a href="https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/76">Issue #76</a>), including the proposed alternatives that were not adopted.</p>
+    <table>
+      <tr><th>Curve</th><th>ISO/IEC 15946-5:2022</th><th># Libraries</th><th># Applications</th></tr>
+      <tr><td class="bold-curve">BLS12-381</td><td>BLS12 examples added (2022 ed.)</td><td>12+ (blst, mcl, RELIC, MIRACL Core, gnark-crypto, noble-curves, arkworks, constantine, CIRCL, zkcrypto, Adjoint, &hellip;)</td><td>6+ (Ethereum, Zcash, Chia, DFINITY, Algorand, Filecoin)</td></tr>
+      <tr><td class="bold-curve">BN462</td><td>Annex D.2.3 (exact u-value match)</td><td>3 (mcl, MIRACL Core, Adjoint)</td><td>1 (DFINITY)</td></tr>
+      <tr><td class="bold-curve">BLS48-581</td><td>Annex D.3.5 (exact u-value match)</td><td>2 (Kyushu Univ., MIRACL Core)</td><td>&mdash;</td></tr>
+      <tr><td>BN446 (proposed)</td><td>Annex D.2.2 (pre-exTNFS legacy; same ed. sets |p|&ge;461 guideline)</td><td>1 (RELIC)</td><td>&mdash;</td></tr>
+      <tr><td>BLS48-575 (proposed)</td><td>Not listed</td><td>1 (RELIC)</td><td>&mdash;</td></tr>
+      <tr><td>BLS24-509 (proposed)</td><td>Not listed (ISO 2022 has BLS24 at 559-bit p, not 509)</td><td>0</td><td>&mdash;</td></tr>
+    </table>
+
+    <h2>Cryptographic Libraries (full survey)</h2>
+    <table>
+      <tr><th>Library</th><th>Maintainer</th><th>Status</th><th>Curves &ge; 128-bit (pairing-friendly)</th></tr>
+      <tr><td class="bold-curve">blst</td><td>Supranational</td><td>Active</td><td><span class="bold-curve">BLS12-381</span></td></tr>
+      <tr><td>mcl</td><td>Herumi (Shigeo Mitsunari)</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, <span class="bold-curve">BN462</span>, BN254N, BN382M, BN_SNARK1</td></tr>
+      <tr><td>Kyushu Univ. BLS48</td><td>Kyushu University</td><td>Archived (reference impl)</td><td><span class="bold-curve">BLS48-581</span></td></tr>
+      <tr><td>gnark-crypto</td><td>Consensys</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, BN254, BLS12-377, BLS24-315, BW6-761, BW6-633</td></tr>
+      <tr><td>noble-curves</td><td>Paul Miller</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, BN254</td></tr>
+      <tr><td>arkworks</td><td>arkworks-rs contributors</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, BN254, BLS12-377, BLS24-315, BW6-761, MNT4-298, MNT6-298</td></tr>
+      <tr><td>constantine</td><td>Mamy Ratsimbazafy</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, BN254, BLS12-377, BW6-761, BLS24-317</td></tr>
+      <tr><td>CIRCL</td><td>Cloudflare</td><td>Active</td><td><span class="bold-curve">BLS12-381</span></td></tr>
+      <tr><td>zkcrypto</td><td>zkcrypto contributors</td><td>Active</td><td><span class="bold-curve">BLS12-381</span></td></tr>
+      <tr><td>RELIC</td><td>Diego Aranha et al.</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, BLS12-446, BLS12-455, BLS12-638, BLS24-477, BLS48-575, BN382R, BN446, BN638, CP8-544, K54-569, KSS18-508, OT8-511</td></tr>
+      <tr><td>MIRACL Core</td><td>MIRACL Ltd.</td><td>Active</td><td><span class="bold-curve">BLS12-381</span>, <span class="bold-curve">BLS48-581</span>, <span class="bold-curve">BN462</span>, BLS12-383, BLS12-461, BLS24-479, BLS48-556, BN254N, BN254CX, BN256I, BN512I</td></tr>
+      <tr><td>Adjoint</td><td>Adjoint Inc.</td><td>Stale</td><td><span class="bold-curve">BLS12-381</span>, <span class="bold-curve">BN462</span>, BN254N, BN254B, BN254S1, BN254S2, BN_SNARK1</td></tr>
+      <tr><td>PBC</td><td>Stanford University</td><td>Legacy</td><td>BN (generic), MNT, Freeman, supersingular</td></tr>
+      <tr><td>TEPLA</td><td>University of Tsukuba</td><td>Legacy</td><td>BN254N, BN254B</td></tr>
+      <tr><td>Intel-IPP</td><td>Intel</td><td>Active</td><td>BN256I</td></tr>
+      <tr><td>bls12377js</td><td>Celo Foundation</td><td>Stale</td><td>BLS12-377</td></tr>
+    </table>
+
+    <h2>Applications</h2>
+    <table>
+      <tr><th>Application</th><th>Organization</th><th>Curve</th></tr>
+      <tr><td>Ethereum (consensus / EIP-2537)</td><td>Ethereum Foundation</td><td class="bold-curve">BLS12-381</td></tr>
+      <tr><td>Zcash (Sapling/Orchard)</td><td>Zcash Foundation</td><td class="bold-curve">BLS12-381</td></tr>
+      <tr><td>Chia Network</td><td>Chia Network Inc.</td><td class="bold-curve">BLS12-381</td></tr>
+      <tr><td>DFINITY / Internet Computer</td><td>DFINITY Foundation</td><td><span class="bold-curve">BLS12-381</span>, BN382M, <span class="bold-curve">BN462</span></td></tr>
+      <tr><td>Algorand</td><td>Algorand Foundation</td><td class="bold-curve">BLS12-381</td></tr>
+      <tr><td>Filecoin</td><td>Protocol Labs</td><td><span class="bold-curve">BLS12-381</span> (via blst)</td></tr>
+    </table>
+
+    <p class="note">Sources and further detail: <a href="https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/blob/master/notes/table_adoption.md">notes/table_adoption.md</a> in the repository. A historical 2020-vs-2026 comparison is discussed in <a href="https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/72">Issue #72</a>.</p>
+
+    <p><a href="index.html">&larr; back to editor's drafts</a></p>
+  </body>
+</html>
