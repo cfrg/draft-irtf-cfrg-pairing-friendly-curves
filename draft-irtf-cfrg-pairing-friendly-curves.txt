@@ -105,7 +105,8 @@ Table of Contents
      5.2.  Point Serialization Procedure
      5.3.  Point Deserialization Procedure
      5.4.  Scalar Serialization
-     5.5.  Applicability to BN462
+     5.5.  Identity Point Handling
+     5.6.  Applicability to BN462
    6.  Security Considerations
    7.  IANA Considerations
    8.  Acknowledgements
@@ -982,7 +983,7 @@ Table of Contents
    by [I-D.irtf-cfrg-bbs-signatures] and
    [I-D.ietf-cose-bls-key-representations]; the latter extends it to
    BLS48_581, and the extension is adopted here.  Applicability to BN462
-   is discussed in Section 5.5.
+   is discussed in Section 5.6.
 
    At a high level, the serialization format is defined as follows:
 
@@ -1230,12 +1231,40 @@ Table of Contents
    This enforces a unique (canonical) encoding for each equivalence
    class, per the recommendation raised in issue #74 of the GitHub
    repository for this document.  This document does not define a
-   distinct encoding for the zero scalar; whether zero is accepted is
-   intended to follow the same policy as the identity point for the
-   curve in question (tracked in issue #75 of the GitHub repository for
-   this document) and is otherwise left to the calling protocol.
+   distinct encoding for the zero scalar; whether zero is accepted
+   follows the same protocol-dependent policy as the identity point,
+   discussed in Section 5.5.
 
-5.5.  Applicability to BN462
+5.5.  Identity Point Handling
+
+   The procedures in Section 5.2 and Section 5.3 define a byte
+   representation for the identity element (point at infinity) of E and
+   E', via the I_bit.  Whether a calling protocol should accept the
+   identity element as a valid deserialized point depends on that
+   protocol's own semantics and threat model, not on the wire format
+   itself: some protocols (e.g., certain zero-knowledge proof
+   constructions) legitimately reference the identity element as part of
+   a public statement, while others should never encounter it in normal
+   operation, and accepting it unexpectedly has contributed to at least
+   one documented issue in a deployed protocol.
+
+   This document therefore defines two deserialization behaviors, and
+   protocols using this document's serialization format SHOULD
+   explicitly state which one they require, rather than relying on an
+   implicit default:
+
+   *  *Reject identity (RECOMMENDED default)*: after running
+      Section 5.3, if the resulting point is the identity element, treat
+      the overall result as INVALID.  This is the appropriate choice for
+      protocols where the identity element is not an expected input in
+      normal operation.
+
+   *  *Allow identity*: use the result of Section 5.3 as-is, including
+      when it is the identity element.  This is appropriate for
+      protocols with a specific, documented need to represent the
+      identity element.
+
+5.6.  Applicability to BN462
 
    The point serialization format defined in Section 5.2 and Section 5.3
    is not applicable to BN462.  (Scalar serialization, defined in
@@ -1301,6 +1330,18 @@ Table of Contents
    appropriate range [IEEE1363].  If the coefficient is out of range,
    there is a possible that security vulnerabilities such as the
    signature forgery may occur.
+
+   Protocol designers using the point serialization format in Section 5
+   should be deliberate about which of the two identity-point
+   deserialization behaviors described in Section 5.5 their protocol
+   requires, rather than assuming a default.  Treating the identity
+   element as an unremarkable, always-valid deserialization result --
+   when the calling protocol does not actually expect it -- can
+   introduce timing side channels from identity-checking branches, and
+   has contributed to at least one documented issue in a deployed
+   protocol construction.  Protocol specifications SHOULD state
+   explicitly whether they require the identity-rejecting or identity-
+   allowing behavior, consistent with their own security assumptions.
 
    Recommended parameters are affected by the Cheon's attack which is a
    solving algorithm for the strong DH problem [Cheon06].  The
