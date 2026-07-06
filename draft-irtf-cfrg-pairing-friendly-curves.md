@@ -259,16 +259,7 @@ As a result, we recommend the BLS curve with 381-bit characteristic of embedding
 
 ## Adoption Status of Pairing-friendly Curves  {#impl}
 
-<!-- NOTE: The comprehensive adoption status table (Table 1 in v12 XML) has been
-     removed from this section due to its size and feedback from CFRG members
-     that it may not be suitable for inclusion in the I-D body.
-     The table data is preserved in notes/table_adoption.xml and
-     notes/table_adoption.md for reference.
-     TODO: Determine the appropriate publication venue for the full table
-     (e.g., companion document, external resource, or appendix).
-     See GitHub issue for tracking. -->
-
-We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications.
+We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications. A comprehensive curve-by-curve comparison, including proposed alternatives that were not selected, is maintained at [https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html](https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html).
 
 The adoption status of pairing-friendly curves is surveyed in standards, libraries and applications. In this survey, "Arnd" is an abbreviation for "Around". The curves categorized as 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. Other labels shown with '~' mean that the security level of the categorized curve is outside the range of each security level. Specifically, the security level of the categorized curves is more than the previous column and is less than the next column. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
 
