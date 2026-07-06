@@ -547,7 +547,7 @@ Table of Contents
    curve that provides security margin above the nominal security level:
    a margin advantage is a security consideration, and by the priority
    above it outranks an efficiency advantage of a lower-margin
-   alternative.  BLS12-381 is the one exception to this preference for
+   alternative.  BLS12_381 is the one exception to this preference for
    margin: although its security level is estimated at approximately 126
    bits [GMT19], slightly below the nominal 128-bit target, it is
    retained because its adoption in production deployments (see
@@ -1304,10 +1304,17 @@ Table of Contents
    the exTNFS proposed by Kim et al. in 2016 [KB16] and they are
    categorized in each security level in accordance with [BD18].
    Implementers who will newly develop pairing-based cryptography
-   applications SHOULD use the recommended parameters.  As of 2020, as
-   far as we've investigated the top cryptographic conferences in the
-   past, there are no fatal attacks that significantly reduce the
-   security of pairing-friendly curves after exTNFS.
+   applications SHOULD use the recommended parameters.  As of 2026, as
+   far as we've investigated the top cryptographic conferences, there
+   are no fatal attacks that significantly reduce the security of
+   pairing-friendly curves beyond what is already reflected in the
+   security estimates cited in this memo ([BD18], [GMT19], [KIK17]).
+   Continued refinements to the number field sieve and its tower
+   variants (e.g., record discrete-logarithm computations and complexity
+   analyses) have been published since 2020, but these are improvements
+   to known algorithm families already accounted for by the post-exTNFS
+   estimates used here, not new attack types that change the qualitative
+   security picture.
 
    BLS curves of embedding degree 12 typically require a characteristic
    p of 461 bits or larger to achieve the 128-bit security level [BD18].
@@ -1386,8 +1393,8 @@ Table of Contents
    Akihiro Kato for their significant contribution to early versions of
    this memo.  The authors would also like to acknowledge Kim Taechan,
    Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an
-   Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Satoru
-   Kanno for their valuable comments.
+   Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F.
+   Aranha for their valuable comments.
 
 9.  References
 
@@ -1831,9 +1838,9 @@ Table of Contents
    [Zcash]    Lindemann, R., "What are zk-SNARKs?",
               <https://z.cash/technology/zksnarks.html>.
 
-   [ZCashRep] Electric Coin Company, "BLS12-381", July 2017,
-              <https://github.com/zkcrypto/pairing/blob/master/src/
-              bls12_381/README.md>.
+   [ZCashRep] Hopwood, D-E., Bowe, S., Hornby, T., and N. Wilcox, "Zcash
+              Protocol Specification", Section 5.4.9.2, 2026,
+              <https://zips.z.cash/protocol/protocol.pdf#blspairing>.
 
    [zkcrypto] zkcrypto, "zkcrypto - Pairing-friendly elliptic curve
               library", 2017, <https://github.com/zkcrypto/pairing>.
