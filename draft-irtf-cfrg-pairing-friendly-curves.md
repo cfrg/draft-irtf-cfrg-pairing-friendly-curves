@@ -253,7 +253,7 @@ First, we show the adoption status of pairing-friendly curves in standards, libr
 
 In our selection policy, it is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. In addition, "efficiency" is one of the important aspects but greatly dependant on implementations, so we choose to prioritize "security" and "widely used" over "efficiency" in consideration of future interconnections and interoperability over the internet.
 
-Within this policy, when "widely used" does not by itself distinguish between candidate curves at a given security level, we prefer the curve that provides security margin above the nominal security level: a margin advantage is a security consideration, and by the priority above it outranks an efficiency advantage of a lower-margin alternative. BLS12-381 is the one exception to this preference for margin: although its security level is estimated at approximately 126 bits {{GMT19}}, slightly below the nominal 128-bit target, it is retained because its adoption in production deployments (see {{impl}}) decisively satisfies the "widely used" criterion. Where no candidate at a given security level satisfies "widely used" -- as is currently the case at the 256-bit level -- this exception does not apply, and the preference for margin governs without qualification.
+Within this policy, when "widely used" does not by itself distinguish between candidate curves at a given security level, we prefer the curve that provides security margin above the nominal security level: a margin advantage is a security consideration, and by the priority above it outranks an efficiency advantage of a lower-margin alternative. BLS12_381 is the one exception to this preference for margin: although its security level is estimated at approximately 126 bits {{GMT19}}, slightly below the nominal 128-bit target, it is retained because its adoption in production deployments (see {{impl}}) decisively satisfies the "widely used" criterion. Where no candidate at a given security level satisfies "widely used" -- as is currently the case at the 256-bit level -- this exception does not apply, and the preference for margin governs without qualification.
 
 As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
 
@@ -717,7 +717,7 @@ The point serialization format defined in {{point-serialization-procedure}} and 
 
 # Security Considerations  {#security-considerations}
 
-The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. As of 2020, as far as we've investigated the top cryptographic conferences in the past, there are no fatal attacks that significantly reduce the security of pairing-friendly curves after exTNFS.
+The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. As of 2026, as far as we've investigated the top cryptographic conferences, there are no fatal attacks that significantly reduce the security of pairing-friendly curves beyond what is already reflected in the security estimates cited in this memo ({{BD18}}, {{GMT19}}, {{KIK17}}). Continued refinements to the number field sieve and its tower variants (e.g., record discrete-logarithm computations and complexity analyses) have been published since 2020, but these are improvements to known algorithm families already accounted for by the post-exTNFS estimates used here, not new attack types that change the qualitative security picture.
 
 BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level {{BD18}}. Note that the security level of BLS12_381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used {{BD18}} {{GMT19}}.
 
@@ -743,7 +743,7 @@ This document has no actions for IANA.
 
 # Acknowledgements  {#acknowledgements}
 
-The authors would like to appreciate a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Satoru Kanno for their valuable comments.
+The authors would like to appreciate a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments.
 
 
 --- back
@@ -1080,14 +1080,24 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
-        <reference anchor="ZCashRep" target="https://github.com/zkcrypto/pairing/blob/master/src/bls12_381/README.md">
+        <reference anchor="ZCashRep" target="https://zips.z.cash/protocol/protocol.pdf#blspairing">
           <front>
-            <title>BLS12-381</title>
-            <author>
-              <organization>Electric Coin Company</organization>
+            <title>Zcash Protocol Specification</title>
+            <author initials="D-E." surname="Hopwood">
+              <organization />
             </author>
-            <date year="2017" month="July" />
+            <author initials="S." surname="Bowe">
+              <organization />
+            </author>
+            <author initials="T." surname="Hornby">
+              <organization />
+            </author>
+            <author initials="N." surname="Wilcox">
+              <organization />
+            </author>
+            <date year="2026" />
           </front>
+          <seriesInfo name="Section" value="5.4.9.2" />
         </reference>
 
         <reference anchor="Cloudflare" target="https://blog.cloudflare.com/geo-key-manager-how-it-works/">
