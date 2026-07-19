@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-07T03:34:26.480904+00:00",
+  "timestamp": "2026-07-19T02:51:43.332512+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2935,7 +2935,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-03-04T15:26:22Z",
-      "updatedAt": "2026-07-06T21:54:21Z",
+      "updatedAt": "2026-07-18T15:38:06Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
@@ -2967,6 +2967,13 @@
           "body": "@yumi-sakemi this PR is about the **interface** that you promised and will be used elsewhere, that's the part that matters the most for adopters of this spec. \r\n\r\nIn particular the split between EC interfaces and Field interfaces is what I care about since it creates confusion in the Fiat-Shamir spec.",
           "createdAt": "2026-07-06T21:54:21Z",
           "updatedAt": "2026-07-06T21:54:21Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @mmaker \u2014 following up on this.\n\nSince the intent behind this interface (and how it's meant to be used downstream, e.g. by sigma-protocols) wasn't fully clear to us, we thought it'd be useful to get broader input from the RG before shaping how this lands in PFC. We've just sent a note to the CFRG list raising a few clarifying questions from this thread: https://mailarchive.ietf.org/arch/msg/cfrg/-OPPc8GWi80T1fFasHMl39g7j9s/\n\nWe'd like to let that conversation develop a bit before deciding how to move forward here on the PR \u2014 happy to continue discussing in parallel if you'd prefer, but wanted to flag that we're intentionally holding off on accepting/merging until we have a clearer picture. Thanks for your patience.",
+          "createdAt": "2026-07-18T15:38:06Z",
+          "updatedAt": "2026-07-18T15:38:06Z"
         }
       ],
       "reviews": [
