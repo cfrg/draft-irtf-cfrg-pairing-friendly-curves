@@ -88,7 +88,7 @@ Let p be a prime number and q = p^n for a natural number n > 0, where p at least
 
 ~~~~~~~~~~
 
-   E : y^2 = x^3 + a * x + b,
+E : y^2 = x^3 + a * x + b,
 
 ~~~~~~~~~~
 
@@ -154,8 +154,8 @@ A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen
 
 ~~~~~~~~~~
 
-    p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
-    r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
+p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
+r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 
 ~~~~~~~~~~
 
@@ -179,12 +179,12 @@ In BLS curves, parameters p and r are given by the following equations:
 
 ~~~~~~~~~~
 
-   BLS12:
-       p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
-       r = t^4 - t^2 + 1
-   BLS48:
-       p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
-       r = t^16 - t^8 + 1
+BLS12:
+    p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
+    r = t^4 - t^2 + 1
+BLS48:
+    p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
+    r = t^16 - t^8 + 1
 
 ~~~~~~~~~~
 
@@ -313,7 +313,7 @@ The BLS12_381 curve is shown in {{BLS12_381}} and it is defined by the parameter
 
 ~~~~~~~~~~
 
-    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
+t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 
 ~~~~~~~~~~
 
@@ -324,9 +324,9 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and G
 
 ~~~~~~~~~~
 
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
-    GF(p^12) = GF(p^6)[w] / (w^2 - v).
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
+GF(p^12) = GF(p^6)[w] / (w^2 - v).
 
 ~~~~~~~~~~
 
@@ -336,7 +336,7 @@ The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
 
-    psi(x', y') = (x' / w^2, y' / w^3)
+psi(x', y') = (x' / w^2, y' / w^3)
 
 ~~~~~~~~~~
 
@@ -395,7 +395,7 @@ A BN curve with the 128-bit security level is shown in {{BD18}}, which we call B
 
 ~~~~~~~~~~
 
-    t = 2^114 + 2^101 - 2^14 - 1
+t = 2^114 + 2^101 - 2^14 - 1
 
 ~~~~~~~~~~
 
@@ -406,9 +406,9 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and G
 
 ~~~~~~~~~~
 
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
-    GF(p^12) = GF(p^6)[w] / (w^2 - v).
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
+GF(p^12) = GF(p^6)[w] / (w^2 - v).
 
 ~~~~~~~~~~
 
@@ -418,7 +418,7 @@ The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
 
-    psi(x', y') = (x' * w^2, y' * w^3)
+psi(x', y') = (x' * w^2, y' * w^3)
 
 ~~~~~~~~~~
 
@@ -477,7 +477,7 @@ The selected BLS48 curve is shown in {{KIK17}} and it is defined by the paramete
 
 ~~~~~~~~~~
 
-    t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
 
 ~~~~~~~~~~
 
@@ -488,11 +488,11 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p
 
 ~~~~~~~~~~
 
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
-    GF(p^8) = GF(p^4)[w] / (w^2 + v)
-    GF(p^24) = GF(p^8)[z] / (z^3 + w)
-    GF(p^48)= GF(p^24)[s] / (s^2 + z).
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
+GF(p^8) = GF(p^4)[w] / (w^2 + v)
+GF(p^24) = GF(p^8)[z] / (z^3 + w)
+GF(p^48)= GF(p^24)[s] / (s^2 + z).
 
 ~~~~~~~~~~
 
@@ -502,7 +502,7 @@ The untwist isomorphism psi : E'(GF(p^8)) -> E(GF(p^48)) is given by
 
 ~~~~~~~~~~
 
-    psi(x', y') = (x' * xi^2, y' * xi^3)
+psi(x', y') = (x' * xi^2, y' * xi^3)
 
 ~~~~~~~~~~
 
@@ -614,8 +614,8 @@ Below, we give detailed serialization and de-serialization procedures, applicabl
 
 ~~~~~~~~~~
 
-    sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
-                   { 0 otherwise.
+sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
+                { 0 otherwise.
 
 ~~~~~~~~~~
 
@@ -1811,14 +1811,14 @@ The following algorithm, Line_Function shows the computation of the line functio
 
 ~~~~~~~~~~
 
-    if (Q_1 = Q_2) then
-        l := (3 * x_1^2) / (2 * y_1);
-    else if (Q_1 = -Q_2) then
-        return x - x_1;
-    else
-        l := (y_2 - y_1) / (x_2 - x_1);
-    end if;
-    return (l * (x - x_1) + y_1 - y);
+if (Q_1 = Q_2) then
+    l := (3 * x_1^2) / (2 * y_1);
+else if (Q_1 = -Q_2) then
+    return x - x_1;
+else
+    l := (y_2 - y_1) / (x_2 - x_1);
+end if;
+return (l * (x - x_1) + y_1 - y);
 
 ~~~~~~~~~~
 
@@ -1834,23 +1834,23 @@ The following algorithm shows the computation of the optimal Ate pairing on BN c
 
 ~~~~~~~~~~
 
-    f := 1; T := Q;
-    if (c_L = -1) then
-        T := -T;
+f := 1; T := Q;
+if (c_L = -1) then
+    T := -T;
+end if
+for i = L-1 downto 0
+    f := f^2 * Line_function(T, T, P); T := T + T;
+    if (c_i = 1) then
+        f := f * Line_function(T, Q, P); T := T + Q;
+    else if (c_i = -1) then
+        f := f * Line_function(T, -Q, P); T := T - Q;
     end if
-    for i = L-1 downto 0
-        f := f^2 * Line_function(T, T, P); T := T + T;
-        if (c_i = 1) then
-            f := f * Line_function(T, Q, P); T := T + Q;
-        else if (c_i = -1) then
-            f := f * Line_function(T, -Q, P); T := T - Q;
-        end if
-    end for
-    Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
-    f := f * Line_function(T, Q_1, P); T := T + Q_1;
-    f := f * Line_function(T, -Q_2, P);
-    f := f^{(p^k - 1) / r}
-    return f;
+end for
+Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
+f := f * Line_function(T, Q_1, P); T := T + Q_1;
+f := f * Line_function(T, -Q_2, P);
+f := f^{(p^k - 1) / r}
+return f;
 
 ~~~~~~~~~~
 
@@ -1862,20 +1862,20 @@ The following algorithm shows the computation of the optimal Ate pairing on Barr
 
 ~~~~~~~~~~
 
-    f := 1; T := Q;
-    if (c_L = -1) then
-        T := -T;
+f := 1; T := Q;
+if (c_L = -1) then
+    T := -T;
+end if
+for i = L-1 downto 0
+    f := f^2 * Line_function(T, T, P); T := T + T;
+    if (c_i = 1) then
+        f := f * Line_function(T, Q, P); T := T + Q;
+    else if (c_i = -1) then
+        f := f * Line_function(T, -Q, P); T := T - Q;
     end if
-    for i = L-1 downto 0
-        f := f^2 * Line_function(T, T, P); T := T + T;
-        if (c_i = 1) then
-            f := f * Line_function(T, Q, P); T := T + Q;
-        else if (c_i = -1) then
-            f := f * Line_function(T, -Q, P); T := T - Q;
-        end if
-    end for
-    f := f^{(p^k - 1) / r};
-    return f;
+end for
+f := f^{(p^k - 1) / r};
+return f;
 
 ~~~~~~~~~~
 
@@ -1889,7 +1889,7 @@ This appendix is informative. It documents implementation considerations discove
 Implementations using the fast final-exponentiation optimizations described in the literature cited below compute pairings that differ from the literal output of the pseudocode in {{comp_pairing}} by a curve-specific exponent in G_T:
 
 ~~~~~~~~~~
-    e_lib(P, Q) = e_pseudocode(P, Q)^k
+e_lib(P, Q) = e_pseudocode(P, Q)^k
 ~~~~~~~~~~
 
 where k is:
@@ -1919,8 +1919,8 @@ For BLS12_381 and BN462, Q = (x', y') is given by
 
 ~~~~~~~~~~
 
-    x' = x'_0 + x'_1 * u and
-    y' = y'_0 + y'_1 * u,
+x' = x'_0 + x'_1 * u and
+y' = y'_0 + y'_1 * u,
 
 ~~~~~~~~~~
 
@@ -1930,10 +1930,10 @@ For BLS48_581, Q = (x', y') is given by
 
 ~~~~~~~~~~
 
-    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
-        + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
-    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
-        + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
+x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
+    + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
+y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
+    + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 
 ~~~~~~~~~~
 
