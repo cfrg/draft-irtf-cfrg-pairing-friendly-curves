@@ -87,9 +87,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Let p be a prime number and q = p^n for a natural number n > 0, where p at least 5. Let GF(q) be a finite field. The curve defined by the following equation E is called an elliptic curve:
 
 ~~~~~~~~~~
-
 E : y^2 = x^3 + a * x + b,
-
 ~~~~~~~~~~
 
 and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q. This is called the Weierstrass normal form of an elliptic curve.
@@ -153,10 +151,8 @@ A BN curve {{BN05}} is a family of pairing-friendly curves proposed in 2005. A p
 A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t. E is defined over GF(p), where p is a prime number and at least 5, and E(GF(p)) has a subgroup of prime order r. The characteristic p and the order r are parameterized by
 
 ~~~~~~~~~~
-
 p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
 r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
-
 ~~~~~~~~~~
 
 for an integer t.
@@ -178,14 +174,12 @@ BLS curves vary in accordance with different embedding degrees. In this memo, we
 In BLS curves, parameters p and r are given by the following equations:
 
 ~~~~~~~~~~
-
 BLS12:
     p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
     r = t^4 - t^2 + 1
 BLS48:
     p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
     r = t^16 - t^8 + 1
-
 ~~~~~~~~~~
 
 for a well chosen integer t where t must be 1 (mod 3).
@@ -312,9 +306,7 @@ In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of emb
 The BLS12_381 curve is shown in {{BLS12_381}} and it is defined by the parameter
 
 ~~~~~~~~~~
-
 t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
-
 ~~~~~~~~~~
 
 where the size of p becomes 381-bit length.
@@ -323,11 +315,9 @@ where the size of p becomes 381-bit length.
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
 
 ~~~~~~~~~~
-
 GF(p^2) = GF(p)[u] / (u^2 + 1)
 GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
 GF(p^12) = GF(p^6)[w] / (w^2 - v).
-
 ~~~~~~~~~~
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.
@@ -335,9 +325,7 @@ Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = 
 The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
-
 psi(x', y') = (x' / w^2, y' / w^3)
-
 ~~~~~~~~~~
 
 where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in {{tower_bls12_381}}.
@@ -394,9 +382,7 @@ In addition, many pairing-based cryptographic applications use a hashing to an e
 A BN curve with the 128-bit security level is shown in {{BD18}}, which we call BN462. BN462 is defined by the parameter
 
 ~~~~~~~~~~
-
 t = 2^114 + 2^101 - 2^14 - 1
-
 ~~~~~~~~~~
 
 for the definition in {{BNdef}}.
@@ -405,11 +391,9 @@ for the definition in {{BNdef}}.
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
 
 ~~~~~~~~~~
-
 GF(p^2) = GF(p)[u] / (u^2 + 1)
 GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
 GF(p^12) = GF(p^6)[w] / (w^2 - v).
-
 ~~~~~~~~~~
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.
@@ -417,9 +401,7 @@ Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = 
 The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
-
 psi(x', y') = (x' * w^2, y' * w^3)
-
 ~~~~~~~~~~
 
 where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in {{tower_bn462}}.
@@ -476,9 +458,7 @@ As shown in the survey in {{impl}}, there are three candidates of pairing-friend
 The selected BLS48 curve is shown in {{KIK17}} and it is defined by the parameter
 
 ~~~~~~~~~~
-
 t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
-
 ~~~~~~~~~~
 
 In this case, the size of p becomes 581-bit.
@@ -487,13 +467,11 @@ In this case, the size of p becomes 581-bit.
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:
 
 ~~~~~~~~~~
-
 GF(p^2) = GF(p)[u] / (u^2 + 1)
 GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
 GF(p^8) = GF(p^4)[w] / (w^2 + v)
 GF(p^24) = GF(p^8)[z] / (z^3 + w)
 GF(p^48)= GF(p^24)[s] / (s^2 + z).
-
 ~~~~~~~~~~
 
 The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48_581 is categorized as D-type.
@@ -501,9 +479,7 @@ The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E'
 The untwist isomorphism psi : E'(GF(p^8)) -> E(GF(p^48)) is given by
 
 ~~~~~~~~~~
-
 psi(x', y') = (x' * xi^2, y' * xi^3)
-
 ~~~~~~~~~~
 
 where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per the tower defined in {{tower_bls48_581}}. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
@@ -613,10 +589,8 @@ Below, we give detailed serialization and de-serialization procedures, applicabl
 - The function sign_GF_p(y) returns one bit representing the sign of an element of GF(p). This function is defined as follows:
 
 ~~~~~~~~~~
-
 sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
                 { 0 otherwise.
-
 ~~~~~~~~~~
 
 - The function sign_GF_p^m(y), for an element y = (y_0, ..., y_{m-1}) of GF(p^m), returns one bit computed as follows: let i be the largest index in {0, ..., m-1} such that y_i is nonzero, or i = 0 if all coefficients are zero; return sign_GF_p(y_i). For BLS12_381 (m=2), this specializes to: sign_GF_p^2(y') = sign_GF_p(y'_0) if y'_1 equals 0, else sign_GF_p(y'_1). For BLS48_581 (m=8), this is the same function specified as sign_GF_p^8 in {{I-D.ietf-cose-bls-key-representations}}, evaluated over the coefficient ordering (y'_0, ..., y'_7) given in {{secure_params}}.
@@ -1810,7 +1784,6 @@ Before presenting the computation of the optimal Ate pairing e(P, Q) satisfying 
 The following algorithm, Line_Function shows the computation of the line function. It takes Q_1 = (x_1, x_2), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of G_T.
 
 ~~~~~~~~~~
-
 if (Q_1 = Q_2) then
     l := (3 * x_1^2) / (2 * y_1);
 else if (Q_1 = -Q_2) then
@@ -1819,7 +1792,6 @@ else
     l := (y_2 - y_1) / (x_2 - x_1);
 end if;
 return (l * (x - x_1) + y_1 - y);
-
 ~~~~~~~~~~
 
 When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}}{{KIK17}}. We note that Line_function does not consider such an isomorphism.
@@ -1833,7 +1805,6 @@ Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such tha
 The following algorithm shows the computation of the optimal Ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
 ~~~~~~~~~~
-
 f := 1; T := Q;
 if (c_L = -1) then
     T := -T;
@@ -1851,7 +1822,6 @@ f := f * Line_function(T, Q_1, P); T := T + Q_1;
 f := f * Line_function(T, -Q_2, P);
 f := f^{(p^k - 1) / r}
 return f;
-
 ~~~~~~~~~~
 
 ## Optimal Ate Pairings over Barreto-Lynn-Scott Curves  {#optimal-ate-pairings-over-barreto-lynn-scott-curves}
@@ -1861,7 +1831,6 @@ Let c = t for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the su
 The following algorithm shows the computation of the optimal Ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
 ~~~~~~~~~~
-
 f := 1; T := Q;
 if (c_L = -1) then
     T := -T;
@@ -1876,7 +1845,6 @@ for i = L-1 downto 0
 end for
 f := f^{(p^k - 1) / r};
 return f;
-
 ~~~~~~~~~~
 
 
@@ -1918,10 +1886,8 @@ Note: The G_2 base points Q = (x', y') in this appendix are given in twisted for
 For BLS12_381 and BN462, Q = (x', y') is given by
 
 ~~~~~~~~~~
-
 x' = x'_0 + x'_1 * u and
 y' = y'_0 + y'_1 * u,
-
 ~~~~~~~~~~
 
 where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).
@@ -1929,12 +1895,10 @@ where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).
 For BLS48_581, Q = (x', y') is given by
 
 ~~~~~~~~~~
-
 x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
     + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
 y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
     + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
-
 ~~~~~~~~~~
 
 where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p). The representation of Q = (x', y') given below is followed by {{I-D.ietf-lwig-curve-representations}}.
