@@ -385,7 +385,7 @@ h':
 b':
 :   4 * (u + 1)
 
-As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, {{point-serialization}} defines a normative point serialization format for it (with test vectors in {{point-serialization-test-vectors}}). This serialization format is also adopted in {{I-D.boneh-bls-signature}} {{zkcrypto}}.
+As mentioned above, BLS12_381 is adopted in a lot of applications. Since it is expected that BLS12_381 will continue to be widely used more and more in the future, {{point-serialization}} describes the *de facto* canonical point serialization format for it (with test vectors in {{point-serialization-test-vectors}}). This serialization format is also adopted in {{I-D.boneh-bls-signature}} {{zkcrypto}}.
 
 In addition, many pairing-based cryptographic applications use a hashing to an elliptic curve procedure that outputs a rational point on an elliptic curve from an arbitrary input. {{RFC9380}} specifies ciphersuites for hashing to an elliptic curve, including BLS12_381, and is valuable information for implementers.
 
@@ -589,7 +589,7 @@ b':
 
 # Point Serialization  {#point-serialization}
 
-This section defines a normative point encoding and decoding procedure for BLS12_381 and BLS48_581. The format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
+This section describes the *de facto* canonical point encoding and decoding procedure for BLS12_381, and also extends it to BLS48_581. The format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
 
 At a high level, the serialization format is defined as follows:
 
