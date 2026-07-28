@@ -120,10 +120,10 @@ GF(p^k):
 :   an extension field of degree k.
 
 (GF(p))*:
-:   a multiplicative group of GF(p).
+:   the multiplicative group of GF(p).
 
 (GF(p^k))*:
-:   a multiplicative group of GF(p^k).
+:   the multiplicative group of GF(p^k).
 
 b:
 :   a primitive element of the multiplicative group (GF(p))^*.
@@ -165,7 +165,7 @@ The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a 
 
 In the case of BN curves, we can use twists of the degree 6. If m is an element that is neither a square nor a cube in an extension field GF(p^2), the twist E' of E is defined over an extension field GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. BN curves are called D-type if b' = b / m, and M-type if b' = b * m. The embedding degree k is 12.
 
-A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as a subgroup of a multiplicative group (GF(p^12))^* of order r.
+A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as an order r subgroup of the multiplicative group (GF(p^12))^*.
 
 ## Barreto-Lynn-Scott Curves  {#BLSdef}
 
@@ -190,7 +190,7 @@ In BLS curves, parameters p and r are given by the following equations:
 
 for a well chosen integer t where t must be 1 (mod 3).
 
-A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of a multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative group (GF(p^48))^* for BLS48.
+A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of the multiplicative group (GF(p^12))^* for BLS12 and of the multiplicative group (GF(p^48))^* for BLS48.
 
 ## Representation Convention for an Extension Field  {#representation-convention-for-an-extension-field}
 
