@@ -1822,7 +1822,7 @@ The following algorithm, Line_Function shows the computation of the line functio
 
 ~~~~~~~~~~
 
-When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}}{{KIK17}}. We note that Line_function does not consider such an isomorphism.
+When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}}{{KIK17}}. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.
 
 The computation of the optimal Ate pairing uses the Frobenius endomorphism. The p-power Frobenius endomorphism pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).
 
