@@ -67,7 +67,7 @@ Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I
 
 ## Motivation and Contribution  {#goal}
 
-At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) {{KB16}}. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i*j (gcd (i, j) = 1, i, j> 1). The basic idea is based on the equality GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the amount of cost for solving the discrete logarithm problem is using sub-field calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves){{BN05}} and Barreto-Lynn-Scott curves (BLS curves){{BLS02}} are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to {{KB16}} for detailed ideas and calculation algorithms of the attack by Kim. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation {{NIST}}.
+At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) {{KB16}}. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i\*j (gcd (i, j) = 1, i, j> 1). The basic idea is based on the equality GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the amount of cost for solving the discrete logarithm problem is using sub-field calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves){{BN05}} and Barreto-Lynn-Scott curves (BLS curves){{BLS02}} are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to {{KB16}} for detailed ideas and calculation algorithms of the attack by Kim. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level, however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation {{NIST}}.
 
 To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack {{BD18}} {{BLS12_381}}.
 
@@ -87,9 +87,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Let p be a prime number and q = p^n for a natural number n > 0, where p at least 5. Let GF(q) be a finite field. The curve defined by the following equation E is called an elliptic curve:
 
 ~~~~~~~~~~
-
-   E : y^2 = x^3 + a * x + b,
-
+E : y^2 = x^3 + a * x + b,
 ~~~~~~~~~~
 
 and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q. This is called the Weierstrass normal form of an elliptic curve.
@@ -153,10 +151,8 @@ A BN curve {{BN05}} is a family of pairing-friendly curves proposed in 2005. A p
 A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t. E is defined over GF(p), where p is a prime number and at least 5, and E(GF(p)) has a subgroup of prime order r. The characteristic p and the order r are parameterized by
 
 ~~~~~~~~~~
-
-    p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
-    r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
-
+p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
+r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 ~~~~~~~~~~
 
 for an integer t.
@@ -178,14 +174,12 @@ BLS curves vary in accordance with different embedding degrees. In this memo, we
 In BLS curves, parameters p and r are given by the following equations:
 
 ~~~~~~~~~~
-
-   BLS12:
-       p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
-       r = t^4 - t^2 + 1
-   BLS48:
-       p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
-       r = t^16 - t^8 + 1
-
+BLS12:
+    p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
+    r = t^4 - t^2 + 1
+BLS48:
+    p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
+    r = t^16 - t^8 + 1
 ~~~~~~~~~~
 
 for a well chosen integer t where t must be 1 (mod 3).
@@ -240,7 +234,7 @@ The security levels of pairing-friendly curves are estimated by the computationa
 
 ## Impact of Recent Attacks  {#impact}
 
-In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP {{KB16}}. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j (gcd (i, j) = 1, i, j> 1). Since the above condition is satisfied especially when k = 2^n*3^m (n, m> 1), BN curves and BLS curves whose embedding degree is divisible by 6 are affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the amount of cost for solving FFDLP is using sub-field calculation. Please refer to {{KB16}} for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits {{BD18}}. Here, the security levels described in this memo correspond to the security strength of NIST recommendation {{NIST}}.
+In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP {{KB16}}. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j (gcd (i, j) = 1, i, j> 1). Since the above condition is satisfied especially when k = 2^n\*3^m (n, m> 1), BN curves and BLS curves whose embedding degree is divisible by 6 are affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the amount of cost for solving FFDLP is using sub-field calculation. Please refer to {{KB16}} for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits {{BD18}}. Here, the security levels described in this memo correspond to the security strength of NIST recommendation {{NIST}}.
 
 There has since been research into the minimum bit length of the parameters of pairing-friendly curves for each security level when applying exTNFS as an attacking method for FFDLP. For 128-bit security, Barbulescu and Duquesne estimated the minimum bit length of p of BN curves and BLS12 curves after exTNFS as 461 bits {{BD18}}. For 256-bit security, Kiyomura et al. estimated the minimum bit length of p^k of BLS48 curves as 27,410 bits, which indicated 572 bits of p {{KIK17}}.
 
@@ -312,9 +306,7 @@ In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of emb
 The BLS12_381 curve is shown in {{BLS12_381}} and it is defined by the parameter
 
 ~~~~~~~~~~
-
-    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
-
+t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 ~~~~~~~~~~
 
 where the size of p becomes 381-bit length.
@@ -323,21 +315,17 @@ where the size of p becomes 381-bit length.
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
 
 ~~~~~~~~~~
-
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
-    GF(p^12) = GF(p^6)[w] / (w^2 - v).
-
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
+GF(p^12) = GF(p^6)[w] / (w^2 - v).
 ~~~~~~~~~~
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.
 
-The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
+The untwist isomorphism psi: E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
-
-    psi(x', y') = (x' / w^2, y' / w^3)
-
+psi(x', y') = (x' / w^2, y' / w^3)
 ~~~~~~~~~~
 
 where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in {{tower_bls12_381}}.
@@ -394,9 +382,7 @@ In addition, many pairing-based cryptographic applications use a hashing to an e
 A BN curve with the 128-bit security level is shown in {{BD18}}, which we call BN462. BN462 is defined by the parameter
 
 ~~~~~~~~~~
-
-    t = 2^114 + 2^101 - 2^14 - 1
-
+t = 2^114 + 2^101 - 2^14 - 1
 ~~~~~~~~~~
 
 for the definition in {{BNdef}}.
@@ -405,21 +391,17 @@ for the definition in {{BNdef}}.
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
 
 ~~~~~~~~~~
-
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
-    GF(p^12) = GF(p^6)[w] / (w^2 - v).
-
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
+GF(p^12) = GF(p^6)[w] / (w^2 - v).
 ~~~~~~~~~~
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.
 
-The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
+The untwist isomorphism psi: E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
-
-    psi(x', y') = (x' * w^2, y' * w^3)
-
+psi(x', y') = (x' * w^2, y' * w^3)
 ~~~~~~~~~~
 
 where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in {{tower_bn462}}.
@@ -476,9 +458,7 @@ As shown in the survey in {{impl}}, there are three candidates of pairing-friend
 The selected BLS48 curve is shown in {{KIK17}} and it is defined by the parameter
 
 ~~~~~~~~~~
-
-    t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
-
+t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
 ~~~~~~~~~~
 
 In this case, the size of p becomes 581-bit.
@@ -487,23 +467,19 @@ In this case, the size of p becomes 581-bit.
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:
 
 ~~~~~~~~~~
-
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
-    GF(p^8) = GF(p^4)[w] / (w^2 + v)
-    GF(p^24) = GF(p^8)[z] / (z^3 + w)
-    GF(p^48)= GF(p^24)[s] / (s^2 + z).
-
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
+GF(p^8) = GF(p^4)[w] / (w^2 + v)
+GF(p^24) = GF(p^8)[z] / (z^3 + w)
+GF(p^48)= GF(p^24)[s] / (s^2 + z).
 ~~~~~~~~~~
 
 The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48_581 is categorized as D-type.
 
-The untwist isomorphism psi : E'(GF(p^8)) -> E(GF(p^48)) is given by
+The untwist isomorphism psi: E'(GF(p^8)) -> E(GF(p^48)) is given by
 
 ~~~~~~~~~~
-
-    psi(x', y') = (x' * xi^2, y' * xi^3)
-
+psi(x', y') = (x' * xi^2, y' * xi^3)
 ~~~~~~~~~~
 
 where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per the tower defined in {{tower_bls48_581}}. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
@@ -594,7 +570,7 @@ This section defines a normative point encoding and decoding procedure for BLS12
 At a high level, the serialization format is defined as follows:
 
 - Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.
-- For a curve with characteristic p represented in n = ceil(len(p) / 8) bytes, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in {{point-serialization-params}}, are serialized into m*n bytes (compressed) or 2*m*n bytes (uncompressed).
+- For a curve with characteristic p represented in n = ceil(len(p) / 8) bytes, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in {{point-serialization-params}}, are serialized into m\*n bytes (compressed) or 2\*m\*n bytes (uncompressed).
 - The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.
 - The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.
 - The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.
@@ -613,10 +589,8 @@ Below, we give detailed serialization and de-serialization procedures, applicabl
 - The function sign_GF_p(y) returns one bit representing the sign of an element of GF(p). This function is defined as follows:
 
 ~~~~~~~~~~
-
-    sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
-                   { 0 otherwise.
-
+sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
+                { 0 otherwise.
 ~~~~~~~~~~
 
 - The function sign_GF_p^m(y), for an element y = (y_0, ..., y_{m-1}) of GF(p^m), returns one bit computed as follows: let i be the largest index in {0, ..., m-1} such that y_i is nonzero, or i = 0 if all coefficients are zero; return sign_GF_p(y_i). For BLS12_381 (m=2), this specializes to: sign_GF_p^2(y') = sign_GF_p(y'_0) if y'_1 equals 0, else sign_GF_p(y'_1). For BLS48_581 (m=8), this is the same function specified as sign_GF_p^8 in {{I-D.ietf-cose-bls-key-representations}}, evaluated over the coefficient ordering (y'_0, ..., y'_7) given in {{secure_params}}.
@@ -633,7 +607,7 @@ The serialization procedure is defined as follows for a point P = (x, y) on a cu
 3. Let x_string be the serialization of x, which is defined as follows:
    - If P is the point at infinity on E, let x_string = I2OSP(0, n).
    - If P is a point on E other than the point at infinity, then x is an element of GF(p), i.e., an integer in the inclusive range [0, p - 1]. In this case, let x_string = I2OSP(x, n).
-   - If P is the point at infinity on E', let x_string = I2OSP(0, m*n).
+   - If P is the point at infinity on E', let x_string = I2OSP(0, m\*n).
    - If P is a point on E' other than the point at infinity, then x can be represented as (x_0, ..., x_{m-1}) where each x_i is an element of GF(p). In this case, let x_string = I2OSP(x_{m-1}, n) concatenated with I2OSP(x_{m-2}, n), ..., concatenated with I2OSP(x_0, n) (i.e., coefficients in decreasing index order). Notice that in all of the above cases, the 3 most significant bits of x_string[0] are guaranteed to be 0.
 4. If point compression is used, let y_string be the empty string. Otherwise (i.e., when point compression is not used), let y_string be the serialization of y, which is defined in Step 3.
 5. Let s_string be the concatenation of x_string and y_string.
@@ -650,12 +624,12 @@ The deserialization procedure is defined as follows for a string s_string, for a
    - Let S_bit equal the third most significant bit of m_byte.
 2. If C_bit is 1:
    - If s_string has length n bytes, the output point is on the curve E.
-   - If s_string has length m*n bytes, the output point is on the curve E'.
+   - If s_string has length m\*n bytes, the output point is on the curve E'.
    - If s_string has any other length, output INVALID and stop decoding.
 
    If C_bit is 0:
    - If s_string has length 2n bytes, the output point is on E.
-   - If s_string has length 2*m*n bytes, the output point is on E'.
+   - If s_string has length 2\*m\*n bytes, the output point is on E'.
    - If s_string has any other length, output INVALID and stop decoding.
 3. Let s_string[0] = s_string[0] AND 0x1F, where AND is computed bitwise. In other words, set the three most significant bits of s_string[0] to 0.
 4. If I_bit is 1:
@@ -1836,19 +1810,17 @@ Before presenting the computation of the optimal Ate pairing e(P, Q) satisfying 
 The following algorithm, Line_Function shows the computation of the line function. It takes Q_1 = (x_1, x_2), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of G_T.
 
 ~~~~~~~~~~
-
-    if (Q_1 = Q_2) then
-        l := (3 * x_1^2) / (2 * y_1);
-    else if (Q_1 = -Q_2) then
-        return x - x_1;
-    else
-        l := (y_2 - y_1) / (x_2 - x_1);
-    end if;
-    return (l * (x - x_1) + y_1 - y);
-
+if (Q_1 = Q_2) then
+    l := (3 * x_1^2) / (2 * y_1);
+else if (Q_1 = -Q_2) then
+    return x - x_1;
+else
+    l := (y_2 - y_1) / (x_2 - x_1);
+end if;
+return (l * (x - x_1) + y_1 - y);
 ~~~~~~~~~~
 
-When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}}{{KIK17}}. We note that Line_function does not consider such an isomorphism.
+When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}}{{KIK17}}. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.
 
 The computation of the optimal Ate pairing uses the Frobenius endomorphism. The p-power Frobenius endomorphism pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).
 
@@ -1859,25 +1831,23 @@ Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such tha
 The following algorithm shows the computation of the optimal Ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
 ~~~~~~~~~~
-
-    f := 1; T := Q;
-    if (c_L = -1) then
-        T := -T;
+f := 1; T := Q;
+if (c_L = -1) then
+    T := -T;
+end if
+for i = L-1 downto 0
+    f := f^2 * Line_function(T, T, P); T := T + T;
+    if (c_i = 1) then
+        f := f * Line_function(T, Q, P); T := T + Q;
+    else if (c_i = -1) then
+        f := f * Line_function(T, -Q, P); T := T - Q;
     end if
-    for i = L-1 downto 0
-        f := f^2 * Line_function(T, T, P); T := T + T;
-        if (c_i = 1) then
-            f := f * Line_function(T, Q, P); T := T + Q;
-        else if (c_i = -1) then
-            f := f * Line_function(T, -Q, P); T := T - Q;
-        end if
-    end for
-    Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
-    f := f * Line_function(T, Q_1, P); T := T + Q_1;
-    f := f * Line_function(T, -Q_2, P);
-    f := f^{(p^k - 1) / r}
-    return f;
-
+end for
+Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
+f := f * Line_function(T, Q_1, P); T := T + Q_1;
+f := f * Line_function(T, -Q_2, P);
+f := f^{(p^k - 1) / r}
+return f;
 ~~~~~~~~~~
 
 ## Optimal Ate Pairings over Barreto-Lynn-Scott Curves  {#optimal-ate-pairings-over-barreto-lynn-scott-curves}
@@ -1887,22 +1857,20 @@ Let c = t for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such that the su
 The following algorithm shows the computation of the optimal Ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
 ~~~~~~~~~~
-
-    f := 1; T := Q;
-    if (c_L = -1) then
-        T := -T;
+f := 1; T := Q;
+if (c_L = -1) then
+    T := -T;
+end if
+for i = L-1 downto 0
+    f := f^2 * Line_function(T, T, P); T := T + T;
+    if (c_i = 1) then
+        f := f * Line_function(T, Q, P); T := T + Q;
+    else if (c_i = -1) then
+        f := f * Line_function(T, -Q, P); T := T - Q;
     end if
-    for i = L-1 downto 0
-        f := f^2 * Line_function(T, T, P); T := T + T;
-        if (c_i = 1) then
-            f := f * Line_function(T, Q, P); T := T + Q;
-        else if (c_i = -1) then
-            f := f * Line_function(T, -Q, P); T := T - Q;
-        end if
-    end for
-    f := f^{(p^k - 1) / r};
-    return f;
-
+end for
+f := f^{(p^k - 1) / r};
+return f;
 ~~~~~~~~~~
 
 
@@ -1915,7 +1883,7 @@ This appendix is informative. It documents implementation considerations discove
 Implementations using the fast final-exponentiation optimizations described in the literature cited below compute pairings that differ from the literal output of the pseudocode in {{comp_pairing}} by a curve-specific exponent in G_T:
 
 ~~~~~~~~~~
-    e_lib(P, Q) = e_pseudocode(P, Q)^k
+e_lib(P, Q) = e_pseudocode(P, Q)^k
 ~~~~~~~~~~
 
 where k is:
@@ -1944,10 +1912,8 @@ Note: The G_2 base points Q = (x', y') in this appendix are given in twisted for
 For BLS12_381 and BN462, Q = (x', y') is given by
 
 ~~~~~~~~~~
-
-    x' = x'_0 + x'_1 * u and
-    y' = y'_0 + y'_1 * u,
-
+x' = x'_0 + x'_1 * u and
+y' = y'_0 + y'_1 * u,
 ~~~~~~~~~~
 
 where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).
@@ -1955,12 +1921,10 @@ where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).
 For BLS48_581, Q = (x', y') is given by
 
 ~~~~~~~~~~
-
-    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
-        + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
-    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
-        + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
-
+x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
+    + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
+y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
+    + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 ~~~~~~~~~~
 
 where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p). The representation of Q = (x', y') given below is followed by {{I-D.ietf-lwig-curve-representations}}.
