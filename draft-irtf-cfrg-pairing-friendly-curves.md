@@ -332,7 +332,7 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and G
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.
 
-The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
+The untwist isomorphism psi: E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
 
@@ -414,7 +414,7 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and G
 
 Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.
 
-The untwist isomorphism psi : E'(GF(p^2)) -> E(GF(p^12)) is given by
+The untwist isomorphism psi: E'(GF(p^2)) -> E(GF(p^12)) is given by
 
 ~~~~~~~~~~
 
@@ -498,7 +498,7 @@ For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p
 
 The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48_581 is categorized as D-type.
 
-The untwist isomorphism psi : E'(GF(p^8)) -> E(GF(p^48)) is given by
+The untwist isomorphism psi: E'(GF(p^8)) -> E(GF(p^48)) is given by
 
 ~~~~~~~~~~
 
