@@ -713,7 +713,13 @@ This document therefore defines two deserialization behaviors, and protocols usi
 
 ## Applicability to BN462  {#bn462-not-applicable}
 
-The point serialization format defined in {{point-serialization-procedure}} and {{point-deserialization-procedure}} is not applicable to BN462. (Scalar serialization, defined in {{scalar-serialization}}, is unaffected and applies to BN462 as well.) BN462 has a 462-bit characteristic p, requiring n = 58 bytes for its canonical GF(p) representation (58 * 8 = 464 bits). This leaves only 2 spare bits in the leading byte of a serialized x-coordinate -- one bit short of the 3 bits (C_bit, I_bit, S_bit) required by the metadata scheme defined above. Consequently, this document does not define a point serialization format for BN462. Doing so would require a different metadata encoding, for example a dedicated leading byte following the general pattern of {{SEC1}} rather than bit-packing into the coordinate representation; designing such an encoding is out of scope for this document, whose primary purpose is parameter specification rather than encoding algorithm design.
+The point serialization procedures of {{point-serialization-procedure}} and {{point-deserialization-procedure}} do not apply to BN462. Scalar serialization, defined in {{scalar-serialization}}, is unaffected and applies to BN462 as well.
+
+BN462 has a 462-bit characteristic p, so its canonical GF(p) representation occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits. This leaves 2 unused bits in the leading byte of a serialized coordinate, one short of the three (C_bit, I_bit, S_bit) that the scheme above places there. A point format for BN462 would therefore have to carry its metadata elsewhere, for example in a dedicated leading byte following the general pattern of {{SEC1}} rather than bit-packing into the coordinate representation.
+
+This document does not define such a format. The format specified above is recorded here because it is already widely used in applications, and because specifications depend on it: it originates with {{ZCashRep}} and is relied upon by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. Neither consideration applies to BN462, so specifying a format for it would mean designing an encoding rather than recording established practice, and encoding design is outside the purpose of this document, which is the specification of curve parameters.
+
+Implementations that nevertheless need to exchange BN462 points may find {{bn462-serialization-notes}} useful. It records, informatively, the encodings that existing implementations use and the alternatives that have been considered. It defines no format.
 
 # Security Considerations  {#security-considerations}
 
@@ -1698,6 +1704,26 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
+        <reference anchor="zig-pairings" target="https://github.com/jedisct1/zig-pairings">
+          <front>
+            <title>zig-pairings: Pairing-friendly curves in pure Zig (BLS12-381, BN462)</title>
+            <author initials="F." surname="Denis" fullname="Frank Denis">
+              <organization />
+            </author>
+            <date year="2026" />
+          </front>
+        </reference>
+
+        <reference anchor="pfcurve-js" target="https://github.com/jc-lab/pfcurve.js">
+          <front>
+            <title>pfcurve.js: A pairing-friendly curve library for Node.js and the browser</title>
+            <author>
+              <organization>JC-Lab</organization>
+            </author>
+            <date year="2020" />
+          </front>
+        </reference>
+
         <reference anchor="Filecoin" target="https://filecoin.io">
           <front>
             <title>Filecoin: A Decentralized Storage Network</title>
@@ -2320,6 +2346,61 @@ Identity (G2, 584 bytes): a string of 584 zero bytes with the leading byte set t
 
 > Note: the BLS12_381 values above are independently confirmed against multiple third-party implementations (e.g. zkcrypto/bls12_381, arkworks). The BLS48_581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
 
+
+# Point Serialization for BN462  {#bn462-serialization-notes}
+
+This appendix is informative. It records why the point serialization format of {{point-serialization}} is not applicable to BN462, which encodings existing BN462 implementations use instead, and which alternatives were considered and set aside. It defines no format, standardizes no algorithm, and places no requirement on implementations. Its purpose is to spare implementers of BN462 the effort of rediscovering the constraint described below, and to record the state of practice at the time of writing.
+
+The observations below were obtained by reading the source code of the cited libraries in August 2026. They describe what those libraries emit and accept; no survey of deployed protocols or products was carried out.
+
+## The Constraint  {#bn462-constraint}
+
+The format of {{point-serialization}} carries three metadata bits (C_bit, I_bit, S_bit) in the three most significant bits of the first byte of a serialized coordinate. This requires the canonical representation of an element of GF(p) to leave at least three unused bits in its leading byte.
+
+BN462 has a 462-bit characteristic p, so n = ceil(462 / 8) = 58 bytes, i.e. 464 bits, and only 464 - 462 = 2 bits are unused: one bit short, as stated in {{bn462-not-applicable}}.
+
+The same criterion appears in implementations. {{MIRACL}} selects between two point encodings at compile time using the condition (MBITS - 1) mod 8 <= 4, where MBITS is the bit length of p; this condition holds exactly when the leading byte of a coordinate has three or more unused bits. When it holds, the library packs a compression flag (0x80) and a sign flag (0x20) into that byte, reserving 0x40; when it does not, it falls back to the {{SEC1}} encoding described in {{bn462-leading-byte}}. For BN462, (462 - 1) mod 8 = 5, so the fallback is used. The diagnosis above is therefore not particular to this document: an implementation supporting BN462 reaches the same conclusion by the same test. (The bit-packing path is additionally gated on a build-time option that the shipped configuration does not enable, so the default build uses the fallback encoding for every curve it supports.)
+
+## Encodings Used by Existing Implementations  {#bn462-existing}
+
+Few libraries implement BN462 at all. Among those surveyed for this document, it is absent from {{RELIC}}, {{blst}}, {{gnark-crypto}}, {{noble-curves}} and {{arkworks}}, each of which does implement BLS12_381. The following do provide it:
+
+| Implementation | G_1 uncompressed | G_1 compressed | Metadata placement | Coordinate byte order |
+|---|---|---|---|---|
+| {{MIRACL}} | 117 bytes | 59 bytes | {{SEC1}} type byte (0x04 / 0x02 / 0x03) | big-endian |
+| {{pfcurve-js}} | 117 bytes | 59 bytes | {{SEC1}} type byte (0x04 / 0x02 / 0x03) | big-endian |
+| {{zig-pairings}} | 117 bytes | 59 bytes | dedicated flag byte, see {{bn462-leading-byte}} | big-endian |
+| {{mcl}} | 116 bytes | 58 bytes | none / packed into the coordinate | little-endian by default |
+
+For {{MIRACL}} and {{zig-pairings}}, the corresponding G_2 sizes are 233 bytes uncompressed and 117 bytes compressed.
+
+In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
+
+Two observations follow. First, implementations that support BN462 have converged on a dedicated leading byte rather than on packing metadata into the coordinate. Second, none of the implementations examined uses the two spare bits of the coordinate to carry metadata.
+
+## Alternative Considered: Two Metadata Bits  {#bn462-two-bit}
+
+S_bit is meaningful only for compressed points (see Step 1 of {{point-serialization-procedure}}). An encoding restricted to uncompressed points therefore needs only C_bit and I_bit, which fit in the two spare bits that BN462 does have. This possibility was raised by Frank Denis during review of this document. Its appeal is that BN462 would remain within the same bit-packing family as the other two curves: a decoder written for BLS12_381 could be extended to BN462 by masking two metadata bits instead of three, rather than by acquiring a second, leading-byte parser used only for BN462.
+
+It carries a pitfall. Step 2 of {{point-deserialization-procedure}} determines the curve jointly from C_bit and the length of the string. For BN462 (n = 58, and E' represented over GF(p^2)), an uncompressed point on E and a compressed point on E' both occupy 116 bytes. Under a two-bit variant, compressed forms cannot be represented and C_bit is always 0, so the two cases never both arise; but a decoder that reuses Step 2 unmodified would accept a 116-byte string with C_bit set and interpret it as a compressed point on E'. An implementation of such a variant would have to reject a nonzero C_bit before the length-based determination in Step 2. An encoding with a dedicated leading byte ({{bn462-leading-byte}}) does not have this hazard, because the type byte separates the two cases structurally.
+
+The variant would also forgo point compression, which is the form most protocols transmit. No implementation of it was found.
+
+## Alternative Considered: A Dedicated Leading Byte  {#bn462-leading-byte}
+
+Moving the metadata out of the coordinate and into a byte of its own removes the constraint of {{bn462-constraint}} entirely and keeps point compression available, at a cost of one byte. Two mutually incompatible variants are in use:
+
+- The {{SEC1}} type byte: 0x04 for an uncompressed point, 0x02 or 0x03 for a compressed point with the value itself carrying the sign of y, followed by the coordinates in big-endian order. This is what {{MIRACL}} and {{pfcurve-js}} emit.
+
+- A flag byte carrying the same three metadata bits as {{point-serialization-procedure}} in the same positions -- C_bit at 0x80, I_bit at 0x40, S_bit at 0x20, with the remaining five bits zero and checked on input -- followed by the coordinates in big-endian order. This is what {{zig-pairings}} emits. These are the same bit positions that {{MIRACL}} uses in its bit-packing path, so this variant amounts to relocating the bit assignment of {{point-serialization}} into a leading byte, leaving the rest of the format unchanged.
+
+Both variants yield the same encoded lengths (117 and 59 bytes for G_1, 233 and 117 bytes for G_2), so length alone does not distinguish them. The leading byte does: an uncompressed point other than the identity element begins with 0x04 in the first variant and 0x00 in the second. A decoder that validates the leading byte rather than skipping over it will therefore reject a string in the other format instead of misparsing it.
+
+## Why This Document Does Not Define a Format  {#bn462-not-defined}
+
+{{bn462-not-applicable}} gives the reasons this document does not define a BN462 point format. Two of them bear on what is recorded above. No specification examined defines or requires a BN462 point encoding, so the encodings listed here are library conventions rather than a format that a consumer of this document needs; and choosing among them would be encoding design rather than the recording of established practice.
+
+Should BN462 point encodings converge, or should a protocol specification come to require one, a future version of this document or a separate specification can define one. Of the encodings recorded above, the {{SEC1}} type byte is the most widely implemented among the libraries examined, and is the form an implementer is most likely to encounter when interoperating with existing BN462 code.
 
 # Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level  {#adoption_status_100bit_security}
 
