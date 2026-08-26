@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 7 January 2027                                         R. Wahby
+Expires: 27 February 2027                                       R. Wahby
                                                      Stanford University
-                                                             6 July 2026
+                                                          26 August 2026
 
 
                         Pairing-Friendly Curves
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 27 February 2027.
 
 Copyright Notice
 
@@ -1296,7 +1296,9 @@ Table of Contents
    following the general pattern of [SEC1] rather than bit-packing into
    the coordinate representation; designing such an encoding is out of
    scope for this document, whose primary purpose is parameter
-   specification rather than encoding algorithm design.
+   specification rather than encoding algorithm design.  The BLS12_381
+   serialization is worth describing since it is already widely used in
+   applications; this consideration does not apply to BN462.
 
 6.  Security Considerations
 
