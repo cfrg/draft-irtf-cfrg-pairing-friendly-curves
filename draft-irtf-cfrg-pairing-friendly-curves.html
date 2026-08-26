@@ -2044,7 +2044,7 @@ are octet strings encoded by above convention.
           <p id="section-5-3.1.1">Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.<a href="#section-5-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-3.2">
-          <p id="section-5-3.2.1">For a curve with characteristic p represented in n = ceil(len(p) / 8) bytes, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>, are serialized into m<em>n bytes (compressed) or 2</em>m*n bytes (uncompressed).<a href="#section-5-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-5-3.2.1">For a curve with characteristic p represented in n = ceil(len(p) / 8) bytes, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>, are serialized into m*n bytes (compressed) or 2*m*n bytes (uncompressed).<a href="#section-5-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-5-3.3">
           <p id="section-5-3.3.1">The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.<a href="#section-5-3.3.1" class="pilcrow">¶</a></p>
@@ -2211,7 +2211,7 @@ are octet strings encoded by above convention.
 <p id="section-5.3-2.2.3">
 If C_bit is 0:
 - If s_string has length 2n bytes, the output point is on E.
-- If s_string has length 2<em>m</em>n bytes, the output point is on E'.
+- If s_string has length 2*m*n bytes, the output point is on E'.
 - If s_string has any other length, output INVALID and stop decoding.<a href="#section-5.3-2.2.3" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.3-2.3">

@@ -1012,8 +1012,8 @@ Table of Contents
    *  For a curve with characteristic p represented in n = ceil(len(p) /
       8) bytes, points on E are serialized into n bytes (compressed) or
       2n bytes (uncompressed).  Points on E', represented over GF(p^m)
-      for the m given in Section 5.1, are serialized into m_n bytes
-      (compressed) or 2_m*n bytes (uncompressed).
+      for the m given in Section 5.1, are serialized into m*n bytes
+      (compressed) or 2*m*n bytes (uncompressed).
 
    *  The serialization of a point at infinity comprises a string of
       zero bytes, except that the metadata bits may be nonzero.
@@ -1155,7 +1155,7 @@ Table of Contents
           decoding.
 
        If C_bit is 0: - If s_string has length 2n bytes, the output
-       point is on E. - If s_string has length 2_m_n bytes, the output
+       point is on E. - If s_string has length 2*m*n bytes, the output
        point is on E'. - If s_string has any other length, output
        INVALID and stop decoding.
 
