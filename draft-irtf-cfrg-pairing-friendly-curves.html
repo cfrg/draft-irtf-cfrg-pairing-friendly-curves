@@ -2772,7 +2772,7 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 
 </pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A-4">When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span><span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
+<p id="appendix-A-4">When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span><span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
 <p id="appendix-A-5">The computation of the optimal Ate pairing uses the Frobenius endomorphism. The p-power Frobenius endomorphism pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <div id="optimal-ate-pairings-over-barreto-naehrig-curves">
 <section id="appendix-A.1">
