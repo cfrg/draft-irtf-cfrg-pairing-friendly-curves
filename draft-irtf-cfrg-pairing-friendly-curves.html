@@ -1380,8 +1380,7 @@ svg {
 <p id="section-2.1-1">Let p be a prime number and q = p^n for a natural number n &gt; 0, where p at least 5. Let GF(q) be a finite field. The curve defined by the following equation E is called an elliptic curve:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-2.1-2">
 <pre>
-   E : y^2 = x^3 + a * x + b,
-
+E : y^2 = x^3 + a * x + b,
 </pre><a href="#section-2.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1-3">and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q. This is called the Weierstrass normal form of an elliptic curve.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
@@ -1475,9 +1474,8 @@ svg {
 <p id="section-2.3-2">A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t. E is defined over GF(p), where p is a prime number and at least 5, and E(GF(p)) has a subgroup of prime order r. The characteristic p and the order r are parameterized by<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-2.3-3">
 <pre>
-    p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
-    r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
-
+p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
+r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 </pre><a href="#section-2.3-3" class="pilcrow">¶</a>
 </div>
 <p id="section-2.3-4">for an integer t.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
@@ -1497,13 +1495,12 @@ svg {
 <p id="section-2.4-4">In BLS curves, parameters p and r are given by the following equations:<a href="#section-2.4-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-2.4-5">
 <pre>
-   BLS12:
-       p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
-       r = t^4 - t^2 + 1
-   BLS48:
-       p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
-       r = t^16 - t^8 + 1
-
+BLS12:
+    p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
+    r = t^4 - t^2 + 1
+BLS48:
+    p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
+    r = t^16 - t^8 + 1
 </pre><a href="#section-2.4-5" class="pilcrow">¶</a>
 </div>
 <p id="section-2.4-6">for a well chosen integer t where t must be 1 (mod 3).<a href="#section-2.4-6" class="pilcrow">¶</a></p>
@@ -1649,8 +1646,7 @@ are octet strings encoded by above convention.
 <p id="section-4.2.1-2">The BLS12_381 curve is shown in <span>[<a href="#BLS12_381" class="cite xref">BLS12_381</a>]</span> and it is defined by the parameter<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.2.1-3">
 <pre>
-    t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
-
+t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 </pre><a href="#section-4.2.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.1-4">where the size of p becomes 381-bit length.<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
@@ -1659,18 +1655,16 @@ are octet strings encoded by above convention.
 </div>
 <div class="alignLeft art-text artwork" id="section-4.2.1-6">
 <pre>
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
-    GF(p^12) = GF(p^6)[w] / (w^2 - v).
-
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
+GF(p^12) = GF(p^6)[w] / (w^2 - v).
 </pre><a href="#section-4.2.1-6" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.1-7">Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12_381 is categorized as M-type.<a href="#section-4.2.1-7" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-8">The untwist isomorphism psi: E'(GF(p^2)) -&gt; E(GF(p^12)) is given by<a href="#section-4.2.1-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.2.1-9">
 <pre>
-    psi(x', y') = (x' / w^2, y' / w^3)
-
+psi(x', y') = (x' / w^2, y' / w^3)
 </pre><a href="#section-4.2.1-9" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.1-10">where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in <a href="#tower_bls12_381" class="auto internal xref">Section 4.2.1, Paragraph 5</a>.<a href="#section-4.2.1-10" class="pilcrow">¶</a></p>
@@ -1758,8 +1752,7 @@ are octet strings encoded by above convention.
 <p id="section-4.2.2-1">A BN curve with the 128-bit security level is shown in <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>, which we call BN462. BN462 is defined by the parameter<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.2.2-2">
 <pre>
-    t = 2^114 + 2^101 - 2^14 - 1
-
+t = 2^114 + 2^101 - 2^14 - 1
 </pre><a href="#section-4.2.2-2" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.2-3">for the definition in <a href="#BNdef" class="auto internal xref">Section 2.3</a>.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
@@ -1768,18 +1761,16 @@ are octet strings encoded by above convention.
 </div>
 <div class="alignLeft art-text artwork" id="section-4.2.2-5">
 <pre>
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
-    GF(p^12) = GF(p^6)[w] / (w^2 - v).
-
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
+GF(p^12) = GF(p^6)[w] / (w^2 - v).
 </pre><a href="#section-4.2.2-5" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.2-6">Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.<a href="#section-4.2.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-7">The untwist isomorphism psi: E'(GF(p^2)) -&gt; E(GF(p^12)) is given by<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.2.2-8">
 <pre>
-    psi(x', y') = (x' * w^2, y' * w^3)
-
+psi(x', y') = (x' * w^2, y' * w^3)
 </pre><a href="#section-4.2.2-8" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.2-9">where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in <a href="#tower_bn462" class="auto internal xref">Section 4.2.2, Paragraph 4</a>.<a href="#section-4.2.2-9" class="pilcrow">¶</a></p>
@@ -1869,8 +1860,7 @@ are octet strings encoded by above convention.
 <p id="section-4.3-2">The selected BLS48 curve is shown in <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span> and it is defined by the parameter<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-3">
 <pre>
-    t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
-
+t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
 </pre><a href="#section-4.3-3" class="pilcrow">¶</a>
 </div>
 <p id="section-4.3-4">In this case, the size of p becomes 581-bit.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
@@ -1879,20 +1869,18 @@ are octet strings encoded by above convention.
 </div>
 <div class="alignLeft art-text artwork" id="section-4.3-6">
 <pre>
-    GF(p^2) = GF(p)[u] / (u^2 + 1)
-    GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
-    GF(p^8) = GF(p^4)[w] / (w^2 + v)
-    GF(p^24) = GF(p^8)[z] / (z^3 + w)
-    GF(p^48)= GF(p^24)[s] / (s^2 + z).
-
+GF(p^2) = GF(p)[u] / (u^2 + 1)
+GF(p^4) = GF(p^2)[v] / (v^2 + u + 1)
+GF(p^8) = GF(p^4)[w] / (w^2 + v)
+GF(p^24) = GF(p^8)[z] / (z^3 + w)
+GF(p^48)= GF(p^24)[s] / (s^2 + z).
 </pre><a href="#section-4.3-6" class="pilcrow">¶</a>
 </div>
 <p id="section-4.3-7">The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48_581 is categorized as D-type.<a href="#section-4.3-7" class="pilcrow">¶</a></p>
 <p id="section-4.3-8">The untwist isomorphism psi: E'(GF(p^8)) -&gt; E(GF(p^48)) is given by<a href="#section-4.3-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-9">
 <pre>
-    psi(x', y') = (x' * xi^2, y' * xi^3)
-
+psi(x', y') = (x' * xi^2, y' * xi^3)
 </pre><a href="#section-4.3-9" class="pilcrow">¶</a>
 </div>
 <p id="section-4.3-10">where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per the tower defined in <a href="#tower_bls48_581" class="auto internal xref">Section 4.3, Paragraph 5</a>. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
@@ -2106,9 +2094,8 @@ are octet strings encoded by above convention.
         </ul>
 <div class="alignLeft art-text artwork" id="section-5.1-4">
 <pre>
-    sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
-                   { 0 otherwise.
-
+sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
+                { 0 otherwise.
 </pre><a href="#section-5.1-4" class="pilcrow">¶</a>
 </div>
 <ul class="normal">
@@ -2761,15 +2748,14 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 <p id="appendix-A-2">The following algorithm, Line_Function shows the computation of the line function. It takes Q_1 = (x_1, x_2), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of G_T.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A-3">
 <pre>
-    if (Q_1 = Q_2) then
-        l := (3 * x_1^2) / (2 * y_1);
-    else if (Q_1 = -Q_2) then
-        return x - x_1;
-    else
-        l := (y_2 - y_1) / (x_2 - x_1);
-    end if;
-    return (l * (x - x_1) + y_1 - y);
-
+if (Q_1 = Q_2) then
+    l := (3 * x_1^2) / (2 * y_1);
+else if (Q_1 = -Q_2) then
+    return x - x_1;
+else
+    l := (y_2 - y_1) / (x_2 - x_1);
+end if;
+return (l * (x - x_1) + y_1 - y);
 </pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
 <p id="appendix-A-4">When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span><span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
@@ -2783,24 +2769,23 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 <p id="appendix-A.1-2">The following algorithm shows the computation of the optimal Ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A.1-3">
 <pre>
-    f := 1; T := Q;
-    if (c_L = -1) then
-        T := -T;
+f := 1; T := Q;
+if (c_L = -1) then
+    T := -T;
+end if
+for i = L-1 downto 0
+    f := f^2 * Line_function(T, T, P); T := T + T;
+    if (c_i = 1) then
+        f := f * Line_function(T, Q, P); T := T + Q;
+    else if (c_i = -1) then
+        f := f * Line_function(T, -Q, P); T := T - Q;
     end if
-    for i = L-1 downto 0
-        f := f^2 * Line_function(T, T, P); T := T + T;
-        if (c_i = 1) then
-            f := f * Line_function(T, Q, P); T := T + Q;
-        else if (c_i = -1) then
-            f := f * Line_function(T, -Q, P); T := T - Q;
-        end if
-    end for
-    Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
-    f := f * Line_function(T, Q_1, P); T := T + Q_1;
-    f := f * Line_function(T, -Q_2, P);
-    f := f^{(p^k - 1) / r}
-    return f;
-
+end for
+Q_1 := pi(p, Q); Q_2 := pi(p, Q_1);
+f := f * Line_function(T, Q_1, P); T := T + Q_1;
+f := f * Line_function(T, -Q_2, P);
+f := f^{(p^k - 1) / r}
+return f;
 </pre><a href="#appendix-A.1-3" class="pilcrow">¶</a>
 </div>
 </section>
@@ -2814,21 +2799,20 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 <p id="appendix-A.2-2">The following algorithm shows the computation of the optimal Ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A.2-3">
 <pre>
-    f := 1; T := Q;
-    if (c_L = -1) then
-        T := -T;
+f := 1; T := Q;
+if (c_L = -1) then
+    T := -T;
+end if
+for i = L-1 downto 0
+    f := f^2 * Line_function(T, T, P); T := T + T;
+    if (c_i = 1) then
+        f := f * Line_function(T, Q, P); T := T + Q;
+    else if (c_i = -1) then
+        f := f * Line_function(T, -Q, P); T := T - Q;
     end if
-    for i = L-1 downto 0
-        f := f^2 * Line_function(T, T, P); T := T + T;
-        if (c_i = 1) then
-            f := f * Line_function(T, Q, P); T := T + Q;
-        else if (c_i = -1) then
-            f := f * Line_function(T, -Q, P); T := T - Q;
-        end if
-    end for
-    f := f^{(p^k - 1) / r};
-    return f;
-
+end for
+f := f^{(p^k - 1) / r};
+return f;
 </pre><a href="#appendix-A.2-3" class="pilcrow">¶</a>
 </div>
 </section>
@@ -2849,7 +2833,7 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 <p id="appendix-B.1-1">Implementations using the fast final-exponentiation optimizations described in the literature cited below compute pairings that differ from the literal output of the pseudocode in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> by a curve-specific exponent in G_T:<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.1-2">
 <pre>
-    e_lib(P, Q) = e_pseudocode(P, Q)^k
+e_lib(P, Q) = e_pseudocode(P, Q)^k
 </pre><a href="#appendix-B.1-2" class="pilcrow">¶</a>
 </div>
 <p id="appendix-B.1-3">where k is:<a href="#appendix-B.1-3" class="pilcrow">¶</a></p>
@@ -2896,20 +2880,18 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 <p id="appendix-C-3">For BLS12_381 and BN462, Q = (x', y') is given by<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-C-4">
 <pre>
-    x' = x'_0 + x'_1 * u and
-    y' = y'_0 + y'_1 * u,
-
+x' = x'_0 + x'_1 * u and
+y' = y'_0 + y'_1 * u,
 </pre><a href="#appendix-C-4" class="pilcrow">¶</a>
 </div>
 <p id="appendix-C-5">where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).<a href="#appendix-C-5" class="pilcrow">¶</a></p>
 <p id="appendix-C-6">For BLS48_581, Q = (x', y') is given by<a href="#appendix-C-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-C-7">
 <pre>
-    x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
-        + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
-    y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
-        + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
-
+x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
+    + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w and
+y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
+    + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 </pre><a href="#appendix-C-7" class="pilcrow">¶</a>
 </div>
 <p id="appendix-C-8">where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p). The representation of Q = (x', y') given below is followed by <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>.<a href="#appendix-C-8" class="pilcrow">¶</a></p>
