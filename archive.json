@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-30T02:30:50.178781+00:00",
+  "timestamp": "2026-08-27T08:04:05.969076+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2777,6 +2777,38 @@
       "updatedAt": "2026-07-28T15:29:13Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 100,
+      "id": "I_kwDOD8wsds8AAAABOU399g",
+      "title": "Record existing BN462 point encodings in an informative appendix",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/100",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Summary\n\nFrank Denis implemented curves from -13 in Zig ([zig-pairings](https://github.com/jedisct1/zig-pairings), covering BLS12-381 and BN462) and reported that BN462 is the one curve for which the draft leaves an implementer nothing to follow for point serialization. He wrote (quoted with his permission):\n\n> It would be useful to define at least an uncompressed encoding for BN462. I had to invent an encoding, and anyone else implementing the draft will invent a different one.\n> The curve has only two spare leading bits, which prevents the current compressed format, but uncompressed points need only the compression and infinity bits, so those two bits are sufficient.\n\nSection 5.6 of -13 already states that the format is not applicable to BN462 and why. What it does not do is help the implementer who still has to emit a BN462 point.\n\n### Proposed resolution: an informative appendix, not a normative format\n\nThis issue proposes to **record** the situation in an informative appendix rather than to **define** a format in the body. The reasoning:\n\n1. **Section 5 documents established practice; for BN462 there is none to document.** The BLS12_381 format originates with the Zcash protocol specification and is relied upon by `draft-irtf-cfrg-bbs-signatures` and `draft-ietf-cose-bls-key-representations`. No specification examined requires a BN462 point encoding, so defining one here would be encoding design rather than documentation \u2014 which Section 5.6 already says is out of scope for this document.\n\n2. **There is existing practice at the library level, and it does not match the draft's scheme.** A survey of the implementations that support BN462 (August 2026, by reading source) found:\n   - `miracl/core` and `pfcurve.js`: SEC1 form, `0x04 || x || y`, 117 bytes for uncompressed G_1\n   - `zig-pairings`: a dedicated flag byte carrying (C_bit, I_bit, S_bit) in bits 7/6/5, then the Section 5.2 coordinate encoding; same 117 bytes\n   - `mcl`: BN462 is marked deprecated; no metadata bits, little-endian by default\n   - **No implementation packs metadata into the two spare bits**, including zig-pairings, which uses a leading byte for the reasons summarised in #101.\n   - BN462 is absent from RELIC, blst, gnark-crypto, noble-curves and arkworks.\n\n   So \"there is nothing to interoperate with\" would not be an accurate justification for staying silent \u2014 but neither would picking one of these produce a format that a protocol currently needs.\n\n   Frank has also made clear that he does not regard his library's format as a constraint on the draft:\n\n   > But this is clearly documented as something specific to that library, so don't treat it as a constraint: if you go for a different format, I'll switch to it in a new release.\n\n3. **`miracl/core` reaches Section 5.6's diagnosis independently.** It selects between two encodings using `(MBITS-1) % 8 <= 4`, which holds exactly when the leading byte has three or more spare bits. For BN462 this is false, and the library falls back to the SEC1 form. The draft's analysis is confirmed by an implementation that hit the same wall.\n\n4. **The two-bit variant has a subtlety worth recording.** For BN462 an uncompressed point on E and a compressed point on E' are both 116 bytes, so a decoder that dispatches on length must reject `C_bit = 1` before the length check. Frank agreed this was \"an important detail\". Recording it costs little and saves the next implementer from finding it the hard way.\n\n### Proposed appendix contents\n\n- **X.1** Why the Section 5 format does not apply (2 spare bits vs 3 required), and the same criterion as it appears in `miracl/core`\n- **X.2** Encodings used by existing implementations, with sizes and byte order\n- **X.3** The two-bit variant: what it buys (BLS12_381 decoders extend by masking two bits instead of three) and the length-ambiguity pitfall\n- **X.4** The dedicated-leading-byte variant, in its two mutually incompatible forms (SEC1 type byte vs metadata flag byte)\n- **X.5** Why this document does not define a format, and under what conditions a future version or a separate document could\n\nPrecedent: #78 added an informative \"Implementation Notes\" appendix in the same spirit.\n\n### Related\n\n- #101 \u2014 the full review this point came from (F5), with the rest of its findings\n- PR #94 adds a sentence to the same Section 5.6 paragraph, on the same point\n- #74 (serialization scope), scope item 6 in particular\n- Section 5.6 \"Applicability to BN462\"\n\n\n\n",
+      "createdAt": "2026-08-26T11:16:16Z",
+      "updatedAt": "2026-08-26T11:43:16Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 101,
+      "id": "I_kwDOD8wsds8AAAABOVCbLQ",
+      "title": "Review from Frank Denis (zig-pairings): summary and tracking",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/101",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Context\n\nFrank Denis implemented pairing-friendly curves from -13 in Zig ([zig-pairings](https://github.com/jedisct1/zig-pairings), covering BLS12-381 and BN462) and sent a review based on that experience on 2026-07-28, followed by an exchange on 2026-08-17/18.\n\nThe correspondence was private. Frank has given permission to name him and to cite his comments, so this issue **summarises** the points in our own words and tracks their disposition, rather than reproducing the messages.\n\nThis is the counterpart, for Frank's review, of #99 (Emil Lundberg's review). Several findings were reached independently by more than one reviewer, which is noted below.\n\n### Points raised, and where each is tracked\n\n| # | Point | Disposition |\n|---|---|---|\n| **F1** | The BLS48-581 test vector in Appendix C is the cube of the literal Appendix A.2 output, while the BLS12-381 and BN462 vectors are literal outputs. Appendix B.1 should also cover BLS48-581, and should distinguish a different pairing normalisation from a different way of computing the same final exponent. | **Confirmed.** We reimplemented Appendix A literally and checked all three curves: BLS12-381 and BN462 match exactly, BLS48-581 equals the cube. Verified two independent ways. Resolution: replace the Appendix C vector with the literal output, and give Appendix B.1 a BLS48-581 entry. |\n| **F2a** | Section 5.3 should reject an encoding in which any GF(p) coefficient is >= p; without it one point has several accepted encodings. | **Accepted.** Raised independently by Michele Orr\u00f9. We checked blst, zkcrypto/bls12_381 and gnark-crypto: **all three already reject it**, and all place the check immediately after masking the metadata bits. A MUST will be added at the corresponding point in the procedure. Depends on #91 (coefficient splitting) landing first. |\n| **F2b** | Section 5.3 should either require an r-torsion subgroup check, or state very clearly that callers must perform one. | **Accepted, and taken further.** Rather than requiring a separate check, deserialization to G_1 / G_2 will include it, so a successful decode yields a group element by construction. |\n| **F2c** | For BLS48-581, accepting every curve point lets two compressed strings decode to the same point when y = 0. | **Confirmed.** May be subsumed by F2b: with the subgroup check folded into deserialization, the duplicate representative has order 2 and is outside G_1, so it is rejected anyway. Being confirmed with the co-authors whether to also close it at the encoding layer. |\n| **F3** | Section 2.2 should define G_2 precisely, e.g. as `E(GF(p^k))[r]` intersected with `ker(pi - [p])`. The current wording permits G_2 = G_1, for which the Appendix A pairing degenerates to 1. | **Accepted, and now a prerequisite** rather than an improvement, since the F2b resolution needs a precise definition of the group that deserialization returns. Wording to be checked against #95. |\n| **F4a** | Section 5 consistency: some byte-length expressions lost their multiplication signs, and Sections 2.5 and 5.2 specify opposite coefficient orders. | Multiplication signs: **#92** (asterisks parsed as emphasis). Coefficient order: the two sections genuinely disagree; being resolved together with the treatment of Section 2.5. A survey of miracl/core found its extension-field serialization uses decreasing index order, matching Section 5.2. |\n| **F4b** | The deserialization procedure should explicitly split extension-field coordinates into n-byte coefficients and mirror the serialization procedure. | **#91.** Reached independently by Emil Lundberg. |\n| **F5** | Define at least an uncompressed encoding for BN462: he had to invent one, and other implementers will each invent a different one. Uncompressed points need only the compression and infinity bits, so BN462's two spare bits suffice. | **#100.** Resolved as an informative appendix recording existing practice and the alternatives, rather than a normative format. See that issue for the reasoning. |\n| **F6** | `G_3` in Section 6 should be `G_T`. | Accepted; single occurrence. |\n| **F7** | Add uncompressed-point and scalar test vectors to help implementations and interoperability. | Accepted; vectors generated, to be added to Appendix D. |\n\n### Follow-up exchange (2026-08-17 / 08-18)\n\nWe asked three things and got answers to all of them:\n\n1. **Permission** to name him and cite his comments in public venues \u2014 granted without restriction.\n2. **The layout of zig-pairings' BN462 encoding.** It uses a dedicated leading byte holding (C_bit, I_bit, S_bit) in bits 7, 6 and 5 with the remaining bits zero, followed by the Section 5.2 coordinate encoding unchanged. He chose it for consistency with what implementers expect from SEC1/NIST curves, and because it leaves room for a sign bit so compressed points remain possible. He explicitly asked that this not be treated as a constraint on the draft, and offered to follow whatever format the draft settles on.\n3. **Whether he happened to know of other implementations emitting uncompressed BN462 points.** Establishing that is the authors' job, and we have since surveyed the implementations; the results are summarised in #100. Frank had deliberately worked from the draft alone, to test whether an implementation could be written from it and where it fell short -- which is what makes this review as useful as it is.\n\nHe also confirmed a detail we raised: under a two-bit scheme a decoder that dispatches on length must check C_bit first, because for BN462 an uncompressed point on E and a compressed point on E' are both 116 bytes.\n\n### Related\n\n- #100 \u2014 BN462 point encodings (F5)\n- #99 \u2014 review from Emil Lundberg\n- #91, #92, #95 \u2014 PRs covering F4a, F4b and part of F3\n- #74 \u2014 serialization scope\n\n",
+      "createdAt": "2026-08-26T11:37:13Z",
+      "updatedAt": "2026-08-26T11:41:28Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -3405,25 +3437,35 @@
       "id": "PR_kwDOD8wsds73fSto",
       "title": "Escape multiplication asterisks parsed as emphasis",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/92",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emlun",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "When `*` appears 2 or more times in a paragraph without whitespace surrounding it, it gets parsed as emphasis instead of as a multiplication asterisk. This causes `m*n bytes (compressed) or 2*m*n bytes (uncompressed)` to render as \"mn bytes (compressed) or 2m*n bytes (uncompressed)\" in section 5, and `length 2*m*n bytes` to render as \"length 2mn bytes\" in section 5.3. This commit also escapes other occurrences of un-spaced `*` as a precaution.",
       "createdAt": "2026-07-28T14:13:47Z",
-      "updatedAt": "2026-07-28T14:13:47Z",
+      "updatedAt": "2026-08-26T12:40:59Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
       "headRepository": "emlun/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "review-emlun/asterisks",
       "headRefOid": "e6cd4aa2787246dffff68880c1a8f9640b15eb48",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-08-26T12:40:58Z",
+      "mergedAt": "2026-08-26T12:40:58Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "56a7575d398fb3a6aac458513fdead230e3dbaaa"
+      },
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged, thanks. The rendering issue was real: in the text output of -13, `m*n` in the Section 5 overview comes out as `m_n`, because the asterisks are consumed as emphasis markers. Escaping them fixes it.\n",
+          "createdAt": "2026-08-26T12:40:56Z",
+          "updatedAt": "2026-08-26T12:40:56Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3457,25 +3499,35 @@
       "id": "PR_kwDOD8wsds73fkzi",
       "title": "Suggestion: Note that BLS12-381 serialization is widely used, unlike one for BN462",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/94",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emlun",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This is only a suggestion - you are welcome to ignore/reject this if you disagree, or to pick out any pieces you like and edit them as you please.",
       "createdAt": "2026-07-28T14:22:43Z",
-      "updatedAt": "2026-07-28T14:22:43Z",
+      "updatedAt": "2026-08-26T11:59:24Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
       "headRepository": "emlun/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "review-emlun/serialization-widely-used",
       "headRefOid": "433a164495bf6d08b9edd661d620b4bcb8793acb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-08-26T11:59:06Z",
+      "mergedAt": "2026-08-26T11:59:06Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "b94a50bf6dbac35871b6cdf197eaa9a536a47172"
+      },
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged \u2014 thank you. This was worth stating explicitly: Section 5.6 gave the technical reason (two spare bits where three are needed) and said that designing an alternative encoding is out of scope, but it never said why the BLS12_381 format is worth writing down in the first place. That was a gap in the reasoning, not just in the wording.\n\nOne heads-up so the change doesn't come as a surprise later. Section 5 is being restructured along per-curve lines for -14, and Section 5.6 becomes the BN462 subsection. As part of that the paragraph is being split so each reason stands on its own: applicability (points no, scalars yes), the bit-width constraint, why no format is defined, and a pointer to a new informative appendix. **Your point becomes the third of those, so the sentence itself will read differently even though the substance stays.**\n\nIt also picks up a second piece of evidence we found while working through the serialization review: besides being widely used in applications, the BLS12_381 format is depended on normatively by `draft-irtf-cfrg-bbs-signatures` and `draft-ietf-cose-bls-key-representations` \u2014 and BN462 has no counterpart to either. The two conditions together are what make the asymmetry you identified concrete.\n\nThe appendix is tracked in #100; it records what existing BN462 implementations actually emit, since a survey turned up more prior art than we expected \u2014 though none of it matching the draft's scheme.\n\nThanks as well for the questions at IETF 126 and for the review since. Both have been genuinely useful.\n",
+          "createdAt": "2026-08-26T11:59:24Z",
+          "updatedAt": "2026-08-26T11:59:24Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3509,25 +3561,35 @@
       "id": "PR_kwDOD8wsds73fpCs",
       "title": "Clarify in Line_function definition that coordinates are untwisted",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/96",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emlun",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This clarification is already present in [Appendix C](https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-13.html#name-test-vectors-of-optimal-ate), which is good, but this PR also adds it to the section that defines Line_function.\r\n\r\nThis is only a suggestion - you are welcome to ignore/reject this if you disagree, or to pick out any pieces you like and edit them as you please.",
       "createdAt": "2026-07-28T14:24:50Z",
-      "updatedAt": "2026-07-28T14:24:50Z",
+      "updatedAt": "2026-08-26T12:41:34Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
       "headRepository": "emlun/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "review-emlun/line-function-untwisted",
       "headRefOid": "156e99d8e4095a134d3c4ba075eee26d366d27ca",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-08-26T12:41:34Z",
+      "mergedAt": "2026-08-26T12:41:34Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "8a529533ac487955f221c5a235055d9f5e54b559"
+      },
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged, thanks. The untwisted-coordinate assumption was implicit before, so stating it is a helpful clarification.\n",
+          "createdAt": "2026-08-26T12:41:31Z",
+          "updatedAt": "2026-08-26T12:41:31Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3535,25 +3597,35 @@
       "id": "PR_kwDOD8wsds73fqVb",
       "title": "Remove space between psi and function definition colon",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/97",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emlun",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This now matches the formatting `e: (G_1, G_2) -> G_T` already present in section 2.2.\r\n\r\nThis is only a suggestion - you are welcome to ignore/reject this if you disagree.",
       "createdAt": "2026-07-28T14:25:26Z",
-      "updatedAt": "2026-07-28T14:25:26Z",
+      "updatedAt": "2026-08-26T12:41:55Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
       "headRepository": "emlun/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "review-emlun/psi-space",
       "headRefOid": "308d0505fb5bb7a552af97c0055a58f17508251e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-08-26T12:41:55Z",
+      "mergedAt": "2026-08-26T12:41:55Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "c1c1c35ce17681c3be90c1aec22e7b4699f39287"
+      },
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged, thanks.\n",
+          "createdAt": "2026-08-26T12:41:52Z",
+          "updatedAt": "2026-08-26T12:41:52Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3561,25 +3633,35 @@
       "id": "PR_kwDOD8wsds73fzIa",
       "title": "Remove unnecessary whitespace from code blocks",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/98",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emlun",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "- Remove unnecessary indentation from code blocks:\r\n\r\n  This may have been an intentional style decision, but it seems like it's not since such indentation is missing in [section 2.5](https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-13.html#name-representation-convention-f) and [Appendix D](https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-13.html#name-test-vectors-for-point-seri).\r\n\r\n- Remove leading/trailing blank lines from code blocks:\r\n\r\n  At least the trailing blank lines do cause the Markdown parser to render extra vertical whitespace which is not needed.\r\n\r\nThis is only a suggestion - you are welcome to ignore/reject this if you disagree, or to pick out any pieces you like and edit them as you please.",
       "createdAt": "2026-07-28T14:29:31Z",
-      "updatedAt": "2026-07-28T14:29:31Z",
+      "updatedAt": "2026-08-26T12:43:27Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
       "headRepository": "emlun/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "review-emlun/code-block-blank-lines",
       "headRefOid": "878664a230503946b382d603355aac9b5d557519",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-08-26T12:43:26Z",
+      "mergedAt": "2026-08-26T12:43:26Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "eb1ae8a18118bf65f4b3bef32271c499575071d3"
+      },
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged, thanks. As a side effect this also cleared the last remaining `Artwork too wide, reducing indentation from 3 to 1` warning from xml2rfc, and the rendered output stays at the same page count.\n",
+          "createdAt": "2026-08-26T12:43:23Z",
+          "updatedAt": "2026-08-26T12:43:23Z"
+        }
+      ],
       "reviews": []
     }
   ]
