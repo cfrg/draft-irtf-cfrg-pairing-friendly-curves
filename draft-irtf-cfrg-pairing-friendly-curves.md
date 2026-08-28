@@ -186,36 +186,6 @@ for a well chosen integer t where t must be 1 (mod 3).
 
 A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of a multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative group (GF(p^48))^* for BLS48.
 
-## Representation Convention for an Extension Field  {#representation-convention-for-an-extension-field}
-
-Pairing-friendly curves use a tower of some extension fields. In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of {{I-D.ietf-lwig-curve-representations}} as a standard and effective method. Note that the big-endian encoding is used for an element in GF(p) which follows to mcl {{mcl}}, ISO/IEC 15946-5 {{ISOIEC15946-5}} and etc.
-
-Let GF(p) be a finite field of characteristic p and GF(p^d) = GF(p)(i) be an extension field of GF(p) of degree d.
-
-~~~~~~~~~~
-For an element s in GF(p^d) such that s = s_0 + s_1 * i + ... +
-s_{d - 1} * i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the
-basefield GF(p), s is represented as octet string by
-oct(s) = s_0 || s_1 || ... || s_{d - 1}.
-~~~~~~~~~~
-
-Let GF(p^d') = GF(p^d)(j) be an extension field of GF(p^d) of degree d' / d.
-
-~~~~~~~~~~
-For an element s' in GF(p^d') such that s' = s'_0 + s'_1 * j + ...
-+ s'_{d' / d - 1} * j^{d' / d - 1} where s'_0, s'_1, ...,
-s'_{d' / d - 1} in the basefield GF(p^d), s' is represented as
-integer by oct(s') = oct(s'_0) || oct(s'_1) || ... ||
-oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1})
-are octet strings encoded by above convention.
-~~~~~~~~~~
-
-In general, one can define encoding between integer and an element of any finite field tower by inductively applying the above convention.
-
-The parameters and test vectors of extension fields described in this memo are encoded by this convention and represented in an octet stream.
-
-When applications communicate elements in an extension field, using the compression method {{MP04}} may be more effective. In that case, care for interoperability must be taken.
-
 
 # Security of Pairing-Friendly Curves  {#security_pfc}
 
@@ -335,7 +305,7 @@ We have to note that the security level of this pairing is expected to be 126 ra
 Parameters of BLS12_381 are given as follows.
 
 - G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1
-- G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with {{I-D.ietf-lwig-curve-representations}}) - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r
+- G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r
 
 p:
 :   0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab
@@ -413,7 +383,7 @@ We note also that CP8_544 is about 20% faster that BN462 {{GMT19}}, has 131-bit 
 We give the following parameters for BN462.
 
 - G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1
-- G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with {{I-D.ietf-lwig-curve-representations}}) - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r
+- G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r
 
 p:
 :   0x240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908f41c8020ffffffffff6ff66fc6ff687f640000000002401b00840138013
@@ -487,7 +457,7 @@ where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per th
 We then give the parameters for BLS48_581 as follows.
 
 - G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1
-- G_2 is an r-order subgroup of E'(GF(p^8)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with {{I-D.ietf-lwig-curve-representations}}) - x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p)) - h' : the cofactor #E'(GF(p^8))/r
+- G_2 is an r-order subgroup of E'(GF(p^8)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p)) - h' : the cofactor #E'(GF(p^8))/r
 
 p:
 :   0x1280f73ff3476f313824e31d47012a0056e84f8d122131bb3be6c0f1f3975444a48ae43af6e082acd9cd30394f4736daf68367a5513170ee0a578fdf721a4a48ac3edc154e6565912b
@@ -1084,7 +1054,6 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-lwig-curve-representations-23.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-boneh-bls-signature-00.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9380.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-10.xml" />
@@ -1386,23 +1355,6 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
               <organization />
             </author>
             <date year="2010" />
-          </front>
-        </reference>
-
-        <reference anchor="MP04" target="https://eprint.iacr.org/2004/032.pdf">
-          <front>
-            <title>Cocks–Pinch curves of embedding degrees five to eight and optimal ate pairing computation</title>
-            <seriesInfo name="Cryptology ePrint Archive" value="Report 2019/431" />
-            <author initials="A." surname="Guillevic">
-              <organization />
-            </author>
-            <author initials="S." surname="Masson">
-              <organization />
-            </author>
-            <author initials="E." surname="Thome">
-              <organization />
-            </author>
-            <date year="2019" />
           </front>
         </reference>
 
@@ -1902,9 +1854,23 @@ y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
     + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 ~~~~~~~~~~
 
-where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p). The representation of Q = (x', y') given below is followed by {{I-D.ietf-lwig-curve-representations}}.
+where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p).
 
-In addition, we use the notation e_i (i = 0, ..., k-1) to represent each element in e(P, Q), where the extension field that e(P, Q) belongs is constructed according to {{I-D.ietf-lwig-curve-representations}}.
+In addition, we use the notation e_i (i = 0, ..., k-1) for the coefficients of e(P, Q) over GF(p), with respect to the tower of extension fields defined for each curve in {{secure_params}}. The basis is the set of products of powers of the indeterminates of that tower, indexed so that each indeterminate contributes a stride equal to the degree over GF(p) of the field it extends.
+
+For BLS12_381 and BN462 (k = 12), with the towers of {{tower_bls12_381}} and {{tower_bn462}}, this gives
+
+~~~~~~~~~~
+e(P, Q) = e_0 + e_1 * u + e_2 * v + e_3 * u * v + e_4 * v^2
+        + e_5 * u * v^2 + e_6 * w + e_7 * u * w + e_8 * v * w
+        + e_9 * u * v * w + e_10 * v^2 * w + e_11 * u * v^2 * w.
+~~~~~~~~~~
+
+For BLS48_581 (k = 48), with the tower of {{tower_bls48_581}}, the same rule gives the 48 basis elements u^i1 * v^i2 * w^i3 * z^i4 * s^i5, where i1, i2, i3 and i5 are in {0, 1} and i4 is in {0, 1, 2}. The coefficient of that basis element is e_i with
+
+~~~~~~~~~~
+i = i1 + 2 * i2 + 4 * i3 + 8 * i4 + 24 * i5.
+~~~~~~~~~~
 
 BLS12_381:
 
