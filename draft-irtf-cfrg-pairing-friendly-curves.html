@@ -1177,9 +1177,6 @@ svg {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
                 <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-barreto-lynn-scott-curves" class="internal xref">Barreto-Lynn-Scott Curves</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
-                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-representation-convention-f" class="internal xref">Representation Convention for an Extension Field</a></p>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
@@ -1507,37 +1504,6 @@ BLS48:
 <p id="section-2.4-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of a multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative group (GF(p^48))^* for BLS48.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="representation-convention-for-an-extension-field">
-<section id="section-2.5">
-        <h3 id="name-representation-convention-f">
-<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-representation-convention-f" class="section-name selfRef">Representation Convention for an Extension Field</a>
-        </h3>
-<p id="section-2.5-1">Pairing-friendly curves use a tower of some extension fields. In order to encode an element of an extension field, focusing on interoperability, we adopt the representation convention shown in Appendix J.4 of <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span> as a standard and effective method. Note that the big-endian encoding is used for an element in GF(p) which follows to mcl <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, ISO/IEC 15946-5 <span>[<a href="#ISOIEC15946-5" class="cite xref">ISOIEC15946-5</a>]</span> and etc.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
-<p id="section-2.5-2">Let GF(p) be a finite field of characteristic p and GF(p^d) = GF(p)(i) be an extension field of GF(p) of degree d.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.5-3">
-<pre>
-For an element s in GF(p^d) such that s = s_0 + s_1 * i + ... +
-s_{d - 1} * i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the
-basefield GF(p), s is represented as octet string by
-oct(s) = s_0 || s_1 || ... || s_{d - 1}.
-</pre><a href="#section-2.5-3" class="pilcrow">¶</a>
-</div>
-<p id="section-2.5-4">Let GF(p^d') = GF(p^d)(j) be an extension field of GF(p^d) of degree d' / d.<a href="#section-2.5-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.5-5">
-<pre>
-For an element s' in GF(p^d') such that s' = s'_0 + s'_1 * j + ...
-+ s'_{d' / d - 1} * j^{d' / d - 1} where s'_0, s'_1, ...,
-s'_{d' / d - 1} in the basefield GF(p^d), s' is represented as
-integer by oct(s') = oct(s'_0) || oct(s'_1) || ... ||
-oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1})
-are octet strings encoded by above convention.
-</pre><a href="#section-2.5-5" class="pilcrow">¶</a>
-</div>
-<p id="section-2.5-6">In general, one can define encoding between integer and an element of any finite field tower by inductively applying the above convention.<a href="#section-2.5-6" class="pilcrow">¶</a></p>
-<p id="section-2.5-7">The parameters and test vectors of extension fields described in this memo are encoded by this convention and represented in an octet stream.<a href="#section-2.5-7" class="pilcrow">¶</a></p>
-<p id="section-2.5-8">When applications communicate elements in an extension field, using the compression method <span>[<a href="#MP04" class="cite xref">MP04</a>]</span> may be more effective. In that case, care for interoperability must be taken.<a href="#section-2.5-8" class="pilcrow">¶</a></p>
-</section>
-</div>
 </section>
 </div>
 <div id="security_pfc">
@@ -1675,7 +1641,7 @@ psi(x', y') = (x' / w^2, y' / w^3)
               <p id="section-4.2.1-13.1.1">G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1<a href="#section-4.2.1-13.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.2.1-13.2">
-              <p id="section-4.2.1-13.2.1">G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>) - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.1-13.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.1-13.2.1">G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.1-13.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <span class="break"></span><dl class="dlParallel" id="section-4.2.1-14">
@@ -1782,7 +1748,7 @@ psi(x', y') = (x' * w^2, y' * w^3)
               <p id="section-4.2.2-13.1.1">G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1<a href="#section-4.2.2-13.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.2.2-13.2">
-              <p id="section-4.2.2-13.2.1">G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>) - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.2-13.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.2-13.2.1">G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.2-13.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <span class="break"></span><dl class="dlParallel" id="section-4.2.2-14">
@@ -1890,7 +1856,7 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
             <p id="section-4.3-12.1.1">G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1<a href="#section-4.3-12.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.3-12.2">
-            <p id="section-4.3-12.2.1">G_2 is an r-order subgroup of E'(GF(p^8)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 (encoded with <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>) - x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p)) - h' : the cofactor #E'(GF(p^8))/r<a href="#section-4.3-12.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.3-12.2.1">G_2 is an r-order subgroup of E'(GF(p^8)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p)) - h' : the cofactor #E'(GF(p^8))/r<a href="#section-4.3-12.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <span class="break"></span><dl class="dlParallel" id="section-4.3-13">
@@ -2584,10 +2550,6 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
         <dd>
 <span class="refAuthor">Looker, T.</span> and <span class="refAuthor">M. B. Jones</span>, <span class="refTitle">"Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-bls-key-representations-08</span>, <time datetime="2025-11-04" class="refDate">4 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-bls-key-representations-08">https://datatracker.ietf.org/doc/html/draft-ietf-cose-bls-key-representations-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.ietf-lwig-curve-representations">[I-D.ietf-lwig-curve-representations]</dt>
-        <dd>
-<span class="refAuthor">Struik, R.</span>, <span class="refTitle">"Alternative Elliptic Curve Representations"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lwig-curve-representations-23</span>, <time datetime="2022-01-21" class="refDate">21 January 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lwig-curve-representations-23">https://datatracker.ietf.org/doc/html/draft-ietf-lwig-curve-representations-23</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="I-D.irtf-cfrg-bbs-signatures">[I-D.irtf-cfrg-bbs-signatures]</dt>
         <dd>
 <span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Kalos, V.</span>, <span class="refAuthor">Whitehead, A.</span>, and <span class="refAuthor">M. Lodder</span>, <span class="refTitle">"The BBS Signature Scheme"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-bbs-signatures-10</span>, <time datetime="2026-01-08" class="refDate">8 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bbs-signatures-10">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-bbs-signatures-10</a>&gt;</span>. </dd>
@@ -2643,10 +2605,6 @@ Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 <dt id="Montgomery">[Montgomery]</dt>
         <dd>
 <span class="refAuthor">Montgomery, P.</span>, <span class="refTitle">"Speeding the Pollard and Elliptic Curve Methods of Factorization"</span>, <span class="seriesInfo">MATHEMATICS OF COMPUTATION , January</span>, <time datetime="1987" class="refDate">1987</time>, <span>&lt;<a href="https://www.ams.org/journals/mcom/1987-48-177/S0025-5718-1987-0866113-7/S0025-5718-1987-0866113-7.pdf">https://www.ams.org/journals/mcom/1987-48-177/S0025-5718-1987-0866113-7/S0025-5718-1987-0866113-7.pdf</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="MP04">[MP04]</dt>
-        <dd>
-<span class="refAuthor">Guillevic, A.</span>, <span class="refAuthor">Masson, S.</span>, and <span class="refAuthor">E. Thome</span>, <span class="refTitle">"Cocks–Pinch curves of embedding degrees five to eight and optimal ate pairing computation"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2019/431</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2004/032.pdf">https://eprint.iacr.org/2004/032.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NASKM08">[NASKM08]</dt>
         <dd>
@@ -2897,524 +2855,538 @@ y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v
     + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 </pre><a href="#appendix-C-7" class="pilcrow">¶</a>
 </div>
-<p id="appendix-C-8">where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p). The representation of Q = (x', y') given below is followed by <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>.<a href="#appendix-C-8" class="pilcrow">¶</a></p>
-<p id="appendix-C-9">In addition, we use the notation e_i (i = 0, ..., k-1) to represent each element in e(P, Q), where the extension field that e(P, Q) belongs is constructed according to <span>[<a href="#I-D.ietf-lwig-curve-representations" class="cite xref">I-D.ietf-lwig-curve-representations</a>]</span>.<a href="#appendix-C-9" class="pilcrow">¶</a></p>
-<p id="appendix-C-10">BLS12_381:<a href="#appendix-C-10" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="appendix-C-11">
-        <dt id="appendix-C-11.1">Input x value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.2">
-          <p id="appendix-C-11.2.1">0x17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac586c55e83ff97a1aeffb3af00adb22c6bb<a href="#appendix-C-11.2.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.3">Input y value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.4">
-          <p id="appendix-C-11.4.1">0x08b3f481e3aaa0f1a09e30ed741d8ae4fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1<a href="#appendix-C-11.4.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.5">Input x'_0 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.6">
-          <p id="appendix-C-11.6.1">0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8<a href="#appendix-C-11.6.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.7">Input x'_1 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.8">
-          <p id="appendix-C-11.8.1">0x13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e<a href="#appendix-C-11.8.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.9">Input y'_0 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.10">
-          <p id="appendix-C-11.10.1">0x0ce5d527727d6e118cc9cdc6da2e351aadfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801<a href="#appendix-C-11.10.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.11">Input y'_1 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.12">
-          <p id="appendix-C-11.12.1">0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be<a href="#appendix-C-11.12.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.13">e_0:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.14">
-          <p id="appendix-C-11.14.1">0x11619b45f61edfe3b47a15fac19442526ff489dcda25e59121d9931438907dfd448299a87dde3a649bdba96e84d54558<a href="#appendix-C-11.14.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.15">e_1:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.16">
-          <p id="appendix-C-11.16.1">0x153ce14a76a53e205ba8f275ef1137c56a566f638b52d34ba3bf3bf22f277d70f76316218c0dfd583a394b8448d2be7f<a href="#appendix-C-11.16.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.17">e_2:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.18">
-          <p id="appendix-C-11.18.1">0x095668fb4a02fe930ed44767834c915b283b1c6ca98c047bd4c272e9ac3f3ba6ff0b05a93e59c71fba77bce995f04692<a href="#appendix-C-11.18.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.19">e_3:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.20">
-          <p id="appendix-C-11.20.1">0x16deedaa683124fe7260085184d88f7d036b86f53bb5b7f1fc5e248814782065413e7d958d17960109ea006b2afdeb5f<a href="#appendix-C-11.20.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.21">e_4:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.22">
-          <p id="appendix-C-11.22.1">0x09c92cf02f3cd3d2f9d34bc44eee0dd50314ed44ca5d30ce6a9ec0539be7a86b121edc61839ccc908c4bdde256cd6048<a href="#appendix-C-11.22.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.23">e_5:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.24">
-          <p id="appendix-C-11.24.1">0x111061f398efc2a97ff825b04d21089e24fd8b93a47e41e60eae7e9b2a38d54fa4dedced0811c34ce528781ab9e929c7<a href="#appendix-C-11.24.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.25">e_6:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.26">
-          <p id="appendix-C-11.26.1">0x01ecfcf31c86257ab00b4709c33f1c9c4e007659dd5ffc4a735192167ce197058cfb4c94225e7f1b6c26ad9ba68f63bc<a href="#appendix-C-11.26.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.27">e_7:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.28">
-          <p id="appendix-C-11.28.1">0x08890726743a1f94a8193a166800b7787744a8ad8e2f9365db76863e894b7a11d83f90d873567e9d645ccf725b32d26f<a href="#appendix-C-11.28.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.29">e_8:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.30">
-          <p id="appendix-C-11.30.1">0x0e61c752414ca5dfd258e9606bac08daec29b3e2c57062669556954fb227d3f1260eedf25446a086b0844bcd43646c10<a href="#appendix-C-11.30.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.31">e_9:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.32">
-          <p id="appendix-C-11.32.1">0x0fe63f185f56dd29150fc498bbeea78969e7e783043620db33f75a05a0a2ce5c442beaff9da195ff15164c00ab66bdde<a href="#appendix-C-11.32.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.33">e_10:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.34">
-          <p id="appendix-C-11.34.1">0x10900338a92ed0b47af211636f7cfdec717b7ee43900eee9b5fc24f0000c5874d4801372db478987691c566a8c474978<a href="#appendix-C-11.34.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-11.35">e_11:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-11.36">
-          <p id="appendix-C-11.36.1">0x1454814f3085f0e6602247671bc408bbce2007201536818c901dbd4d2095dd86c1ec8b888e59611f60a301af7776be3d<a href="#appendix-C-11.36.1" class="pilcrow">¶</a></p>
-</dd>
-      <dd class="break"></dd>
-</dl>
-<p id="appendix-C-12">BN462:<a href="#appendix-C-12" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="appendix-C-13">
-        <dt id="appendix-C-13.1">Input x value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.2">
-          <p id="appendix-C-13.2.1">0x21a6d67ef250191fadba34a0a30160b9ac9264b6f95f63b3edbec3cf4b2e689db1bbb4e69a416a0b1e79239c0372e5cd70113c98d91f36b6980d<a href="#appendix-C-13.2.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.3">Input y value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.4">
-          <p id="appendix-C-13.4.1">0x0118ea0460f7f7abb82b33676a7432a490eeda842cccfa7d788c659650426e6af77df11b8ae40eb80f475432c66600622ecaa8a5734d36fb03de<a href="#appendix-C-13.4.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.5">Input x'_0 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.6">
-          <p id="appendix-C-13.6.1">0x0257ccc85b58dda0dfb38e3a8cbdc5482e0337e7c1cd96ed61c913820408208f9ad2699bad92e0032ae1f0aa6a8b48807695468e3d934ae1e4df<a href="#appendix-C-13.6.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.7">Input x'_1 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.8">
-          <p id="appendix-C-13.8.1">0x1d2e4343e8599102af8edca849566ba3c98e2a354730cbed9176884058b18134dd86bae555b783718f50af8b59bf7e850e9b73108ba6aa8cd283<a href="#appendix-C-13.8.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.9">Input y'_0 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.10">
-          <p id="appendix-C-13.10.1">0x0a0650439da22c1979517427a20809eca035634706e23c3fa7a6bb42fe810f1399a1f41c9ddae32e03695a140e7b11d7c3376e5b68df0db7154e<a href="#appendix-C-13.10.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.11">Input y'_1 value:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.12">
-          <p id="appendix-C-13.12.1">0x073ef0cbd438cbe0172c8ae37306324d44d5e6b0c69ac57b393f1ab370fd725cc647692444a04ef87387aa68d53743493b9eba14cc552ca2a93a<a href="#appendix-C-13.12.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.13">e_0:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.14">
-          <p id="appendix-C-13.14.1">0x0cf7f0f2e01610804272f4a7a24014ac085543d787c8f8bf07059f93f87ba7e2a4ac77835d4ff10e78669be39cd23cc3a659c093dbe3b9647e8c<a href="#appendix-C-13.14.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.15">e_1:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.16">
-          <p id="appendix-C-13.16.1">0x00ef2c737515694ee5b85051e39970f24e27ca278847c7cfa709b0df408b830b3763b1b001f1194445b62d6c093fb6f77e43e369edefb1200389<a href="#appendix-C-13.16.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.17">e_2:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.18">
-          <p id="appendix-C-13.18.1">0x04d685b29fd2b8faedacd36873f24a06158742bb2328740f93827934592d6f1723e0772bb9ccd3025f88dc457fc4f77dfef76104ff43cd430bf7<a href="#appendix-C-13.18.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.19">e_3:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.20">
-          <p id="appendix-C-13.20.1">0x090067ef2892de0c48ee49cbe4ff1f835286c700c8d191574cb424019de11142b3c722cc5083a71912411c4a1f61c00d1e8f14f545348eb7462c<a href="#appendix-C-13.20.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.21">e_4:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.22">
-          <p id="appendix-C-13.22.1">0x1437603b60dce235a090c43f5147d9c03bd63081c8bb1ffa7d8a2c31d673230860bb3dfe4ca85581f7459204ef755f63cba1fbd6a4436f10ba0e<a href="#appendix-C-13.22.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.23">e_5:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.24">
-          <p id="appendix-C-13.24.1">0x13191b1110d13650bf8e76b356fe776eb9d7a03fe33f82e3fe5732071f305d201843238cc96fd0e892bc61701e1844faa8e33446f87c6e29e75f<a href="#appendix-C-13.24.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.25">e_6:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.26">
-          <p id="appendix-C-13.26.1">0x07b1ce375c0191c786bb184cc9c08a6ae5a569dd7586f75d6d2de2b2f075787ee5082d44ca4b8009b3285ecae5fa521e23be76e6a08f17fa5cc8<a href="#appendix-C-13.26.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.27">e_7:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.28">
-          <p id="appendix-C-13.28.1">0x05b64add5e49574b124a02d85f508c8d2d37993ae4c370a9cda89a100cdb5e1d441b57768dbc68429ffae243c0c57fe5ab0a3ee4c6f2d9d34714<a href="#appendix-C-13.28.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.29">e_8:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.30">
-          <p id="appendix-C-13.30.1">0x0fd9a3271854a2b4542b42c55916e1faf7a8b87a7d10907179ac7073f6a1de044906ffaf4760d11c8f92df3e50251e39ce92c700a12e77d0adf3<a href="#appendix-C-13.30.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.31">e_9:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.32">
-          <p id="appendix-C-13.32.1">0x17fa0c7fa60c9a6d4d8bb9897991efd087899edc776f33743db921a689720c82257ee3c788e8160c112f18e841a3dd9a79a6f8782f771d542ee5<a href="#appendix-C-13.32.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.33">e_10:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.34">
-          <p id="appendix-C-13.34.1">0x0c901397a62bb185a8f9cf336e28cfb0f354e2313f99c538cdceedf8b8aa22c23b896201170fc915690f79f6ba75581f1b76055cd89b7182041c<a href="#appendix-C-13.34.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-C-13.35">e_11:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-13.36">
-          <p id="appendix-C-13.36.1">0x20f27fde93cee94ca4bf9ded1b1378c1b0d80439eeb1d0c8daef30db0037104a5e32a2ccc94fa1860a95e39a93ba51187b45f4c2c50c16482322<a href="#appendix-C-13.36.1" class="pilcrow">¶</a></p>
-</dd>
-      <dd class="break"></dd>
-</dl>
-<p id="appendix-C-14">BLS48_581:<a href="#appendix-C-14" class="pilcrow">¶</a></p>
+<p id="appendix-C-8">where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0, ..., y'_7 are elements of GF(p).<a href="#appendix-C-8" class="pilcrow">¶</a></p>
+<p id="appendix-C-9">In addition, we use the notation e_i (i = 0, ..., k-1) for the coefficients of e(P, Q) over GF(p), with respect to the tower of extension fields defined for each curve in <a href="#secure_params" class="auto internal xref">Section 4</a>. The basis is the set of products of powers of the indeterminates of that tower, indexed so that each indeterminate contributes a stride equal to the degree over GF(p) of the field it extends.<a href="#appendix-C-9" class="pilcrow">¶</a></p>
+<p id="appendix-C-10">For BLS12_381 and BN462 (k = 12), with the towers of <a href="#tower_bls12_381" class="auto internal xref">Section 4.2.1, Paragraph 5</a> and <a href="#tower_bn462" class="auto internal xref">Section 4.2.2, Paragraph 4</a>, this gives<a href="#appendix-C-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-C-11">
+<pre>
+e(P, Q) = e_0 + e_1 * u + e_2 * v + e_3 * u * v + e_4 * v^2
+        + e_5 * u * v^2 + e_6 * w + e_7 * u * w + e_8 * v * w
+        + e_9 * u * v * w + e_10 * v^2 * w + e_11 * u * v^2 * w.
+</pre><a href="#appendix-C-11" class="pilcrow">¶</a>
+</div>
+<p id="appendix-C-12">For BLS48_581 (k = 48), with the tower of <a href="#tower_bls48_581" class="auto internal xref">Section 4.3, Paragraph 5</a>, the same rule gives the 48 basis elements u^i1 * v^i2 * w^i3 * z^i4 * s^i5, where i1, i2, i3 and i5 are in {0, 1} and i4 is in {0, 1, 2}. The coefficient of that basis element is e_i with<a href="#appendix-C-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-C-13">
+<pre>
+i = i1 + 2 * i2 + 4 * i3 + 8 * i4 + 24 * i5.
+</pre><a href="#appendix-C-13" class="pilcrow">¶</a>
+</div>
+<p id="appendix-C-14">BLS12_381:<a href="#appendix-C-14" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="appendix-C-15">
         <dt id="appendix-C-15.1">Input x value:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.2">
-          <p id="appendix-C-15.2.1">0x02af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d8c3bce8732315af640<a href="#appendix-C-15.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.2.1">0x17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac586c55e83ff97a1aeffb3af00adb22c6bb<a href="#appendix-C-15.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="appendix-C-15.3">Input y value:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.4">
-          <p id="appendix-C-15.4.1">0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70<a href="#appendix-C-15.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.4.1">0x08b3f481e3aaa0f1a09e30ed741d8ae4fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1<a href="#appendix-C-15.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.5">x'_0:</dt>
+<dt id="appendix-C-15.5">Input x'_0 value:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.6">
-          <p id="appendix-C-15.6.1">0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab<a href="#appendix-C-15.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.6.1">0x024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8<a href="#appendix-C-15.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.7">x'_1:</dt>
+<dt id="appendix-C-15.7">Input x'_1 value:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.8">
-          <p id="appendix-C-15.8.1">0x07c4973ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c57<a href="#appendix-C-15.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.8.1">0x13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e<a href="#appendix-C-15.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.9">x'_2:</dt>
+<dt id="appendix-C-15.9">Input y'_0 value:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.10">
-          <p id="appendix-C-15.10.1">0x01fccc70198f1334e1b2ea1853ad83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a<a href="#appendix-C-15.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.10.1">0x0ce5d527727d6e118cc9cdc6da2e351aadfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801<a href="#appendix-C-15.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.11">x'_3:</dt>
+<dt id="appendix-C-15.11">Input y'_1 value:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.12">
-          <p id="appendix-C-15.12.1">0x0be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8cb4e80bc3f09a7033cbb7feafe<a href="#appendix-C-15.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.12.1">0x0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab3f370d275cec1da1aaa9075ff05f79be<a href="#appendix-C-15.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.13">x'_4:</dt>
+<dt id="appendix-C-15.13">e_0:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.14">
-          <p id="appendix-C-15.14.1">0x038b91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c53f8cce5<a href="#appendix-C-15.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.14.1">0x11619b45f61edfe3b47a15fac19442526ff489dcda25e59121d9931438907dfd448299a87dde3a649bdba96e84d54558<a href="#appendix-C-15.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.15">x'_5:</dt>
+<dt id="appendix-C-15.15">e_1:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.16">
-          <p id="appendix-C-15.16.1">0x0c96c7797eb0738603f1311e4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a<a href="#appendix-C-15.16.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.16.1">0x153ce14a76a53e205ba8f275ef1137c56a566f638b52d34ba3bf3bf22f277d70f76316218c0dfd583a394b8448d2be7f<a href="#appendix-C-15.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.17">x'_6:</dt>
+<dt id="appendix-C-15.17">e_2:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.18">
-          <p id="appendix-C-15.18.1">0x0b9b7951c6061ee3f0197a498908aee660dea41b39d13852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c22d63334b5b0e205c3354e41607e60750e057<a href="#appendix-C-15.18.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.18.1">0x095668fb4a02fe930ed44767834c915b283b1c6ca98c047bd4c272e9ac3f3ba6ff0b05a93e59c71fba77bce995f04692<a href="#appendix-C-15.18.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.19">x'_7:</dt>
+<dt id="appendix-C-15.19">e_3:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.20">
-          <p id="appendix-C-15.20.1">0x0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3f84e19da00fbc6ae34<a href="#appendix-C-15.20.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.20.1">0x16deedaa683124fe7260085184d88f7d036b86f53bb5b7f1fc5e248814782065413e7d958d17960109ea006b2afdeb5f<a href="#appendix-C-15.20.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.21">y'_0:</dt>
+<dt id="appendix-C-15.21">e_4:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.22">
-          <p id="appendix-C-15.22.1">0x00eb53356c375b5dfa497216452f3024b918b4238059a577e6f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d659045012ab12c0ff323edd3fe4d2d7971<a href="#appendix-C-15.22.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.22.1">0x09c92cf02f3cd3d2f9d34bc44eee0dd50314ed44ca5d30ce6a9ec0539be7a86b121edc61839ccc908c4bdde256cd6048<a href="#appendix-C-15.22.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.23">y'_1:</dt>
+<dt id="appendix-C-15.23">e_5:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.24">
-          <p id="appendix-C-15.24.1">0x0284dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3afb096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111471db936cd5665<a href="#appendix-C-15.24.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.24.1">0x111061f398efc2a97ff825b04d21089e24fd8b93a47e41e60eae7e9b2a38d54fa4dedced0811c34ce528781ab9e929c7<a href="#appendix-C-15.24.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.25">y'_2:</dt>
+<dt id="appendix-C-15.25">e_6:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.26">
-          <p id="appendix-C-15.26.1">0x0b36a201dd008523e421efb70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e90411515536ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a8474<a href="#appendix-C-15.26.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.26.1">0x01ecfcf31c86257ab00b4709c33f1c9c4e007659dd5ffc4a735192167ce197058cfb4c94225e7f1b6c26ad9ba68f63bc<a href="#appendix-C-15.26.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.27">y'_3:</dt>
+<dt id="appendix-C-15.27">e_7:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.28">
-          <p id="appendix-C-15.28.1">0x0aec25a4621edc0688223fbbd478762b1c2cded3360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bda503ee5e578fb3d8b8a1e5337316213da92841589d<a href="#appendix-C-15.28.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.28.1">0x08890726743a1f94a8193a166800b7787744a8ad8e2f9365db76863e894b7a11d83f90d873567e9d645ccf725b32d26f<a href="#appendix-C-15.28.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.29">y'_4:</dt>
+<dt id="appendix-C-15.29">e_8:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.30">
-          <p id="appendix-C-15.30.1">0x0d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdddfcf7a43f47831f982e50137<a href="#appendix-C-15.30.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.30.1">0x0e61c752414ca5dfd258e9606bac08daec29b3e2c57062669556954fb227d3f1260eedf25446a086b0844bcd43646c10<a href="#appendix-C-15.30.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.31">y'_5:</dt>
+<dt id="appendix-C-15.31">e_9:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.32">
-          <p id="appendix-C-15.32.1">0x07d0d03745736b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c270841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf90bee4<a href="#appendix-C-15.32.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.32.1">0x0fe63f185f56dd29150fc498bbeea78969e7e783043620db33f75a05a0a2ce5c442beaff9da195ff15164c00ab66bdde<a href="#appendix-C-15.32.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.33">y'_6:</dt>
+<dt id="appendix-C-15.33">e_10:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.34">
-          <p id="appendix-C-15.34.1">0x0896767811be65ea25c2d05dfdd17af8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb23986<a href="#appendix-C-15.34.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.34.1">0x10900338a92ed0b47af211636f7cfdec717b7ee43900eee9b5fc24f0000c5874d4801372db478987691c566a8c474978<a href="#appendix-C-15.34.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.35">y'_7:</dt>
+<dt id="appendix-C-15.35">e_11:</dt>
         <dd style="margin-left: 1.5em" id="appendix-C-15.36">
-          <p id="appendix-C-15.36.1">0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6<a href="#appendix-C-15.36.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-15.36.1">0x1454814f3085f0e6602247671bc408bbce2007201536818c901dbd4d2095dd86c1ec8b888e59611f60a301af7776be3d<a href="#appendix-C-15.36.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+<p id="appendix-C-16">BN462:<a href="#appendix-C-16" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="appendix-C-17">
+        <dt id="appendix-C-17.1">Input x value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.2">
+          <p id="appendix-C-17.2.1">0x21a6d67ef250191fadba34a0a30160b9ac9264b6f95f63b3edbec3cf4b2e689db1bbb4e69a416a0b1e79239c0372e5cd70113c98d91f36b6980d<a href="#appendix-C-17.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.37">e_0:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.38">
-          <p id="appendix-C-15.38.1">0x0e26c3fcb8ef67417814098de5111ffcccc1d003d15b367bad07cef2291a93d31db03e3f03376f3beae2bd877bcfc22a25dc51016eda1ab56ee3033bc4b4fec5962f02dffb3af5e38e<a href="#appendix-C-15.38.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.3">Input y value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.4">
+          <p id="appendix-C-17.4.1">0x0118ea0460f7f7abb82b33676a7432a490eeda842cccfa7d788c659650426e6af77df11b8ae40eb80f475432c66600622ecaa8a5734d36fb03de<a href="#appendix-C-17.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.39">e_1:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.40">
-          <p id="appendix-C-15.40.1">0x069061b8047279aa5c2d25cdf676ddf34eddbc8ec2ec0f03614886fa828e1fc066b26d35744c0c38271843aa4fb617b57fa9eb4bd256d17367914159fc18b10a1085cb626e5bedb145<a href="#appendix-C-15.40.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.5">Input x'_0 value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.6">
+          <p id="appendix-C-17.6.1">0x0257ccc85b58dda0dfb38e3a8cbdc5482e0337e7c1cd96ed61c913820408208f9ad2699bad92e0032ae1f0aa6a8b48807695468e3d934ae1e4df<a href="#appendix-C-17.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.41">e_2:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.42">
-          <p id="appendix-C-15.42.1">0x02b9bece645fbf9d8f97025a1545359f6fe3ffab3cd57094f862f7fb9ca01c88705c26675bcc723878e943da6b56ce25d063381fcd2a292e0e7501fe572744184fb4ab4ca071a04281<a href="#appendix-C-15.42.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.7">Input x'_1 value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.8">
+          <p id="appendix-C-17.8.1">0x1d2e4343e8599102af8edca849566ba3c98e2a354730cbed9176884058b18134dd86bae555b783718f50af8b59bf7e850e9b73108ba6aa8cd283<a href="#appendix-C-17.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.43">e_3:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.44">
-          <p id="appendix-C-15.44.1">0x0080d267bf036c1e61d7fc73905e8c630b97aa05ef3266c82e7a111072c0d2056baa8137fba111c9650dfb18cb1f43363041e202e3192fced29d2b0501c882543fb370a56bfdc2435b<a href="#appendix-C-15.44.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.9">Input y'_0 value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.10">
+          <p id="appendix-C-17.10.1">0x0a0650439da22c1979517427a20809eca035634706e23c3fa7a6bb42fe810f1399a1f41c9ddae32e03695a140e7b11d7c3376e5b68df0db7154e<a href="#appendix-C-17.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.45">e_4:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.46">
-          <p id="appendix-C-15.46.1">0x03c6b4c12f338f9401e6a493a405b33e64389338db8c5e592a8dd79eac7720dd83dd6b0c189eeda20809160cd57cdf3e2edc82db15f553c1f6c953ea27114cb6bd8a38e273f407dae0<a href="#appendix-C-15.46.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.11">Input y'_1 value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.12">
+          <p id="appendix-C-17.12.1">0x073ef0cbd438cbe0172c8ae37306324d44d5e6b0c69ac57b393f1ab370fd725cc647692444a04ef87387aa68d53743493b9eba14cc552ca2a93a<a href="#appendix-C-17.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.47">e_5:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.48">
-          <p id="appendix-C-15.48.1">0x016e46224f28bfd8833f76ac29ee6e406a9da1bde55f5e82b3bd977897a9104f18b9ee41ea9af7d4183d895102950a12ce9975669db07924e1b432d9680f5ce7e5c67ed68f381eba45<a href="#appendix-C-15.48.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.13">e_0:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.14">
+          <p id="appendix-C-17.14.1">0x0cf7f0f2e01610804272f4a7a24014ac085543d787c8f8bf07059f93f87ba7e2a4ac77835d4ff10e78669be39cd23cc3a659c093dbe3b9647e8c<a href="#appendix-C-17.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.49">e_6:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.50">
-          <p id="appendix-C-15.50.1">0x008ddce7a4a1b94be5df3ceea56bef0077dcdde86d579938a50933a47296d337b7629934128e2457e24142b0eeaa978fd8e70986d7dd51fccbbeb8a1933434fec4f5bc538de2646e90<a href="#appendix-C-15.50.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.15">e_1:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.16">
+          <p id="appendix-C-17.16.1">0x00ef2c737515694ee5b85051e39970f24e27ca278847c7cfa709b0df408b830b3763b1b001f1194445b62d6c093fb6f77e43e369edefb1200389<a href="#appendix-C-17.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.51">e_7:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.52">
-          <p id="appendix-C-15.52.1">0x060ef6eae55728e40bd4628265218b24b38cdd434968c14bfefb87f0dcbfc76cc473ae2dc0cac6e69dfdf90951175178dc75b9cc08320fcde187aa58ea047a2ee00b1968650eec2791<a href="#appendix-C-15.52.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.17">e_2:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.18">
+          <p id="appendix-C-17.18.1">0x04d685b29fd2b8faedacd36873f24a06158742bb2328740f93827934592d6f1723e0772bb9ccd3025f88dc457fc4f77dfef76104ff43cd430bf7<a href="#appendix-C-17.18.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.53">e_8:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.54">
-          <p id="appendix-C-15.54.1">0x0c3943636876fd4f9393414099a746f84b2633dfb7c36ba6512a0b48e66dcb2e409f1b9e150e36b0b4311165810a3c721525f0d43a021f090e6a27577b42c7a57bed3327edb98ba8f8<a href="#appendix-C-15.54.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.19">e_3:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.20">
+          <p id="appendix-C-17.20.1">0x090067ef2892de0c48ee49cbe4ff1f835286c700c8d191574cb424019de11142b3c722cc5083a71912411c4a1f61c00d1e8f14f545348eb7462c<a href="#appendix-C-17.20.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.55">e_9:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.56">
-          <p id="appendix-C-15.56.1">0x02d31eb8be0d923cac2a8eb6a07556c8951d849ec53c2848ee78c5eed40262eb21822527a8555b071f1cd080e049e5e7ebfe2541d5b42c1e414341694d6f16d287e4a8d28359c2d2f9<a href="#appendix-C-15.56.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.21">e_4:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.22">
+          <p id="appendix-C-17.22.1">0x1437603b60dce235a090c43f5147d9c03bd63081c8bb1ffa7d8a2c31d673230860bb3dfe4ca85581f7459204ef755f63cba1fbd6a4436f10ba0e<a href="#appendix-C-17.22.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.57">e_10:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.58">
-          <p id="appendix-C-15.58.1">0x07f19673c5580d6a10d09a032397c5d425c3a99ff1dd0abe5bec40a0d47a6b8daabb22edb6b06dd8691950b8f23faefcdd80c45aa3817a840018965941f4247f9f97233a84f58b262e<a href="#appendix-C-15.58.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.23">e_5:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.24">
+          <p id="appendix-C-17.24.1">0x13191b1110d13650bf8e76b356fe776eb9d7a03fe33f82e3fe5732071f305d201843238cc96fd0e892bc61701e1844faa8e33446f87c6e29e75f<a href="#appendix-C-17.24.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.59">e_11:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.60">
-          <p id="appendix-C-15.60.1">0x0d3fe01f0c114915c3bdf8089377780076c1685302279fd9ab12d07477aac03b69291652e9f179baa0a99c38aa8851c1d25ffdb4ded2c8fe8b30338c14428607d6d822610d41f51372<a href="#appendix-C-15.60.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.25">e_6:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.26">
+          <p id="appendix-C-17.26.1">0x07b1ce375c0191c786bb184cc9c08a6ae5a569dd7586f75d6d2de2b2f075787ee5082d44ca4b8009b3285ecae5fa521e23be76e6a08f17fa5cc8<a href="#appendix-C-17.26.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.61">e_12:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.62">
-          <p id="appendix-C-15.62.1">0x0662eefd5fab9509aed968866b68cff3bc5d48ecc8ac6867c212a2d82cee5a689a3c9c67f1d611adac7268dc8b06471c0598f7016ca3d1c01649dda4b43531cffc4eb41e691e27f2eb<a href="#appendix-C-15.62.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.27">e_7:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.28">
+          <p id="appendix-C-17.28.1">0x05b64add5e49574b124a02d85f508c8d2d37993ae4c370a9cda89a100cdb5e1d441b57768dbc68429ffae243c0c57fe5ab0a3ee4c6f2d9d34714<a href="#appendix-C-17.28.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.63">e_13:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.64">
-          <p id="appendix-C-15.64.1">0x0aad8f4a8cfdca8de0985070304fe4f4d32f99b01d4ea50d9f7cd2abdc0aeea99311a36ec6ed18208642cef9e09b96795b27c42a5a744a7b01a617a91d9fb7623d636640d61a6596ec<a href="#appendix-C-15.64.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.29">e_8:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.30">
+          <p id="appendix-C-17.30.1">0x0fd9a3271854a2b4542b42c55916e1faf7a8b87a7d10907179ac7073f6a1de044906ffaf4760d11c8f92df3e50251e39ce92c700a12e77d0adf3<a href="#appendix-C-17.30.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.65">e_14:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.66">
-          <p id="appendix-C-15.66.1">0x0ffcf21d641fd9c6a641a749d80cab1bcad4b34ee97567d905ed9d5cfb74e9aef19674e2eb6ce3dfb706aa814d4a228db4fcd707e571259435393a27cac68b59a1b690ae8cde7a94c3<a href="#appendix-C-15.66.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.31">e_9:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.32">
+          <p id="appendix-C-17.32.1">0x17fa0c7fa60c9a6d4d8bb9897991efd087899edc776f33743db921a689720c82257ee3c788e8160c112f18e841a3dd9a79a6f8782f771d542ee5<a href="#appendix-C-17.32.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.67">e_15:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.68">
-          <p id="appendix-C-15.68.1">0x0cbe92a53151790cece4a86f91e9b31644a86fc4c954e5fa04e707beb69fc60a858fed8ebd53e4cfd51546d5c0732331071c358d721ee601bfd3847e0e904101c62822dd2e4c7f8e5c<a href="#appendix-C-15.68.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.33">e_10:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.34">
+          <p id="appendix-C-17.34.1">0x0c901397a62bb185a8f9cf336e28cfb0f354e2313f99c538cdceedf8b8aa22c23b896201170fc915690f79f6ba75581f1b76055cd89b7182041c<a href="#appendix-C-17.34.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.69">e_16:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.70">
-          <p id="appendix-C-15.70.1">0x0202db83b1ff33016679b6cfc8931deea6df1485c894dcd113bacf564411519a42026b5fda4e16262674dcb3f089cd7d552f8089a1fec93e3db6bca43788cdb06fc41baaa5c5098667<a href="#appendix-C-15.70.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-17.35">e_11:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-17.36">
+          <p id="appendix-C-17.36.1">0x20f27fde93cee94ca4bf9ded1b1378c1b0d80439eeb1d0c8daef30db0037104a5e32a2ccc94fa1860a95e39a93ba51187b45f4c2c50c16482322<a href="#appendix-C-17.36.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+<p id="appendix-C-18">BLS48_581:<a href="#appendix-C-18" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="appendix-C-19">
+        <dt id="appendix-C-19.1">Input x value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.2">
+          <p id="appendix-C-19.2.1">0x02af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d8c3bce8732315af640<a href="#appendix-C-19.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.71">e_17:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.72">
-          <p id="appendix-C-15.72.1">0x070a617ed131b857f5b74b625c4ef70cc567f619defb5f2ab67534a1a8aa72975fc4248ac8551ce02b68801703971a2cf1cb934c9c354cadd5cfc4575cde8dbde6122bd54826a9b3e9<a href="#appendix-C-15.72.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.3">Input y value:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.4">
+          <p id="appendix-C-19.4.1">0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70<a href="#appendix-C-19.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.73">e_18:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.74">
-          <p id="appendix-C-15.74.1">0x070e1ebce457c141417f88423127b7a7321424f64119d5089d883cb953283ee4e1f2e01ffa7b903fe7a94af4bb1acb02ca6a36678e41506879069cee11c9dcf6a080b6a4a7c7f21dc9<a href="#appendix-C-15.74.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.5">x'_0:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.6">
+          <p id="appendix-C-19.6.1">0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab<a href="#appendix-C-19.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.75">e_19:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.76">
-          <p id="appendix-C-15.76.1">0x058a06be5a36c6148d8a1287ee7f0e725453fa1bb05cf77239f235b417127e370cfa4f88e61a23ea16df3c45d29c203d04d09782b39e9b4037c0c4ac8e8653e7c533ad752a640b233e<a href="#appendix-C-15.76.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.7">x'_1:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.8">
+          <p id="appendix-C-19.8.1">0x07c4973ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c57<a href="#appendix-C-19.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.77">e_20:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.78">
-          <p id="appendix-C-15.78.1">0x0dfdfaaeb9349cf18d21b92ad68f8a7ecc509c35fcd4b8abeb93be7a204ac871f2195180206a2c340fccb69dbc30b9410ed0b122308a8fc75141f673ae5ec82b6a45fc2d664409c6b6<a href="#appendix-C-15.78.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.9">x'_2:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.10">
+          <p id="appendix-C-19.10.1">0x01fccc70198f1334e1b2ea1853ad83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a<a href="#appendix-C-19.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.79">e_21:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.80">
-          <p id="appendix-C-15.80.1">0x0d06c8adfdd81275da2a0ce375b8df9199f3d359e8cf50064a3dc10a592417124a3b705b05a7ffe78e20f935a08868ecf3fc5aba0ace7ce4497bb59085ca277c16b3d53dd7dae5c857<a href="#appendix-C-15.80.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.11">x'_3:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.12">
+          <p id="appendix-C-19.12.1">0x0be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8cb4e80bc3f09a7033cbb7feafe<a href="#appendix-C-19.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.81">e_22:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.82">
-          <p id="appendix-C-15.82.1">0x0708effd28c4ae21b6969cb9bdd0c27f8a3e341798b6f6d4baf27be259b4a47688b50cb68a69a917a4a1faf56cec93f69ac416512c32e9d5e69bd8836b6c2ba9c6889d507ad571dbc4<a href="#appendix-C-15.82.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.13">x'_4:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.14">
+          <p id="appendix-C-19.14.1">0x038b91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c53f8cce5<a href="#appendix-C-19.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.83">e_23:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.84">
-          <p id="appendix-C-15.84.1">0x09da7c7aa48ce571f8ece74b98431b14ae6fb4a53ae979cd6b2e82320e8d25a0ece1ca1563aa5aa6926e7d608358af8399534f6b00788e95e37ef1b549f43a58ad250a71f0b2fdb2bf<a href="#appendix-C-15.84.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.15">x'_5:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.16">
+          <p id="appendix-C-19.16.1">0x0c96c7797eb0738603f1311e4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a<a href="#appendix-C-19.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.85">e_24:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.86">
-          <p id="appendix-C-15.86.1">0x080fa69eaed5d5e9044c43db6c168066772604f3a94c4e7db2f92252ebed3011df4c9bcf4ffccbc7e514566fc6462ca39d4da73705a404bce6b7e2751037e5cd279df81de00e653134<a href="#appendix-C-15.86.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.17">x'_6:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.18">
+          <p id="appendix-C-19.18.1">0x0b9b7951c6061ee3f0197a498908aee660dea41b39d13852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c22d63334b5b0e205c3354e41607e60750e057<a href="#appendix-C-19.18.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.87">e_25:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.88">
-          <p id="appendix-C-15.88.1">0x0a3a604cd354f6a763481558b087c55b1e6df4aca073f89ee4c2f7eea48091ef2b75369a7819f39472a1d518474fb11998a3d10e4cc3aaba54b5531e8dd777b9b5503283f15f2cbc53<a href="#appendix-C-15.88.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.19">x'_7:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.20">
+          <p id="appendix-C-19.20.1">0x0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3f84e19da00fbc6ae34<a href="#appendix-C-19.20.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.89">e_26:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.90">
-          <p id="appendix-C-15.90.1">0x0ee80fd1b6256c379e78d3a966f78a1b75ea21a33ffd4a2b758a6a0fe9c95fb597700b44eda1f05ff3dc6705178624c83eff49c2e1a109e7af3ef6eaf2138d81b9934c6c6dac264587<a href="#appendix-C-15.90.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.21">y'_0:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.22">
+          <p id="appendix-C-19.22.1">0x00eb53356c375b5dfa497216452f3024b918b4238059a577e6f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d659045012ab12c0ff323edd3fe4d2d7971<a href="#appendix-C-19.22.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.91">e_27:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.92">
-          <p id="appendix-C-15.92.1">0x0baa734a9d454bc8507eaf40d71e100339988eac975139f667cf426e4a856d1190a9f6a2ea07693108526be00ca0d94a0fb7d59b63497d81f97786159ee25bb0e8384e61403094adca<a href="#appendix-C-15.92.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.23">y'_1:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.24">
+          <p id="appendix-C-19.24.1">0x0284dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3afb096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111471db936cd5665<a href="#appendix-C-19.24.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.93">e_28:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.94">
-          <p id="appendix-C-15.94.1">0x050ab6cabefbfeafa89331de62bb2c7441607dccabe12fa3302bf74e5cea09b6e2a44e8a32ba04b8393cae776984e015b6aecd3151695907b83feb8fb1683b52bdac298802a1820bb5<a href="#appendix-C-15.94.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.25">y'_2:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.26">
+          <p id="appendix-C-19.26.1">0x0b36a201dd008523e421efb70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e90411515536ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a8474<a href="#appendix-C-19.26.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.95">e_29:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.96">
-          <p id="appendix-C-15.96.1">0x07da541017034b7f7150a4cc42eb8e32c8e4a91641cb5d71cc6ba5297d85efa21400a44a121bb0b8a3ad1a780722a46ae4a0d7101f78986f29aab9688af8302c0a7cc1e16b95ddb4da<a href="#appendix-C-15.96.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.27">y'_3:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.28">
+          <p id="appendix-C-19.28.1">0x0aec25a4621edc0688223fbbd478762b1c2cded3360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bda503ee5e578fb3d8b8a1e5337316213da92841589d<a href="#appendix-C-19.28.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.97">e_30:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.98">
-          <p id="appendix-C-15.98.1">0x013985a6999ae046842851e80d88dae0c26a5b1cab6a70f97d36d41693efcf80e5ecfe8fceb61b22afc07140de05f5342dd8c04050afd6649f10e0bf2180f6ff4e14562558e21cdd9e<a href="#appendix-C-15.98.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.29">y'_4:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.30">
+          <p id="appendix-C-19.30.1">0x0d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdddfcf7a43f47831f982e50137<a href="#appendix-C-19.30.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.99">e_31:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.100">
-          <p id="appendix-C-15.100.1">0x00dd7f830773ae0a3569af18f7fa31794a413c91b576c48a775bf25b6a078876c8bbb247c5169d8871812d70418f43cf56bef6ce6adfc90558610ba732e3447107c4c0c56a018f6d63<a href="#appendix-C-15.100.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.31">y'_5:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.32">
+          <p id="appendix-C-19.32.1">0x07d0d03745736b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c270841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf90bee4<a href="#appendix-C-19.32.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.101">e_32:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.102">
-          <p id="appendix-C-15.102.1">0x06f5b22dfef5b5047297208ef02b482fadf2f7a05fde3ce1a740991176a359ffbdb2a781ef01d5b9d5fa38d7ce3bd946bb3ca36d131d3b01e658ce48cb0c16b44acb14896a9e0794a8<a href="#appendix-C-15.102.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.33">y'_6:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.34">
+          <p id="appendix-C-19.34.1">0x0896767811be65ea25c2d05dfdd17af8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb23986<a href="#appendix-C-19.34.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.103">e_33:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.104">
-          <p id="appendix-C-15.104.1">0x09779469c05944d969e2db181a1caf60dffe3fb23afc7a95d03641b8aeadf0aa0c6db009ee6e40c9cee370db20a40be7d2b4e8d3bb5ded36c08c6a236823d175269a4209446e8ba161<a href="#appendix-C-15.104.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.35">y'_7:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.36">
+          <p id="appendix-C-19.36.1">0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6<a href="#appendix-C-19.36.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.105">e_34:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.106">
-          <p id="appendix-C-15.106.1">0x094f2f80f6c6c25fb2dbc6b49778ba5768ae8d6e3e355a7782d0360e40fe74fc488d1cdf61efd091ecf453900d677009a016a0978ae88a214319432047ff820c29aa07cd87f6f118de<a href="#appendix-C-15.106.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.37">e_0:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.38">
+          <p id="appendix-C-19.38.1">0x0e26c3fcb8ef67417814098de5111ffcccc1d003d15b367bad07cef2291a93d31db03e3f03376f3beae2bd877bcfc22a25dc51016eda1ab56ee3033bc4b4fec5962f02dffb3af5e38e<a href="#appendix-C-19.38.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.107">e_35:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.108">
-          <p id="appendix-C-15.108.1">0x1076373833daf844b5a78fb8d6a87d5bce51be2aa85a8fb9d05aba01e08e527c0d336a498fb22a8eabcf73444a5dc80b8e8196d1b6843b1e905ba7e158ddddc080291f2fbb432684af<a href="#appendix-C-15.108.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.39">e_1:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.40">
+          <p id="appendix-C-19.40.1">0x069061b8047279aa5c2d25cdf676ddf34eddbc8ec2ec0f03614886fa828e1fc066b26d35744c0c38271843aa4fb617b57fa9eb4bd256d17367914159fc18b10a1085cb626e5bedb145<a href="#appendix-C-19.40.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.109">e_36:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.110">
-          <p id="appendix-C-15.110.1">0x06760a326a3b3425d0e8ee8533684d4149d27c221becb781e24786cf9b55cfc21511eb1f3b237a9a8f35c90feb5b059b0540a34e6517412a79b7bb9cd243b070846a549d7ab484aa92<a href="#appendix-C-15.110.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.41">e_2:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.42">
+          <p id="appendix-C-19.42.1">0x02b9bece645fbf9d8f97025a1545359f6fe3ffab3cd57094f862f7fb9ca01c88705c26675bcc723878e943da6b56ce25d063381fcd2a292e0e7501fe572744184fb4ab4ca071a04281<a href="#appendix-C-19.42.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.111">e_37:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.112">
-          <p id="appendix-C-15.112.1">0x03897dadb1a5b4c58d7c6f0ff099885371d896a6d7546dff0b0ab940d61e77f04922532ef46bf90c018a5e7f148330c17e02318b387772ba8a65626c6275ff4df09f5bf5d8d4dec847<a href="#appendix-C-15.112.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.43">e_3:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.44">
+          <p id="appendix-C-19.44.1">0x0080d267bf036c1e61d7fc73905e8c630b97aa05ef3266c82e7a111072c0d2056baa8137fba111c9650dfb18cb1f43363041e202e3192fced29d2b0501c882543fb370a56bfdc2435b<a href="#appendix-C-19.44.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.113">e_38:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.114">
-          <p id="appendix-C-15.114.1">0x111a9376b2770c3d32b28b5452058eca6ec30e1b97ecd98d641165b007e960375c1c0cf586dc47829d7f4da0f5494bf13fcf10da1d7630cf3b1e96771bd3e125abed5d7a4b07ff2b2f<a href="#appendix-C-15.114.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.45">e_4:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.46">
+          <p id="appendix-C-19.46.1">0x03c6b4c12f338f9401e6a493a405b33e64389338db8c5e592a8dd79eac7720dd83dd6b0c189eeda20809160cd57cdf3e2edc82db15f553c1f6c953ea27114cb6bd8a38e273f407dae0<a href="#appendix-C-19.46.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.115">e_39:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.116">
-          <p id="appendix-C-15.116.1">0x00fc4faae2597cd2fc5206a40cb0a70646fb4237727fe75e51e6f6a591a5e2adc28b28b6c47e0fcc0953f9aab4d3daf926249f9930550f55554d6d380c3b4c875a6aa4e1ef525be43e<a href="#appendix-C-15.116.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.47">e_5:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.48">
+          <p id="appendix-C-19.48.1">0x016e46224f28bfd8833f76ac29ee6e406a9da1bde55f5e82b3bd977897a9104f18b9ee41ea9af7d4183d895102950a12ce9975669db07924e1b432d9680f5ce7e5c67ed68f381eba45<a href="#appendix-C-19.48.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.117">e_40:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.118">
-          <p id="appendix-C-15.118.1">0x0072af98ab6e2c8ba452e0acca6dbc50afe97b037ba3586cf2f3a8f4b70f393462a72d7efcf87f8f94e9941e9998f4f66e989df87822ea5ce094055105827af2d5d86ef324cc139811<a href="#appendix-C-15.118.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.49">e_6:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.50">
+          <p id="appendix-C-19.50.1">0x008ddce7a4a1b94be5df3ceea56bef0077dcdde86d579938a50933a47296d337b7629934128e2457e24142b0eeaa978fd8e70986d7dd51fccbbeb8a1933434fec4f5bc538de2646e90<a href="#appendix-C-19.50.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.119">e_41:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.120">
-          <p id="appendix-C-15.120.1">0x10158908b23e827e39978dacbf0d1f489c1f89de0bdc8b6614cf5b1c78c03d01fa57d1141e6f21a24d80ff6c596e891c0a5f99a6305820c3ba5192fd18dd9b422976adccdaacc823ba<a href="#appendix-C-15.120.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.51">e_7:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.52">
+          <p id="appendix-C-19.52.1">0x060ef6eae55728e40bd4628265218b24b38cdd434968c14bfefb87f0dcbfc76cc473ae2dc0cac6e69dfdf90951175178dc75b9cc08320fcde187aa58ea047a2ee00b1968650eec2791<a href="#appendix-C-19.52.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.121">e_42:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.122">
-          <p id="appendix-C-15.122.1">0x0e651105c3a12b4b91b5346cad5de5ff5126c1c2b94c1246882798d44eb0ca93655491c753f3492e5eb1097b7a6c88f3e5c064551fa6660460a6275caf7a672c0886574c254e8ec0b1<a href="#appendix-C-15.122.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.53">e_8:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.54">
+          <p id="appendix-C-19.54.1">0x0c3943636876fd4f9393414099a746f84b2633dfb7c36ba6512a0b48e66dcb2e409f1b9e150e36b0b4311165810a3c721525f0d43a021f090e6a27577b42c7a57bed3327edb98ba8f8<a href="#appendix-C-19.54.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.123">e_43:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.124">
-          <p id="appendix-C-15.124.1">0x0040de9ec4386438b63e6cbea88022e58a9163bf374460b3c6dae8887f56882db2fa40e1a0acc723d8e6ada12bc0ca838c932d74e199d6b006b92dd204eaf2e1186b6e91434ed6a24e<a href="#appendix-C-15.124.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.55">e_9:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.56">
+          <p id="appendix-C-19.56.1">0x02d31eb8be0d923cac2a8eb6a07556c8951d849ec53c2848ee78c5eed40262eb21822527a8555b071f1cd080e049e5e7ebfe2541d5b42c1e414341694d6f16d287e4a8d28359c2d2f9<a href="#appendix-C-19.56.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.125">e_44:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.126">
-          <p id="appendix-C-15.126.1">0x053ec95b4b13256c02702930617ab4b3c2d3069bb4d08414c7de5b33578c4ddd1bd4dcb3cf18a3ca40206edc917ab98928bdb62df970f3537910dfc2423dcebc561ed93b3ed4e0d346<a href="#appendix-C-15.126.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.57">e_10:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.58">
+          <p id="appendix-C-19.58.1">0x07f19673c5580d6a10d09a032397c5d425c3a99ff1dd0abe5bec40a0d47a6b8daabb22edb6b06dd8691950b8f23faefcdd80c45aa3817a840018965941f4247f9f97233a84f58b262e<a href="#appendix-C-19.58.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.127">e_45:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.128">
-          <p id="appendix-C-15.128.1">0x0167007aacbba10275709297b940b601b1ed49d629e35faee61cf188a6da8ec4e39ae91dc326cd54617a5fa3330637c9ab0ed46f32e472eef36f30228bb2c3ad3cc03d5d49a8794a50<a href="#appendix-C-15.128.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.59">e_11:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.60">
+          <p id="appendix-C-19.60.1">0x0d3fe01f0c114915c3bdf8089377780076c1685302279fd9ab12d07477aac03b69291652e9f179baa0a99c38aa8851c1d25ffdb4ded2c8fe8b30338c14428607d6d822610d41f51372<a href="#appendix-C-19.60.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.129">e_46:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.130">
-          <p id="appendix-C-15.130.1">0x0c624cb15846e9faedc2f8cddd3dd894eaee57ed85a76167559fd68e818184df146aa913a44ffb7e9c520ab84c6a2ad0ac525cb1bbb00afc02c79603375060b2ddeac8eec0e4ce49a7<a href="#appendix-C-15.130.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.61">e_12:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.62">
+          <p id="appendix-C-19.62.1">0x0662eefd5fab9509aed968866b68cff3bc5d48ecc8ac6867c212a2d82cee5a689a3c9c67f1d611adac7268dc8b06471c0598f7016ca3d1c01649dda4b43531cffc4eb41e691e27f2eb<a href="#appendix-C-19.62.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-C-15.131">e_47:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-C-15.132">
-          <p id="appendix-C-15.132.1">0x07a369e7095b629da43956d18650a88bb0342dabc1e04265ae4133cdd537c3d9cdc0b99518aa6e8b6942c4a958d3c7df4a18211c91bc4e9455f28a49c7e0ee07dc2f97fd5ce4edf7a6<a href="#appendix-C-15.132.1" class="pilcrow">¶</a></p>
+<dt id="appendix-C-19.63">e_13:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.64">
+          <p id="appendix-C-19.64.1">0x0aad8f4a8cfdca8de0985070304fe4f4d32f99b01d4ea50d9f7cd2abdc0aeea99311a36ec6ed18208642cef9e09b96795b27c42a5a744a7b01a617a91d9fb7623d636640d61a6596ec<a href="#appendix-C-19.64.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.65">e_14:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.66">
+          <p id="appendix-C-19.66.1">0x0ffcf21d641fd9c6a641a749d80cab1bcad4b34ee97567d905ed9d5cfb74e9aef19674e2eb6ce3dfb706aa814d4a228db4fcd707e571259435393a27cac68b59a1b690ae8cde7a94c3<a href="#appendix-C-19.66.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.67">e_15:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.68">
+          <p id="appendix-C-19.68.1">0x0cbe92a53151790cece4a86f91e9b31644a86fc4c954e5fa04e707beb69fc60a858fed8ebd53e4cfd51546d5c0732331071c358d721ee601bfd3847e0e904101c62822dd2e4c7f8e5c<a href="#appendix-C-19.68.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.69">e_16:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.70">
+          <p id="appendix-C-19.70.1">0x0202db83b1ff33016679b6cfc8931deea6df1485c894dcd113bacf564411519a42026b5fda4e16262674dcb3f089cd7d552f8089a1fec93e3db6bca43788cdb06fc41baaa5c5098667<a href="#appendix-C-19.70.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.71">e_17:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.72">
+          <p id="appendix-C-19.72.1">0x070a617ed131b857f5b74b625c4ef70cc567f619defb5f2ab67534a1a8aa72975fc4248ac8551ce02b68801703971a2cf1cb934c9c354cadd5cfc4575cde8dbde6122bd54826a9b3e9<a href="#appendix-C-19.72.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.73">e_18:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.74">
+          <p id="appendix-C-19.74.1">0x070e1ebce457c141417f88423127b7a7321424f64119d5089d883cb953283ee4e1f2e01ffa7b903fe7a94af4bb1acb02ca6a36678e41506879069cee11c9dcf6a080b6a4a7c7f21dc9<a href="#appendix-C-19.74.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.75">e_19:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.76">
+          <p id="appendix-C-19.76.1">0x058a06be5a36c6148d8a1287ee7f0e725453fa1bb05cf77239f235b417127e370cfa4f88e61a23ea16df3c45d29c203d04d09782b39e9b4037c0c4ac8e8653e7c533ad752a640b233e<a href="#appendix-C-19.76.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.77">e_20:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.78">
+          <p id="appendix-C-19.78.1">0x0dfdfaaeb9349cf18d21b92ad68f8a7ecc509c35fcd4b8abeb93be7a204ac871f2195180206a2c340fccb69dbc30b9410ed0b122308a8fc75141f673ae5ec82b6a45fc2d664409c6b6<a href="#appendix-C-19.78.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.79">e_21:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.80">
+          <p id="appendix-C-19.80.1">0x0d06c8adfdd81275da2a0ce375b8df9199f3d359e8cf50064a3dc10a592417124a3b705b05a7ffe78e20f935a08868ecf3fc5aba0ace7ce4497bb59085ca277c16b3d53dd7dae5c857<a href="#appendix-C-19.80.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.81">e_22:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.82">
+          <p id="appendix-C-19.82.1">0x0708effd28c4ae21b6969cb9bdd0c27f8a3e341798b6f6d4baf27be259b4a47688b50cb68a69a917a4a1faf56cec93f69ac416512c32e9d5e69bd8836b6c2ba9c6889d507ad571dbc4<a href="#appendix-C-19.82.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.83">e_23:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.84">
+          <p id="appendix-C-19.84.1">0x09da7c7aa48ce571f8ece74b98431b14ae6fb4a53ae979cd6b2e82320e8d25a0ece1ca1563aa5aa6926e7d608358af8399534f6b00788e95e37ef1b549f43a58ad250a71f0b2fdb2bf<a href="#appendix-C-19.84.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.85">e_24:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.86">
+          <p id="appendix-C-19.86.1">0x080fa69eaed5d5e9044c43db6c168066772604f3a94c4e7db2f92252ebed3011df4c9bcf4ffccbc7e514566fc6462ca39d4da73705a404bce6b7e2751037e5cd279df81de00e653134<a href="#appendix-C-19.86.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.87">e_25:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.88">
+          <p id="appendix-C-19.88.1">0x0a3a604cd354f6a763481558b087c55b1e6df4aca073f89ee4c2f7eea48091ef2b75369a7819f39472a1d518474fb11998a3d10e4cc3aaba54b5531e8dd777b9b5503283f15f2cbc53<a href="#appendix-C-19.88.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.89">e_26:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.90">
+          <p id="appendix-C-19.90.1">0x0ee80fd1b6256c379e78d3a966f78a1b75ea21a33ffd4a2b758a6a0fe9c95fb597700b44eda1f05ff3dc6705178624c83eff49c2e1a109e7af3ef6eaf2138d81b9934c6c6dac264587<a href="#appendix-C-19.90.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.91">e_27:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.92">
+          <p id="appendix-C-19.92.1">0x0baa734a9d454bc8507eaf40d71e100339988eac975139f667cf426e4a856d1190a9f6a2ea07693108526be00ca0d94a0fb7d59b63497d81f97786159ee25bb0e8384e61403094adca<a href="#appendix-C-19.92.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.93">e_28:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.94">
+          <p id="appendix-C-19.94.1">0x050ab6cabefbfeafa89331de62bb2c7441607dccabe12fa3302bf74e5cea09b6e2a44e8a32ba04b8393cae776984e015b6aecd3151695907b83feb8fb1683b52bdac298802a1820bb5<a href="#appendix-C-19.94.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.95">e_29:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.96">
+          <p id="appendix-C-19.96.1">0x07da541017034b7f7150a4cc42eb8e32c8e4a91641cb5d71cc6ba5297d85efa21400a44a121bb0b8a3ad1a780722a46ae4a0d7101f78986f29aab9688af8302c0a7cc1e16b95ddb4da<a href="#appendix-C-19.96.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.97">e_30:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.98">
+          <p id="appendix-C-19.98.1">0x013985a6999ae046842851e80d88dae0c26a5b1cab6a70f97d36d41693efcf80e5ecfe8fceb61b22afc07140de05f5342dd8c04050afd6649f10e0bf2180f6ff4e14562558e21cdd9e<a href="#appendix-C-19.98.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.99">e_31:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.100">
+          <p id="appendix-C-19.100.1">0x00dd7f830773ae0a3569af18f7fa31794a413c91b576c48a775bf25b6a078876c8bbb247c5169d8871812d70418f43cf56bef6ce6adfc90558610ba732e3447107c4c0c56a018f6d63<a href="#appendix-C-19.100.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.101">e_32:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.102">
+          <p id="appendix-C-19.102.1">0x06f5b22dfef5b5047297208ef02b482fadf2f7a05fde3ce1a740991176a359ffbdb2a781ef01d5b9d5fa38d7ce3bd946bb3ca36d131d3b01e658ce48cb0c16b44acb14896a9e0794a8<a href="#appendix-C-19.102.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.103">e_33:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.104">
+          <p id="appendix-C-19.104.1">0x09779469c05944d969e2db181a1caf60dffe3fb23afc7a95d03641b8aeadf0aa0c6db009ee6e40c9cee370db20a40be7d2b4e8d3bb5ded36c08c6a236823d175269a4209446e8ba161<a href="#appendix-C-19.104.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.105">e_34:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.106">
+          <p id="appendix-C-19.106.1">0x094f2f80f6c6c25fb2dbc6b49778ba5768ae8d6e3e355a7782d0360e40fe74fc488d1cdf61efd091ecf453900d677009a016a0978ae88a214319432047ff820c29aa07cd87f6f118de<a href="#appendix-C-19.106.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.107">e_35:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.108">
+          <p id="appendix-C-19.108.1">0x1076373833daf844b5a78fb8d6a87d5bce51be2aa85a8fb9d05aba01e08e527c0d336a498fb22a8eabcf73444a5dc80b8e8196d1b6843b1e905ba7e158ddddc080291f2fbb432684af<a href="#appendix-C-19.108.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.109">e_36:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.110">
+          <p id="appendix-C-19.110.1">0x06760a326a3b3425d0e8ee8533684d4149d27c221becb781e24786cf9b55cfc21511eb1f3b237a9a8f35c90feb5b059b0540a34e6517412a79b7bb9cd243b070846a549d7ab484aa92<a href="#appendix-C-19.110.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.111">e_37:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.112">
+          <p id="appendix-C-19.112.1">0x03897dadb1a5b4c58d7c6f0ff099885371d896a6d7546dff0b0ab940d61e77f04922532ef46bf90c018a5e7f148330c17e02318b387772ba8a65626c6275ff4df09f5bf5d8d4dec847<a href="#appendix-C-19.112.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.113">e_38:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.114">
+          <p id="appendix-C-19.114.1">0x111a9376b2770c3d32b28b5452058eca6ec30e1b97ecd98d641165b007e960375c1c0cf586dc47829d7f4da0f5494bf13fcf10da1d7630cf3b1e96771bd3e125abed5d7a4b07ff2b2f<a href="#appendix-C-19.114.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.115">e_39:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.116">
+          <p id="appendix-C-19.116.1">0x00fc4faae2597cd2fc5206a40cb0a70646fb4237727fe75e51e6f6a591a5e2adc28b28b6c47e0fcc0953f9aab4d3daf926249f9930550f55554d6d380c3b4c875a6aa4e1ef525be43e<a href="#appendix-C-19.116.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.117">e_40:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.118">
+          <p id="appendix-C-19.118.1">0x0072af98ab6e2c8ba452e0acca6dbc50afe97b037ba3586cf2f3a8f4b70f393462a72d7efcf87f8f94e9941e9998f4f66e989df87822ea5ce094055105827af2d5d86ef324cc139811<a href="#appendix-C-19.118.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.119">e_41:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.120">
+          <p id="appendix-C-19.120.1">0x10158908b23e827e39978dacbf0d1f489c1f89de0bdc8b6614cf5b1c78c03d01fa57d1141e6f21a24d80ff6c596e891c0a5f99a6305820c3ba5192fd18dd9b422976adccdaacc823ba<a href="#appendix-C-19.120.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.121">e_42:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.122">
+          <p id="appendix-C-19.122.1">0x0e651105c3a12b4b91b5346cad5de5ff5126c1c2b94c1246882798d44eb0ca93655491c753f3492e5eb1097b7a6c88f3e5c064551fa6660460a6275caf7a672c0886574c254e8ec0b1<a href="#appendix-C-19.122.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.123">e_43:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.124">
+          <p id="appendix-C-19.124.1">0x0040de9ec4386438b63e6cbea88022e58a9163bf374460b3c6dae8887f56882db2fa40e1a0acc723d8e6ada12bc0ca838c932d74e199d6b006b92dd204eaf2e1186b6e91434ed6a24e<a href="#appendix-C-19.124.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.125">e_44:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.126">
+          <p id="appendix-C-19.126.1">0x053ec95b4b13256c02702930617ab4b3c2d3069bb4d08414c7de5b33578c4ddd1bd4dcb3cf18a3ca40206edc917ab98928bdb62df970f3537910dfc2423dcebc561ed93b3ed4e0d346<a href="#appendix-C-19.126.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.127">e_45:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.128">
+          <p id="appendix-C-19.128.1">0x0167007aacbba10275709297b940b601b1ed49d629e35faee61cf188a6da8ec4e39ae91dc326cd54617a5fa3330637c9ab0ed46f32e472eef36f30228bb2c3ad3cc03d5d49a8794a50<a href="#appendix-C-19.128.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.129">e_46:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.130">
+          <p id="appendix-C-19.130.1">0x0c624cb15846e9faedc2f8cddd3dd894eaee57ed85a76167559fd68e818184df146aa913a44ffb7e9c520ab84c6a2ad0ac525cb1bbb00afc02c79603375060b2ddeac8eec0e4ce49a7<a href="#appendix-C-19.130.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-C-19.131">e_47:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-C-19.132">
+          <p id="appendix-C-19.132.1">0x07a369e7095b629da43956d18650a88bb0342dabc1e04265ae4133cdd537c3d9cdc0b99518aa6e8b6942c4a958d3c7df4a18211c91bc4e9455f28a49c7e0ee07dc2f97fd5ce4edf7a6<a href="#appendix-C-19.132.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>

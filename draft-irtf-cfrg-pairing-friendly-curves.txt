@@ -87,7 +87,6 @@ Table of Contents
      2.2.  Pairings
      2.3.  Barreto-Naehrig Curves
      2.4.  Barreto-Lynn-Scott Curves
-     2.5.  Representation Convention for an Extension Field
    3.  Security of Pairing-Friendly Curves
      3.1.  Evaluating the Security of Pairing-Friendly Curves
      3.2.  Impact of Recent Attacks
@@ -417,45 +416,6 @@ Table of Contents
    multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative
    group (GF(p^48))^* for BLS48.
 
-2.5.  Representation Convention for an Extension Field
-
-   Pairing-friendly curves use a tower of some extension fields.  In
-   order to encode an element of an extension field, focusing on
-   interoperability, we adopt the representation convention shown in
-   Appendix J.4 of [I-D.ietf-lwig-curve-representations] as a standard
-   and effective method.  Note that the big-endian encoding is used for
-   an element in GF(p) which follows to mcl [mcl], ISO/IEC 15946-5
-   [ISOIEC15946-5] and etc.
-
-   Let GF(p) be a finite field of characteristic p and GF(p^d) =
-   GF(p)(i) be an extension field of GF(p) of degree d.
-
-   For an element s in GF(p^d) such that s = s_0 + s_1 * i + ... +
-   s_{d - 1} * i^{d - 1} where s_0, s_1, ... , s_{d - 1} in the
-   basefield GF(p), s is represented as octet string by
-   oct(s) = s_0 || s_1 || ... || s_{d - 1}.
-
-   Let GF(p^d') = GF(p^d)(j) be an extension field of GF(p^d) of degree
-   d' / d.
-
-   For an element s' in GF(p^d') such that s' = s'_0 + s'_1 * j + ...
-   + s'_{d' / d - 1} * j^{d' / d - 1} where s'_0, s'_1, ...,
-   s'_{d' / d - 1} in the basefield GF(p^d), s' is represented as
-   integer by oct(s') = oct(s'_0) || oct(s'_1) || ... ||
-   oct(s'_{d' / d - 1}), where oct(s'_0), ... , oct(s'_{d' / d - 1})
-   are octet strings encoded by above convention.
-
-   In general, one can define encoding between integer and an element of
-   any finite field tower by inductively applying the above convention.
-
-   The parameters and test vectors of extension fields described in this
-   memo are encoded by this convention and represented in an octet
-   stream.
-
-   When applications communicate elements in an extension field, using
-   the compression method [MP04] may be more effective.  In that case,
-   care for interoperability must be taken.
-
 3.  Security of Pairing-Friendly Curves
 
 3.1.  Evaluating the Security of Pairing-Friendly Curves
@@ -771,8 +731,7 @@ Table of Contents
       a 'base point', i.e., a generator of G_1
 
    *  G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a
-      'base point', i.e., a generator of G_2 (encoded with
-      [I-D.ietf-lwig-curve-representations]) - x' = x'_0 + x'_1 * u
+      'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u
       (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p))
       - h' : the cofactor #E'(GF(p^2))/r
 
@@ -857,8 +816,7 @@ Table of Contents
       a 'base point', i.e., a generator of G_1
 
    *  G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a
-      'base point', i.e., a generator of G_2 (encoded with
-      [I-D.ietf-lwig-curve-representations]) - x' = x'_0 + x'_1 * u
+      'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u
       (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p))
       - h' : the cofactor #E'(GF(p^2))/r
 
@@ -929,8 +887,7 @@ Table of Contents
       a 'base point', i.e., a generator of G_1
 
    *  G_2 is an r-order subgroup of E'(GF(p^8)) - BP' = (x',y') : a
-      'base point', i.e., a generator of G_2 (encoded with
-      [I-D.ietf-lwig-curve-representations]) - x' = x'_0 + x'_1 * u +
+      'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u +
       x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w +
       x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u
       + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w
@@ -1663,13 +1620,6 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
               bls-key-representations-08>.
 
-   [I-D.ietf-lwig-curve-representations]
-              Struik, R., "Alternative Elliptic Curve Representations",
-              Work in Progress, Internet-Draft, draft-ietf-lwig-curve-
-              representations-23, 21 January 2022,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-lwig-
-              curve-representations-23>.
-
    [I-D.irtf-cfrg-bbs-signatures]
               Looker, T., Kalos, V., Whitehead, A., and M. Lodder, "The
               BBS Signature Scheme", Work in Progress, Internet-Draft,
@@ -1743,11 +1693,6 @@ Table of Contents
               January, 1987, <https://www.ams.org/journals/mcom/1987-48-
               177/S0025-5718-1987-0866113-7/
               S0025-5718-1987-0866113-7.pdf>.
-
-   [MP04]     Guillevic, A., Masson, S., and E. Thome, "Cocks–Pinch
-              curves of embedding degrees five to eight and optimal ate
-              pairing computation", Cryptology ePrint Archive Report
-              2019/431, 2019, <https://eprint.iacr.org/2004/032.pdf>.
 
    [NASKM08]  Nogami, Y., Akane, M., Sakemi, Y., Kato, H., and Y.
               Morikawa, "Integer Variable X-Based Ate Pairing",
@@ -2015,13 +1960,28 @@ Appendix C.  Test Vectors of Optimal Ate Pairing
        + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w,
 
    where u, v and w are indeterminates and x'_0, ..., x'_7 and y'_0,
-   ..., y'_7 are elements of GF(p).  The representation of Q = (x', y')
-   given below is followed by [I-D.ietf-lwig-curve-representations].
+   ..., y'_7 are elements of GF(p).
 
-   In addition, we use the notation e_i (i = 0, ..., k-1) to represent
-   each element in e(P, Q), where the extension field that e(P, Q)
-   belongs is constructed according to
-   [I-D.ietf-lwig-curve-representations].
+   In addition, we use the notation e_i (i = 0, ..., k-1) for the
+   coefficients of e(P, Q) over GF(p), with respect to the tower of
+   extension fields defined for each curve in Section 4.  The basis is
+   the set of products of powers of the indeterminates of that tower,
+   indexed so that each indeterminate contributes a stride equal to the
+   degree over GF(p) of the field it extends.
+
+   For BLS12_381 and BN462 (k = 12), with the towers of Section 4.2.1,
+   Paragraph 5 and Section 4.2.2, Paragraph 4, this gives
+
+   e(P, Q) = e_0 + e_1 * u + e_2 * v + e_3 * u * v + e_4 * v^2
+           + e_5 * u * v^2 + e_6 * w + e_7 * u * w + e_8 * v * w
+           + e_9 * u * v * w + e_10 * v^2 * w + e_11 * u * v^2 * w.
+
+   For BLS48_581 (k = 48), with the tower of Section 4.3, Paragraph 5,
+   the same rule gives the 48 basis elements u^i1 * v^i2 * w^i3 * z^i4 *
+   s^i5, where i1, i2, i3 and i5 are in {0, 1} and i4 is in {0, 1, 2}.
+   The coefficient of that basis element is e_i with
+
+   i = i1 + 2 * i2 + 4 * i3 + 8 * i4 + 24 * i5.
 
    BLS12_381:
 
