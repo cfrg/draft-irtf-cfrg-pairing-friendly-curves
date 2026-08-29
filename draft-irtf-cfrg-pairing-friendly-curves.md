@@ -535,7 +535,7 @@ b':
 
 # Point Serialization  {#point-serialization}
 
-This section defines a normative point encoding and decoding procedure for BLS12_381 and BLS48_581. The format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
+This section defines a normative point encoding and decoding procedure for BLS12_381 and BLS48_581. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
 
 At a high level, the serialization format is defined as follows:
 
@@ -2355,7 +2355,7 @@ Both variants yield the same encoded lengths (117 and 59 bytes for G_1, 233 and 
 
 {{bn462-not-applicable}} gives the reasons this document does not define a BN462 point format. Two of them bear on what is recorded above. No specification examined defines or requires a BN462 point encoding, so the encodings listed here are library conventions rather than a format that a consumer of this document needs; and choosing among them would be encoding design rather than the recording of established practice.
 
-Should BN462 point encodings converge, or should a protocol specification come to require one, a future version of this document or a separate specification can define one. Of the encodings recorded above, the {{SEC1}} type byte is the most widely implemented among the libraries examined, and is the form an implementer is most likely to encounter when interoperating with existing BN462 code.
+Should BN462 point encodings converge, or should a protocol specification come to require one, a separate specification can define one. Of the encodings recorded above, the {{SEC1}} type byte is the most widely implemented among the libraries examined, and is the form an implementer is most likely to encounter when interoperating with existing BN462 code.
 
 # Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level  {#adoption_status_100bit_security}
 
