@@ -586,7 +586,7 @@ The serialization procedure is defined as follows for a point P = (x, y) on a cu
 
 ## Point Deserialization Procedure  {#point-deserialization-procedure}
 
-The deserialization procedure is defined as follows for a string s_string, for a curve with parameters n and m as given in {{point-serialization-params}}. This procedure uses the OS2IP function defined in {{RFC8017}}.
+The deserialization procedure is defined as follows for a string s_string, for a curve with parameters n and m as given in {{point-serialization-params}}. This procedure uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{Appendix I.5 of I-D.ietf-lwig-curve-representations}}.
 
 1. Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0. If m_byte equals any of 0x20, 0x60, or 0xE0, output INVALID and stop decoding. Otherwise:
    - Let C_bit equal the most significant bit of m_byte,
@@ -607,26 +607,47 @@ The deserialization procedure is defined as follows for a string s_string, for a
    - Otherwise (i.e., if s_string is the all zeros string), output the point at infinity on the curve that was determined in step 2 and stop decoding.
 
    Otherwise, I_bit must be 0. Continue decoding.
+
 5. If C_bit is 0:
    - Let x_string be the first half of s_string.
    - Let y_string be the last half of s_string.
-   - Let x = OS2IP(x_string).
-   - Let y = OS2IP(y_string).
-   - If the point P = (x, y) is not a valid point on the curve that was determined in step 2, output INVALID and stop decoding.
-   - Otherwise, output the point P = (x, y) and stop decoding.
+
+   - If the output curve that was determined in step 2 is E:
+
+      - Let x = OS2IP(x_string).
+      - Let y = OS2IP(y_string).
+      - If the point P = (x, y) is not a valid point on E, output INVALID and stop decoding.
+      - Otherwise, output the point P = (x, y) and stop decoding.
+
+   - Otherwise, (i.e., when the curve that was determined in step 2 is E'):
+
+      - Let x = OS2FE(x_string, n).
+      - Let y = OS2FE(y_string, n).
+      - If the point P = (x, y) is not a valid point on E', output INVALID and stop decoding.
+      - Otherwise, output the point P = (x, y) and stop decoding.
 
    Otherwise, C_bit must be 1. Continue decoding.
-6. Let x = OS2IP(s_string).
-7. If the curve that was determined in step 2 is E:
-   - Let y2 = the right-hand side of the curve equation for E (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p).
-   - If y2 is not square in GF(p), output INVALID and stop decoding.
-   - Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit = sign_GF_p(y).
 
-   Otherwise, (i.e., when the curve that was determined in step 2 is E'):
-   - Let y2 = the right-hand side of the curve equation for E' (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p^m).
-   - If y2 is not square in GF(p^m), output INVALID and stop decoding.
-   - Otherwise, let y = sqrt(y2) in GF(p^m) and let Y_bit = sign_GF_p^m(y).
-8. If S_bit equals Y_bit, output P = (x, y) and stop decoding. Otherwise, output P = (x, -y) and stop decoding.
+6. Let x_string be s_string.
+
+    - If the output curve determined in step 2 is E:
+      - Let x = OS2IP(x_string).
+      - Let y2 = the right-hand side of the curve equation for E (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p).
+      - If y2 is not square in GF(p), output INVALID and stop decoding.
+      - Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit = sign_GF_p(y).
+
+    - Otherwise, (i.e., when the curve that was determined in step 2 is E'):
+      - Let x = OS2FE(x_string, n).
+      - Let y2 = the right-hand side of the curve equation for E' (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p^m).
+      - If y2 is not square in GF(p^m), output INVALID and stop decoding.
+      - Otherwise, let y = sqrt(y2) in GF(p^m) and let Y_bit = sign_GF_p^m(y).
+
+7. If S_bit equals Y_bit, output P = (x, y) and stop decoding. Otherwise, output P = (x, -y) and stop decoding.
+
+Note that OS2FE here outputs field elements in the towered representation:
+
+- For BLS12_381, OS2FE(X, n) = (x'_1, x'_0) = x'_0 + x'_1 * u
+- For BLS48_581, OS2FE(X, n) = (x'_7, x'_6, ..., x'_0) = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w
 
 ## Scalar Serialization  {#scalar-serialization}
 
