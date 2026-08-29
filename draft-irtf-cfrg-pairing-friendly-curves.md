@@ -564,6 +564,7 @@ sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
 ~~~~~~~~~~
 
 - The function sign_GF_p^m(y), for an element y = (y_0, ..., y_{m-1}) of GF(p^m), returns one bit computed as follows: let i be the largest index in {0, ..., m-1} such that y_i is nonzero, or i = 0 if all coefficients are zero; return sign_GF_p(y_i). For BLS12_381 (m=2), this specializes to: sign_GF_p^2(y') = sign_GF_p(y'_0) if y'_1 equals 0, else sign_GF_p(y'_1). For BLS48_581 (m=8), this is the same function specified as sign_GF_p^8 in {{I-D.ietf-cose-bls-key-representations}}, evaluated over the coefficient ordering (y'_0, ..., y'_7) given in {{secure_params}}.
+- The function OS2FE(str, n), for a byte string str of m\*n bytes, returns an element of GF(p^m) or INVALID. It inverts the coordinate serialization of step 3 of {{point-serialization-procedure}}: divide str into m consecutive blocks of n bytes each, and for each i in {0, ..., m-1} let y_i = OS2IP(str_i), where str_i is the block starting at offset (m - 1 - i) \* n, so that the blocks give the coefficients in decreasing index order. If any y_i is greater than or equal to p, OS2FE returns INVALID; otherwise it returns y = (y_0, ..., y_{m-1}).
 
 ## Point Serialization Procedure  {#point-serialization-procedure}
 
@@ -586,7 +587,9 @@ The serialization procedure is defined as follows for a point P = (x, y) on a cu
 
 ## Point Deserialization Procedure  {#point-deserialization-procedure}
 
-The deserialization procedure is defined as follows for a string s_string, for a curve with parameters n and m as given in {{point-serialization-params}}. This procedure uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{Appendix I.5 of I-D.ietf-lwig-curve-representations}}.
+The deserialization procedure is defined as follows for a string s_string, for a curve with parameters n and m as given in {{point-serialization-params}}. This procedure uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{point-serialization-params}}.
+
+Every GF(p) coefficient recovered by this procedure MUST be an integer in the inclusive range [0, p - 1]. An octet string that encodes a coordinate, or a coefficient of a coordinate, as a value greater than or equal to p is not a canonical encoding of a field element; implementations MUST output INVALID and stop decoding in that case. This applies to coordinates on E, recovered with OS2IP, as well as to the coefficients of coordinates on E', recovered with OS2FE.
 
 1. Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0. If m_byte equals any of 0x20, 0x60, or 0xE0, output INVALID and stop decoding. Otherwise:
    - Let C_bit equal the most significant bit of m_byte,
@@ -644,10 +647,10 @@ The deserialization procedure is defined as follows for a string s_string, for a
 
 7. If S_bit equals Y_bit, output P = (x, y) and stop decoding. Otherwise, output P = (x, -y) and stop decoding.
 
-Note that OS2FE here outputs field elements in the towered representation:
+Note that OS2FE outputs field elements in the towered representation of the curve in question:
 
-- For BLS12_381, OS2FE(X, n) = (x'_1, x'_0) = x'_0 + x'_1 * u
-- For BLS48_581, OS2FE(X, n) = (x'_7, x'_6, ..., x'_0) = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w
+- For BLS12_381, OS2FE(x_string, n) = (x'_0, x'_1) = x'_0 + x'_1 * u
+- For BLS48_581, OS2FE(x_string, n) = (x'_0, ..., x'_7) = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w
 
 ## Scalar Serialization  {#scalar-serialization}
 
