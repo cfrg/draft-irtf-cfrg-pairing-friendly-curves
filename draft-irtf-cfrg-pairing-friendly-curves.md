@@ -533,9 +533,9 @@ b':
 
 {{point-serialization}} defines a normative point serialization format for BLS48_581 (with test vectors in {{point-serialization-test-vectors}}), extending the format defined by {{ZCashRep}} for BLS12_381 as specified in {{I-D.ietf-cose-bls-key-representations}}.
 
-# Point and Scalar Serialization  {#point-serialization}
+# Serialization and Validation  {#point-serialization}
 
-This section defines a normative encoding and decoding procedure for BLS12_381, and also extends it to BLS48_581. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
+This section defines normative serialization and deserialization procedures for BLS12_381, and also extends them to BLS48_581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
 
 Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.
 
@@ -623,7 +623,7 @@ This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_
 
 ## Point Deserialization  {#point-deserialization-procedure}
 
-This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G_2 respectively, or INVALID. A string that decodes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.
+This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G_2 respectively, or INVALID. A string that deserializes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.
 
 This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and they are what the specifications citing this document exchange. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires the subgroup check of conforming implementations for the same reason, and Section 6.2 of {{I-D.irtf-cfrg-bbs-signatures}} describes the combined operation as the one that libraries provide.
 
