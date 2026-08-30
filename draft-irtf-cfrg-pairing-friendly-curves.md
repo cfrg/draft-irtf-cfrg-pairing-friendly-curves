@@ -240,9 +240,9 @@ As a result, we recommend the BLS curve with 381-bit characteristic of embedding
 
 We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications. A comprehensive curve-by-curve comparison, including proposed alternatives that were not selected, is maintained at [https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html](https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html).
 
-The adoption status of pairing-friendly curves is surveyed in standards, libraries and applications. In this survey, "Arnd" is an abbreviation for "Around". The curves categorized as 'Arnd 128-bit', 'Arnd 192-bit' and 'Arnd 256-bit' for each label show that their security levels are within the range of plus/minus 5 bits for each security level. Other labels shown with '~' mean that the security level of the categorized curve is outside the range of each security level. Specifically, the security level of the categorized curves is more than the previous column and is less than the next column. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk_XXX.
+The adoption status of pairing-friendly curves is surveyed in standards, libraries and applications. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk-XXX.
 
-This section omits parameters with security levels below the "Arnd 128-bit" range due to space limitations and viewpoints of secure usage of parameters. On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore {{adoption_status_100bit_security}} shows these parameters.
+This section omits parameters whose security level is more than 5 bits below the 128-bit level, both to limit the size of the survey and because this document recommends against using parameters below the 128-bit level. On the other hand, indicating which standards, libraries, and applications use these lower security level parameters would be useful information for implementers, therefore {{adoption_status_100bit_security}} shows these parameters.
 
 The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves {{Freeman06}} and MNT curves {{MNT01}} are not included in this survey because {{BD18}} does not show the security levels of these curves.
 
@@ -787,7 +787,7 @@ This document has no actions for IANA.
 
 # Acknowledgements  {#acknowledgements}
 
-The authors would like to appreciate a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments.
+The authors would like to appreciate a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments. The authors would further like to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, and Michele Orrù for their detailed reviews of recent revisions, which shaped Section 5 in particular.
 
 
 --- back
@@ -1948,9 +1948,9 @@ return f;
 
 # Implementation Notes  {#implementation-notes}
 
-This appendix is informative. It documents implementation considerations discovered through verification of this memo's pseudocode against production-grade pairing libraries (mcl, noble-curves, blst), and does not standardize any algorithm.
+This appendix is informative. It documents implementation considerations discovered through verification of this memo's pseudocode against widely used pairing libraries (mcl, noble-curves, blst), and does not standardize any algorithm.
 
-## Production Library Cofactors  {#production-library-cofactors}
+## Cofactors in Existing Libraries  {#library-cofactors}
 
 Some implementations evaluate a fixed multiple of the final exponent. Their output differs from the literal output of the pseudocode in {{comp_pairing}} by a curve-specific exponent in G_T:
 
@@ -1974,13 +1974,13 @@ Because gcd(alpha, r) = 1 for all three curves, the following properties hold:
 
 The pseudocode in {{comp_pairing}} writes the final exponentiation as a single step, f := f^((p^k - 1) / r). In practice, implementations compute this via an easy/hard split: an easy part computed cheaply via the Frobenius endomorphism, and a hard part computed via an addition chain over the curve parameter t.
 
-Standard references for the hard-part addition chain include {{SBCK09}} (the original approach for BLS curves), {{AKLGL11}} (for BN curves), {{FCKR11}} (the BN cofactor variant used by mcl), and {{HHT20}} (a more recent, general treatment via cyclotomic structure, used for BLS12-381 above).
+Standard references for the hard-part addition chain include {{SBCK09}} (the original approach for BLS curves) and {{AKLGL11}} (for BN curves). {{FCKR11}} and {{HHT20}} are cited in {{library-cofactors}} for a different reason: each evaluates a fixed multiple of the hard part rather than the hard part itself, which is where the exponent alpha given there comes from.
 
 # Test Vectors of Optimal Ate Pairing  {#test-vectors-of-optimal-ate-pairing}
 
 We provide test vectors for Optimal Ate Pairing e(P, Q) given in {{comp_pairing}} for the curves BLS12-381, BN462 and BLS48-581 given in {{secure_params}}. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in {{secure_params}}.
 
-Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, i.e., as coordinates over E'(GF(p^(k/d))), which gives a compact representation. The pseudocode in Appendix A operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in {{secure_params}} to lift Q from E' to E(GF(p^k)). Most production libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
+Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, i.e., as coordinates over E'(GF(p^(k/d))), which gives a compact representation. The pseudocode in Appendix A operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in {{secure_params}} to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
 
 For BLS12-381 and BN462, Q = (x', y') is given by
 
@@ -2576,7 +2576,7 @@ Should BN462 point encodings converge, or should a protocol specification come t
 
 # Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level  {#adoption_status_100bit_security}
 
-BN curves including BN254 that were estimated as the 128-bit security level before exTNFS ensure no more than the 100-bit security level by the effect of exTNFS. The following table summarizes the adoption status of the parameters with a security level lower than the "Arnd 128-bit" range. Please refer to {{secure_params}} for the naming conventions for each curve.
+BN curves including BN254 that were estimated as the 128-bit security level before exTNFS ensure no more than the 100-bit security level by the effect of exTNFS. The following table summarizes the adoption status of the parameters that {{impl}} omits, namely those whose security level is more than 5 bits below the 128-bit level. Please refer to {{secure_params}} for the naming conventions for each curve.
 
 | Category | Name | Supported 100-bit Curves |
 |:---:|:---:|:---:|
