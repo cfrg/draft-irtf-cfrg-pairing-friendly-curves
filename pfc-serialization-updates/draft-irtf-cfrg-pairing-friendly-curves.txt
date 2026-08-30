@@ -18,7 +18,7 @@ Abstract
    Pairing-based cryptography, a subfield of elliptic curve
    cryptography, has received attention due to its flexible and
    practical functionality.  Pairings are special maps defined using
-   elliptic curves and it can be applied to construct several
+   elliptic curves and they can be applied to construct several
    cryptographic protocols such as identity-based encryption, attribute-
    based encryption, and so on.  At CRYPTO 2016, Kim and Barbulescu
    proposed an efficient number field sieve algorithm named exTNFS for
@@ -34,7 +34,10 @@ Abstract
    applications, and classify them in the 128-bit, 192-bit, and 256-bit
    security levels.  Then, from the viewpoints of "security" and "widely
    used", we select the recommended pairing-friendly curves considering
-   exTNFS.
+   exTNFS.  This memo also specifies the serialization and
+   deserialization of the points and scalars that protocols exchange,
+   restating a format that is already in widespread use, and states
+   which of the remaining decisions belong to the calling protocol.
 
 Discussion Venues
 
@@ -225,9 +228,9 @@ Table of Contents
    discrete logarithms in GF(p^k).  The idea is applicable when the
    embedding degree k is a composite that satisfies k = i * j with
    gcd(i, j) = 1 and i, j > 1.  The basic idea is based on the equality
-   GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the
+   GF(p^k) = (GF(p^i)^j) and one of the improvements for reducing the
    amount of cost for solving the discrete logarithm problem is using
-   sub-field calculation.  Several types of pairing-friendly curves such
+   subfield calculation.  Several types of pairing-friendly curves such
    as Barreto-Naehrig curves (BN curves)[BN05] and Barreto-Lynn-Scott
    curves (BLS curves)[BLS02] are affected by the attack, since a
    pairing-friendly curve suitable for cryptographic applications
@@ -260,6 +263,15 @@ Table of Contents
    characteristic for the 128-bit security level, and the BLS curves of
    embedding degree 48 with the 581-bit characteristic for the 256-bit
    security level.  This memo shows their specific test vectors.
+
+   This memo also specifies how the points and scalars that protocols
+   exchange are serialized and deserialized.  That format does not
+   originate here: it comes from [ZCashRep] and is already relied upon
+   by other specifications, which cite this document for it.  It is
+   restated normatively in Section 5, together with what makes a
+   deserialized value valid and which decisions are left to the calling
+   protocol.  Point serialization is given for BLS12-381 and BLS48-581;
+   scalar serialization applies to all three curves.
 
 1.4.  Requirements Terminology
 
@@ -305,8 +317,8 @@ Table of Contents
 
    A pairing is a bilinear map defined on two subgroups of rational
    points of an elliptic curve.  Examples include the Weil pairing, the
-   Tate pairing, the optimal Ate pairing [Ver09], and so on.  The
-   optimal Ate pairing is considered to be the most efficient to compute
+   Tate pairing, the optimal ate pairing [Ver09], and so on.  The
+   optimal ate pairing is considered to be the most efficient to compute
    and is the one that is most commonly used for practical
    implementation.
 
@@ -382,7 +394,7 @@ Table of Contents
 2.3.  Barreto-Naehrig Curves
 
    A BN curve [BN05] is a family of pairing-friendly curves proposed in
-   2005.  A pairing over BN curves constructs optimal Ate pairings.
+   2005.  A pairing over BN curves constructs optimal ate pairings.
 
    A BN curve is defined by elliptic curves E and E' parameterized by a
    well-chosen integer t.  E is defined over GF(p), where p is a prime
@@ -413,7 +425,7 @@ Table of Contents
 
    A BLS curve [BLS02] is another family of pairing-friendly curves
    proposed in 2002.  Similar to BN curves, a pairing over BLS curves
-   constructs optimal Ate pairings.
+   constructs optimal ate pairings.
 
    A BLS curve is defined by elliptic curves E and E' parameterized by a
    well-chosen integer t.  E is defined over a finite field GF(p) by an
@@ -495,8 +507,8 @@ Table of Contents
    6 as the first case it treats.  BN curves and BLS curves, whose
    embedding degree is divisible by 6, are therefore affected by the
    exTNFS.  The basic idea of the exTNFS is based on the equality
-   GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the
-   amount of cost for solving FFDLP is using sub-field calculation.
+   GF(p^k) = (GF(p^i)^j) and one of the improvements for reducing the
+   amount of cost for solving FFDLP is using subfield calculation.
    Please refer to [KB16] for detailed ideas and calculation algorithms
    of exTNFS.  Due to exTNFS, the security levels of certain pairing-
    friendly curves asymptotically dropped down.  For instance,
@@ -530,7 +542,7 @@ Table of Contents
    In our selection policy, it is important that selected curves are
    shown in peer-reviewed papers for security and that they are widely
    used in cryptographic libraries.  In addition, "efficiency" is one of
-   the important aspects but greatly dependant on implementations, so we
+   the important aspects but greatly dependent on implementations, so we
    choose to prioritize "security" and "widely used" over "efficiency"
    in consideration of future interconnections and interoperability over
    the internet.
@@ -573,13 +585,12 @@ Table of Contents
    p is denoted as BNXXX and a BLS curve of embedding degree k with a
    XXX-bit p is denoted as BLSk-XXX.
 
-   This section omits parameters whose security level is more than 5
-   bits below the 128-bit level, both to limit the size of the survey
-   and because this document recommends against using parameters below
-   the 128-bit level.  On the other hand, indicating which standards,
-   libraries, and applications use these lower security level parameters
-   would be useful information for implementers, therefore Appendix F
-   shows these parameters.
+   Parameters whose security level is more than 5 bits below the 128-bit
+   level are not candidates for selection here, because this document
+   recommends against using parameters below the 128-bit level.  They
+   are still named in the subsections below wherever a standard or a
+   library supports them, and Appendix F tabulates that adoption, which
+   is useful information for implementers.
 
    The security level for each curve is evaluated in accordance with
    [BD18], [GMT19], [MAF19] and [FK18].  Note that the Freeman curves
@@ -676,8 +687,8 @@ Table of Contents
    curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462)
    [AdjointLib], where BN254S1 and BN254S2 are BN curves adopted by an
    old version of AMCL [AMCLv2].  The suffix 'S' of BN254S1 and BN254S2
-   are given from the initials of developper's name because he proposed
-   these parameters.
+   are given from the initials of the developer's name because he
+   proposed these parameters.
 
    The Celo foundation published the bls12377js library [bls12377js].
    The supported curve is the BLS12-377 curve which is shown in
@@ -848,7 +859,7 @@ Table of Contents
    but has 134-bit security level [GMT19], so may be more resistant to
    future small improvements to the exTNFS attack.
 
-   We note also that CP8-544 is about 20% faster that BN462 [GMT19], has
+   We note also that CP8-544 is about 20% faster than BN462 [GMT19], has
    131-bit security level, and that due to its construction will not be
    affected by future small improvements to the exTNFS attack.  However,
    as this curve is not widely used (it is only implemented in one
@@ -1190,6 +1201,9 @@ Table of Contents
    *  Elements of GF(p^m) are represented as a vector of m coefficients
       in GF(p), (y_0, ..., y_{m-1}), using the basis and coefficient
       ordering already defined for each curve in Section 4.
+
+   *  The identity element of G_1 and of G_2 is the point at infinity
+      O_E of Section 2.1; the two names are used interchangeably below.
 
    *  For a byte string str, str[0] is defined as the first byte of str.
 
@@ -1545,8 +1559,8 @@ Table of Contents
    encoding, and the implementations that do emit BN462 points have not
    converged on one of the variants above.  Choosing among them would
    therefore be encoding design rather than the recording of established
-   practice, and encoding design is outside the purpose of this
-   document, which is the specification of curve parameters.
+   practice, and this document restates an encoding only where practice
+   has already settled on one.
 
    Implementations that nevertheless need to exchange BN462 points may
    find Appendix E useful.  It records, informatively, the encodings
@@ -1649,7 +1663,7 @@ Table of Contents
    The following points also apply to implementations of pairing-based
    cryptographic applications that use the recommended curves.
    Regarding the use case and applications of pairing-based
-   cryptographic applications, please refer Section 1.2.
+   cryptographic applications, please refer to Section 1.2.
 
    In applications such as key agreement protocols, users exchange the
    elements in G_1 and G_2 as public keys.  Such an element has to be
@@ -1658,16 +1672,16 @@ Table of Contents
    Section 5.4 has already been checked, since those procedures return
    an element of G_1 or of G_2 or nothing at all.  A point obtained in
    any other way, for instance as the result of point addition or scalar
-   multiplication, has not been, and implementors SHOULD apply
+   multiplication, has not been, and implementers SHOULD apply
    Section 5.4.1 to it.
 
    The pairing-based protocols, such as the BLS signatures, use a scalar
    multiplication in G_1, G_2 and an exponentiation in G_T with the
    secret key.  In order to prevent the leakage of secret key due to
-   side channel attacks, implementors SHOULD apply countermeasure
+   side channel attacks, implementers SHOULD apply countermeasure
    techniques such as the Montgomery ladder [Montgomery] [CF06] when
    they implement modules of a scalar multiplication and an
-   exponentiation.  Please refer [Montgomery] and [CF06] for the
+   exponentiation.  Please refer to [Montgomery] and [CF06] for the
    detailed algorithms of the Montgomery ladder.
 
    A coordinate that is read from a byte string has to be checked
@@ -1692,17 +1706,17 @@ Table of Contents
    solving algorithm for the strong DH problem [Cheon06].  The
    mathematical problem that provides the security of the strong DH
    problem is called ECDLP with Auxiliary Inputs (ECDLPwAI).  In
-   ECDLPwAI, given rational points P, [K]P, [K^i]P, for i=1,...,n, then
-   we find a secret K.  Since the complexity of ECDLPwAI is given as
-   O(sqrt((r-1)/n + sqrt(n)) where n divides r-1 by using Cheon's
-   algorithm whereas the complexity of ECDLP is given as O(sqrt(r)), the
-   complexity of ECDLPwAI with the ideal value n becomes dramatically
-   smaller than that of ECDLP.  Please refer [Cheon06] for the details
-   of Cheon's algorithm.  The design of a cryptographic protocol based
-   on the strong DH problem therefore has to take this attack into
-   account.  For example, in the case of Short Signatures, the attack
-   can be prevented by carefully setting the maximum number of queries,
-   which corresponds to the parameter n.
+   ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ...,
+   delta, then we find a secret K.  By Cheon's algorithm the complexity
+   of ECDLPwAI is O(sqrt((r-1)/delta) + sqrt(delta)) for a divisor delta
+   of r-1, whereas the complexity of ECDLP is O(sqrt(r)), so for a well
+   chosen delta the complexity of ECDLPwAI becomes dramatically smaller
+   than that of ECDLP.  Please refer to [Cheon06] for the details of
+   Cheon's algorithm.  The design of a cryptographic protocol based on
+   the strong DH problem therefore has to take this attack into account.
+   For example, in the case of Short Signatures, the attack can be
+   prevented by carefully setting the maximum number of queries, which
+   corresponds to the parameter delta.
 
 7.  IANA Considerations
 
@@ -1792,9 +1806,9 @@ Table of Contents
    [AFKMR12]  Aranha, D.F., Fuentes-Castaneda, L., Knapp, E., Menezes,
               A., and F. Rodríguez-Henríquez, "Implementing Pairings at
               the 192-Bit Security Level",
-              DOI /10.1007/978-3-642-36334-4_11, Pairing 2012 pp.
+              DOI 10.1007/978-3-642-36334-4_11, Pairing 2012 pp.
               177-195, 2012,
-              <https://doi.org//10.1007/978-3-642-36334-4_11>.
+              <https://doi.org/10.1007/978-3-642-36334-4_11>.
 
    [AKLGL11]  Aranha, D.F., Karabina, K., Longa, P., Gebotys, C.H., and
               J. López, "Faster Explicit Formulas for Computing Pairings
@@ -2008,9 +2022,9 @@ Table of Contents
    [Intel-IPP]
               Intel Corporation, "Developer Reference for Intel
               Integrated Performance Primitives Cryptography 2019",
-              2018, <https://software.intel.com/en-us/ipp-crypto-
-              reference-arithmetic-of-the-group-of-elliptic-curve-
-              points>.
+              2018, <https://web.archive.org/web/20200506110820/
+              https://software.intel.com/en-us/ipp-crypto-reference-
+              arithmetic-of-the-group-of-elliptic-curve-points>.
 
    [ISOIEC11770-3]
               ISO/IEC, "ISO/IEC 11770-3:2015", ISO/IEC Information
@@ -2185,7 +2199,7 @@ Table of Contents
 
 Appendix A.  Computing the Optimal Ate Pairing
 
-   Before presenting the computation of the optimal Ate pairing e(P, Q)
+   Before presenting the computation of the optimal ate pairing e(P, Q)
    satisfying the properties shown in Section 2.2, we give the
    subfunctions used for the pairing computation.
 
@@ -2208,7 +2222,7 @@ Appendix A.  Computing the Optimal Ate Pairing
    Line_function does not consider such an isomorphism; i.e., the above
    pseudocode operates on coordinates in untwisted form.
 
-   The computation of the optimal Ate pairing uses the p-power Frobenius
+   The computation of the optimal ate pairing uses the p-power Frobenius
    endomorphism pi of Section 2.2, applied to points Q = (x, y) over E'.
    The pseudocode below writes it with the characteristic as an explicit
    argument, pi(p, Q) = (x^p, y^p).
@@ -2218,7 +2232,7 @@ A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
    Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in
    {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
-   The following algorithm shows the computation of the optimal Ate
+   The following algorithm shows the computation of the optimal ate
    pairing on BN curves.  It takes P in G_1, Q in G_2, an integer c,
    c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1,
    ..., N) equals c, and the order r of G_1 as input, and outputs e(P,
@@ -2247,7 +2261,7 @@ A.2.  Optimal Ate Pairings over Barreto-Lynn-Scott Curves
    Let c = t for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such
    that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
-   The following algorithm shows the computation of the optimal Ate
+   The following algorithm shows the computation of the optimal ate
    pairing on Barreto-Lynn-Scott curves.  It takes P in G_1, Q in G_2,
    an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i
    (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and
