@@ -1455,7 +1455,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date year="2016" />
           </front>
         </reference>
-        <reference anchor="BLS12-381" target="https://electriccoin.co/blog/new-snark-curve/">
+        <reference anchor="BLS12-381" target="https://web.archive.org/web/20260823101842/https://electriccoin.co/blog/new-snark-curve/">
           <front>
             <title>BLS12-381: New zk-SNARK Elliptic Curve Construction</title>
             <author initials="S." surname="Bowe">
