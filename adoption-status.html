@@ -34,6 +34,35 @@
       <tr><td>BLS24-509 (proposed)</td><td>Not listed (ISO 2022 has BLS24 at 559-bit p, not 509)</td><td>0</td><td>&mdash;</td></tr>
     </table>
 
+    <h2>Security-Level Bands</h2>
+    <p>The draft groups curves by nominal security level. In this survey, &quot;Arnd&quot; is an
+      abbreviation for &quot;Around&quot;: a curve labelled <code>Arnd 128</code>, <code>Arnd 192</code>
+      or <code>Arnd 256</code> has an estimated security level within plus or minus 5 bits of that
+      level. A label shown with <code>~</code> means the estimate falls outside those ranges, between
+      the level to its left and the level to its right.</p>
+    <p>The levels below are the post-exTNFS estimates the draft itself states; the draft evaluates
+      security in accordance with [BD18], [GMT19], [MAF19] and [FK18]. Every curve for which the
+      draft states a figure is listed, whether or not it was selected. The band assignments published
+      in the table of draft -12 are superseded by this one.</p>
+    <table>
+      <tr><th>Curve</th><th>Estimated security level</th><th>Band</th><th>Status in the draft</th><th>Where the draft says so</th></tr>
+      <tr><td class="bold-curve">BLS12-381</td><td>approximately 126 bits</td><td><code>Arnd 128</code></td><td>Selected, on adoption</td><td>&sect;4.2.1 (BLS12-381), citing [GMT19]</td></tr>
+      <tr><td>CP8-544</td><td>131 bits</td><td><code>Arnd 128</code></td><td>Considered, not selected: implemented in one library</td><td>&sect;4.2.2 (BN462), citing [GMT19]</td></tr>
+      <tr><td class="bold-curve">BN462</td><td>134 bits</td><td><code>~</code> (above <code>Arnd 128</code>, below <code>Arnd 192</code>)</td><td>Selected, on margin</td><td>&sect;4.2.2 (BN462), citing [GMT19]</td></tr>
+    </table>
+    <p class="note">These three rows are the draft&#39;s decision at the 128-bit level. Its policy
+      prioritises &quot;security&quot; and &quot;widely used&quot; over &quot;efficiency&quot;, and
+      where &quot;widely used&quot; does not separate two candidates it prefers the one with margin
+      above the nominal level. BN462 sits above the <code>Arnd 128</code> band and is kept for that
+      margin. BLS12-381 sits inside the band and slightly below the nominal level, and is the stated
+      exception, kept because its adoption decisively satisfies &quot;widely used&quot;. CP8-544 has
+      more margin than BLS12-381 and, by its construction, is not affected by further refinements of
+      the exTNFS attack, and it is faster than BN462; it was not selected because it is implemented
+      in one library only.</p>
+    <p class="note">Curves elsewhere on this page are not assigned a band, because the draft does not
+      state a post-exTNFS estimate for them. Curves at or below the 100-bit level, which the draft
+      lists separately, are out of scope for this page.</p>
+
     <h2>Cryptographic Libraries (full survey)</h2>
     <table>
       <tr><th>Library</th><th>Maintainer</th><th>Status</th><th>Curves &ge; 128-bit (pairing-friendly)</th></tr>
