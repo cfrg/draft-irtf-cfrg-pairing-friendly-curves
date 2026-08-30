@@ -99,7 +99,7 @@ Table of Contents
        4.2.1.  BLS Curves for the 128-bit security level (BLS12_381)
        4.2.2.  BN Curves for the 128-bit security level (BN462)
      4.3.  For 256-bit Security
-   5.  Point and Scalar Serialization
+   5.  Serialization and Validation
      5.1.  Parameters and Notation
      5.2.  Scalar Serialization
      5.3.  Point Serialization
@@ -957,15 +957,17 @@ Table of Contents
    defined by [ZCashRep] for BLS12_381 as specified in
    [I-D.ietf-cose-bls-key-representations].
 
-5.  Point and Scalar Serialization
+5.  Serialization and Validation
 
-   This section defines a normative encoding and decoding procedure for
-   BLS12_381, and also extends it to BLS48_581.  What is encoded here
-   are the objects that protocols transmit: points on E and on E', and
-   scalars.  Elements of GF(p) and of GF(p^m) appear as coordinates of
-   those points rather than as objects with encodings of their own.  The
-   point format is based on the one originally defined by [ZCashRep] for
-   BLS12_381 and is, in turn, based on the representation shown in
+   This section defines normative serialization and deserialization
+   procedures for BLS12_381, and also extends them to BLS48_581.  It
+   also states what makes a deserialized value valid, and which of the
+   remaining decisions belong to the calling protocol.  What is encoded
+   here are the objects that protocols transmit: points on E and on E',
+   and scalars.  Elements of GF(p) and of GF(p^m) appear as coordinates
+   of those points rather than as objects with encodings of their own.
+   The point format is based on the one originally defined by [ZCashRep]
+   for BLS12_381 and is, in turn, based on the representation shown in
    [SEC1] with a small tweak to apply to GF(p^m).  It is already relied
    upon, directly or indirectly, by [I-D.irtf-cfrg-bbs-signatures] and
    [I-D.ietf-cose-bls-key-representations]; the latter extends it to
@@ -1207,10 +1209,10 @@ Table of Contents
 
    This section defines octets_to_point_G1 and octets_to_point_G2.  Each
    takes a byte string and returns an element of G_1 or of G_2
-   respectively, or INVALID.  A string that decodes to a point of E or
-   E' that is not in the group is INVALID, so a value returned by these
-   procedures is a group element and a caller does not have to obtain
-   one by a further step.
+   respectively, or INVALID.  A string that deserializes to a point of E
+   or E' that is not in the group is INVALID, so a value returned by
+   these procedures is a group element and a caller does not have to
+   obtain one by a further step.
 
    This document does not define a deserialization procedure that stops
    at E or E'.  G_1 and G_2 are the groups on which the pairing of
