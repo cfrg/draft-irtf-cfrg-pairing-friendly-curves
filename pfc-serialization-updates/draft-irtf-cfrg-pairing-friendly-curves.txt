@@ -3164,12 +3164,11 @@ E.3.  Alternative Considered: Two Metadata Bits
    S_bit is meaningful only for compressed points (see Step 1 of
    Section 5.3).  An encoding restricted to uncompressed points
    therefore needs only C_bit and I_bit, which fit in the two spare bits
-   that BN462 does have.  This possibility was raised by Frank Denis
-   during review of this document.  Its appeal is that BN462 would
-   remain within the same bit-packing family as the other two curves: a
-   decoder written for BLS12-381 could be extended to BN462 by masking
-   two metadata bits instead of three, rather than by acquiring a
-   second, leading-byte parser used only for BN462.
+   that BN462 does have.  The appeal of such an encoding is that BN462
+   would remain within the same bit-packing family as the other two
+   curves: a decoder written for BLS12-381 could be extended to BN462 by
+   masking two metadata bits instead of three, rather than by acquiring
+   a second, leading-byte parser used only for BN462.
 
    It carries a pitfall.  Step 2 of Section 5.4 determines the curve
    jointly from C_bit and the length of the string.  For BN462 (n = 58,
