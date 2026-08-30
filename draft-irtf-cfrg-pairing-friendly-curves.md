@@ -550,7 +550,7 @@ b':
 
 # Serialization and Validation  {#point-serialization}
 
-This section defines normative serialization and deserialization procedures for BLS12_381, and also extends them to BLS48_581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-not-applicable}}.
+This section defines normative serialization and deserialization procedures for BLS12_381, and also extends them to BLS48_581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZCashRep}} for BLS12_381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48_581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-applicability}}.
 
 Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.
 
@@ -559,7 +559,7 @@ Not all of what follows originates with this document. Where an existing format 
 | Scalar encoding | Existing practice: I2OSP and OS2IP {{RFC8017}}, together with a comparison against the group order | Specified here, for all three curves |
 | BLS12_381 point encoding | {{ZCashRep}}, which adapts the representation of {{SEC1}} to GF(p^m) | Restated here as the format in use |
 | BLS48_581 point encoding | The same format, extended to GF(p^8) in {{I-D.ietf-cose-bls-key-representations}} | That extension is adopted here |
-| BN462 point encoding | -- | Not applicable; see {{bn462-not-applicable}} |
+| BN462 point encoding | -- | Not specified here; see {{bn462-applicability}} |
 | Group membership and identity handling | This document | Specified here |
 
 At a high level, the point serialization format is defined as follows:
@@ -722,13 +722,13 @@ Faster tests are known for particular curves. Any method that decides the same p
 
 These checks apply to all three curves in this document. Note that for BN462 the cofactor h of E(GF(p)) is 1, so every point of E(GF(p)) is an element of G_1 and subgroup_check_G1 always returns TRUE; the cofactor h' of E'(GF(p^2)) is not 1, so subgroup_check_G2 remains meaningful.
 
-## Applicability to BN462  {#bn462-not-applicable}
+## Applicability to BN462  {#bn462-applicability}
 
-The point serialization procedures of {{point-serialization-procedure}} and {{point-deserialization-procedure}} do not apply to BN462. Scalar serialization, defined in {{scalar-serialization}}, and the subgroup checks of {{subgroup-check}} are unaffected and apply to BN462 as well.
+This document does not specify a point encoding for BN462. Scalar serialization, defined in {{scalar-serialization}}, and the subgroup checks of {{subgroup-check}} are unaffected and apply to BN462 as well.
 
-BN462 has a 462-bit characteristic p, so its canonical GF(p) representation occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits. This leaves 2 unused bits in the leading byte of a serialized coordinate, one short of the three (C_bit, I_bit, S_bit) that the scheme above places there. A point format for BN462 would therefore have to carry its metadata elsewhere, for example in a dedicated leading byte following the general pattern of {{SEC1}} rather than bit-packing into the coordinate representation.
+The coordinate encoding of {{point-serialization-procedure}} -- coordinates as fixed-length big-endian integers, with the coefficients of an element of GF(p^m) in decreasing index order -- carries over to BN462 unchanged. What does not fit is the placement of the metadata bits. BN462 has a 462-bit characteristic p, so its canonical GF(p) representation occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits. This leaves 2 unused bits in the leading byte of a serialized coordinate, one short of the three (C_bit, I_bit, S_bit) that the scheme above places there. {{bn462-serialization-notes}} describes two ways of accommodating that: carrying the metadata in a byte of its own, following the general pattern of {{SEC1}}, which leaves the rest of the format unchanged; or restricting the format to uncompressed points, which need only C_bit and I_bit and therefore fit in the two bits available.
 
-This document does not define such a format. The format specified above is recorded here because it is already widely used in applications, and because specifications depend on it: it originates with {{ZCashRep}} and is relied upon by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. Neither consideration applies to BN462, so specifying a format for it would mean designing an encoding rather than recording established practice, and encoding design is outside the purpose of this document, which is the specification of curve parameters.
+This document specifies neither. The format above is specified here because it is already widely used in applications, and because specifications depend on it: it originates with {{ZCashRep}} and is relied upon by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. For BN462 neither consideration holds: no specification examined requires a BN462 point encoding, and the implementations that do emit BN462 points have not converged on one of the variants above. Choosing among them would therefore be encoding design rather than the recording of established practice, and encoding design is outside the purpose of this document, which is the specification of curve parameters.
 
 Implementations that nevertheless need to exchange BN462 points may find {{bn462-serialization-notes}} useful. It records, informatively, the encodings that existing implementations use and the alternatives that have been considered. It defines no format.
 
@@ -2495,7 +2495,7 @@ kappa = r  (deserialization returns INVALID)
 
 # Point Serialization for BN462  {#bn462-serialization-notes}
 
-This appendix is informative. It records why the point serialization format of {{point-serialization}} is not applicable to BN462, which encodings existing BN462 implementations use instead, and which alternatives were considered and set aside. It defines no format, standardizes no algorithm, and places no requirement on implementations. Its purpose is to spare implementers of BN462 the effort of rediscovering the constraint described below, and to record the state of practice at the time of writing.
+This appendix is informative. It records why the metadata placement of {{point-serialization}} does not fit BN462, which encodings existing BN462 implementations use, and which variants were considered and set aside. It defines no format, standardizes no algorithm, and places no requirement on implementations. Its purpose is to spare implementers of BN462 the effort of rediscovering the constraint described below, and to record the state of practice at the time of writing.
 
 The observations below were obtained by reading the source code of the cited libraries in August 2026. They describe what those libraries emit and accept; no survey of deployed protocols or products was carried out.
 
@@ -2503,7 +2503,7 @@ The observations below were obtained by reading the source code of the cited lib
 
 The format of {{point-serialization}} carries three metadata bits (C_bit, I_bit, S_bit) in the three most significant bits of the first byte of a serialized coordinate. This requires the canonical representation of an element of GF(p) to leave at least three unused bits in its leading byte.
 
-BN462 has a 462-bit characteristic p, so n = ceil(462 / 8) = 58 bytes, i.e. 464 bits, and only 464 - 462 = 2 bits are unused: one bit short, as stated in {{bn462-not-applicable}}.
+BN462 has a 462-bit characteristic p, so n = ceil(462 / 8) = 58 bytes, i.e. 464 bits, and only 464 - 462 = 2 bits are unused: one bit short, as stated in {{bn462-applicability}}.
 
 The same criterion appears in implementations. {{MIRACL}} selects between two point encodings at compile time using the condition (MBITS - 1) mod 8 <= 4, where MBITS is the bit length of p; this condition holds exactly when the leading byte of a coordinate has three or more unused bits. When it holds, the library packs a compression flag (0x80) and a sign flag (0x20) into that byte, reserving 0x40; when it does not, it falls back to the {{SEC1}} encoding described in {{bn462-leading-byte}}. For BN462, (462 - 1) mod 8 = 5, so the fallback is used. The diagnosis above is therefore not particular to this document: an implementation supporting BN462 reaches the same conclusion by the same test. (The bit-packing path is additionally gated on a build-time option that the shipped configuration does not enable, so the default build uses the fallback encoding for every curve it supports.)
 
@@ -2544,7 +2544,7 @@ Both variants yield the same encoded lengths (117 and 59 bytes for G_1, 233 and 
 
 ## Why This Document Does Not Define a Format  {#bn462-not-defined}
 
-{{bn462-not-applicable}} gives the reasons this document does not define a BN462 point format. Two of them bear on what is recorded above. No specification examined defines or requires a BN462 point encoding, so the encodings listed here are library conventions rather than a format that a consumer of this document needs; and choosing among them would be encoding design rather than the recording of established practice.
+{{bn462-applicability}} gives the reasons this document does not specify a BN462 point format. Two of them bear on what is recorded above. No specification examined defines or requires a BN462 point encoding, so the encodings listed here are library conventions rather than a format that a consumer of this document needs; and choosing among them would be encoding design rather than the recording of established practice.
 
 Should BN462 point encodings converge, or should a protocol specification come to require one, a separate specification can define one. Of the encodings recorded above, the {{SEC1}} type byte is the most widely implemented among the libraries examined, and is the form an implementer is most likely to encounter when interoperating with existing BN462 code.
 
