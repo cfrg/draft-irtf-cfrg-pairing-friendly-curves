@@ -100,7 +100,16 @@ The set E(GF(q^k)) forms a group under a group law that can be defined geometric
 
 A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing {{Ver09}}, and so on. The optimal Ate pairing is considered to be the most efficient to compute and is the one that is most commonly used for practical implementation.
 
-Let E be an elliptic curve defined over a prime field GF(p). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let G_1 be a cyclic subgroup of E(GF(p)) of order r, there also exists a cyclic subgroup of E(GF(p^k)) of order r, define this to be G_2. Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If an isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist of E. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.
+Let E be an elliptic curve defined over a prime field GF(p), and let r be a large prime dividing the order of E(GF(p)). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let pi be the p-power Frobenius endomorphism, which maps a point (x, y) of E to (x^p, y^p), and let E(GF(p^k))[r] be the r-torsion subgroup of E(GF(p^k)). The pairing is defined on the two subgroups
+
+~~~~~~~~~~
+G_1 = E(GF(p^k))[r] intersect ker(pi - [1]) = E(GF(p))[r],
+G_2 = E(GF(p^k))[r] intersect ker(pi - [p]),
+~~~~~~~~~~
+
+where ker(pi - [a]) denotes the set of points T with pi(T) = [a]T. For the curves considered in this document, both G_1 and G_2 have order r. G_2 is identified by the eigenvalue p, and not merely as an order r subgroup of E(GF(p^k)): that weaker description is satisfied by G_1 as well, and the pairing computed in {{comp_pairing}} is degenerate when both of its arguments are taken from G_1.
+
+Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If an isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist of E. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.
 
 A pairing is defined as a bilinear map e: (G_1, G_2) -> G_T satisfying the following properties:
 
@@ -137,6 +146,12 @@ E(GF(p^k)):
 
 r:
 :   the order of G_1 and G_2.
+
+E(GF(p^k))[r]:
+:   the r-torsion subgroup of E(GF(p^k)), that is, the set of points T of E(GF(p^k)) with [r]T = O_E.
+
+pi:
+:   the p-power Frobenius endomorphism, which maps a point (x, y) of E to (x^p, y^p).
 
 BP:
 :   a point in G_1. (The 'base point' of a cyclic subgroup of G_1)
@@ -1855,7 +1870,7 @@ return (l * (x - x_1) + y_1 - y);
 
 When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}}{{KIK17}}. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.
 
-The computation of the optimal Ate pairing uses the Frobenius endomorphism. The p-power Frobenius endomorphism pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).
+The computation of the optimal Ate pairing uses the p-power Frobenius endomorphism pi of {{pairing}}, applied to points Q = (x, y) over E'. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).
 
 ## Optimal Ate Pairings over Barreto-Naehrig Curves  {#optimal-ate-pairings-over-barreto-naehrig-curves}
 
