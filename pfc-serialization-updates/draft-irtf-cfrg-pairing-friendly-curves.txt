@@ -1859,7 +1859,8 @@ Table of Contents
    [BLS12-381]
               Bowe, S., "BLS12-381: New zk-SNARK Elliptic Curve
               Construction",
-              <https://electriccoin.co/blog/new-snark-curve/>.
+              <https://web.archive.org/web/20260823101842/
+              https://electriccoin.co/blog/new-snark-curve/>.
 
    [BLS48]    Kyushu University, "bls48 - C++ library for Optimal Ate
               Pairing on BLS48", 2017,
