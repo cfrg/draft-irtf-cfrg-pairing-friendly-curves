@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-27T08:04:05.969076+00:00",
+  "timestamp": "2026-08-30T04:12:52.239476+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2809,6 +2809,69 @@
       "updatedAt": "2026-08-26T11:41:28Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 102,
+      "id": "I_kwDOD8wsds8AAAABOeJSzQ",
+      "title": "Appendix C: the BLS48-581 test vector is not the literal Appendix A output",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/102",
+      "state": "CLOSED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### The problem\n\nAppendix C of -13 gives the pairing test vector for BLS48-581 as the cube of the literal output of the Appendix A pseudocode. The BLS12-381 and BN462 vectors are the literal outputs. The three curves therefore do not follow the same convention, and Appendix B.1 tells implementers that evaluating the pseudocode literally will reproduce the vectors, which does not hold for BLS48-581.\n\nWriting `L` for the literal output on the base points of Section 4.3:\n\n| | Result |\n|---|---|\n| `L^3` vs Appendix C | 48 / 48 |\n| `L` vs Appendix C | 0 / 48 |\n\nWe derived `L` two independent ways -- a direct evaluation of Appendix A with the final exponentiation carried as a plain integer exponent rather than an addition chain, and the cube root of the published value within `mu_r` -- and both give the same 48 coefficients.\n\n### Plan for -14\n\n- Replace `e_0` .. `e_47` for BLS48-581 in Appendix C with the literal values.\n- Add a BLS48-581 entry to the Appendix B.1 list.\n- Rewrite Appendix B.1 so that a difference of pairing normalization is described separately from a different way of computing the same final exponent. The BLS48-581 discrepancy is the former, and the two are currently presented together.\n\n### Credit\n\nReported by Frank Denis (@jedisct1), who implemented the draft independently in [zig-pairings](https://github.com/jedisct1/zig-pairings) and noticed the discrepancy against the pseudocode. Summarised here with his permission.\n",
+      "createdAt": "2026-08-27T09:38:39Z",
+      "updatedAt": "2026-08-28T07:27:41Z",
+      "closedAt": "2026-08-28T07:27:41Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "### Done in the working branch\n\nAll three items are in.\n\n- The 48 `e_i` values for BLS48-581 in Appendix C are now the literal output.\n- Appendix B.1 has a BLS48-581 entry: `alpha = 3`.\n- Appendix B.1 no longer presents a difference of pairing normalization together with\n  a different way of computing the same final exponent.\n\nTwo notes on how the last two turned out, since they differ slightly from the plan above.\n\n**Appendix B.1 was narrowed rather than expanded.** The opening sentence now reads\n`Some implementations evaluate a fixed multiple of the final exponent`, replacing\n`Implementations using the fast final-exponentiation optimizations described in the\nliterature cited below`. Limiting the subject is enough to separate the two cases:\ncomputing the same exponent by an easy/hard split, which is what Appendix B.2\ndescribes, does not change the result and is now outside what B.1 talks about. No\ndescription of the easy/hard split was added to B.1.\n\n**The exponent was renamed from `k` to `alpha`.** The document uses `k` for the\nembedding degree throughout, including in Appendix B.2, so B.1 was overloading the\nsymbol. `alpha` is unused elsewhere in the document.\n\n`alpha = 3` is cited to [HHT20], which gives `p(x) = (x-1)^2 r(x)/3 + x` and\n`3*Phi_k(p(x))/r(x)` as the hard-part exponent for the BLS families with k = 12 and\nk = 48. The 3 comes from the `/3` in the prime definition, so the same value applies\nto both curves.\n\n### Verification of the replaced values\n\n| | Result |\n|---|---|\n| new `e_i` vs literal output (two independent derivations) | 48 / 48 |\n| `new^3` vs the -13 values | 48 / 48 |\n\nBuild is unchanged: same kramdown warning count, no new xml2rfc warnings, same page\ncount.\n\n@jedisct1 -- no rush at all, but if you have time to compare the new Appendix C values\nagainst your own evaluation, that would be a useful second pair of eyes before -14.",
+          "createdAt": "2026-08-27T12:08:13Z",
+          "updatedAt": "2026-08-27T12:08:13Z"
+        },
+        {
+          "author": "jedisct1",
+          "authorAssociation": "NONE",
+          "body": "Hi Yumi,\n\nAll 48 coefficients match exactly what I get. \n\nThank you for addressing this so quickly!",
+          "createdAt": "2026-08-27T12:28:28Z",
+          "updatedAt": "2026-08-27T12:28:28Z"
+        }
+      ]
+    },
+    {
+      "number": 105,
+      "id": "I_kwDOD8wsds8AAAABOqLYrg",
+      "title": "Review from Emil Lundberg (CFRG list): summary and tracking",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/105",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Context\n\nEmil Lundberg reviewed draft -13 on the CFRG mailing list in three messages on\n2026-07-27 and 2026-07-28:\n\n- [Serialization and deserialization issues](https://mailarchive.ietf.org/arch/msg/cfrg/UIDHgwRtkl86O37kQDET-wWWwPc/) (items 1-3)\n- [Review of draft-irtf-cfrg-pairing-friendly-curves-13](https://mailarchive.ietf.org/arch/msg/cfrg/hq2MwtzetN-scVSXlQCYoquNQ5M/) (items 4-11)\n- [A follow-up on the Appendix A/B thread](https://mailarchive.ietf.org/arch/msg/cfrg/_ywgWwdFeAui-15wokulMSTOe0I/) from the -12 review\n\nWe [replied on the list](https://mailarchive.ietf.org/arch/msg/cfrg/hG21DaIF0oU-ERiS19erXG7wqhw/)\nsaying we would file issues for each point. This is that issue: it records where each\npoint stands so that nothing is tracked only in private notes.\n\nThis is the counterpart, for Emil's review, of #101 (Frank Denis's review). Several\nfindings were reached independently by both reviewers, which is noted below.\n\nNote that #99 is a separate list: those are the additional style and formatting comments\nEmil raised directly on GitHub rather than on the list.\n\n### Points raised, and where each is tracked\n\n| # | Point | Disposition |\n|---|---|---|\n| **1 / 7** | The octet-string convention in Section 2.5 is little-endian in coefficient order, and the `[I-D.ietf-lwig-curve-representations]` citation attached to it does not support what the section claims. | **Resolved in #104.** Following this up led further than the coefficient order: the cited appendix is a worked numeric example rather than a representation convention, the coefficient order disagrees with Section 5.2, and the convention Section 2.5 stated is not one the cited document defines. Rather than repair the citation, Section 2.5 was removed and the conventions it carried were made self-contained: Section 5.2 already fixes the byte order, and Appendix C now carries an explicit coefficient-index rule. |\n| **2** | Steps 5-7 of the deserialization procedure in Section 5.3 unconditionally apply OS2IP to the whole coordinate string, so they only work for `E(GF(p))`. | **#91**, your pull request. Reached independently by Frank Denis (F4b in #101). The blocker on merging it was the Section 2.5 question above, which is now resolved. |\n| **3** | The `[MP04]` reference has a bibliography entry and a URL that point at different papers. | **Resolved in #104.** The only citation of `[MP04]` in the body was in Section 2.5, so the reference definition went with it. |\n| **4** | `(GF(p^k))^*` reads as a Cartesian product, and is written inconsistently across the draft. | **#95**, your pull request. Held for now only because the wording interacts with the Section 2.2 change described under F3 in #101. |\n| **5** | The draft spells `BLS12_381` with an underscore where the surrounding literature uses `BLS12-381`. | **Accepted.** Body text, headings, table labels and appendix labels will move to the hyphenated form. Citation tags and internal anchors will be left alone, since changing anchors would break cross-references. Planned after #91/#93/#95 are settled, to avoid conflicts. |\n| **6a** | \"Arnd\" does not appear anywhere, so a table may be missing. | **Accepted, with one correction to the premise.** \"Arnd\" is defined in Section 4.1 as an abbreviation for \"Around\". What is missing is any table that uses the label: it appears neither in the draft nor on the adoption-status page. The legend has outlived its table, so it will move to the adoption-status page where the table lives. Three places in the draft refer to it. |\n| **6b** | \"and viewpoints of secure usage of parameters\" is unclear. | **Accepted**, using your suggested rewording. |\n| **8** | Guidance on deciding whether `y2` is a square, and on computing `sqrt(y2)`. | **Accepted**, with one correction to the suggested formula: `y2^((p-1)/2)` is the Legendre symbol, which returns 1 for a square rather than a square root. For the base field, both curves have `p = 3 (mod 4)`, so RFC 9380 Appendix I.1 applies directly. The twist side is different: `q = p^2` and `q = p^8` are both `1 (mod 4)`, so the right pointer there is Appendix I.4 (constant-time Tonelli-Shanks for general `q`), with Appendix I.5 for `is_square` over `GF(p^2)`. To be written as part of the Section 5 restructuring. |\n| **9** | \"has contributed to at least one documented issue in a deployed protocol\" in Section 5.5 should cite the issue. | **Accepted.** Rather than adding a citation, the claim will be dropped from both places it appears (Section 5.5 and Section 6 -- see item 10). Whether the identity element is acceptable is a protocol-level decision, which Section 5.5 already says; Section 5.2 of `draft-irtf-cfrg-bls-signature` will be cited instead, as a concrete protocol-level reason a protocol might reject it. To land with the Section 5 restructuring. |\n| **10** | Two points in Section 6: (i) the extension-field coefficient-range paragraph is unclear; (ii) the \"documented issue\" sentence recurs here. | (i) **Accepted.** The paragraph will be rewritten rather than patched: it also has a missing article (\"an element in extension field\") and an ungrammatical clause (\"there is a possible that\"). (ii) **Covered by item 9** -- the claim is dropped from this occurrence as well. |\n| **11a** | `[CF06]` DOI not found. | **Confirmed.** The current DOI is not registered with Crossref; the registered DOI for that title will be used instead. |\n| **11b** | `[W3C]` points at `/TR/` rather than a stable Level 1 URL. | **Accepted**, using the dated URL you gave. |\n| **11c** | You are credited as the sole author of the WebAuthn reference. | **Confirmed as our error.** The co-authors will be listed. |\n| **11d** | `[EPID]` is a dead link. | **Confirmed (404).** To be replaced with a stable Intel page. |\n| **11e** | `[DFINITY]` is a dead link. | **Confirmed (503, repeatedly).** To be replaced with an Internet Archive snapshot. |\n| **11f** | `[Zcash]` is attributed to \"Lindemann, R.\", who is not its author. | **Confirmed.** The URL also redirects, and the current page carries no byline, so the reference will be attributed to the publishing organisation rather than to an individual. |\n| **11g** | `[I-D.boneh-bls-signature]` should be the RG draft. | **Accepted.** Will be updated to `draft-irtf-cfrg-bls-signature`. |\n\n### Your pull requests\n\n`#92`, `#94`, `#96`, `#97` and `#98` have been merged. `#91`, `#93` and `#95` are open and\nare being resolved together with the Section 5 restructuring described in #74.\n\n### Closing condition\n\nThis issue will be closed when the items above have landed in -14, or, for any item we\nend up handling differently, when that is recorded here.\n\nThank you for the depth of this review \u2014 several of these are things that would otherwise\nhave gone into an RFC.",
+      "createdAt": "2026-08-28T13:32:06Z",
+      "updatedAt": "2026-08-28T13:32:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 106,
+      "id": "I_kwDOD8wsds8AAAABOyV1RA",
+      "title": "Serialization of GF(p^k) elements (G_T)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/106",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Context\n\nIn #74, @mratsim asked whether serialization of `GF(p^12)` elements could be standardized as\nwell, noting that it would help fuzzing and cross-implementation comparison, and listing the\nways implementations diverge: the tower used, byte order, the order of powers, and the order\nwithin a field extension.\n\nWe replied on 2026-04-21 that this was outside the scope of #74 and suggested a separate issue.\nThis is that issue, so the request is recorded somewhere it can be found.\n\n### What Section 5 covers\n\nSection 5 defines encodings for the objects that protocols put on the wire: points on `E` and\n`E'`, and scalars. `GF(p)` and `GF(p^m)` elements are encoded there as point coordinates, and\nscalars have their own subsection because protocols transmit them on their own.\n\n`G_T` sits outside that line. Section 2.2 defines it as an order-`r` subgroup of the\nmultiplicative group `(GF(p^k))^*`, not as a group of curve points, so the metadata bits, the\ncoordinate pair and the y-sign convention have nothing to attach to. More to the point, the\nspecifications that cite this document do not transmit `G_T` values:\n\n- `draft-irtf-cfrg-bls-signature` computes `C1 = pairing(Q, xP)` and `C2 = pairing(R, P)` and\n  returns VALID if `C1 == C2`; the aggregate variant accumulates into `C1` and compares once.\n- `draft-irtf-cfrg-bbs-signatures` verifies `h(A, W + BP2 * e) * h(B, -BP2) != Identity_GT` and\n  never names the intermediate value.\n- `draft-irtf-cfrg-bbs-per-verifier-linkability` uses `GT` only in its terminology section.\n- `draft-irtf-cfrg-sigma-protocols` uses no pairing at all; it uses `G1` as a prime-order group.\n- `draft-irtf-cfrg-fiat-shamir` does not mention `G_T`.\n- `draft-ietf-cose-bls-key-representations` encodes public keys, which are points.\n\nIn every case a pairing value is a local intermediate that is compared and discarded.\n\nThere is precedent for drawing the line and stating it. RFC 9380 works over `GF(p^2)` and\npublishes test vectors for it, while Section 2.2.4 says plainly that the document does not\ncover serialization or deserialization. Appendix C of this document is in the same position:\nit prints `e_i` as integers, so no byte-level convention is needed to reproduce it.\n\nWe plan to say this in -14, as a positive statement of what Section 5 covers rather than as a\nlist of exclusions.\n\n### On the use case behind the request\n\nComparing implementations is a real need, and it does not require a byte encoding. What it\nrequires is agreement on which coefficient is which, and -14 supplies that: Appendix C now\nstates the basis and the coefficient indexing for `GF(p^k)` elements, made explicit in #104.\nTwo implementations that agree on the tower can compare the `k` integers directly.\n\nThe friction in the earlier discussion (supranational/blst#101) was that `Fp12` was reachable\nonly as an opaque struct through the Go bindings, so a byte array was the convenient way to get\nvalues out. That was resolved by adding an accessor.\n\n### What a survey of current implementations shows\n\nWe read the current sources of four libraries in August 2026, to see whether an encoding for\nthese elements has settled. Coefficients are labelled with the `e_i` indexing of Appendix C.\nAll four produce 576 bytes for BLS12-381 and use the tower of Section 4.2.1.\n\n| Implementation | Coefficient order | Byte order per coefficient |\n|---|---|---|\n| blst (`blst_bendian_from_fp12`) | `e_0, e_1, e_6, e_7, e_2, e_3, e_8, e_9, e_4, e_5, e_10, e_11` | big-endian |\n| gnark-crypto (`E12.Bytes`) | `e_11 ... e_0` | big-endian |\n| arkworks (`CanonicalSerialize`) | `e_0 ... e_11` | little-endian |\n| noble-curves (`Fp12.toBytes`) | `e_0 ... e_11` | big-endian |\n\nCompressed forms appear in these libraries as computation-side optimisations -- torus\ncompression in one, cyclotomic-subgroup compression in another -- rather than as encodings\noffered for interchange.\n\n### On defining one in this document\n\nNothing here would be hard to specify. Section 5.2 already fixes the byte order and the\nconcatenation order for the `m` coefficients of an `E'` coordinate; the same rule with `m = k`\ngives an encoding for `GF(p^k)`, and no metadata bits are needed, so it would apply to all three\ncurves including BN462. What is not settled is whether a compressed form should be offered, and\nwhat a decoder should check.\n\nWeighing that against the picture above, our plan is not to define one here. We would rather\nnot add a normative encoding that no consumer of this document has asked for, and where the\nimplementations that exist do not agree with each other.\n\nWe may have missed something. That reading rests on the specifications we could find that cite\nthis document, and on the four implementations we looked at. If you know of a setting where a\n`GF(p^k)` element genuinely has to be exchanged between implementations, we would be glad to\nhear about it and to look at this again.\n\nOne practical note on timing rather than principle: the document is being prepared for Crypto\nPanel review, so input that reaches us before -14 is much easier to act on. If a need turns up\nlater, a separate specification can carry the encoding, and the conventions in Section 5.2 are\navailable to it.\n\n### Closing condition\n\nThis issue will be closed when -14 carries the scope statement, or, if the discussion here goes\nanother way, when that is recorded here.",
+      "createdAt": "2026-08-29T15:05:35Z",
+      "updatedAt": "2026-08-29T15:05:35Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -2983,21 +3046,21 @@
       "id": "PR_kwDOD8wsds7H6I8L",
       "title": "add sketch interface for elliptic curves and scalars.",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/71",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mmaker",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-03-04T15:26:22Z",
-      "updatedAt": "2026-07-18T15:38:06Z",
+      "updatedAt": "2026-08-30T01:11:27Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
       "headRepository": "mmaker/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "mu/def",
       "headRefOid": "1b6687f211f25e295fe77d16729dee4acde6ceba",
-      "closedAt": null,
+      "closedAt": "2026-08-30T01:11:27Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -3029,6 +3092,13 @@
           "body": "Thanks @mmaker \u2014 following up on this.\n\nSince the intent behind this interface (and how it's meant to be used downstream, e.g. by sigma-protocols) wasn't fully clear to us, we thought it'd be useful to get broader input from the RG before shaping how this lands in PFC. We've just sent a note to the CFRG list raising a few clarifying questions from this thread: https://mailarchive.ietf.org/arch/msg/cfrg/-OPPc8GWi80T1fFasHMl39g7j9s/\n\nWe'd like to let that conversation develop a bit before deciding how to move forward here on the PR \u2014 happy to continue discussing in parallel if you'd prefer, but wanted to flag that we're intentionally holding off on accepting/merging until we have a clearer picture. Thanks for your patience.",
           "createdAt": "2026-07-18T15:38:06Z",
           "updatedAt": "2026-07-18T15:38:06Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this in favour of Section 5 and #74, as @mmaker suggested in his reply on the\nCFRG list. The full reply to that message is now on the list:\nhttps://mailarchive.ietf.org/arch/msg/cfrg/sI2Khp7EH2_IKHSMD1LMs33RumA/\n\n@mmaker, thank you for your patience here, and @bellebaum, thank you for the detailed\nreview -- the points raised have not been lost.\n\nDraft -13 added Section 5, which specifies point serialization and deserialization for\nBLS12_381 and BLS48_581, and scalar serialization for all three curves; that is the work\ntracked in #74. Section 5 has been reworked again for -14, and three points from the\nreview of this PR land there:\n\n* Whether `Group` means the curve groups or their order-`r` subgroups. In -14,\n  `octets_to_point_G1` and `octets_to_point_G2` return an element of `G_1` or of `G_2`,\n  with the subgroup check included, so the type is fixed and stated in the name.\n  `subgroup_check_G1` and `subgroup_check_G2` are specified separately, since a point can\n  also arise from addition or scalar multiplication rather than from a byte string.\n\n* Distinguishing `INVALID` from a separate deserialization error. -14 uses a single\n  failure value, `INVALID`, throughout Section 5.\n\n* Naming the zero scalar directly. -14 has a \"Zero Scalar\" section, kept separate from\n  identity element handling.\n\nRather than adding a Group/Scalar abstraction to this document, -14 gives the operations\nnames and return types in Section 5. The linked reply sets out the reasoning, including\nthe places where we did not go as far as the alignment proposed on the list.\n",
+          "createdAt": "2026-08-30T01:11:22Z",
+          "updatedAt": "2026-08-30T01:11:22Z"
         }
       ],
       "reviews": [
@@ -3411,25 +3481,35 @@
       "id": "PR_kwDOD8wsds73aThG",
       "title": "Handle extension field coordinates in point deserialization procedure",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/91",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "emlun",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "As was mentioned at IETF 126 and [on the CFRG mail list](https://mailarchive.ietf.org/arch/msg/cfrg/UIDHgwRtkl86O37kQDET-wWWwPc/), there's an issue in the point deserialization procedure, namely that steps 5-7 implicitly only work for E(GF(p)) since they unconditionally parse the whole x_string (and y_string where present) using OS2IP.\r\n\r\nFortunately the issue is unambiguous and straightforward to fix. This PR suggests one way to write it; you are welcome to reject or ignore it or to edit and rephrase it as you like.\r\n\r\nI'll note that this as currently written would add a normative reference to `I-D.ietf-lwig-curve-representations`. As also noted on the CFRG list [[1]](https://mailarchive.ietf.org/arch/msg/cfrg/UIDHgwRtkl86O37kQDET-wWWwPc/) [[2]](https://mailarchive.ietf.org/arch/msg/cfrg/hq2MwtzetN-scVSXlQCYoquNQ5M/) [[3]](https://mailarchive.ietf.org/arch/msg/cfrg/_ywgWwdFeAui-15wokulMSTOe0I/), the other existing references to `lwig-curve-representations` seem like they may be inaccurate or outdated. If those other references are deleted, the reference added here could be the only one that remains. I don't know if that would be a problem, but I figure it's worth pointing out.\r\n\r\nThis relates to issue #74.",
       "createdAt": "2026-07-28T11:24:42Z",
-      "updatedAt": "2026-07-28T11:27:13Z",
+      "updatedAt": "2026-08-29T23:40:51Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
       "headRepository": "emlun/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "serialization",
       "headRefOid": "58b9c83b7b0952b28d8edb8988797a22877679d5",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-08-29T23:39:31Z",
+      "mergedAt": "2026-08-29T23:39:31Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "f4e981ebc39f84719c5a1d74f5d3b847fe883956"
+      },
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged via #107, which takes your commit as authored. One thing was adjusted: OS2FE is now defined in Section 5.1 rather than cited to Appendix I.5 of `draft-ietf-lwig-curve-representations`, because #104 removed that draft's bibliographic entry in the meantime. The definition is simply the inverse of step 3 of Section 5.2, so it states no new convention.\n\nSection 5.3 also gained a MUST that every recovered GF(p) coefficient is in the range [0, p - 1] -- the point-side counterpart of the `k >= r` check that Section 5.4 already had.\n\nThank you for catching this and for writing the fix out so precisely.\n",
+          "createdAt": "2026-08-29T23:40:50Z",
+          "updatedAt": "2026-08-29T23:40:50Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3444,7 +3524,7 @@
       "labels": [],
       "body": "When `*` appears 2 or more times in a paragraph without whitespace surrounding it, it gets parsed as emphasis instead of as a multiplication asterisk. This causes `m*n bytes (compressed) or 2*m*n bytes (uncompressed)` to render as \"mn bytes (compressed) or 2m*n bytes (uncompressed)\" in section 5, and `length 2*m*n bytes` to render as \"length 2mn bytes\" in section 5.3. This commit also escapes other occurrences of un-spaced `*` as a precaution.",
       "createdAt": "2026-07-28T14:13:47Z",
-      "updatedAt": "2026-08-26T12:40:59Z",
+      "updatedAt": "2026-08-28T10:32:43Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
@@ -3506,7 +3586,7 @@
       "labels": [],
       "body": "This is only a suggestion - you are welcome to ignore/reject this if you disagree, or to pick out any pieces you like and edit them as you please.",
       "createdAt": "2026-07-28T14:22:43Z",
-      "updatedAt": "2026-08-26T11:59:24Z",
+      "updatedAt": "2026-08-28T10:31:29Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
@@ -3526,6 +3606,13 @@
           "body": "Merged \u2014 thank you. This was worth stating explicitly: Section 5.6 gave the technical reason (two spare bits where three are needed) and said that designing an alternative encoding is out of scope, but it never said why the BLS12_381 format is worth writing down in the first place. That was a gap in the reasoning, not just in the wording.\n\nOne heads-up so the change doesn't come as a surprise later. Section 5 is being restructured along per-curve lines for -14, and Section 5.6 becomes the BN462 subsection. As part of that the paragraph is being split so each reason stands on its own: applicability (points no, scalars yes), the bit-width constraint, why no format is defined, and a pointer to a new informative appendix. **Your point becomes the third of those, so the sentence itself will read differently even though the substance stays.**\n\nIt also picks up a second piece of evidence we found while working through the serialization review: besides being widely used in applications, the BLS12_381 format is depended on normatively by `draft-irtf-cfrg-bbs-signatures` and `draft-ietf-cose-bls-key-representations` \u2014 and BN462 has no counterpart to either. The two conditions together are what make the asymmetry you identified concrete.\n\nThe appendix is tracked in #100; it records what existing BN462 implementations actually emit, since a survey turned up more prior art than we expected \u2014 though none of it matching the draft's scheme.\n\nThanks as well for the questions at IETF 126 and for the review since. Both have been genuinely useful.\n",
           "createdAt": "2026-08-26T11:59:24Z",
           "updatedAt": "2026-08-26T11:59:24Z"
+        },
+        {
+          "author": "emlun",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Sounds good, thank you!",
+          "createdAt": "2026-08-28T10:31:29Z",
+          "updatedAt": "2026-08-28T10:31:29Z"
         }
       ],
       "reviews": []
@@ -3568,7 +3655,7 @@
       "labels": [],
       "body": "This clarification is already present in [Appendix C](https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-13.html#name-test-vectors-of-optimal-ate), which is good, but this PR also adds it to the section that defines Line_function.\r\n\r\nThis is only a suggestion - you are welcome to ignore/reject this if you disagree, or to pick out any pieces you like and edit them as you please.",
       "createdAt": "2026-07-28T14:24:50Z",
-      "updatedAt": "2026-08-26T12:41:34Z",
+      "updatedAt": "2026-08-28T10:32:35Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
@@ -3604,7 +3691,7 @@
       "labels": [],
       "body": "This now matches the formatting `e: (G_1, G_2) -> G_T` already present in section 2.2.\r\n\r\nThis is only a suggestion - you are welcome to ignore/reject this if you disagree.",
       "createdAt": "2026-07-28T14:25:26Z",
-      "updatedAt": "2026-08-26T12:41:55Z",
+      "updatedAt": "2026-08-28T10:32:59Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
@@ -3640,7 +3727,7 @@
       "labels": [],
       "body": "- Remove unnecessary indentation from code blocks:\r\n\r\n  This may have been an intentional style decision, but it seems like it's not since such indentation is missing in [section 2.5](https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-13.html#name-representation-convention-f) and [Appendix D](https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-13.html#name-test-vectors-for-point-seri).\r\n\r\n- Remove leading/trailing blank lines from code blocks:\r\n\r\n  At least the trailing blank lines do cause the Markdown parser to render extra vertical whitespace which is not needed.\r\n\r\nThis is only a suggestion - you are welcome to ignore/reject this if you disagree, or to pick out any pieces you like and edit them as you please.",
       "createdAt": "2026-07-28T14:29:31Z",
-      "updatedAt": "2026-08-26T12:43:27Z",
+      "updatedAt": "2026-08-28T10:33:23Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "521aa8a310f75ec67a126e35afdf3afca63170f7",
@@ -3662,6 +3749,90 @@
           "updatedAt": "2026-08-26T12:43:23Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOD8wsds8AAAABBTnisQ",
+      "title": "Replace the BLS48-581 pairing test vector with the literal Appendix A output (#102)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/103",
+      "state": "MERGED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #102.\n\nAppendix C gave the BLS48-581 pairing test vector as the cube of the literal output of\nthe Appendix A pseudocode, while the BLS12-381 and BN462 vectors are the literal\noutputs. This PR replaces the 48 coefficients with the literal output, so that the three\ncurves follow one convention and Appendix B.1 holds for all of them.\n\nAppendix B.1 is adjusted alongside it:\n\n- The opening sentence is limited to implementations that evaluate a fixed multiple of\n  the final exponent. Computing the same exponent by an easy/hard split, which is what\n  Appendix B.2 describes, does not change the result, and the previous wording read as\n  though it might.\n- A BLS48-581 entry is added: `alpha = 3`, cited to [HHT20].\n- The exponent is renamed from `k` to `alpha`, since `k` is the embedding degree\n  elsewhere in the document, including in Appendix B.2.\n- \"for both curves\" becomes \"for all three curves\".\n\n### Verification\n\n| | Result |\n|---|---|\n| new `e_i` vs literal output, two independent derivations | 48 / 48 |\n| `new^3` vs the -13 values | 48 / 48 |\n| `new^-1` vs the -12 values | 48 / 48 |\n\nThe two derivations were a direct evaluation of Appendix A with the hard part carried as\na plain integer exponent, and the cube root of the published values within mu_r.\n\nBuild against this base is unchanged: same kramdown warning count, no new xml2rfc\nwarnings, same page count. The text diff is confined to the 48 values and the\nAppendix B.1 wording above.\n\nReported by Frank Denis (@jedisct1) from an independent implementation\n([zig-pairings](https://github.com/jedisct1/zig-pairings)), who has since confirmed on\n#102 that all 48 replacement values match his own evaluation.",
+      "createdAt": "2026-08-28T07:26:30Z",
+      "updatedAt": "2026-08-28T07:27:43Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "eb1ae8a18118bf65f4b3bef32271c499575071d3",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix/issue-102-bls48-literal-tv",
+      "headRefOid": "7b3a32e979d84c08989c7b8d37111b9a6a4fc2e4",
+      "closedAt": "2026-08-28T07:27:40Z",
+      "mergedAt": "2026-08-28T07:27:40Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "f0836c7760f51bcb04f5f7b465b370fd5cac92ef"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 104,
+      "id": "PR_kwDOD8wsds8AAAABBUWdtw",
+      "title": "Remove Section 2.5 and make the extension field conventions self-contained",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/104",
+      "state": "MERGED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 2.5 adopts the representation convention of Appendix J.4 of\n[I-D.ietf-lwig-curve-representations]. Emil Lundberg (#99, item 7) and Frank Denis\n(#101, F4a) both raised this, and on checking, the reference does not hold up:\n\n1. Appendix J.4 is \"Example with Wei25519.2\", a worked numeric example rather than a\n   convention. The convention is in Appendix B.2, which represents a GF(p^m) element as\n   a vector, and Appendix I.5, which encodes it as `X_{m-1} || ... || X_0`.\n2. Those are descending, Section 2.5 is ascending, and Section 5.2 is descending. So\n   Section 5.2 agrees with the cited draft and Section 2.5 is the one that disagrees.\n3. Even with the citation corrected, the lwig draft specifies the encoding of a flat\n   coefficient vector. It does not define towered constructions, nor which tower basis\n   element corresponds to which coefficient index, which is what Appendix C needs.\n\nRather than repair the citation, this makes the conventions self-contained. Looking at\nwhat Section 2.5 actually carried, most of it turned out to be doing no work:\n\n- **Its octet concatenation rule is used nowhere.** The only concatenated octet strings\n  in the document are the Appendix D test vectors, and those follow Section 5.2's\n  descending order. The BLS12_381 G2 vector is `x'_1 || x'_0`, which matches Section 4.2.1\n  and not Section 2.5.\n- **Its big-endian note is not needed.** Section 4 and Appendix C give integers in\n  hexadecimal, which carry no byte order, and every integer-to-octet conversion in\n  Section 5 goes through I2OSP and OS2IP.\n- **Its ascending coefficient indexing is correct**, and is what Appendix C needs, but it\n  was stated only for a single extension and not for a tower.\n\nSo the substantive gap is one place. Appendix C defined `e_i` only by pointing at the\nlwig draft. It now states the rule and gives it explicitly, derived from the tower\ndefinitions already in Section 4: each indeterminate contributes a stride equal to the\ndegree over GF(p) of the field it extends.\n\n    For BLS12_381 and BN462 (k = 12):\n      e(P, Q) = e_0 + e_1*u + e_2*v + e_3*u*v + e_4*v^2 + e_5*u*v^2\n              + e_6*w + e_7*u*w + e_8*v*w + e_9*u*v*w + e_10*v^2*w + e_11*u*v^2*w\n\n    For BLS48_581 (k = 48):\n      the coefficient of u^i1 * v^i2 * w^i3 * z^i4 * s^i5 is e_i with\n      i = i1 + 2*i2 + 4*i3 + 8*i4 + 24*i5\n\nThe remaining lwig citations are dropped as redundant: the three base point entries in\nSection 4 and the sentence before the `e_i` definition in Appendix C each already sit\nnext to the relevant basis expansion.\n\nThis also drops the only citation of [MP04], whose bibliographic entry (ePrint 2019/431,\nCocks-Pinch curves) matches neither its target URL (ePrint 2004/032) nor the compression\nmethod the sentence claimed for it. That was item 3 of #99. Both reference definitions\nare removed, so informative references go from 79 to 77.\n\n### Verification\n\nReconstructing the Appendix C coefficients under the stated indexing gives an element `e`\nof GF(p^k), and `e^r = 1` should hold since the pairing output has order r.\n\n| Curve | Indexing | `e^r = 1` |\n|---|---|---|\n| BLS12_381 | `i1 + 2*i2 + 6*i3` | yes |\n| BN462 | `i1 + 2*i2 + 6*i3` | yes |\n| BLS48_581 | `i1 + 2*i2 + 4*i3 + 8*i4 + 24*i5` | yes |\n\nAs a control, descending order, transposed strides, a wrong stride, and twenty random\npermutations of the coefficients all fail the same check.\n\nBuild is unchanged against this base: same kramdown warning count, no new xml2rfc\nwarnings, same page count. The only text differences are the removals above, the new\nAppendix C paragraphs, and the resulting repagination.\n\n### Relation to open pull requests\n\nThis is the precondition for #91, which adds one further lwig citation. The substance of\n#91 is right and we want it; with Section 2.5 gone we can take it with the reference part\nadjusted.\n\nRefs #99, #101.",
+      "createdAt": "2026-08-28T09:15:26Z",
+      "updatedAt": "2026-08-28T09:16:48Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "f0836c7760f51bcb04f5f7b465b370fd5cac92ef",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix/remove-lwig-reference",
+      "headRefOid": "99ab6f1574c5175e90d1612e5211f5a5bb35b3c7",
+      "closedAt": "2026-08-28T09:16:45Z",
+      "mergedAt": "2026-08-28T09:16:45Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "6b5e28f4377eae1a3adafcdd15bb3184c0dafdd2"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 107,
+      "id": "PR_kwDOD8wsds8AAAABBeNYrQ",
+      "title": "Merge #91 and define OS2FE in this document",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/107",
+      "state": "MERGED",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This merges #91 and adjusts the one place where it no longer fits the current text.\n\n**What #91 fixes.** Steps 5-7 of Section 5.3 parsed the entire coordinate string with OS2IP, which is only correct for points on E. Emil Lundberg reported this at IETF 126 and on the CFRG list. The commit is taken as authored.\n\n**The adjustment.** #91 obtains the extension field coordinate through OS2FE, cited to Appendix I.5 of `draft-ietf-lwig-curve-representations`. That appendix does state the convention #91 needs. Since #91 was opened, however, #104 removed the last citation of that draft together with its bibliographic entry, so the citation is no longer available here. Rather than reintroduce it for this one function, OS2FE is now defined in the notation list of Section 5.1, as the inverse of step 3 of Section 5.2. This restates a convention Section 5.2 already fixes, so it introduces nothing new.\n\n**One addition beyond #91.** Section 5.3 now states, as a MUST, that every GF(p) coefficient recovered by the procedure is in the inclusive range [0, p - 1]. Section 5.4 already checks `k >= r` for scalars, but nothing on the point side required a coordinate to be smaller than p, and Section 6 mentioned it only informally. Frank Denis and Michele Orru each raised this independently. The requirement is stated once and covers both the OS2IP path on E and the OS2FE path on E'.\n\nThe trailing note from #91 is kept. Its coefficient vectors are written in increasing index order, to match the convention stated at the top of Section 5.1 and used in Appendix C.\n\n**Verification.** OS2FE as defined here reproduces `x'_0, ..., x'_{m-1}` of BP' in Section 4 from the compressed G2 test vectors in Appendix D, for both BLS12_381 and BLS48_581. Ascending block order fails that check for both curves, and the range check rejects an all-ones string. xml2rfc output is unchanged from master; kramdown adds one \"no link definition\" notice, for the literal `[0, p - 1]` in the new text, which is the same pattern master already emits in Section 5.2.\n",
+      "createdAt": "2026-08-29T23:37:58Z",
+      "updatedAt": "2026-08-29T23:39:32Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "6b5e28f4377eae1a3adafcdd15bb3184c0dafdd2",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "fix/pr91-extension-field-coords",
+      "headRefOid": "70da12294cbaf01b4f6bf58e614dffef564eb15d",
+      "closedAt": "2026-08-29T23:39:29Z",
+      "mergedAt": "2026-08-29T23:39:29Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "87a034c7449db8bf7bd82dc11ac9ebdca90dd5db"
+      },
+      "comments": [],
       "reviews": []
     }
   ]
