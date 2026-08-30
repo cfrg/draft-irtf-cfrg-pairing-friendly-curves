@@ -940,7 +940,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
         <reference anchor="CF06">
           <front>
             <title>Handbook of Elliptic and Hyperelliptic Curve Cryptography</title>
-            <seriesInfo name="DOI" value="10.1201/9780367801625" />
+            <seriesInfo name="DOI" value="10.1201/9781420034981" />
             <seriesInfo name="Chapman and Hall" value="CRC" />
             <author initials="H." surname="Cohen" fullname="Henri Cohen">
               <organization />
@@ -1081,16 +1081,40 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date />
           </front>
         </reference>
-        <reference anchor="W3C" target="https://www.w3.org/TR/webauthn/">
+        <reference anchor="W3C" target="https://www.w3.org/TR/2019/REC-webauthn-1-20190304/">
           <front>
             <title>Web Authentication: An API for accessing Public Key Credentials Level 1 - W3C Recommendation</title>
-            <author initials="E." surname="Lundberg">
-              <organization />
+            <author initials="D." surname="Balfanz">
+              <organization>Google</organization>
             </author>
-            <date />
+            <author initials="A." surname="Czeskis">
+              <organization>Google</organization>
+            </author>
+            <author initials="J." surname="Hodges">
+              <organization>Google</organization>
+            </author>
+            <author initials="J.C." surname="Jones">
+              <organization>Mozilla</organization>
+            </author>
+            <author initials="M.B." surname="Jones">
+              <organization>Microsoft</organization>
+            </author>
+            <author initials="A." surname="Kumar">
+              <organization>Microsoft</organization>
+            </author>
+            <author initials="A." surname="Liao">
+              <organization>Microsoft</organization>
+            </author>
+            <author initials="R." surname="Lindemann">
+              <organization>Nok Nok Labs</organization>
+            </author>
+            <author initials="E." surname="Lundberg">
+              <organization>Yubico</organization>
+            </author>
+            <date year="2019" month="March" day="4" />
           </front>
         </reference>
-        <reference anchor="EPID" target="https://software.intel.com/en-us/download/intel-sgx-intel-epid-provisioning-and-attestation-services">
+        <reference anchor="EPID" target="https://web.archive.org/web/20200506110729/https://software.intel.com/en-us/download/intel-sgx-intel-epid-provisioning-and-attestation-services">
           <front>
             <title>Intel (R) SGX: Intel (R) EPID Provisioning and Attestation Services</title>
             <author>
@@ -1114,11 +1138,11 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
-        <reference anchor="Zcash" target="https://z.cash/technology/zksnarks.html">
+        <reference anchor="Zcash" target="https://z.cash/technology/zksnarks/">
           <front>
             <title>What are zk-SNARKs?</title>
-            <author initials="R." surname="Lindemann">
-              <organization />
+            <author>
+              <organization>Zcash</organization>
             </author>
             <date />
           </front>
@@ -1188,7 +1212,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
             <date />
           </front>
         </reference>
-        <reference anchor="DFINITY" target="https://dfinity.org/pdf-viewer/library/dfinity-consensus.pdf">
+        <reference anchor="DFINITY" target="https://web.archive.org/web/20250307232101/https://dfinity.org/pdf-viewer/library/dfinity-consensus.pdf">
           <front>
             <title>DFINITY Technology Overview Series Consensus System Rev. 1</title>
             <author initials="D." surname="Williams">
