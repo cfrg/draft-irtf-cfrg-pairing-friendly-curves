@@ -96,8 +96,8 @@ Table of Contents
        4.1.2.  Cryptographic Libraries
        4.1.3.  Applications
      4.2.  For 128-bit Security
-       4.2.1.  BLS Curves for the 128-bit security level (BLS12_381)
-       4.2.2.  BN Curves for the 128-bit security level (BN462)
+       4.2.1.  BLS Curves for the 128-bit Security Level (BLS12_381)
+       4.2.2.  BN Curves for the 128-bit Security Level (BN462)
      4.3.  For 256-bit Security
    5.  Serialization and Validation
      5.1.  Parameters and Notation
@@ -223,23 +223,23 @@ Table of Contents
    field GF(p^k) [KB16].  The attack improves the polynomial selection
    that is the first step in the number field sieve algorithm for
    discrete logarithms in GF(p^k).  The idea is applicable when the
-   embedding degree k is a composite that satisfies k = i*j (gcd (i, j)
-   = 1, i, j> 1).  The basic idea is based on the equality GF(p^k) =
-   (GF(p^i)^j) and one of the improvement for reducing the amount of
-   cost for solving the discrete logarithm problem is using sub-field
-   calculation.  Several types of pairing-friendly curves such as
-   Barreto-Naehrig curves (BN curves)[BN05] and Barreto-Lynn-Scott
+   embedding degree k is a composite that satisfies k = i * j with
+   gcd(i, j) = 1 and i, j > 1.  The basic idea is based on the equality
+   GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the
+   amount of cost for solving the discrete logarithm problem is using
+   sub-field calculation.  Several types of pairing-friendly curves such
+   as Barreto-Naehrig curves (BN curves)[BN05] and Barreto-Lynn-Scott
    curves (BLS curves)[BLS02] are affected by the attack, since a
    pairing-friendly curve suitable for cryptographic applications
    requires that the discrete logarithm problem is sufficiently
    difficult.  Please refer to [KB16] for detailed ideas and calculation
-   algorithms of the attack by Kim. In particular, BN254, which is a BN
-   curve with a 254-bit characteristic effective for pairing
-   calculations, was adopted by a lot of cryptographic libraries as a
-   parameter of the 128-bit security level, however, BN254 ensures no
-   more than the 100-bit security level due to the effect of the attack,
-   where the security levels described in this memo correspond to the
-   security strength of NIST recommendation [NIST].
+   algorithms of the attack.  In particular, BN254, which is a BN curve
+   with a 254-bit characteristic effective for pairing calculations, was
+   adopted by a lot of cryptographic libraries as a parameter of the
+   128-bit security level, however, BN254 ensures no more than the
+   100-bit security level due to the effect of the attack, where the
+   security levels described in this memo correspond to the security
+   strength of NIST recommendation [NIST].
 
    To resolve this effect immediately, several research groups and
    implementers re-evaluated the security of pairing-friendly curves and
@@ -273,9 +273,9 @@ Table of Contents
 
 2.1.  Elliptic Curves
 
-   Let p be a prime number and q = p^n for a natural number n > 0, where
-   p at least 5.  Let GF(q) be a finite field.  The curve defined by the
-   following equation E is called an elliptic curve:
+   Let p be a prime number at least 5, and let q be a power of p.  Let
+   GF(q) be a finite field.  The curve defined by the following equation
+   E is called an elliptic curve:
 
    E : y^2 = x^3 + a * x + b,
 
@@ -359,7 +359,7 @@ Table of Contents
 
    (GF(p^k))*:  the multiplicative group of GF(p^k).
 
-   b:  a primitive element of the multiplicative group (GF(p))^*.
+   b:  the coefficient of the curve equation E: y^2 = x^3 + b.
 
    O_E:  the point at infinity over an elliptic curve E.
 
@@ -398,12 +398,12 @@ Table of Contents
    where b is a primitive element of the multiplicative group (GF(p))^*
    of order (p - 1).
 
-   In the case of BN curves, we can use twists of the degree 6.  If m is
-   an element that is neither a square nor a cube in an extension field
-   GF(p^2), the twist E' of E is defined over an extension field GF(p^2)
-   by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m.  BN
-   curves are called D-type if b' = b / m, and M-type if b' = b * m.
-   The embedding degree k is 12.
+   In the case of BN curves, we can use twists of the degree 6.  If nu
+   is an element that is neither a square nor a cube in an extension
+   field GF(p^2), the twist E' of E is defined over an extension field
+   GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / nu or b' = b
+   * nu.  BN curves are called D-type if b' = b / nu, and M-type if b' =
+   b * nu.  The embedding degree k is 12.
 
    A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of
    order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as an order r
@@ -489,20 +489,22 @@ Table of Contents
    exTNFS improves the polynomial selection that is the first step in
    the number field sieve algorithm for discrete logarithms in GF(p^k).
    The idea is applicable when the embedding degree k is a composite
-   that satisfies k = i * j (gcd (i, j) = 1, i, j> 1).  Since the above
-   condition is satisfied especially when k = 2^n*3^m (n, m> 1), BN
-   curves and BLS curves whose embedding degree is divisible by 6 are
-   affected by the exTNFS.  The basic idea of the exTNFS is based on the
-   equality GF(p^k) = (GF(p^i)^j) and one of the improvement for
-   reducing the amount of cost for solving FFDLP is using sub-field
-   calculation.  Please refer to [KB16] for detailed ideas and
-   calculation algorithms of exTNFS.  Due to exTNFS, the security levels
-   of certain pairing-friendly curves asymptotically dropped down.  For
-   instance, Barbulescu and Duquesne estimated that the security of the
-   BN curves, which had been believed to provide 128-bit security
-   (BN256, for example) was reduced to approximately 100 bits [BD18].
-   Here, the security levels described in this memo correspond to the
-   security strength of NIST recommendation [NIST].
+   that can be written as k = i * j with gcd(i, j) = 1 and i, j > 1.
+   Any k divisible by 6 meets this condition, taking i to be the largest
+   power of 2 dividing k and j to be k / i; [KB16] accordingly gives k =
+   6 as the first case it treats.  BN curves and BLS curves, whose
+   embedding degree is divisible by 6, are therefore affected by the
+   exTNFS.  The basic idea of the exTNFS is based on the equality
+   GF(p^k) = (GF(p^i)^j) and one of the improvement for reducing the
+   amount of cost for solving FFDLP is using sub-field calculation.
+   Please refer to [KB16] for detailed ideas and calculation algorithms
+   of exTNFS.  Due to exTNFS, the security levels of certain pairing-
+   friendly curves asymptotically dropped down.  For instance,
+   Barbulescu and Duquesne estimated that the security of the BN curves,
+   which had been believed to provide 128-bit security (BN256, for
+   example) was reduced to approximately 100 bits [BD18].  Here, the
+   security levels described in this memo correspond to the security
+   strength of NIST recommendation [NIST].
 
    There has since been research into the minimum bit length of the
    parameters of pairing-friendly curves for each security level when
@@ -597,15 +599,16 @@ Table of Contents
    [ISOIEC15946-5] (published 2022) reorganized the numerical examples
    and extended coverage to include BLS12, BLS24, and BLS48 curves.  The
    BN462 parameter in this document matches the numerical example in
-   Annex D.2.3 of [ISOIEC15946-5] exactly (u = 2^114 + 2^101 - 2^14 -
-   1), and the BLS48_581 parameter matches Annex D.3.5 exactly (u =
-   -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition introduces a post-
-   exTNFS security guideline that the characteristic p of BN and BLS12
-   curves should be at least 461 bits for the 128-bit security level.
-   As described below, BN curves with 256-bit p and 512-bit p from
-   earlier editions of ISO/IEC 15946-5 are referenced by other standards
-   and libraries; these curves are denoted as BN256I and BN512I, where
-   the suffix 'I' is given from the initials of the standard name ISO.
+   Annex D.2.3 of [ISOIEC15946-5] exactly (t = 2^114 + 2^101 - 2^14 - 1,
+   written u there), and the BLS48_581 parameter matches Annex D.3.5
+   exactly (t = -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition
+   introduces a post-exTNFS security guideline that the characteristic p
+   of BN and BLS12 curves should be at least 461 bits for the 128-bit
+   security level.  As described below, BN curves with 256-bit p and
+   512-bit p from earlier editions of ISO/IEC 15946-5 are referenced by
+   other standards and libraries; these curves are denoted as BN256I and
+   BN512I, where the suffix 'I' is given from the initials of the
+   standard name ISO.
 
    TCG adopts the BN256I and a BN curve with 638-bit p specified by
    their own[TPM].  FIDO Alliance [FIDO] and W3C [W3C] adopt BN256I,
@@ -720,7 +723,7 @@ Table of Contents
    memo in order to have a more efficient and a more prudent option
    respectively.
 
-4.2.1.  BLS Curves for the 128-bit security level (BLS12_381)
+4.2.1.  BLS Curves for the 128-bit Security Level (BLS12_381)
 
    In this part, we introduce the parameters of the Barreto-Lynn-Scott
    curve of embedding degree 12 with 381-bit p that is adopted by a lot
@@ -803,7 +806,7 @@ Table of Contents
    ciphersuites for hashing to an elliptic curve, including BLS12_381,
    and is valuable information for implementers.
 
-4.2.2.  BN Curves for the 128-bit security level (BN462)
+4.2.2.  BN Curves for the 128-bit Security Level (BN462)
 
    A BN curve with the 128-bit security level is shown in [BD18], which
    we call BN462.  BN462 is defined by the parameter
@@ -999,39 +1002,42 @@ Table of Contents
    existing format is restated, it is restated normatively, because
    other specifications already cite this document for it.
 
-   +==========+=========================================+=============+
-   |What      | Where it comes from                     | How this    |
-   |          |                                         | document    |
-   |          |                                         | treats it   |
-   +==========+=========================================+=============+
-   |Scalar    | Existing practice: I2OSP and OS2IP      | Specified   |
-   |encoding  | [RFC8017], together with a comparison   | here, for   |
-   |          | against the group order                 | all three   |
-   |          |                                         | curves      |
-   +----------+-----------------------------------------+-------------+
-   |BLS12_381 | [ZCashRep], which adapts the            | Restated    |
-   |point     | representation of [SEC1] to GF(p^m)     | here as the |
-   |encoding  |                                         | format in   |
-   |          |                                         | use         |
-   +----------+-----------------------------------------+-------------+
-   |BLS48_581 | The same format, extended to GF(p^8) in | That        |
-   |point     | [I-D.ietf-cose-bls-key-representations] | extension   |
-   |encoding  |                                         | is adopted  |
-   |          |                                         | here        |
-   +----------+-----------------------------------------+-------------+
-   |BN462     | --                                      | Not         |
-   |point     |                                         | applicable; |
-   |encoding  |                                         | see         |
-   |          |                                         | Section 5.5 |
-   +----------+-----------------------------------------+-------------+
-   |Group     | This document                           | Specified   |
-   |membership|                                         | here        |
-   |and       |                                         |             |
-   |identity  |                                         |             |
-   |handling  |                                         |             |
-   +----------+-----------------------------------------+-------------+
+   +============+=========================================+============+
+   | What       | Where it comes from                     | How this   |
+   |            |                                         | document   |
+   |            |                                         | treats it  |
+   +============+=========================================+============+
+   | Scalar     | Existing practice: I2OSP and OS2IP      | Specified  |
+   | encoding   | [RFC8017], together with a comparison   | here, for  |
+   |            | against the group order                 | all three  |
+   |            |                                         | curves     |
+   +------------+-----------------------------------------+------------+
+   | BLS12_381  | [ZCashRep], which adapts the            | Restated   |
+   | point      | representation of [SEC1] to GF(p^m)     | here as    |
+   | encoding   |                                         | the        |
+   |            |                                         | format in  |
+   |            |                                         | use        |
+   +------------+-----------------------------------------+------------+
+   | BLS48_581  | The same format, extended to GF(p^8) in | That       |
+   | point      | [I-D.ietf-cose-bls-key-representations] | extension  |
+   | encoding   |                                         | is         |
+   |            |                                         | adopted    |
+   |            |                                         | here       |
+   +------------+-----------------------------------------+------------+
+   | BN462      | --                                      | Not        |
+   | point      |                                         | specified  |
+   | encoding   |                                         | here; see  |
+   |            |                                         | Section    |
+   |            |                                         | 5.5        |
+   +------------+-----------------------------------------+------------+
+   | Group      | This document                           | Specified  |
+   | membership |                                         | here       |
+   | and        |                                         |            |
+   | identity   |                                         |            |
+   | handling   |                                         |            |
+   +------------+-----------------------------------------+------------+
 
-                                 Table 1
+                                  Table 1
 
    At a high level, the point serialization format is defined as
    follows:
@@ -1252,7 +1258,7 @@ Table of Contents
    E, and octets_to_point_G2 the case in which it determines E'.
 
    Every GF(p) coefficient recovered by this procedure MUST be an
-   integer in the inclusive range [0, p - 1].  An octet string that
+   integer in the inclusive range [0, p - 1].  A byte string that
    encodes a coordinate, or a coefficient of a coordinate, as a value
    greater than or equal to p is not a canonical encoding of a field
    element; implementations MUST return INVALID in that case.  This
@@ -1407,29 +1413,35 @@ Table of Contents
 
 5.5.  Applicability to BN462
 
-   The point serialization procedures of Section 5.3 and Section 5.4 do
-   not apply to BN462.  Scalar serialization, defined in Section 5.2,
-   and the subgroup checks of Section 5.4.1 are unaffected and apply to
-   BN462 as well.
+   This document does not specify a point encoding for BN462.  Scalar
+   serialization, defined in Section 5.2, and the subgroup checks of
+   Section 5.4.1 are unaffected and apply to BN462 as well.
 
-   BN462 has a 462-bit characteristic p, so its canonical GF(p)
-   representation occupies n = ceil(462 / 8) = 58 bytes, that is 464
-   bits.  This leaves 2 unused bits in the leading byte of a serialized
-   coordinate, one short of the three (C_bit, I_bit, S_bit) that the
-   scheme above places there.  A point format for BN462 would therefore
-   have to carry its metadata elsewhere, for example in a dedicated
-   leading byte following the general pattern of [SEC1] rather than bit-
-   packing into the coordinate representation.
+   The coordinate encoding of Section 5.3 -- coordinates as fixed-length
+   big-endian integers, with the coefficients of an element of GF(p^m)
+   in decreasing index order -- carries over to BN462 unchanged.  What
+   does not fit is the placement of the metadata bits.  BN462 has a
+   462-bit characteristic p, so its canonical GF(p) representation
+   occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits.  This leaves
+   2 unused bits in the leading byte of a serialized coordinate, one
+   short of the three (C_bit, I_bit, S_bit) that the scheme above places
+   there.  Appendix E describes two ways of accommodating that: carrying
+   the metadata in a byte of its own, following the general pattern of
+   [SEC1], which leaves the rest of the format unchanged; or restricting
+   the format to uncompressed points, which need only C_bit and I_bit
+   and therefore fit in the two bits available.
 
-   This document does not define such a format.  The format specified
-   above is recorded here because it is already widely used in
-   applications, and because specifications depend on it: it originates
-   with [ZCashRep] and is relied upon by [I-D.irtf-cfrg-bbs-signatures]
-   and [I-D.ietf-cose-bls-key-representations].  Neither consideration
-   applies to BN462, so specifying a format for it would mean designing
-   an encoding rather than recording established practice, and encoding
-   design is outside the purpose of this document, which is the
-   specification of curve parameters.
+   This document specifies neither.  The format above is specified here
+   because it is already widely used in applications, and because
+   specifications depend on it: it originates with [ZCashRep] and is
+   relied upon by [I-D.irtf-cfrg-bbs-signatures] and
+   [I-D.ietf-cose-bls-key-representations].  For BN462 neither
+   consideration holds: no specification examined requires a BN462 point
+   encoding, and the implementations that do emit BN462 points have not
+   converged on one of the variants above.  Choosing among them would
+   therefore be encoding design rather than the recording of established
+   practice, and encoding design is outside the purpose of this
+   document, which is the specification of curve parameters.
 
    Implementations that nevertheless need to exchange BN462 points may
    find Appendix E useful.  It records, informatively, the encodings
@@ -1536,7 +1548,7 @@ Table of Contents
 
    In applications such as key agreement protocols, users exchange the
    elements in G_1 and G_2 as public keys.  Such an element has to be
-   so-called sub-group secure [BCM15], that is, it has to have the
+   so-called subgroup secure [BCM15], that is, it has to have the
    correct order r.  A point obtained from a byte string through
    Section 5.4 has already been checked, since those procedures return
    an element of G_1 or of G_2 or nothing at all.  A point obtained in
@@ -1553,7 +1565,7 @@ Table of Contents
    Please refer [Montgomery] and [CF06] for the detailed algorithms of
    montgomery ladder.
 
-   A coordinate that is read from an octet string has to be checked
+   A coordinate that is read from a byte string has to be checked
    against the order of the field it is claimed to lie in; a coefficient
    outside that range gives one value several encodings, which can lead
    to vulnerabilities such as signature forgery [IEEE1363].  Section 5.4
@@ -2065,8 +2077,8 @@ Appendix A.  Computing the Optimal Ate Pairing
    satisfying the properties shown in Section 2.2, we give the
    subfunctions used for the pairing computation.
 
-   The following algorithm, Line_Function shows the computation of the
-   line function.  It takes Q_1 = (x_1, x_2), Q_2 = (x_2, y_2) in G_2,
+   The following algorithm, Line_function, shows the computation of the
+   line function.  It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2,
    and P = (x, y) in G_1 as input, and outputs an element of G_T.
 
    if (Q_1 = Q_2) then
@@ -2091,20 +2103,20 @@ Appendix A.  Computing the Optimal Ate Pairing
 
 A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
-   Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_L in
-   {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.
+   Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in
+   {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
    The following algorithm shows the computation of the optimal Ate
    pairing on BN curves.  It takes P in G_1, Q in G_2, an integer c,
-   c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1,
-   ..., L) equals c, and the order r of G_1 as input, and outputs e(P,
+   c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1,
+   ..., N) equals c, and the order r of G_1 as input, and outputs e(P,
    Q).
 
    f := 1; T := Q;
-   if (c_L = -1) then
+   if (c_N = -1) then
        T := -T;
    end if
-   for i = L-1 downto 0
+   for i = N-1 downto 0
        f := f^2 * Line_function(T, T, P); T := T + T;
        if (c_i = 1) then
            f := f * Line_function(T, Q, P); T := T + Q;
@@ -2120,20 +2132,20 @@ A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
 A.2.  Optimal Ate Pairings over Barreto-Lynn-Scott Curves
 
-   Let c = t for a parameter t and c_0, c_1, ... , c_L in {-1,0,1} such
-   that the sum of c_i * 2^i (i = 0, 1, ..., L) equals c.
+   Let c = t for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such
+   that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
    The following algorithm shows the computation of the optimal Ate
    pairing on Barreto-Lynn-Scott curves.  It takes P in G_1, Q in G_2,
-   an integer c, c_0, ...,c_L in {-1,0,1} such that the sum of c_i * 2^i
-   (i = 0, 1, ..., L) equals c, and the order r of G_1 as input, and
+   an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i
+   (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and
    outputs e(P, Q).
 
    f := 1; T := Q;
-   if (c_L = -1) then
+   if (c_N = -1) then
        T := -T;
    end if
-   for i = L-1 downto 0
+   for i = N-1 downto 0
        f := f^2 * Line_function(T, T, P); T := T + T;
        if (c_i = 1) then
            f := f * Line_function(T, Q, P); T := T + Q;
@@ -2163,14 +2175,14 @@ B.1.  Production Library Cofactors
 
    *  BLS12_381: alpha = 3 [HHT20]
 
-   *  BN462: alpha = 2u(6u^2 + 3u + 1) mod r [FCKR11]
+   *  BN462: alpha = 2t(6t^2 + 3t + 1) mod r [FCKR11]
 
    *  BLS48_581: alpha = 3 [HHT20]
 
    Because gcd(alpha, r) = 1 for all three curves, the following
    properties hold:
 
-   *  Bilinearity is preserved: e_lib([a]P, [b]Q) = e_lib(P, Q)^(ab).
+   *  Bilinearity is preserved: e_lib([K]P, [L]Q) = e_lib(P, Q)^{K * L}.
 
    *  Verification equations of the form e(A, B) = e(C, D) hold using
       e_lib if and only if they hold using e_pseudocode.
@@ -2187,7 +2199,7 @@ B.2.  Final Exponentiation Decomposition
    single step, f := f^((p^k - 1) / r).  In practice, implementations
    compute this via an easy/hard split: an easy part computed cheaply
    via the Frobenius endomorphism, and a hard part computed via an
-   addition chain over the curve parameter u.
+   addition chain over the curve parameter t.
 
    Standard references for the hard-part addition chain include [SBCK09]
    (the original approach for BLS curves), [AKLGL11] (for BN curves),
@@ -2333,37 +2345,37 @@ Appendix C.  Test Vectors of Optimal Ate Pairing
 
    Input y value:  0x0cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d1b2e35f37aef7b926b576dbb5de3e2587a70
 
-   x'_0:  0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab
+   Input x'_0 value:  0x05d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154dec34fd0b4ace8bfab
 
-   x'_1:  0x07c4973ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c57
+   Input x'_1 value:  0x07c4973ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c57
 
-   x'_2:  0x01fccc70198f1334e1b2ea1853ad83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a
+   Input x'_2 value:  0x01fccc70198f1334e1b2ea1853ad83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a
 
-   x'_3:  0x0be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8cb4e80bc3f09a7033cbb7feafe
+   Input x'_3 value:  0x0be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8cb4e80bc3f09a7033cbb7feafe
 
-   x'_4:  0x038b91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c53f8cce5
+   Input x'_4 value:  0x038b91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c53f8cce5
 
-   x'_5:  0x0c96c7797eb0738603f1311e4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a
+   Input x'_5 value:  0x0c96c7797eb0738603f1311e4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a
 
-   x'_6:  0x0b9b7951c6061ee3f0197a498908aee660dea41b39d13852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c22d63334b5b0e205c3354e41607e60750e057
+   Input x'_6 value:  0x0b9b7951c6061ee3f0197a498908aee660dea41b39d13852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c22d63334b5b0e205c3354e41607e60750e057
 
-   x'_7:  0x0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3f84e19da00fbc6ae34
+   Input x'_7 value:  0x0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3f84e19da00fbc6ae34
 
-   y'_0:  0x00eb53356c375b5dfa497216452f3024b918b4238059a577e6f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d659045012ab12c0ff323edd3fe4d2d7971
+   Input y'_0 value:  0x00eb53356c375b5dfa497216452f3024b918b4238059a577e6f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d659045012ab12c0ff323edd3fe4d2d7971
 
-   y'_1:  0x0284dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3afb096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111471db936cd5665
+   Input y'_1 value:  0x0284dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3afb096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111471db936cd5665
 
-   y'_2:  0x0b36a201dd008523e421efb70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e90411515536ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a8474
+   Input y'_2 value:  0x0b36a201dd008523e421efb70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e90411515536ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a8474
 
-   y'_3:  0x0aec25a4621edc0688223fbbd478762b1c2cded3360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bda503ee5e578fb3d8b8a1e5337316213da92841589d
+   Input y'_3 value:  0x0aec25a4621edc0688223fbbd478762b1c2cded3360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bda503ee5e578fb3d8b8a1e5337316213da92841589d
 
-   y'_4:  0x0d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdddfcf7a43f47831f982e50137
+   Input y'_4 value:  0x0d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdddfcf7a43f47831f982e50137
 
-   y'_5:  0x07d0d03745736b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c270841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf90bee4
+   Input y'_5 value:  0x07d0d03745736b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c270841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf90bee4
 
-   y'_6:  0x0896767811be65ea25c2d05dfdd17af8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb23986
+   Input y'_6 value:  0x0896767811be65ea25c2d05dfdd17af8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb23986
 
-   y'_7:  0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6
+   Input y'_7 value:  0x035e2524ff89029d393a5c07e84f981b5e068f1406be8e50c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f748e5ac66e84069c55d667ffcb732718b6
 
    e_0:  0x0e26c3fcb8ef67417814098de5111ffcccc1d003d15b367bad07cef2291a93d31db03e3f03376f3beae2bd877bcfc22a25dc51016eda1ab56ee3033bc4b4fec5962f02dffb3af5e38e
 
@@ -2477,24 +2489,24 @@ Appendix D.  Test Vectors for Serialization
 
 D.1.  BLS12_381 Points
 
-   G1 (BP), compressed (48 bytes):
+   G_1 (BP), compressed (48 bytes):
 
    97f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac58
    6c55e83ff97a1aeffb3af00adb22c6bb
 
-   G1 (BP), uncompressed (96 bytes):
+   G_1 (BP), uncompressed (96 bytes):
 
    17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac58
    6c55e83ff97a1aeffb3af00adb22c6bb08b3f481e3aaa0f1a09e30ed741d8ae4
    fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1
 
-   G2 (BP'), compressed (96 bytes):
+   G_2 (BP'), compressed (96 bytes):
 
    93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049
    334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc51051
    c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
 
-   G2 (BP'), uncompressed (192 bytes):
+   G_2 (BP'), uncompressed (192 bytes):
 
    13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049
    334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc51051
@@ -2513,13 +2525,13 @@ D.1.  BLS12_381 Points
 
 D.2.  BLS48_581 Points
 
-   G1 (BP), compressed (73 bytes):
+   G_1 (BP), compressed (73 bytes):
 
    a2af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7
    544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d
    8c3bce8732315af640
 
-   G1 (BP), uncompressed (146 bytes):
+   G_1 (BP), uncompressed (146 bytes):
 
    02af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7
    544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d
@@ -2527,7 +2539,7 @@ D.2.  BLS48_581 Points
    52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d
    1b2e35f37aef7b926b576dbb5de3e2587a70
 
-   G2 (BP'), compressed (584 bytes):
+   G_2 (BP'), compressed (584 bytes):
 
    8827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7
    f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3
@@ -2549,7 +2561,7 @@ D.2.  BLS48_581 Points
    6ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154de
    c34fd0b4ace8bfab
 
-   G2 (BP'), uncompressed (1168 bytes):
+   G_2 (BP'), uncompressed (1168 bytes):
 
    0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7
    f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3
@@ -2659,14 +2671,14 @@ D.3.  Scalars
 
 Appendix E.  Point Serialization for BN462
 
-   This appendix is informative.  It records why the point serialization
-   format of Section 5 is not applicable to BN462, which encodings
-   existing BN462 implementations use instead, and which alternatives
-   were considered and set aside.  It defines no format, standardizes no
-   algorithm, and places no requirement on implementations.  Its purpose
-   is to spare implementers of BN462 the effort of rediscovering the
-   constraint described below, and to record the state of practice at
-   the time of writing.
+   This appendix is informative.  It records why the metadata placement
+   of Section 5 does not fit BN462, which encodings existing BN462
+   implementations use, and which variants were considered and set
+   aside.  It defines no format, standardizes no algorithm, and places
+   no requirement on implementations.  Its purpose is to spare
+   implementers of BN462 the effort of rediscovering the constraint
+   described below, and to record the state of practice at the time of
+   writing.
 
    The observations below were obtained by reading the source code of
    the cited libraries in August 2026.  They describe what those
@@ -2737,6 +2749,14 @@ E.2.  Encodings Used by Existing Implementations
 
    For [MIRACL] and [zig-pairings], the corresponding G_2 sizes are 233
    bytes uncompressed and 117 bytes compressed.
+
+   Both leading-byte forms leave the coordinate encoding of Section 5.3
+   untouched: [MIRACL] writes the coefficients of a GF(p^2) coordinate
+   in decreasing index order, as that section does, and so does
+   [zig-pairings].  The two differ only in what the leading byte means.
+   Note that [SEC1] itself defines point encoding over GF(p) and GF(2^m)
+   only, so its type byte applied to E'(GF(p^2)) is an extension of it
+   by the coefficient rule of Section 5.3 rather than [SEC1] as written.
 
    In [mcl], BN462 is marked deprecated.  Its affine serialization
    writes x followed by y with no metadata at all, its compressed form
@@ -2815,7 +2835,7 @@ E.4.  Alternative Considered: A Dedicated Leading Byte
 
 E.5.  Why This Document Does Not Define a Format
 
-   Section 5.5 gives the reasons this document does not define a BN462
+   Section 5.5 gives the reasons this document does not specify a BN462
    point format.  Two of them bear on what is recorded above.  No
    specification examined defines or requires a BN462 point encoding, so
    the encodings listed here are library conventions rather than a
