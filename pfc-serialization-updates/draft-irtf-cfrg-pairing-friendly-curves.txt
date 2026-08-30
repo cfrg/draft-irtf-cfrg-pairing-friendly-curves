@@ -123,9 +123,10 @@ Table of Contents
      B.1.  Production Library Cofactors
      B.2.  Final Exponentiation Decomposition
    Appendix C.  Test Vectors of Optimal Ate Pairing
-   Appendix D.  Test Vectors for Point Serialization
-     D.1.  BLS12_381
-     D.2.  BLS48_581
+   Appendix D.  Test Vectors for Serialization
+     D.1.  BLS12_381 Points
+     D.2.  BLS48_581 Points
+     D.3.  Scalars
    Appendix E.  Point Serialization for BN462
      E.1.  The Constraint
      E.2.  Encodings Used by Existing Implementations
@@ -1146,16 +1147,18 @@ Table of Contents
 
                                   Table 3
 
-   Serialization: a scalar k in the range [0, r - 1] is serialized as
-   I2OSP(k, n_s).
+   Serialization: a scalar kappa in the range [0, r - 1] is serialized
+   as I2OSP(kappa, n_s).
 
-   Deserialization: given a byte string s_string of length n_s, let k =
-   OS2IP(s_string).  If k >= r, return INVALID.  Otherwise, return k.
+   Deserialization: given a byte string s_string of length n_s, let
+   kappa = OS2IP(s_string).  If kappa >= r, return INVALID.  Otherwise,
+   return kappa.
 
-   Rejecting k >= r gives every scalar exactly one encoding, which
-   matters wherever an encoded scalar is hashed or compared as bytes.
-   The byte order is the big-endian order of I2OSP and OS2IP [RFC8017],
-   which is the order used by [I-D.irtf-cfrg-bbs-signatures] and
+   Rejecting values greater than or equal to r gives every scalar
+   exactly one encoding, which matters wherever an encoded scalar is
+   hashed or compared as bytes.  The byte order is the big-endian order
+   of I2OSP and OS2IP [RFC8017], which is the order used by
+   [I-D.irtf-cfrg-bbs-signatures] and
    [I-D.ietf-cose-bls-key-representations].  Other specifications for
    prime-order groups encode scalars in little-endian order, [RFC8032]
    among them, so an implementation working with both needs to convert.
@@ -2458,72 +2461,198 @@ Appendix C.  Test Vectors of Optimal Ate Pairing
 
    e_47:  0x07a369e7095b629da43956d18650a88bb0342dabc1e04265ae4133cdd537c3d9cdc0b99518aa6e8b6942c4a958d3c7df4a18211c91bc4e9455f28a49c7e0ee07dc2f97fd5ce4edf7a6
 
-Appendix D.  Test Vectors for Point Serialization
+Appendix D.  Test Vectors for Serialization
 
-   This appendix gives test vectors for the point serialization
-   procedure defined in Section 5, computed for the base points BP and
-   BP' given in Section 4, using compressed encoding (C_bit = 1).
+   This appendix gives test vectors for the serialization procedures
+   defined in Section 5.  The point vectors are computed for the base
+   points BP and BP' given in Section 4, in the compressed form (C_bit =
+   1) and in the uncompressed form (C_bit = 0).  The scalar vectors are
+   given for all three curves, since Section 5.2 applies to BN462 as
+   well.
 
-D.1.  BLS12_381
+   In each uncompressed string, the first half is the corresponding
+   compressed string with the three metadata bits cleared, and the
+   second half is the y-coordinate laid out by the rule of step 3 of
+   Section 5.3.  Hex strings are broken at a whole number of bytes.
 
-   G1 (BP):
+D.1.  BLS12_381 Points
 
-   97f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac5
-   86c55e83ff97a1aeffb3af00adb22c6bb
+   G1 (BP), compressed (48 bytes):
 
-   G2 (BP'):
+   97f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac58
+   6c55e83ff97a1aeffb3af00adb22c6bb
 
-   93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f504
-   9334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc510
-   51c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121b
-   db8
+   G1 (BP), uncompressed (96 bytes):
 
-   Identity (G1, 48 bytes): a string of 48 zero bytes with the leading
-   byte set to 0xc0 (C_bit=1, I_bit=1).
+   17f1d3a73197d7942695638c4fa9ac0fc3688c4f9774b905a14e3a3f171bac58
+   6c55e83ff97a1aeffb3af00adb22c6bb08b3f481e3aaa0f1a09e30ed741d8ae4
+   fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1
 
-   Identity (G2, 96 bytes): a string of 96 zero bytes with the leading
-   byte set to 0xc0.
+   G2 (BP'), compressed (96 bytes):
 
-D.2.  BLS48_581
+   93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049
+   334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc51051
+   c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
 
-   G1 (BP):
+   G2 (BP'), uncompressed (192 bytes):
 
-   a2af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f
-   7544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e
-   6d8c3bce8732315af640
+   13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049
+   334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc51051
+   c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
+   0606c4a02ea734cc32acd2b02bc28b99cb3e287e85a763af267492ab572e99ab
+   3f370d275cec1da1aaa9075ff05f79be0ce5d527727d6e118cc9cdc6da2e351a
+   adfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801
 
-   G2 (BP'):
+   Identity on E: 48 zero bytes with the leading byte set to 0xc0 (C_bit
+   = 1, I_bit = 1) when compressed, and 96 zero bytes with the leading
+   byte set to 0x40 (I_bit = 1) when uncompressed.
 
-   8827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a
-   7f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c
-   3f84e19da00fbc6ae340b9b7951c6061ee3f0197a498908aee660dea41b39d1
-   3852b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe432
-   4c22d63334b5b0e205c3354e41607e60750e0570c96c7797eb0738603f1311e
-   4ecda088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b4
-   0b9c0b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a038b
-   91c600b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699
-   981f9e48199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb
-   739c3a1c53f8cce50be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5
-   821b7b92a393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c20
-   0ca52310b8cb4e80bc3f09a7033cbb7feafe01fccc70198f1334e1b2ea1853a
-   d83bc73a8a6ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0
-   d2a6d55f028cbdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a07c4973
-   ece2258512069b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943
-   a00abfedf16214a76affa62504f0c3c7630d979630ffd75556a01afa143f166
-   9b36676b47c5705d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7
-   de64db3a2ef156c46ff79baad1a8c42281a63ca0612f400503004d80491f510
-   317b79766322154dec34fd0b4ace8bfab
+   Identity on E': 96 zero bytes with the leading byte set to 0xc0 when
+   compressed, and 192 zero bytes with the leading byte set to 0x40 when
+   uncompressed.
 
-   Identity (G1, 73 bytes): a string of 73 zero bytes with the leading
-   byte set to 0xc0.
+D.2.  BLS48_581 Points
 
-   Identity (G2, 584 bytes): a string of 584 zero bytes with the leading
-   byte set to 0xc0.
+   G1 (BP), compressed (73 bytes):
 
-      Note: the BLS12_381 values above are independently confirmed
-      against multiple third-party implementations (e.g. zkcrypto/
-      bls12_381, arkworks).  The BLS48_581 values are newly computed for
-      this document by applying the sign_GF_p^8 function of
+   a2af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7
+   544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d
+   8c3bce8732315af640
+
+   G1 (BP), uncompressed (146 bytes):
+
+   02af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7
+   544550546a9df6f9645847665d859236ebdbc57db368b11786cb74da5d3a1e6d
+   8c3bce8732315af6400cefda44f6531f91f86b3a2d1fb398a488a553c9efeb8a
+   52e991279dd41b720ef7bb7beffb98aee53e80f678584c3ef22f487f77c2876d
+   1b2e35f37aef7b926b576dbb5de3e2587a70
+
+   G2 (BP'), compressed (584 bytes):
+
+   8827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7
+   f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3
+   f84e19da00fbc6ae340b9b7951c6061ee3f0197a498908aee660dea41b39d138
+   52b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c2
+   2d63334b5b0e205c3354e41607e60750e0570c96c7797eb0738603f1311e4ecd
+   a088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0
+   b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a038b91c600
+   b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e4
+   8199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c
+   53f8cce50be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a
+   393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8
+   cb4e80bc3f09a7033cbb7feafe01fccc70198f1334e1b2ea1853ad83bc73a8a6
+   ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028c
+   bdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a07c4973ece2258512069
+   b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214
+   a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c5705
+   d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c4
+   6ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154de
+   c34fd0b4ace8bfab
+
+   G2 (BP'), uncompressed (1168 bytes):
+
+   0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7
+   f9f8cfca93f29cff364a7190b7e2b0d4585479bd6aebf9fc44e56af2fc9e97c3
+   f84e19da00fbc6ae340b9b7951c6061ee3f0197a498908aee660dea41b39d138
+   52b6db908ba2c0b7a449cef11f293b13ced0fd0caa5efcf3432aad1cbe4324c2
+   2d63334b5b0e205c3354e41607e60750e0570c96c7797eb0738603f1311e4ecd
+   a088f7b8f35dcef0977a3d1a58677bb037418181df63835d28997eb57b40b9c0
+   b15dd7595a9f177612f097fc7960910fce3370f2004d914a3c093a038b91c600
+   b35913a3c598e4caa9dd63007c675d0b1642b5675ff0e7c5805386699981f9e4
+   8199d5ac10b2ef492ae589274fad55fc1889aa80c65b5f746c9d4cbb739c3a1c
+   53f8cce50be2218c25ceb6185c78d8012954d4bfe8f5985ac62f3e5821b7b92a
+   393f8be0cc218a95f63e1c776e6ec143b1b279b9468c31c5257c200ca52310b8
+   cb4e80bc3f09a7033cbb7feafe01fccc70198f1334e1b2ea1853ad83bc73a8a6
+   ca9ae237ca7a6d6957ccbab5ab6860161c1dbd19242ffae766f0d2a6d55f028c
+   bdfbb879d5fea8ef4cded6b3f0b46488156ca55a3e6a07c4973ece2258512069
+   b0e86abc07e8b22bb6d980e1623e9526f6da12307f4e1c3943a00abfedf16214
+   a76affa62504f0c3c7630d979630ffd75556a01afa143f1669b36676b47c5705
+   d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c4
+   6ff79baad1a8c42281a63ca0612f400503004d80491f510317b79766322154de
+   c34fd0b4ace8bfab035e2524ff89029d393a5c07e84f981b5e068f1406be8e50
+   c87549b6ef8eca9a9533a3f8e69c31e97e1ad0333ec719205417300d8c4ab33f
+   748e5ac66e84069c55d667ffcb732718b60896767811be65ea25c2d05dfdd17a
+   f8a006f364fc0841b064155f14e4c819a6df98f425ae3a2864f22c1fab8c74b2
+   618b5bb40fa639f53dccc9e884017d9aa62b3d41faeafeb2398607d0d0374573
+   6b7a513d339d5ad537b90421ad66eb16722b589d82e2055ab7504fa83420e8c2
+   70841f6824f47c180d139e3aafc198caa72b679da59ed8226cf3a594eedc58cf
+   90bee40d209d5a223a9c46916503fa5a88325a2554dc541b43dd93b5a959805f
+   1129857ed85c77fa238cdce8a1e2ca4e512b64f59f430135945d137b08857fdd
+   dfcf7a43f47831f982e501370aec25a4621edc0688223fbbd478762b1c2cded3
+   360dcee23dd8b0e710e122d2742c89b224333fa40dced2817742770ba10d67bd
+   a503ee5e578fb3d8b8a1e5337316213da92841589d0b36a201dd008523e421ef
+   b70367669ef2c2fc5030216d5b119d3a480d370514475f7d5c99d0e904115155
+   36ca3295e5e2f0c1d35d51a652269cbc7c46fc3b8fde68332a526a2a84740284
+   dc75979e0ff144da6531815fcadc2b75a422ba325e6fba01d72964732fcbf3af
+   b096b243b1f192c5c3d1892ab24e1dd212fa097d760e2e588b423525ffc7b111
+   471db936cd566500eb53356c375b5dfa497216452f3024b918b4238059a577e6
+   f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d65
+   9045012ab12c0ff323edd3fe4d2d7971
+
+   Identity on E: 73 zero bytes with the leading byte set to 0xc0 (C_bit
+   = 1, I_bit = 1) when compressed, and 146 zero bytes with the leading
+   byte set to 0x40 (I_bit = 1) when uncompressed.
+
+   Identity on E': 584 zero bytes with the leading byte set to 0xc0 when
+   compressed, and 1168 zero bytes with the leading byte set to 0x40
+   when uncompressed.
+
+D.3.  Scalars
+
+   The values below are the boundary cases of Section 5.2: the zero
+   scalar, the smallest nonzero scalar, the largest scalar the procedure
+   accepts, and the smallest value it rejects.  The value kappa = 1
+   distinguishes the byte order, and kappa = r exercises the rejection
+   of values that are not less than r.
+
+   BLS12_381 (n_s = 32):
+
+   kappa = 0
+   0000000000000000000000000000000000000000000000000000000000000000
+   kappa = 1
+   0000000000000000000000000000000000000000000000000000000000000001
+   kappa = r - 1
+   73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000
+   kappa = r  (deserialization returns INVALID)
+   73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001
+
+   BN462 (n_s = 58):
+
+   kappa = 0
+   0000000000000000000000000000000000000000000000000000000000
+   0000000000000000000000000000000000000000000000000000000000
+   kappa = 1
+   0000000000000000000000000000000000000000000000000000000000
+   0000000000000000000000000000000000000000000000000000000001
+   kappa = r - 1
+   240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908e
+   e1c201f7fffffffff6ff66fc7bf717f7c0000000002401b007e010800c
+   kappa = r  (deserialization returns INVALID)
+   240480360120023ffffffffff6ff0cf6b7d9bfca0000000000d812908e
+   e1c201f7fffffffff6ff66fc7bf717f7c0000000002401b007e010800d
+
+   BLS48_581 (n_s = 65):
+
+   kappa = 0
+   000000000000000000000000000000000000000000000000000000000000000000
+   0000000000000000000000000000000000000000000000000000000000000000
+   kappa = 1
+   000000000000000000000000000000000000000000000000000000000000000000
+   0000000000000000000000000000000000000000000000000000000000000001
+   kappa = r - 1
+   2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e7
+   41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c00
+   kappa = r  (deserialization returns INVALID)
+   2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e7
+   41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
+
+      Note: the BLS12_381 compressed values above are independently
+      confirmed against multiple third-party implementations (e.g.
+      zkcrypto/bls12_381, arkworks).  The uncompressed values are
+      derived from the same coordinates by the procedure of Section 5.3,
+      and have been checked to deserialize back to those coordinates.
+      The BLS48_581 values are newly computed for this document by
+      applying the sign_GF_p^8 function of
       [I-D.ietf-cose-bls-key-representations] to the BP' coordinates in
       Section 4; independent cross-validation from COSE/BBS implementers
       is welcome ahead of RGLC.
