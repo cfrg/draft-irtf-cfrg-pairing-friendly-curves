@@ -1427,72 +1427,90 @@ E : y^2 = x^3 + a * x + b,
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-pairings" class="section-name selfRef">Pairings</a>
         </h3>
 <p id="section-2.2-1">A pairing is a bilinear map defined on two subgroups of rational points of an elliptic curve. Examples include the Weil pairing, the Tate pairing, the optimal Ate pairing <span>[<a href="#Ver09" class="cite xref">Ver09</a>]</span>, and so on. The optimal Ate pairing is considered to be the most efficient to compute and is the one that is most commonly used for practical implementation.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2">Let E be an elliptic curve defined over a prime field GF(p). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let G_1 be a cyclic subgroup of E(GF(p)) of order r, there also exists a cyclic subgroup of E(GF(p^k)) of order r, define this to be G_2. Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If an isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist of E. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2-3">A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T satisfying the following properties:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-2.2-4">
-<li id="section-2.2-4.1">
-            <p id="section-2.2-4.1.1">Bilinearity: for any S in G_1, T in G_2, and integers K and L, e([K]S, [L]T) = e(S, T)^{K * L}.<a href="#section-2.2-4.1.1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">Let E be an elliptic curve defined over a prime field GF(p), and let r be a large prime dividing the order of E(GF(p)). Let k be the minimum integer for which r is a divisor of p^k - 1; this is called the embedding degree of E over GF(p). Let pi be the p-power Frobenius endomorphism, which maps a point (x, y) of E to (x^p, y^p), and let E(GF(p^k))[r] be the r-torsion subgroup of E(GF(p^k)). The pairing is defined on the two subgroups<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2-3">
+<pre>
+G_1 = E(GF(p^k))[r] intersect ker(pi - [1]) = E(GF(p))[r],
+G_2 = E(GF(p^k))[r] intersect ker(pi - [p]),
+</pre><a href="#section-2.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2-4">where ker(pi - [a]) denotes the set of points T with pi(T) = [a]T. For the curves considered in this document, both G_1 and G_2 have order r. G_2 is identified by the eigenvalue p, and not merely as an order r subgroup of E(GF(p^k)): that weaker description is satisfied by G_1 as well, and the pairing computed in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> is degenerate when both of its arguments are taken from G_1.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If an isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist of E. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T satisfying the following properties:<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.2-7">
+<li id="section-2.2-7.1">
+            <p id="section-2.2-7.1.1">Bilinearity: for any S in G_1, T in G_2, and integers K and L, e([K]S, [L]T) = e(S, T)^{K * L}.<a href="#section-2.2-7.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-2.2-4.2">
-            <p id="section-2.2-4.2.1">Non-degeneracy: for any T in G_2, e(S, T) = 1 if and only if S = O_E. Similarly, for any S in G_1, e(S, T) = 1 if and only if T = O_E.<a href="#section-2.2-4.2.1" class="pilcrow">¶</a></p>
+          <li id="section-2.2-7.2">
+            <p id="section-2.2-7.2.1">Non-degeneracy: for any T in G_2, e(S, T) = 1 if and only if S = O_E. Similarly, for any S in G_1, e(S, T) = 1 if and only if T = O_E.<a href="#section-2.2-7.2.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-2.2-5">In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
-<p id="section-2.2-6">We define some of the terminology used in this memo as follows:<a href="#section-2.2-6" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2.2-7">
-          <dt id="section-2.2-7.1">GF(p):</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.2">
-            <p id="section-2.2-7.2.1">a finite field with characteristic p.<a href="#section-2.2-7.2.1" class="pilcrow">¶</a></p>
+<p id="section-2.2-8">In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">We define some of the terminology used in this memo as follows:<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.2-10">
+          <dt id="section-2.2-10.1">GF(p):</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.2">
+            <p id="section-2.2-10.2.1">a finite field with characteristic p.<a href="#section-2.2-10.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.3">GF(p^k):</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.4">
-            <p id="section-2.2-7.4.1">an extension field of degree k.<a href="#section-2.2-7.4.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.3">GF(p^k):</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.4">
+            <p id="section-2.2-10.4.1">an extension field of degree k.<a href="#section-2.2-10.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.5">(GF(p))*:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.6">
-            <p id="section-2.2-7.6.1">a multiplicative group of GF(p).<a href="#section-2.2-7.6.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.5">(GF(p))*:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.6">
+            <p id="section-2.2-10.6.1">the multiplicative group of GF(p).<a href="#section-2.2-10.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.7">(GF(p^k))*:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.8">
-            <p id="section-2.2-7.8.1">a multiplicative group of GF(p^k).<a href="#section-2.2-7.8.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.7">(GF(p^k))*:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.8">
+            <p id="section-2.2-10.8.1">the multiplicative group of GF(p^k).<a href="#section-2.2-10.8.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.9">b:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.10">
-            <p id="section-2.2-7.10.1">a primitive element of the multiplicative group (GF(p))^*.<a href="#section-2.2-7.10.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.9">b:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.10">
+            <p id="section-2.2-10.10.1">a primitive element of the multiplicative group (GF(p))^*.<a href="#section-2.2-10.10.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.11">O_E:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.12">
-            <p id="section-2.2-7.12.1">the point at infinity over an elliptic curve E.<a href="#section-2.2-7.12.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.11">O_E:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.12">
+            <p id="section-2.2-10.12.1">the point at infinity over an elliptic curve E.<a href="#section-2.2-10.12.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.13">E(GF(p^k)):</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.14">
-            <p id="section-2.2-7.14.1">the group of GF(p^k)-rational points of E.<a href="#section-2.2-7.14.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.13">E(GF(p^k)):</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.14">
+            <p id="section-2.2-10.14.1">the group of GF(p^k)-rational points of E.<a href="#section-2.2-10.14.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.15">#E(GF(p^k)):</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.16">
-            <p id="section-2.2-7.16.1">the number of GF(p^k)-rational points of E.<a href="#section-2.2-7.16.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.15">#E(GF(p^k)):</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.16">
+            <p id="section-2.2-10.16.1">the number of GF(p^k)-rational points of E.<a href="#section-2.2-10.16.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.17">r:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.18">
-            <p id="section-2.2-7.18.1">the order of G_1 and G_2.<a href="#section-2.2-7.18.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.17">r:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.18">
+            <p id="section-2.2-10.18.1">the order of G_1 and G_2.<a href="#section-2.2-10.18.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.19">BP:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.20">
-            <p id="section-2.2-7.20.1">a point in G_1. (The 'base point' of a cyclic subgroup of G_1)<a href="#section-2.2-7.20.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.19">E(GF(p^k))[r]:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.20">
+            <p id="section-2.2-10.20.1">the r-torsion subgroup of E(GF(p^k)), that is, the set of points T of E(GF(p^k)) with [r]T = O_E.<a href="#section-2.2-10.20.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.2-7.21">h:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.2-7.22">
-            <p id="section-2.2-7.22.1">the cofactor h = #E(GF(p)) / r, where gcd(h, r)=1.<a href="#section-2.2-7.22.1" class="pilcrow">¶</a></p>
+<dt id="section-2.2-10.21">pi:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.22">
+            <p id="section-2.2-10.22.1">the p-power Frobenius endomorphism, which maps a point (x, y) of E to (x^p, y^p).<a href="#section-2.2-10.22.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.2-10.23">BP:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.24">
+            <p id="section-2.2-10.24.1">a point in G_1. (The 'base point' of a cyclic subgroup of G_1)<a href="#section-2.2-10.24.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.2-10.25">h:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.2-10.26">
+            <p id="section-2.2-10.26.1">the cofactor h = #E(GF(p)) / r, where gcd(h, r)=1.<a href="#section-2.2-10.26.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -1514,7 +1532,7 @@ r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 <p id="section-2.3-4">for an integer t.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <p id="section-2.3-5">The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (GF(p))^* of order (p - 1).<a href="#section-2.3-5" class="pilcrow">¶</a></p>
 <p id="section-2.3-6">In the case of BN curves, we can use twists of the degree 6. If m is an element that is neither a square nor a cube in an extension field GF(p^2), the twist E' of E is defined over an extension field GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / m or b' = b * m. BN curves are called D-type if b' = b / m, and M-type if b' = b * m. The embedding degree k is 12.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
-<p id="section-2.3-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as a subgroup of a multiplicative group (GF(p^12))^* of order r.<a href="#section-2.3-7" class="pilcrow">¶</a></p>
+<p id="section-2.3-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as an order r subgroup of the multiplicative group (GF(p^12))^*.<a href="#section-2.3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="BLSdef">
@@ -1537,7 +1555,7 @@ BLS48:
 </pre><a href="#section-2.4-5" class="pilcrow">¶</a>
 </div>
 <p id="section-2.4-6">for a well chosen integer t where t must be 1 (mod 3).<a href="#section-2.4-6" class="pilcrow">¶</a></p>
-<p id="section-2.4-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of a multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative group (GF(p^48))^* for BLS48.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
+<p id="section-2.4-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of the multiplicative group (GF(p^12))^* for BLS12 and of the multiplicative group (GF(p^48))^* for BLS48.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2916,7 +2934,7 @@ return (l * (x - x_1) + y_1 - y);
 </pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
 <p id="appendix-A-4">When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span><span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
-<p id="appendix-A-5">The computation of the optimal Ate pairing uses the Frobenius endomorphism. The p-power Frobenius endomorphism pi for a point Q = (x, y) over E' is pi(p, Q) = (x^p, y^p).<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<p id="appendix-A-5">The computation of the optimal Ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to points Q = (x, y) over E'. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <div id="optimal-ate-pairings-over-barreto-naehrig-curves">
 <section id="appendix-A.1">
         <h3 id="name-optimal-ate-pairings-over-b">

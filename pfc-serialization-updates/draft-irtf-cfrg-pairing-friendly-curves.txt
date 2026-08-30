@@ -309,17 +309,31 @@ Table of Contents
    and is the one that is most commonly used for practical
    implementation.
 
-   Let E be an elliptic curve defined over a prime field GF(p).  Let k
-   be the minimum integer for which r is a divisor of p^k - 1; this is
-   called the embedding degree of E over GF(p).  Let G_1 be a cyclic
-   subgroup of E(GF(p)) of order r, there also exists a cyclic subgroup
-   of E(GF(p^k)) of order r, define this to be G_2.  Let d be a divisor
-   of k and E' be an elliptic curve defined over GF(p^(k/d)).  If an
-   isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist
-   of E.  It can sometimes be convenient for efficiency to do the
-   computations of G_2 in the twist E', and so consider G_2 to instead
-   be a subgroup of E'.  Let G_T be an order r subgroup of the
-   multiplicative group (GF(p^k))^*; this exists by definition of k.
+   Let E be an elliptic curve defined over a prime field GF(p), and let
+   r be a large prime dividing the order of E(GF(p)).  Let k be the
+   minimum integer for which r is a divisor of p^k - 1; this is called
+   the embedding degree of E over GF(p).  Let pi be the p-power
+   Frobenius endomorphism, which maps a point (x, y) of E to (x^p, y^p),
+   and let E(GF(p^k))[r] be the r-torsion subgroup of E(GF(p^k)).  The
+   pairing is defined on the two subgroups
+
+   G_1 = E(GF(p^k))[r] intersect ker(pi - [1]) = E(GF(p))[r],
+   G_2 = E(GF(p^k))[r] intersect ker(pi - [p]),
+
+   where ker(pi - [a]) denotes the set of points T with pi(T) = [a]T.
+   For the curves considered in this document, both G_1 and G_2 have
+   order r.  G_2 is identified by the eigenvalue p, and not merely as an
+   order r subgroup of E(GF(p^k)): that weaker description is satisfied
+   by G_1 as well, and the pairing computed in Appendix A is degenerate
+   when both of its arguments are taken from G_1.
+
+   Let d be a divisor of k and E' be an elliptic curve defined over
+   GF(p^(k/d)).  If an isomorphism from E' to E(GF(p^k)) exists, then E'
+   is called the twist of E.  It can sometimes be convenient for
+   efficiency to do the computations of G_2 in the twist E', and so
+   consider G_2 to instead be a subgroup of E'.  Let G_T be an order r
+   subgroup of the multiplicative group (GF(p^k))^*; this exists by
+   definition of k.
 
    A pairing is defined as a bilinear map e: (G_1, G_2) -> G_T
    satisfying the following properties:
@@ -340,9 +354,9 @@ Table of Contents
 
    GF(p^k):  an extension field of degree k.
 
-   (GF(p))*:  a multiplicative group of GF(p).
+   (GF(p))*:  the multiplicative group of GF(p).
 
-   (GF(p^k))*:  a multiplicative group of GF(p^k).
+   (GF(p^k))*:  the multiplicative group of GF(p^k).
 
    b:  a primitive element of the multiplicative group (GF(p))^*.
 
@@ -353,6 +367,12 @@ Table of Contents
    #E(GF(p^k)):  the number of GF(p^k)-rational points of E.
 
    r:  the order of G_1 and G_2.
+
+   E(GF(p^k))[r]:  the r-torsion subgroup of E(GF(p^k)), that is, the
+      set of points T of E(GF(p^k)) with [r]T = O_E.
+
+   pi:  the p-power Frobenius endomorphism, which maps a point (x, y) of
+      E to (x^p, y^p).
 
    BP:  a point in G_1.  (The 'base point' of a cyclic subgroup of G_1)
 
@@ -385,8 +405,8 @@ Table of Contents
    The embedding degree k is 12.
 
    A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of
-   order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as a subgroup of a
-   multiplicative group (GF(p^12))^* of order r.
+   order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as an order r
+   subgroup of the multiplicative group (GF(p^12))^*.
 
 2.4.  Barreto-Lynn-Scott Curves
 
@@ -422,8 +442,8 @@ Table of Contents
 
    A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of
    order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of
-   E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of a
-   multiplicative group (GF(p^12))^* for BLS12 and of a multiplicative
+   E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of the
+   multiplicative group (GF(p^12))^* for BLS12 and of the multiplicative
    group (GF(p^48))^* for BLS48.
 
 3.  Security of Pairing-Friendly Curves
@@ -2061,9 +2081,10 @@ Appendix A.  Computing the Optimal Ate Pairing
    Line_function does not consider such an isomorphism; i.e., the above
    pseudocode operates on coordinates in untwisted form.
 
-   The computation of the optimal Ate pairing uses the Frobenius
-   endomorphism.  The p-power Frobenius endomorphism pi for a point Q =
-   (x, y) over E' is pi(p, Q) = (x^p, y^p).
+   The computation of the optimal Ate pairing uses the p-power Frobenius
+   endomorphism pi of Section 2.2, applied to points Q = (x, y) over E'.
+   The pseudocode below writes it with the characteristic as an explicit
+   argument, pi(p, Q) = (x^p, y^p).
 
 A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
