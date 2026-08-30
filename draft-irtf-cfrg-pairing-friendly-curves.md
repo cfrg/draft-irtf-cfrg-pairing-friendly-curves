@@ -2520,6 +2520,8 @@ Few libraries implement BN462 at all. Among those surveyed for this document, it
 
 For {{MIRACL}} and {{zig-pairings}}, the corresponding G_2 sizes are 233 bytes uncompressed and 117 bytes compressed.
 
+Both leading-byte forms leave the coordinate encoding of {{point-serialization-procedure}} untouched: {{MIRACL}} writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does {{zig-pairings}}. The two differ only in what the leading byte means. Note that {{SEC1}} itself defines point encoding over GF(p) and GF(2^m) only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of {{point-serialization-procedure}} rather than {{SEC1}} as written.
+
 In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
 
 Two observations follow. First, implementations that support BN462 have converged on a dedicated leading byte rather than on packing metadata into the coordinate. Second, none of the implementations examined uses the two spare bits of the coordinate to carry metadata.
