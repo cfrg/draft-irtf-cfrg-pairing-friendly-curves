@@ -1716,9 +1716,9 @@ Table of Contents
    Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an
    Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F.
    Aranha for their valuable comments.  The authors would further like
-   to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, and Michele
-   Orrù for their detailed reviews of recent revisions, which shaped
-   Section 5 in particular.
+   to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, Michele Orrù,
+   and Mamy Ratsimbazafy for their detailed reviews of recent revisions,
+   which shaped Section 5 in particular.
 
 9.  References
 
