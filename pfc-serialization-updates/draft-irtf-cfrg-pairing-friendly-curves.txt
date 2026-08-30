@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 2 March 2027                                           R. Wahby
+Expires: 3 March 2027                                           R. Wahby
                                                      Stanford University
-                                                          29 August 2026
+                                                          30 August 2026
 
 
                         Pairing-Friendly Curves
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 March 2027.
+   This Internet-Draft will expire on 3 March 2027.
 
 Copyright Notice
 
@@ -99,13 +99,17 @@ Table of Contents
        4.2.1.  BLS Curves for the 128-bit security level (BLS12_381)
        4.2.2.  BN Curves for the 128-bit security level (BN462)
      4.3.  For 256-bit Security
-   5.  Point Serialization
-     5.1.  Parameters by Curve
-     5.2.  Point Serialization Procedure
-     5.3.  Point Deserialization Procedure
-     5.4.  Scalar Serialization
-     5.5.  Identity Point Handling
-     5.6.  Applicability to BN462
+   5.  Point and Scalar Serialization
+     5.1.  Parameters and Notation
+     5.2.  Scalar Serialization
+     5.3.  Point Serialization
+     5.4.  Point Deserialization
+       5.4.1.  Subgroup Membership
+     5.5.  Applicability to BN462
+     5.6.  Requirements on Calling Protocols
+       5.6.1.  Accepted Point Form
+       5.6.2.  Identity Element
+       5.6.3.  Zero Scalar
    6.  Security Considerations
    7.  IANA Considerations
    8.  Acknowledgements
@@ -205,7 +209,7 @@ Table of Contents
    secure pairing-friendly curves in CIRCL.
 
    Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being
-   standardized [I-D.boneh-bls-signature] and utilized in several
+   standardized [I-D.irtf-cfrg-bls-signature] and utilized in several
    blockchain projects such as Ethereum [Ethereum], Algorand [Algorand],
    Chia Network [Chia], and DFINITY [DFINITY].  The aggregation
    functionality of BLS signatures is effective for their applications
@@ -769,7 +773,7 @@ Table of Contents
    Since it is expected that BLS12_381 will continue to be widely used
    more and more in the future, Section 5 defines a normative point
    serialization format for it (with test vectors in Appendix D).  This
-   serialization format is also adopted in [I-D.boneh-bls-signature]
+   serialization format is also adopted in [I-D.irtf-cfrg-bls-signature]
    [zkcrypto].
 
    In addition, many pairing-based cryptographic applications use a
@@ -953,22 +957,61 @@ Table of Contents
    defined by [ZCashRep] for BLS12_381 as specified in
    [I-D.ietf-cose-bls-key-representations].
 
-5.  Point Serialization
+5.  Point and Scalar Serialization
 
-   This section defines a normative point encoding and decoding
-   procedure for BLS12_381 and BLS48_581.  What is encoded here are the
-   objects that protocols transmit: points on E and on E', and scalars.
-   Elements of GF(p) and of GF(p^m) appear as coordinates of those
-   points rather than as objects with encodings of their own.  The
-   format is based on the one originally defined by [ZCashRep] for
+   This section defines a normative encoding and decoding procedure for
+   BLS12_381, and also extends it to BLS48_581.  What is encoded here
+   are the objects that protocols transmit: points on E and on E', and
+   scalars.  Elements of GF(p) and of GF(p^m) appear as coordinates of
+   those points rather than as objects with encodings of their own.  The
+   point format is based on the one originally defined by [ZCashRep] for
    BLS12_381 and is, in turn, based on the representation shown in
    [SEC1] with a small tweak to apply to GF(p^m).  It is already relied
    upon, directly or indirectly, by [I-D.irtf-cfrg-bbs-signatures] and
    [I-D.ietf-cose-bls-key-representations]; the latter extends it to
    BLS48_581, and the extension is adopted here.  Applicability to BN462
-   is discussed in Section 5.6.
+   is discussed in Section 5.5.
 
-   At a high level, the serialization format is defined as follows:
+   Not all of what follows originates with this document.  Where an
+   existing format is restated, it is restated normatively, because
+   other specifications already cite this document for it.
+
+   +==========+=========================================+=============+
+   |What      | Where it comes from                     | How this    |
+   |          |                                         | document    |
+   |          |                                         | treats it   |
+   +==========+=========================================+=============+
+   |Scalar    | Existing practice: I2OSP and OS2IP      | Specified   |
+   |encoding  | [RFC8017], together with a comparison   | here, for   |
+   |          | against the group order                 | all three   |
+   |          |                                         | curves      |
+   +----------+-----------------------------------------+-------------+
+   |BLS12_381 | [ZCashRep], which adapts the            | Restated    |
+   |point     | representation of [SEC1] to GF(p^m)     | here as the |
+   |encoding  |                                         | format in   |
+   |          |                                         | use         |
+   +----------+-----------------------------------------+-------------+
+   |BLS48_581 | The same format, extended to GF(p^8) in | That        |
+   |point     | [I-D.ietf-cose-bls-key-representations] | extension   |
+   |encoding  |                                         | is adopted  |
+   |          |                                         | here        |
+   +----------+-----------------------------------------+-------------+
+   |BN462     | --                                      | Not         |
+   |point     |                                         | applicable; |
+   |encoding  |                                         | see         |
+   |          |                                         | Section 5.5 |
+   +----------+-----------------------------------------+-------------+
+   |Group     | This document                           | Specified   |
+   |membership|                                         | here        |
+   |and       |                                         |             |
+   |identity  |                                         |             |
+   |handling  |                                         |             |
+   +----------+-----------------------------------------+-------------+
+
+                                 Table 1
+
+   At a high level, the point serialization format is defined as
+   follows:
 
    *  Serialized points include three metadata bits that indicate
       whether a point is compressed or not, whether a point is the point
@@ -991,7 +1034,7 @@ Table of Contents
       infinity comprises a serialized x-coordinate followed by a
       serialized y-coordinate.
 
-5.1.  Parameters by Curve
+5.1.  Parameters and Notation
 
    +===========+===========+==========+===+============+==============+
    | Curve     | n (bytes) | E' field | m | Compressed | Uncompressed |
@@ -1004,11 +1047,11 @@ Table of Contents
    |           |           |          |   | bytes      | bytes        |
    +-----------+-----------+----------+---+------------+--------------+
 
-                                 Table 1
+                                 Table 2
 
-   Below, we give detailed serialization and de-serialization
-   procedures, applicable to both curves using the parameters above.
-   The following notation is used in the rest of this section:
+   Below, we give detailed serialization and deserialization procedures,
+   applicable to both curves using the parameters above.  The following
+   notation is used in the rest of this section:
 
    *  Elements of GF(p^m) are represented as a vector of m coefficients
       in GF(p), (y_0, ..., y_{m-1}), using the basis and coefficient
@@ -1035,7 +1078,7 @@ Table of Contents
 
    *  The function OS2FE(str, n), for a byte string str of m*n bytes,
       returns an element of GF(p^m) or INVALID.  It inverts the
-      coordinate serialization of step 3 of Section 5.2: divide str into
+      coordinate serialization of step 3 of Section 5.3: divide str into
       m consecutive blocks of n bytes each, and for each i in {0, ...,
       m-1} let y_i = OS2IP(str_i), where str_i is the block starting at
       offset (m - 1 - i) * n, so that the blocks give the coefficients
@@ -1043,11 +1086,71 @@ Table of Contents
       p, OS2FE returns INVALID; otherwise it returns y = (y_0, ...,
       y_{m-1}).
 
-5.2.  Point Serialization Procedure
+   Section 5.4 requires deciding whether a field element y2 is a square
+   and, where it is, computing a square root.  This document does not
+   specify how.  The following pointers are provided for implementers
+   and are not requirements.
 
-   The serialization procedure is defined as follows for a point P = (x,
-   y) on a curve with parameters n and m as given in Section 5.1.  This
-   procedure uses the I2OSP function defined in [RFC8017].
+   For y2 in GF(p), all curves in this document have p = 3 (mod 4).
+   Appendix I.1 of [RFC9380] therefore applies directly: y2 is a square
+   exactly when y2^((p-1)/2) is 0 or 1, and a square root is given by
+   y2^((p+1)/4).
+
+   For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8
+   are both 1 (mod 4).  Appendix I.4 of [RFC9380] gives a constant-time
+   Tonelli-Shanks procedure for a general field, and Appendix I.5 gives
+   an is_square test for GF(p^2).
+
+5.2.  Scalar Serialization
+
+   This section defines a serialization format for elements of the
+   scalar field GF(r), where r is the order of G_1 and G_2 as given for
+   each curve in Section 4.  Unlike point serialization, this format
+   applies to all three curves in this document (BLS12_381, BN462, and
+   BLS48_581), since no metadata bits are required.
+
+   For a curve with scalar field order r represented in n_s =
+   ceil(len(r) / 8) bytes:
+
+                        +===========+=============+
+                        | Curve     | n_s (bytes) |
+                        +===========+=============+
+                        | BLS12_381 | 32          |
+                        +-----------+-------------+
+                        | BN462     | 58          |
+                        +-----------+-------------+
+                        | BLS48_581 | 65          |
+                        +-----------+-------------+
+
+                                  Table 3
+
+   Serialization: a scalar k in the range [0, r - 1] is serialized as
+   I2OSP(k, n_s).
+
+   Deserialization: given a byte string s_string of length n_s, let k =
+   OS2IP(s_string).  If k >= r, return INVALID.  Otherwise, return k.
+
+   Rejecting k >= r gives every scalar exactly one encoding, which
+   matters wherever an encoded scalar is hashed or compared as bytes.
+   The byte order is the big-endian order of I2OSP and OS2IP [RFC8017],
+   which is the order used by [I-D.irtf-cfrg-bbs-signatures] and
+   [I-D.ietf-cose-bls-key-representations].  Other specifications for
+   prime-order groups encode scalars in little-endian order, [RFC8032]
+   among them, so an implementation working with both needs to convert.
+
+   This document does not define a distinct encoding for the zero
+   scalar.  Whether a protocol accepts it is a protocol-level decision,
+   discussed in Section 5.6.3.
+
+5.3.  Point Serialization
+
+   This section defines point_to_octets_G1 and point_to_octets_G2.
+   point_to_octets_G1 takes an element of G_1, which is a point on E,
+   and point_to_octets_G2 takes an element of G_2, which is a point on
+   E'; each returns a byte string.  Both are given by the single
+   procedure below, stated for a point P = (x, y) and the parameters n
+   and m of Section 5.1.  This procedure uses the I2OSP function defined
+   in [RFC8017].
 
    1.  Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
 
@@ -1098,29 +1201,44 @@ Table of Contents
        bits of x_string[0] are guaranteed to be zero, as discussed
        above.)
 
-   7.  Output s_string.
+   7.  Return s_string.
 
-5.3.  Point Deserialization Procedure
+5.4.  Point Deserialization
 
-   The deserialization procedure is defined as follows for a string
-   s_string, for a curve with parameters n and m as given in
-   Section 5.1.  This procedure uses the OS2IP function defined in
-   [RFC8017] and the OS2FE function defined in Section 5.1.
+   This section defines octets_to_point_G1 and octets_to_point_G2.  Each
+   takes a byte string and returns an element of G_1 or of G_2
+   respectively, or INVALID.  A string that decodes to a point of E or
+   E' that is not in the group is INVALID, so a value returned by these
+   procedures is a group element and a caller does not have to obtain
+   one by a further step.
+
+   This document does not define a deserialization procedure that stops
+   at E or E'.  G_1 and G_2 are the groups on which the pairing of
+   Section 2.2 is defined, and they are what the specifications citing
+   this document exchange.  Section 5.3 of [I-D.irtf-cfrg-bls-signature]
+   requires the subgroup check of conforming implementations for the
+   same reason, and Section 6.2 of [I-D.irtf-cfrg-bbs-signatures]
+   describes the combined operation as the one that libraries provide.
+
+   The procedure below is stated once, for a string s_string and the
+   parameters n and m of Section 5.1.  It uses the OS2IP function
+   defined in [RFC8017] and the OS2FE function defined in Section 5.1.
+   octets_to_point_G1 is the case in which step 2 determines the curve
+   E, and octets_to_point_G2 the case in which it determines E'.
 
    Every GF(p) coefficient recovered by this procedure MUST be an
    integer in the inclusive range [0, p - 1].  An octet string that
    encodes a coordinate, or a coefficient of a coordinate, as a value
    greater than or equal to p is not a canonical encoding of a field
-   element; implementations MUST output INVALID and stop decoding in
-   that case.  This applies to coordinates on E, recovered with OS2IP,
-   as well as to the coefficients of coordinates on E', recovered with
-   OS2FE.
+   element; implementations MUST return INVALID in that case.  This
+   applies to coordinates on E, recovered with OS2IP, as well as to the
+   coefficients of coordinates on E', recovered with OS2FE.
 
    1.  Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise.
        In other words, the three most significant bits of m_byte equal
        the three most significant bits of s_string[0], and the remaining
-       bits are 0.  If m_byte equals any of 0x20, 0x60, or 0xE0, output
-       INVALID and stop decoding.  Otherwise:
+       bits are 0.  If m_byte equals any of 0x20, 0x60, or 0xE0, return
+       INVALID.  Otherwise:
 
        *  Let C_bit equal the most significant bit of m_byte,
 
@@ -1136,13 +1254,12 @@ Table of Contents
        *  If s_string has length m*n bytes, the output point is on the
           curve E'.
 
-       *  If s_string has any other length, output INVALID and stop
-          decoding.
+       *  If s_string has any other length, return INVALID.
 
        If C_bit is 0: - If s_string has length 2n bytes, the output
        point is on E. - If s_string has length 2*m*n bytes, the output
-       point is on E'. - If s_string has any other length, output
-       INVALID and stop decoding.
+       point is on E'. - If s_string has any other length, return
+       INVALID.
 
    3.  Let s_string[0] = s_string[0] AND 0x1F, where AND is computed
        bitwise.  In other words, set the three most significant bits of
@@ -1150,14 +1267,12 @@ Table of Contents
 
    4.  If I_bit is 1:
 
-       *  If s_string is not the all zeros string, output INVALID and
-          stop decoding.
+       *  If s_string is not the all zeros string, return INVALID.
 
-       *  Otherwise (i.e., if s_string is the all zeros string), output
-          the point at infinity on the curve that was determined in step
-          2 and stop decoding.
+       *  Otherwise (i.e., if s_string is the all zeros string), return
+          the identity element of the group determined in step 2.
 
-       Otherwise, I_bit must be 0.  Continue decoding.
+       Otherwise, I_bit must be 0.  Continue.
 
    5.  If C_bit is 0:
 
@@ -1165,16 +1280,14 @@ Table of Contents
 
        *  Let y_string be the last half of s_string.
 
-       *  If the output curve that was determined in step 2 is E:
+       *  If the curve that was determined in step 2 is E:
 
           -  Let x = OS2IP(x_string).
 
           -  Let y = OS2IP(y_string).
 
-          -  If the point P = (x, y) is not a valid point on E, output
-             INVALID and stop decoding.
-
-          -  Otherwise, output the point P = (x, y) and stop decoding.
+          -  If the point P = (x, y) is not a valid point on E, return
+             INVALID.
 
        *  Otherwise, (i.e., when the curve that was determined in step 2
           is E'):
@@ -1183,16 +1296,16 @@ Table of Contents
 
           -  Let y = OS2FE(y_string, n).
 
-          -  If the point P = (x, y) is not a valid point on E', output
-             INVALID and stop decoding.
+          -  If the point P = (x, y) is not a valid point on E', return
+             INVALID.
 
-          -  Otherwise, output the point P = (x, y) and stop decoding.
+       Let P = (x, y) and continue at step 8.
 
-       Otherwise, C_bit must be 1.  Continue decoding.
+       Otherwise, C_bit must be 1.  Continue.
 
    6.  Let x_string be s_string.
 
-       *  If the output curve determined in step 2 is E:
+       *  If the curve determined in step 2 is E:
 
           -  Let x = OS2IP(x_string).
 
@@ -1200,8 +1313,7 @@ Table of Contents
              (given in Section 4 for the curve in question), evaluated
              at x, in GF(p).
 
-          -  If y2 is not square in GF(p), output INVALID and stop
-             decoding.
+          -  If y2 is not square in GF(p), return INVALID.
 
           -  Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit =
              sign_GF_p(y).
@@ -1215,14 +1327,18 @@ Table of Contents
              (given in Section 4 for the curve in question), evaluated
              at x, in GF(p^m).
 
-          -  If y2 is not square in GF(p^m), output INVALID and stop
-             decoding.
+          -  If y2 is not square in GF(p^m), return INVALID.
 
           -  Otherwise, let y = sqrt(y2) in GF(p^m) and let Y_bit =
              sign_GF_p^m(y).
 
-   7.  If S_bit equals Y_bit, output P = (x, y) and stop decoding.
-       Otherwise, output P = (x, -y) and stop decoding.
+   7.  If S_bit equals Y_bit, let P = (x, y).  Otherwise, let P = (x,
+       -y).
+
+   8.  If the curve determined in step 2 is E and subgroup_check_G1(P)
+       returns FALSE, return INVALID.  If the curve determined in step 2
+       is E' and subgroup_check_G2(P) returns FALSE, return INVALID.
+       Otherwise, return P.
 
    Note that OS2FE outputs field elements in the towered representation
    of the curve in question:
@@ -1233,77 +1349,43 @@ Table of Contents
       x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w +
       x'_6 * v * w + x'_7 * u * v * w
 
-5.4.  Scalar Serialization
+5.4.1.  Subgroup Membership
 
-   This section defines a serialization format for elements of the
-   scalar field GF(r), where r is the order of G_1 and G_2 as given for
-   each curve in Section 4.  Unlike point serialization, this format
-   applies to all three curves in this document (BLS12_381, BN462, and
-   BLS48_581), since no metadata bits are required.
+   subgroup_check_G1(P) takes a point P on E and returns TRUE if P is an
+   element of G_1 and FALSE otherwise. subgroup_check_G2(Q) does the
+   same for a point Q on E' and the group G_2.  Both are used by
+   Section 5.4, and both are specified here as operations in their own
+   right, because a point can also arise from point addition or scalar
+   multiplication rather than from a byte string, and a caller may need
+   to check such a point.
 
-   For a curve with scalar field order r represented in n_s =
-   ceil(len(r) / 8) bytes:
+   For every curve in this document, r^2 does not divide the order of
+   E(GF(p)) or the order of E'(GF(p^m)); this can be seen from the
+   values of r, h and h' given in Section 4.  Consequently a point of
+   order dividing r is an element of G_1, or of G_2, respectively, and
+   both checks can be carried out as follows:
 
-                        +===========+=============+
-                        | Curve     | n_s (bytes) |
-                        +===========+=============+
-                        | BLS12_381 | 32          |
-                        +-----------+-------------+
-                        | BN462     | 58          |
-                        +-----------+-------------+
-                        | BLS48_581 | 65          |
-                        +-----------+-------------+
+   *  subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity
+      on E, and FALSE otherwise.
 
-                                  Table 2
+   *  subgroup_check_G2(Q) returns TRUE if [r]Q is the point at infinity
+      on E', and FALSE otherwise.
 
-   Serialization: a scalar k in the range [0, r - 1] is serialized as
-   I2OSP(k, n_s).
+   Faster tests are known for particular curves.  Any method that
+   decides the same predicate may be used.
 
-   Deserialization: given a byte string s_string of length n_s, let k =
-   OS2IP(s_string).  If k >= r, output INVALID and stop decoding.
-   Otherwise, output k.
+   These checks apply to all three curves in this document.  Note that
+   for BN462 the cofactor h of E(GF(p)) is 1, so every point of E(GF(p))
+   is an element of G_1 and subgroup_check_G1 always returns TRUE; the
+   cofactor h' of E'(GF(p^2)) is not 1, so subgroup_check_G2 remains
+   meaningful.
 
-   This enforces a unique (canonical) encoding for each equivalence
-   class, per the recommendation raised in issue #74 of the GitHub
-   repository for this document.  This document does not define a
-   distinct encoding for the zero scalar; whether zero is accepted
-   follows the same protocol-dependent policy as the identity point,
-   discussed in Section 5.5.
+5.5.  Applicability to BN462
 
-5.5.  Identity Point Handling
-
-   The procedures in Section 5.2 and Section 5.3 define a byte
-   representation for the identity element (point at infinity) of E and
-   E', via the I_bit.  Whether a calling protocol should accept the
-   identity element as a valid deserialized point depends on that
-   protocol's own semantics and threat model, not on the wire format
-   itself: some protocols (e.g., certain zero-knowledge proof
-   constructions) legitimately reference the identity element as part of
-   a public statement, while others should never encounter it in normal
-   operation, and accepting it unexpectedly has contributed to at least
-   one documented issue in a deployed protocol.
-
-   This document therefore defines two deserialization behaviors, and
-   protocols using this document's serialization format SHOULD
-   explicitly state which one they require, rather than relying on an
-   implicit default:
-
-   *  *Reject identity (RECOMMENDED default)*: after running
-      Section 5.3, if the resulting point is the identity element, treat
-      the overall result as INVALID.  This is the appropriate choice for
-      protocols where the identity element is not an expected input in
-      normal operation.
-
-   *  *Allow identity*: use the result of Section 5.3 as-is, including
-      when it is the identity element.  This is appropriate for
-      protocols with a specific, documented need to represent the
-      identity element.
-
-5.6.  Applicability to BN462
-
-   The point serialization procedures of Section 5.2 and Section 5.3 do
-   not apply to BN462.  Scalar serialization, defined in Section 5.4, is
-   unaffected and applies to BN462 as well.
+   The point serialization procedures of Section 5.3 and Section 5.4 do
+   not apply to BN462.  Scalar serialization, defined in Section 5.2,
+   and the subgroup checks of Section 5.4.1 are unaffected and apply to
+   BN462 as well.
 
    BN462 has a 462-bit characteristic p, so its canonical GF(p)
    representation occupies n = ceil(462 / 8) = 58 bytes, that is 464
@@ -1328,6 +1410,70 @@ Table of Contents
    find Appendix E useful.  It records, informatively, the encodings
    that existing implementations use and the alternatives that have been
    considered.  It defines no format.
+
+5.6.  Requirements on Calling Protocols
+
+   The procedures above leave three decisions to the protocol that uses
+   them.  A specification that adopts this format SHOULD state its
+   answer to each, rather than relying on an implicit default.
+
+5.6.1.  Accepted Point Form
+
+   Both a compressed and an uncompressed form are defined.  The
+   compressed form is RECOMMENDED for values that are transmitted: it is
+   the form [ZCashRep] places on the wire, and the form used by
+   [I-D.irtf-cfrg-bbs-signatures],
+   [I-D.ietf-cose-bls-key-representations] and
+   [I-D.irtf-cfrg-bls-signature].  The uncompressed form is retained
+   because it remains in use for stored values, such as verification
+   keys that are validated once, where recovering y from x on every use
+   is not worth the saved space.
+
+   A protocol SHOULD state which forms it accepts.  Accepting both means
+   that one point has two encodings, which matters wherever an encoded
+   point is hashed or compared as a byte string.
+
+5.6.2.  Identity Element
+
+   Section 5.3 and Section 5.4 define a byte representation for the
+   identity element of G_1 and of G_2, via the I_bit, and
+   deserialization returns it as it does any other group element.
+   Whether a calling protocol should accept it depends on that
+   protocol's own semantics and threat model, not on the wire format:
+   some protocols (e.g., certain zero-knowledge proof constructions)
+   legitimately reference the identity element as part of a public
+   statement, while for others it cannot arise in normal operation.
+
+   This document therefore defines two deserialization behaviors, and
+   protocols using this document's serialization format SHOULD
+   explicitly state which one they require, rather than relying on an
+   implicit default:
+
+   *  *Reject identity (RECOMMENDED default)*: after running
+      Section 5.4, if the resulting point is the identity element, treat
+      the overall result as INVALID.  This is the appropriate choice for
+      protocols where the identity element is not an expected input in
+      normal operation.
+
+   *  *Allow identity*: use the result of Section 5.4 as-is, including
+      when it is the identity element.  This is appropriate for
+      protocols with a specific, documented need to represent the
+      identity element.
+
+   Section 5.2 of [I-D.irtf-cfrg-bls-signature] is an example of the
+   first choice, and gives a protocol-level reason for it: the secret
+   key corresponding to an identity public key is zero, and under such a
+   key the identity element is a valid signature on every message.
+
+5.6.3.  Zero Scalar
+
+   Section 5.2 accepts the zero scalar, and a protocol using it SHOULD
+   state whether it does the same.
+
+   This is a separate decision from the one above.  Section 3.1 of
+   [RFC9591] rejects the identity element when deserializing a group
+   element while accepting zero scalars, so the two choices are made
+   independently in at least one existing specification.
 
 6.  Security Considerations
 
@@ -1364,15 +1510,17 @@ Table of Contents
    pairing-based cryptographic applications, please refer Section 1.2.
 
    In applications such as key agreement protocols, users exchange the
-   elements in G_1 and G_2 as public keys.  To check these elements are
-   so-called sub-group secure [BCM15], implementors should validate if
-   the elements have the correct order r.  Specifically, for public keys
-   P in G_1 and Q in G_2, a receiver should calculate scalar
-   multiplications [r]P and [r]Q, and check the results become points at
-   infinity.
+   elements in G_1 and G_2 as public keys.  Such an element has to be
+   so-called sub-group secure [BCM15], that is, it has to have the
+   correct order r.  A point obtained from a byte string through
+   Section 5.4 has already been checked, since those procedures return
+   an element of G_1 or of G_2 or nothing at all.  A point obtained in
+   any other way, for instance as the result of point addition or scalar
+   multiplication, has not been, and implementors should apply
+   Section 5.4.1 to it.
 
    The pairing-based protocols, such as the BLS signatures, use a scalar
-   multiplication in G_1, G_2 and an exponentiation in G_3 with the
+   multiplication in G_1, G_2 and an exponentiation in G_T with the
    secret key.  In order to prevent the leakage of secret key due to
    side channel attacks, implementors should apply countermeasure
    techniques such as montgomery ladder [Montgomery] [CF06] when they
@@ -1380,23 +1528,24 @@ Table of Contents
    Please refer [Montgomery] and [CF06] for the detailed algorithms of
    montgomery ladder.
 
-   When converting between an element in extension field and an octet
-   string, implementors should check that the coefficient is within an
-   appropriate range [IEEE1363].  If the coefficient is out of range,
-   there is a possible that security vulnerabilities such as the
-   signature forgery may occur.
+   A coordinate that is read from an octet string has to be checked
+   against the order of the field it is claimed to lie in; a coefficient
+   outside that range gives one value several encodings, which can lead
+   to vulnerabilities such as signature forgery [IEEE1363].  Section 5.4
+   makes this requirement normative for the procedures defined in this
+   document.
 
-   Protocol designers using the point serialization format in Section 5
-   should be deliberate about which of the two identity-point
-   deserialization behaviors described in Section 5.5 their protocol
-   requires, rather than assuming a default.  Treating the identity
-   element as an unremarkable, always-valid deserialization result --
-   when the calling protocol does not actually expect it -- can
-   introduce timing side channels from identity-checking branches, and
-   has contributed to at least one documented issue in a deployed
-   protocol construction.  Protocol specifications SHOULD state
-   explicitly whether they require the identity-rejecting or identity-
-   allowing behavior, consistent with their own security assumptions.
+   Protocol designers using the serialization format in Section 5 should
+   be deliberate about which of the two identity-element behaviors
+   described in Section 5.6.2 their protocol requires, rather than
+   assuming a default.  Treating the identity element as an
+   unremarkable, always-valid deserialization result -- when the calling
+   protocol does not actually expect it -- can introduce timing side
+   channels from identity-checking branches.  Protocol specifications
+   SHOULD state explicitly whether they require the identity-rejecting
+   or identity-allowing behavior, consistent with their own security
+   assumptions, and SHOULD do the same for the zero scalar
+   (Section 5.6.3).
 
    Recommended parameters are affected by the Cheon's attack which is a
    solving algorithm for the strong DH problem [Cheon06].  The
@@ -1475,6 +1624,11 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC8017]  Moriarty, K., Ed., Kaliski, B., Jonsson, J., and A. Rusch,
+              "PKCS #1: RSA Cryptography Specifications Version 2.2",
+              RFC 8017, DOI 10.17487/RFC8017, November 2016,
+              <https://www.rfc-editor.org/info/rfc8017>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1677,13 +1831,6 @@ Table of Contents
               Advances in Cryptology pp. 3-13, 1983,
               <https://doi.org/10.1007/978-1-4757-0602-4_1>.
 
-   [I-D.boneh-bls-signature]
-              Boneh, D., Gorbunov, S., Wee, H., and Z. Zhang, "BLS
-              Signature Scheme", Work in Progress, Internet-Draft,
-              draft-boneh-bls-signature-00, 8 February 2019,
-              <https://datatracker.ietf.org/doc/html/draft-boneh-bls-
-              signature-00>.
-
    [I-D.ietf-cose-bls-key-representations]
               Looker, T. and M. B. Jones, "Barreto-Lynn-Scott Elliptic
               Curve Key Representations for JOSE and COSE", Work in
@@ -1698,6 +1845,13 @@ Table of Contents
               draft-irtf-cfrg-bbs-signatures-10, 8 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
               bbs-signatures-10>.
+
+   [I-D.irtf-cfrg-bls-signature]
+              Boneh, D., Bradley, J., Gorbunov, S., Wahby, R. S., Wee,
+              H., Wood, C. A., and Z. Zhang, "BLS Signatures", Work in
+              Progress, Internet-Draft, draft-irtf-cfrg-bls-signature-
+              07, 6 July 2026, <https://datatracker.ietf.org/doc/html/
+              draft-irtf-cfrg-bls-signature-07>.
 
    [IEEE1363] "IEEE Standard Specifications for Public-Key
               Cryptography", IEEE standard,
@@ -1815,15 +1969,21 @@ Table of Contents
               DOI 10.17487/RFC6539, March 2012,
               <https://www.rfc-editor.org/info/rfc6539>.
 
-   [RFC8017]  Moriarty, K., Ed., Kaliski, B., Jonsson, J., and A. Rusch,
-              "PKCS #1: RSA Cryptography Specifications Version 2.2",
-              RFC 8017, DOI 10.17487/RFC8017, November 2016,
-              <https://www.rfc-editor.org/info/rfc8017>.
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/info/rfc8032>.
 
    [RFC9380]  Faz-Hernandez, A., Scott, S., Sullivan, N., Wahby, R. S.,
               and C. A. Wood, "Hashing to Elliptic Curves", RFC 9380,
               DOI 10.17487/RFC9380, August 2023,
               <https://www.rfc-editor.org/info/rfc9380>.
+
+   [RFC9591]  Connolly, D., Komlo, C., Goldberg, I., and C. A. Wood,
+              "The Flexible Round-Optimized Schnorr Threshold (FROST)
+              Protocol for Two-Round Schnorr Signatures", RFC 9591,
+              DOI 10.17487/RFC9591, June 2024,
+              <https://www.rfc-editor.org/info/rfc9591>.
 
    [S86]      Silverman, J. H., "The arithmetic of elliptic curves",
               Springer GTM 106, 1986.
@@ -2371,7 +2531,7 @@ E.1.  The Constraint
 
    BN462 has a 462-bit characteristic p, so n = ceil(462 / 8) = 58
    bytes, i.e. 464 bits, and only 464 - 462 = 2 bits are unused: one bit
-   short, as stated in Section 5.6.
+   short, as stated in Section 5.5.
 
    The same criterion appears in implementations.  [MIRACL] selects
    between two point encodings at compile time using the condition
@@ -2421,7 +2581,7 @@ E.2.  Encodings Used by Existing Implementations
    |                |            |          |coordinate  |             |
    +----------------+------------+----------+------------+-------------+
 
-                                  Table 3
+                                  Table 4
 
    For [MIRACL] and [zig-pairings], the corresponding G_2 sizes are 233
    bytes uncompressed and 117 bytes compressed.
@@ -2437,7 +2597,7 @@ E.2.  Encodings Used by Existing Implementations
    metadata bit.  This differs from the approach of Section 5, which
    represents the identity element explicitly through I_bit and leaves
    the decision of whether to accept it to the calling protocol
-   (Section 5.5).
+   (Section 5.6.2).
 
    Two observations follow.  First, implementations that support BN462
    have converged on a dedicated leading byte rather than on packing
@@ -2447,7 +2607,7 @@ E.2.  Encodings Used by Existing Implementations
 E.3.  Alternative Considered: Two Metadata Bits
 
    S_bit is meaningful only for compressed points (see Step 1 of
-   Section 5.2).  An encoding restricted to uncompressed points
+   Section 5.3).  An encoding restricted to uncompressed points
    therefore needs only C_bit and I_bit, which fit in the two spare bits
    that BN462 does have.  This possibility was raised by Frank Denis
    during review of this document.  Its appeal is that BN462 would
@@ -2456,7 +2616,7 @@ E.3.  Alternative Considered: Two Metadata Bits
    two metadata bits instead of three, rather than by acquiring a
    second, leading-byte parser used only for BN462.
 
-   It carries a pitfall.  Step 2 of Section 5.3 determines the curve
+   It carries a pitfall.  Step 2 of Section 5.4 determines the curve
    jointly from C_bit and the length of the string.  For BN462 (n = 58,
    and E' represented over GF(p^2)), an uncompressed point on E and a
    compressed point on E' both occupy 116 bytes.  Under a two-bit
@@ -2484,7 +2644,7 @@ E.4.  Alternative Considered: A Dedicated Leading Byte
       y, followed by the coordinates in big-endian order.  This is what
       [MIRACL] and [pfcurve-js] emit.
 
-   *  A flag byte carrying the same three metadata bits as Section 5.2
+   *  A flag byte carrying the same three metadata bits as Section 5.3
       in the same positions -- C_bit at 0x80, I_bit at 0x40, S_bit at
       0x20, with the remaining five bits zero and checked on input --
       followed by the coordinates in big-endian order.  This is what
@@ -2503,7 +2663,7 @@ E.4.  Alternative Considered: A Dedicated Leading Byte
 
 E.5.  Why This Document Does Not Define a Format
 
-   Section 5.6 gives the reasons this document does not define a BN462
+   Section 5.5 gives the reasons this document does not define a BN462
    point format.  Two of them bear on what is recorded above.  No
    specification examined defines or requires a BN462 point encoding, so
    the encodings listed here are library conventions rather than a
@@ -2582,7 +2742,7 @@ Appendix F.  Adoption Status of Pairing-Friendly Curves with the 100-bit
           | Application |  DFINITY  |        BN_SNARK1         |
           +-------------+-----------+--------------------------+
 
-                                 Table 4
+                                 Table 5
 
 Authors' Addresses
 
