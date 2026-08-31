@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 3 March 2027                                           R. Wahby
+Expires: 4 March 2027                                           R. Wahby
                                                      Stanford University
-                                                          30 August 2026
+                                                          31 August 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 March 2027.
+   This Internet-Draft will expire on 4 March 2027.
 
 Copyright Notice
 
@@ -341,12 +341,17 @@ Table of Contents
    when both of its arguments are taken from G_1.
 
    Let d be a divisor of k and E' be an elliptic curve defined over
-   GF(p^(k/d)).  If an isomorphism from E' to E(GF(p^k)) exists, then E'
-   is called the twist of E.  It can sometimes be convenient for
-   efficiency to do the computations of G_2 in the twist E', and so
-   consider G_2 to instead be a subgroup of E'.  Let G_T be an order r
-   subgroup of the multiplicative group (GF(p^k))^*; this exists by
-   definition of k.
+   GF(p^(k/d)).  If there is an isomorphism psi from E'(GF(p^k)) to
+   E(GF(p^k)), then E' is called the twist of E, and psi is given for
+   each curve in Section 4.  It is more efficient to hold elements of
+   G_2 as points of E'(GF(p^(k/d))), whose coordinates lie in a smaller
+   field.  Write G'_2 for the preimage of G_2 under psi, that is, the
+   set of points Q of E'(GF(p^(k/d))) with psi(Q) in G_2.  Where a point
+   of G_2 is written with coordinates in this document, as in Section 4
+   and in Section 5, it is the corresponding point of G'_2 that is
+   written; psi carries it back to G_2 when the pairing is evaluated.
+   Let G_T be an order r subgroup of the multiplicative group
+   (GF(p^k))^*; this exists by definition of k.
 
    A pairing is defined as a bilinear map e: (G_1, G_2) -> G_T
    satisfying the following properties:
@@ -354,9 +359,11 @@ Table of Contents
    1.  Bilinearity: for any S in G_1, T in G_2, and integers K and L,
        e([K]S, [L]T) = e(S, T)^{K * L}.
 
-   2.  Non-degeneracy: for any T in G_2, e(S, T) = 1 if and only if S =
-       O_E.  Similarly, for any S in G_1, e(S, T) = 1 if and only if T =
-       O_E.
+   2.  Non-degeneracy: for every T in G_2 other than O_E, e(S, T) = 1 if
+       and only if S = O_E; and for every S in G_1 other than O_E, e(S,
+       T) = 1 if and only if T = O_E.  The identity element has to be
+       excluded on both sides: by bilinearity, e(S, O_E) = 1 holds for
+       every S in G_1, and e(O_E, T) = 1 for every T in G_2.
 
    In applications, it is also necessary that for any S in G_1 and T in
    G_2, this bilinear map is efficiently computable.
@@ -389,7 +396,12 @@ Table of Contents
 
    BP:  a point in G_1.  (The 'base point' of a cyclic subgroup of G_1)
 
-   h:  the cofactor h = #E(GF(p)) / r, where gcd(h, r)=1.
+   h:  the cofactor h = #E(GF(p)) / r, where gcd(h, r) = 1.
+
+   h':  the cofactor h' = #E'(GF(p^(k/d))) / r, where gcd(h', r) = 1.
+
+   BP':  a point in G'_2.  (The 'base point' of a cyclic subgroup of
+      G'_2)
 
 2.3.  Barreto-Naehrig Curves
 
@@ -557,8 +569,8 @@ Table of Contents
    bits [GMT19], slightly below the nominal 128-bit target, it is
    retained because its adoption in production deployments (see
    Section 4.1) decisively satisfies the "widely used" criterion.  Where
-   no candidate at a given security level satisfies "widely used" -- as
-   is currently the case at the 256-bit level -- this exception does not
+   no candidate at a given security level satisfies "widely used", as is
+   currently the case at the 256-bit level, this exception does not
    apply, and the preference for margin governs without qualification.
 
    As a result, we recommend the BLS curve with 381-bit characteristic
@@ -593,9 +605,15 @@ Table of Contents
    is useful information for implementers.
 
    The security level for each curve is evaluated in accordance with
-   [BD18], [GMT19], [MAF19] and [FK18].  Note that the Freeman curves
-   [Freeman06] and MNT curves [MNT01] are not included in this survey
-   because [BD18] does not show the security levels of these curves.
+   [BD18], [GMT19], [MAF19] and [FK18].  For the 128-bit level, [G20]
+   revisits the Special variant of the tower number field sieve, which
+   applies to pairing-friendly curves because their characteristic is a
+   polynomial of moderate degree with tiny coefficients evaluated at a
+   seed.  It revises the estimates of earlier work downward for the
+   families it examines, with BLS12 and BN as the exceptions that it
+   leaves unchanged.  Note that the Freeman curves [Freeman06] and MNT
+   curves [MNT01] are not included in this survey because [BD18] does
+   not show the security levels of these curves.
 
 4.1.1.  International Standards
 
@@ -1140,7 +1158,7 @@ Table of Contents
    |            |                                         | adopted    |
    |            |                                         | here       |
    +------------+-----------------------------------------+------------+
-   | BN462      | --                                      | Not        |
+   | BN462      | Not applicable                          | Not        |
    | point      |                                         | specified  |
    | encoding   |                                         | here; see  |
    |            |                                         | Section    |
@@ -1366,15 +1384,24 @@ Table of Contents
    at E or E'.  G_1 and G_2 are the groups on which the pairing of
    Section 2.2 is defined, and they are what the specifications citing
    this document exchange.  Section 5.3 of [I-D.irtf-cfrg-bls-signature]
-   requires the subgroup check of conforming implementations for the
-   same reason, and Section 6.2 of [I-D.irtf-cfrg-bbs-signatures]
+   requires conforming implementations to perform the subgroup check for
+   the same reason, and Section 6.2 of [I-D.irtf-cfrg-bbs-signatures]
    describes the combined operation as the one that libraries provide.
 
    The procedure below is stated once, for a string s_string and the
    parameters n and m of Section 5.1.  It uses the OS2IP function
    defined in [RFC8017] and the OS2FE function defined in Section 5.1.
-   octets_to_point_G1 is the case in which step 2 determines the curve
-   E, and octets_to_point_G2 the case in which it determines E'.
+
+   Each of the two functions fixes the group it returns, and the curve
+   that step 2 determines is what selects between them.
+   octets_to_point_G1 MUST return INVALID if step 2 determines E', and
+   octets_to_point_G2 MUST return INVALID if step 2 determines E.  This
+   check is not redundant: the encodings of the two groups can have the
+   same length.  For BLS12-381, for instance, a 96-byte string is a
+   compressed point on E' when C_bit is 1 and an uncompressed point on E
+   when C_bit is 0, so without this rule a compressed element of G_2
+   passed to octets_to_point_G1 would be decoded and returned rather
+   than rejected.
 
    Every GF(p) coefficient recovered by this procedure MUST be an
    integer in the inclusive range [0, p - 1].  A byte string that
@@ -1384,11 +1411,12 @@ Table of Contents
    applies to coordinates on E, recovered with OS2IP, as well as to the
    coefficients of coordinates on E', recovered with OS2FE.
 
-   1.  Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise.
-       In other words, the three most significant bits of m_byte equal
-       the three most significant bits of s_string[0], and the remaining
-       bits are 0.  If m_byte equals any of 0x20, 0x60, or 0xE0, return
-       INVALID.  Otherwise:
+   1.  If s_string is empty, return INVALID.  Otherwise, let m_byte =
+       s_string[0] AND 0xE0, where AND is computed bitwise.  In other
+       words, the three most significant bits of m_byte equal the three
+       most significant bits of s_string[0], and the remaining bits are
+       0.  If m_byte equals any of 0x20, 0x60, or 0xE0, return INVALID.
+       Otherwise:
 
        *  Let C_bit equal the most significant bit of m_byte,
 
@@ -1406,10 +1434,13 @@ Table of Contents
 
        *  If s_string has any other length, return INVALID.
 
-       If C_bit is 0: - If s_string has length 2n bytes, the output
-       point is on E. - If s_string has length 2*m*n bytes, the output
-       point is on E'. - If s_string has any other length, return
-       INVALID.
+       If C_bit is 0:
+
+       *  If s_string has length 2n bytes, the output point is on E.
+
+       *  If s_string has length 2*m*n bytes, the output point is on E'.
+
+       *  If s_string has any other length, return INVALID.
 
    3.  Let s_string[0] = s_string[0] AND 0x1F, where AND is computed
        bitwise.  In other words, set the three most significant bits of
@@ -1432,9 +1463,11 @@ Table of Contents
 
        *  If the curve that was determined in step 2 is E:
 
-          -  Let x = OS2IP(x_string).
+          -  Let x = OS2IP(x_string).  If x is greater than or equal to
+             p, return INVALID.
 
-          -  Let y = OS2IP(y_string).
+          -  Let y = OS2IP(y_string).  If y is greater than or equal to
+             p, return INVALID.
 
           -  If the point P = (x, y) is not a valid point on E, return
              INVALID.
@@ -1442,9 +1475,11 @@ Table of Contents
        *  Otherwise, (i.e., when the curve that was determined in step 2
           is E'):
 
-          -  Let x = OS2FE(x_string, n).
+          -  Let x = OS2FE(x_string, n).  If x is INVALID, return
+             INVALID.
 
-          -  Let y = OS2FE(y_string, n).
+          -  Let y = OS2FE(y_string, n).  If y is INVALID, return
+             INVALID.
 
           -  If the point P = (x, y) is not a valid point on E', return
              INVALID.
@@ -1457,7 +1492,8 @@ Table of Contents
 
        *  If the curve determined in step 2 is E:
 
-          -  Let x = OS2IP(x_string).
+          -  Let x = OS2IP(x_string).  If x is greater than or equal to
+             p, return INVALID.
 
           -  Let y2 = the right-hand side of the curve equation for E
              (given in Section 4 for the curve in question), evaluated
@@ -1471,7 +1507,8 @@ Table of Contents
        *  Otherwise, (i.e., when the curve that was determined in step 2
           is E'):
 
-          -  Let x = OS2FE(x_string, n).
+          -  Let x = OS2FE(x_string, n).  If x is INVALID, return
+             INVALID.
 
           -  Let y2 = the right-hand side of the curve equation for E'
              (given in Section 4 for the curve in question), evaluated
@@ -1509,11 +1546,12 @@ Table of Contents
    multiplication rather than from a byte string, and a caller may need
    to check such a point.
 
-   For every curve in this document, r^2 does not divide the order of
-   E(GF(p)) or the order of E'(GF(p^m)); this can be seen from the
-   values of r, h and h' given in Section 4.  Consequently a point of
-   order dividing r is an element of G_1, or of G_2, respectively, and
-   both checks can be carried out as follows:
+   For every curve in this document, r^2 divides neither the order of
+   E(GF(p)) nor the order of E'(GF(p^m)): those orders are h * r and h'
+   * r, and gcd(h, r) = gcd(h', r) = 1 by the definitions of h and h' in
+   Section 2.2.  Consequently a point of order dividing r is an element
+   of G_1, or of G_2, respectively, and both checks can be carried out
+   as follows:
 
    *  subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity
       on E, and FALSE otherwise.
@@ -1536,9 +1574,9 @@ Table of Contents
    serialization, defined in Section 5.2, and the subgroup checks of
    Section 5.4.1 are unaffected and apply to BN462 as well.
 
-   The coordinate encoding of Section 5.3 -- coordinates as fixed-length
+   The coordinate encoding of Section 5.3 (coordinates as fixed-length
    big-endian integers, with the coefficients of an element of GF(p^m)
-   in decreasing index order -- carries over to BN462 unchanged.  What
+   in decreasing index order) carries over to BN462 unchanged.  What
    does not fit is the placement of the metadata bits.  BN462 has a
    462-bit characteristic p, so its canonical GF(p) representation
    occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits.  This leaves
@@ -1570,8 +1608,10 @@ Table of Contents
 5.6.  Requirements on Calling Protocols
 
    The procedures above leave three decisions to the protocol that uses
-   them.  A specification that adopts this format SHOULD state its
-   answer to each, rather than relying on an implicit default.
+   them.  This document does not decide them, because the right answer
+   depends on what the protocol does rather than on the curve or the
+   wire format.  A specification that adopts this format SHOULD state
+   its answer to each.
 
 5.6.1.  Accepted Point Form
 
@@ -1600,21 +1640,24 @@ Table of Contents
    legitimately reference the identity element as part of a public
    statement, while for others it cannot arise in normal operation.
 
-   This document therefore defines two deserialization behaviors, and
-   protocols using this document's serialization format SHOULD
-   explicitly state which one they require, rather than relying on an
-   implicit default:
+   Because both kinds of protocol exist, this document does not name one
+   of them as what happens when a protocol says nothing.  It defines the
+   two behaviors, and a protocol using this document's serialization
+   format SHOULD state which one it requires:
 
-   *  *Reject identity (RECOMMENDED default)*: after running
-      Section 5.4, if the resulting point is the identity element, treat
-      the overall result as INVALID.  This is the appropriate choice for
-      protocols where the identity element is not an expected input in
-      normal operation.
+   *  *Reject identity*: after running Section 5.4, if the resulting
+      point is the identity element, treat the overall result as
+      INVALID.  This is the appropriate choice for protocols where the
+      identity element is not an expected input in normal operation.
 
    *  *Allow identity*: use the result of Section 5.4 as-is, including
       when it is the identity element.  This is appropriate for
       protocols with a specific, documented need to represent the
       identity element.
+
+   Neither behavior is part of Section 5.4 itself, which returns the
+   identity element as it returns any other group element.  Rejecting it
+   is a step the calling protocol takes on the result.
 
    Section 5.2 of [I-D.irtf-cfrg-bls-signature] is an example of the
    first choice, and gives a protocol-level reason for it: the secret
@@ -1637,17 +1680,23 @@ Table of Contents
    the exTNFS proposed by Kim et al. in 2016 [KB16] and they are
    categorized in each security level in accordance with [BD18].
    Implementers who will newly develop pairing-based cryptography
-   applications SHOULD use the recommended parameters.  As of 2026, as
-   far as we've investigated the top cryptographic conferences, there
-   are no fatal attacks that significantly reduce the security of
-   pairing-friendly curves beyond what is already reflected in the
-   security estimates cited in this memo ([BD18], [GMT19], [KIK17]).
-   Continued refinements to the number field sieve and its tower
-   variants (e.g., record discrete-logarithm computations and complexity
-   analyses) have been published since 2020, but these are improvements
-   to known algorithm families already accounted for by the post-exTNFS
-   estimates used here, not new attack types that change the qualitative
-   security picture.
+   applications SHOULD use the recommended parameters.  The estimates
+   cited here ([BD18], [GMT19], [G20], [KIK17]) were reviewed against
+   the literature published between January 2020 and August 2026.  The
+   review covered peer-reviewed publications indexed by Crossref, among
+   them CRYPTO, ASIACRYPT, PKC, IACR Communications in Cryptology and
+   Designs, Codes and Cryptography, together with the IACR Cryptology
+   ePrint Archive and arXiv for work not yet in a peer-reviewed venue.
+   No result was found that lowers the estimates for the curves
+   recommended here.  Work on the number field sieve and its tower
+   variants has continued over that period: record discrete-logarithm
+   computations, refinements of the asymptotic analysis, unified
+   complexity formulae for the variants, and constant-factor
+   improvements to individual steps of the tower variant for fields of
+   the extension degrees these curves use.  That work is within the same
+   algorithm families rather than a new kind of attack, and no re-
+   derived bit-level estimate has been published for the curves
+   recommended here; this document has not derived one either.
 
    BLS curves of embedding degree 12 typically require a characteristic
    p of 461 bits or larger to achieve the 128-bit security level [BD18].
@@ -1670,10 +1719,15 @@ Table of Contents
    so-called subgroup secure [BCM15], that is, it has to have the
    correct order r.  A point obtained from a byte string through
    Section 5.4 has already been checked, since those procedures return
-   an element of G_1 or of G_2 or nothing at all.  A point obtained in
-   any other way, for instance as the result of point addition or scalar
-   multiplication, has not been, and implementers SHOULD apply
-   Section 5.4.1 to it.
+   an element of G_1 or of G_2 or nothing at all.  Group operations
+   preserve the property: a sum or a scalar multiple of elements of G_1
+   is again an element of G_1, and likewise for G_2, so a point computed
+   from checked inputs does not need checking again.  What does need
+   checking is a point whose provenance does not establish membership,
+   such as one built from coordinates supplied by another party or one
+   whose group is no longer tracked by the implementation; implementers
+   SHOULD apply Section 5.4.1 to such a point before it is used as an
+   argument to the pairing.
 
    The pairing-based protocols, such as the BLS signatures, use a scalar
    multiplication in G_1, G_2 and an exponentiation in G_T with the
@@ -1691,12 +1745,13 @@ Table of Contents
    makes this requirement normative for the procedures defined in this
    document.
 
-   The serialization format in Section 5 leaves the choice between the
-   two identity-element behaviors described in Section 5.6.2 to the
-   calling protocol, and there is no default to fall back on.  Treating
-   the identity element as an unremarkable, always-valid deserialization
-   result -- when the calling protocol does not actually expect it --
-   can introduce timing side channels from identity-checking branches.
+   The choice between the two identity-element behaviors described in
+   Section 5.6.2 belongs to the calling protocol, because whether the
+   identity element can legitimately appear is a property of the
+   protocol rather than of the curve or the wire format.  Treating the
+   identity element as an unremarkable, always-valid deserialization
+   result, when the calling protocol does not actually expect it, can
+   introduce timing side channels from identity-checking branches.
    Protocol specifications SHOULD state explicitly whether they require
    the identity-rejecting or identity-allowing behavior, consistent with
    their own security assumptions, and SHOULD do the same for the zero
@@ -1707,13 +1762,14 @@ Table of Contents
    mathematical problem that provides the security of the strong DH
    problem is called ECDLP with Auxiliary Inputs (ECDLPwAI).  In
    ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ...,
-   delta, then we find a secret K.  By Cheon's algorithm the complexity
-   of ECDLPwAI is O(sqrt((r-1)/delta) + sqrt(delta)) for a divisor delta
-   of r-1, whereas the complexity of ECDLP is O(sqrt(r)), so for a well
-   chosen delta the complexity of ECDLPwAI becomes dramatically smaller
-   than that of ECDLP.  Please refer to [Cheon06] for the details of
-   Cheon's algorithm.  The design of a cryptographic protocol based on
-   the strong DH problem therefore has to take this attack into account.
+   delta, then we find a secret K.  For a divisor delta of r - 1,
+   Cheon's algorithm recovers K in O(log r * (sqrt(r / delta) +
+   sqrt(delta))) group operations [Cheon06], whereas solving ECDLP by a
+   generic method takes O(sqrt(r)) group operations, so for a well
+   chosen delta the work of ECDLPwAI becomes dramatically smaller than
+   that of ECDLP.  Please refer to [Cheon06] for the details of Cheon's
+   algorithm.  The design of a cryptographic protocol based on the
+   strong DH problem therefore has to take this attack into account.
    For example, in the case of Short Signatures, the attack can be
    prevented by carefully setting the maximum number of queries, which
    corresponds to the parameter delta.
@@ -1753,6 +1809,12 @@ Table of Contents
               Curves of Prime Order", DOI 10.1007/11693383_22, Selected
               Areas in Cryptography pp. 319-331, 2006,
               <https://doi.org/10.1007/11693383_22>.
+
+   [G20]      Guillevic, A., "A Short-List of Pairing-Friendly Curves
+              Resistant to Special TNFS at the 128-Bit Security Level",
+              DOI 10.1007/978-3-030-45388-6_19, Public-Key Cryptography
+              - PKC 2020 pp. 535-564, 2020,
+              <https://doi.org/10.1007/978-3-030-45388-6_19>.
 
    [GMT19]    Guillevic, A., Masson, S., and E. Thome, "Cocks–Pinch
               curves of embedding degrees five to eight and optimal ate
@@ -3169,10 +3231,13 @@ E.2.  Encodings Used by Existing Implementations
    the decision of whether to accept it to the calling protocol
    (Section 5.6.2).
 
-   Two observations follow.  First, implementations that support BN462
-   have converged on a dedicated leading byte rather than on packing
-   metadata into the coordinate.  Second, none of the implementations
-   examined uses the two spare bits of the coordinate to carry metadata.
+   Two observations follow.  First, the implementations that support
+   BN462 and do not mark it deprecated have converged on a dedicated
+   leading byte rather than on packing metadata into the coordinate;
+   [mcl], which does mark it deprecated, is the exception and packs the
+   sign of y into the coordinate.  Second, none of the implementations
+   examined carries the pair C_bit and I_bit in the two spare bits of
+   the coordinate, which is the arrangement Appendix E.3 considers.
 
 E.3.  Alternative Considered: Two Metadata Bits
 
@@ -3214,8 +3279,8 @@ E.4.  Alternative Considered: A Dedicated Leading Byte
       [MIRACL] and [pfcurve-js] emit.
 
    *  A flag byte carrying the same three metadata bits as Section 5.3
-      in the same positions -- C_bit at 0x80, I_bit at 0x40, S_bit at
-      0x20, with the remaining five bits zero and checked on input --
+      in the same positions (C_bit at 0x80, I_bit at 0x40, S_bit at
+      0x20, with the remaining five bits zero and checked on input),
       followed by the coordinates in big-endian order.  This is what
       [zig-pairings] emits.  These are the same bit positions that
       [MIRACL] uses in its bit-packing path, so this variant amounts to
