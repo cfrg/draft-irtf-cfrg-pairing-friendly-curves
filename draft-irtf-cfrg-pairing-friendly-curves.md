@@ -111,12 +111,12 @@ G_2 = E(GF(p^k))[r] intersect ker(pi - [p]),
 
 where ker(pi - [a]) denotes the set of points T with pi(T) = [a]T. For the curves considered in this document, both G_1 and G_2 have order r. G_2 is identified by the eigenvalue p, and not merely as an order r subgroup of E(GF(p^k)): that weaker description is satisfied by G_1 as well, and the pairing computed in {{comp_pairing}} is degenerate when both of its arguments are taken from G_1.
 
-Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If an isomorphism from E' to E(GF(p^k)) exists, then E' is called the twist of E. It can sometimes be convenient for efficiency to do the computations of G_2 in the twist E', and so consider G_2 to instead be a subgroup of E'. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.
+Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If there is an isomorphism psi from E'(GF(p^k)) to E(GF(p^k)), then E' is called the twist of E, and psi is given for each curve in {{secure_params}}. It is more efficient to hold elements of G_2 as points of E'(GF(p^(k/d))), whose coordinates lie in a smaller field. Write G'_2 for the preimage of G_2 under psi, that is, the set of points Q of E'(GF(p^(k/d))) with psi(Q) in G_2. Where a point of G_2 is written with coordinates in this document, as in {{secure_params}} and in {{point-serialization}}, it is the corresponding point of G'_2 that is written; psi carries it back to G_2 when the pairing is evaluated. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.
 
 A pairing is defined as a bilinear map e: (G_1, G_2) -> G_T satisfying the following properties:
 
 1. Bilinearity: for any S in G_1, T in G_2, and integers K and L, e([K]S, [L]T) = e(S, T)^{K * L}.
-2. Non-degeneracy: for any T in G_2, e(S, T) = 1 if and only if S = O_E. Similarly, for any S in G_1, e(S, T) = 1 if and only if T = O_E.
+2. Non-degeneracy: for every T in G_2 other than O_E, e(S, T) = 1 if and only if S = O_E; and for every S in G_1 other than O_E, e(S, T) = 1 if and only if T = O_E. The identity element has to be excluded on both sides: by bilinearity, e(S, O_E) = 1 holds for every S in G_1, and e(O_E, T) = 1 for every T in G_2.
 
 In applications, it is also necessary that for any S in G_1 and T in G_2, this bilinear map is efficiently computable.
 
@@ -159,7 +159,13 @@ BP:
 :   a point in G_1. (The 'base point' of a cyclic subgroup of G_1)
 
 h:
-:   the cofactor h = #E(GF(p)) / r, where gcd(h, r)=1.
+:   the cofactor h = #E(GF(p)) / r, where gcd(h, r) = 1.
+
+h':
+:   the cofactor h' = #E'(GF(p^(k/d))) / r, where gcd(h', r) = 1.
+
+BP':
+:   a point in G'_2. (The 'base point' of a cyclic subgroup of G'_2)
 
 ## Barreto-Naehrig Curves  {#BNdef}
 
@@ -234,7 +240,7 @@ First, we show the adoption status of pairing-friendly curves in standards, libr
 
 In our selection policy, it is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. In addition, "efficiency" is one of the important aspects but greatly dependent on implementations, so we choose to prioritize "security" and "widely used" over "efficiency" in consideration of future interconnections and interoperability over the internet.
 
-Within this policy, when "widely used" does not by itself distinguish between candidate curves at a given security level, we prefer the curve that provides security margin above the nominal security level: a margin advantage is a security consideration, and by the priority above it outranks an efficiency advantage of a lower-margin alternative. BLS12-381 is the one exception to this preference for margin: although its security level is estimated at approximately 126 bits {{GMT19}}, slightly below the nominal 128-bit target, it is retained because its adoption in production deployments (see {{impl}}) decisively satisfies the "widely used" criterion. Where no candidate at a given security level satisfies "widely used" -- as is currently the case at the 256-bit level -- this exception does not apply, and the preference for margin governs without qualification.
+Within this policy, when "widely used" does not by itself distinguish between candidate curves at a given security level, we prefer the curve that provides security margin above the nominal security level: a margin advantage is a security consideration, and by the priority above it outranks an efficiency advantage of a lower-margin alternative. BLS12-381 is the one exception to this preference for margin: although its security level is estimated at approximately 126 bits {{GMT19}}, slightly below the nominal 128-bit target, it is retained because its adoption in production deployments (see {{impl}}) decisively satisfies the "widely used" criterion. Where no candidate at a given security level satisfies "widely used", as is currently the case at the 256-bit level, this exception does not apply, and the preference for margin governs without qualification.
 
 As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
 
@@ -246,7 +252,7 @@ The adoption status of pairing-friendly curves is surveyed in standards, librari
 
 Parameters whose security level is more than 5 bits below the 128-bit level are not candidates for selection here, because this document recommends against using parameters below the 128-bit level. They are still named in the subsections below wherever a standard or a library supports them, and {{adoption_status_100bit_security}} tabulates that adoption, which is useful information for implementers.
 
-The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. Note that the Freeman curves {{Freeman06}} and MNT curves {{MNT01}} are not included in this survey because {{BD18}} does not show the security levels of these curves.
+The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. For the 128-bit level, {{G20}} revisits the Special variant of the tower number field sieve, which applies to pairing-friendly curves because their characteristic is a polynomial of moderate degree with tiny coefficients evaluated at a seed. It revises the estimates of earlier work downward for the families it examines, with BLS12 and BN as the exceptions that it leaves unchanged. Note that the Freeman curves {{Freeman06}} and MNT curves {{MNT01}} are not included in this survey because {{BD18}} does not show the security levels of these curves.
 
 ### International Standards  {#standardization}
 
@@ -712,7 +718,7 @@ Not all of what follows originates with this document. Where an existing format 
 | Scalar encoding | Existing practice: I2OSP and OS2IP {{RFC8017}}, together with a comparison against the group order | Specified here, for all three curves |
 | BLS12-381 point encoding | {{ZCashRep}}, which adapts the representation of {{SEC1}} to GF(p^m) | Restated here as the format in use |
 | BLS48-581 point encoding | The same format, extended to GF(p^8) in {{I-D.ietf-cose-bls-key-representations}} | That extension is adopted here |
-| BN462 point encoding | -- | Not specified here; see {{bn462-applicability}} |
+| BN462 point encoding | Not applicable | Not specified here; see {{bn462-applicability}} |
 | Group membership and identity handling | This document | Specified here |
 
 At a high level, the point serialization format is defined as follows:
@@ -870,7 +876,7 @@ Note that OS2FE outputs field elements in the towered representation of the curv
 
 subgroup_check_G1(P) takes a point P on E and returns TRUE if P is an element of G_1 and FALSE otherwise. subgroup_check_G2(Q) does the same for a point Q on E' and the group G_2. Both are used by {{point-deserialization-procedure}}, and both are specified here as operations in their own right, because a point can also arise from point addition or scalar multiplication rather than from a byte string, and a caller may need to check such a point.
 
-For every curve in this document, r^2 does not divide the order of E(GF(p)) or the order of E'(GF(p^m)); this can be seen from the values of r, h and h' given in {{secure_params}}. Consequently a point of order dividing r is an element of G_1, or of G_2, respectively, and both checks can be carried out as follows:
+For every curve in this document, r^2 divides neither the order of E(GF(p)) nor the order of E'(GF(p^m)): those orders are h * r and h' * r, and gcd(h, r) = gcd(h', r) = 1 by the definitions of h and h' in {{pairing}}. Consequently a point of order dividing r is an element of G_1, or of G_2, respectively, and both checks can be carried out as follows:
 
 - subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity on E, and FALSE otherwise.
 - subgroup_check_G2(Q) returns TRUE if [r]Q is the point at infinity on E', and FALSE otherwise.
@@ -883,7 +889,7 @@ These checks apply to all three curves in this document. Note that for BN462 the
 
 This document does not specify a point encoding for BN462. Scalar serialization, defined in {{scalar-serialization}}, and the subgroup checks of {{subgroup-check}} are unaffected and apply to BN462 as well.
 
-The coordinate encoding of {{point-serialization-procedure}} -- coordinates as fixed-length big-endian integers, with the coefficients of an element of GF(p^m) in decreasing index order -- carries over to BN462 unchanged. What does not fit is the placement of the metadata bits. BN462 has a 462-bit characteristic p, so its canonical GF(p) representation occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits. This leaves 2 unused bits in the leading byte of a serialized coordinate, one short of the three (C_bit, I_bit, S_bit) that the scheme above places there. {{bn462-serialization-notes}} describes two ways of accommodating that: carrying the metadata in a byte of its own, following the general pattern of {{SEC1}}, which leaves the rest of the format unchanged; or restricting the format to uncompressed points, which need only C_bit and I_bit and therefore fit in the two bits available.
+The coordinate encoding of {{point-serialization-procedure}} (coordinates as fixed-length big-endian integers, with the coefficients of an element of GF(p^m) in decreasing index order) carries over to BN462 unchanged. What does not fit is the placement of the metadata bits. BN462 has a 462-bit characteristic p, so its canonical GF(p) representation occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits. This leaves 2 unused bits in the leading byte of a serialized coordinate, one short of the three (C_bit, I_bit, S_bit) that the scheme above places there. {{bn462-serialization-notes}} describes two ways of accommodating that: carrying the metadata in a byte of its own, following the general pattern of {{SEC1}}, which leaves the rest of the format unchanged; or restricting the format to uncompressed points, which need only C_bit and I_bit and therefore fit in the two bits available.
 
 This document specifies neither. The format above is specified here because it is already widely used in applications, and because specifications depend on it: it originates with {{ZCashRep}} and is relied upon by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. For BN462 neither consideration holds: no specification examined requires a BN462 point encoding, and the implementations that do emit BN462 points have not converged on one of the variants above. Choosing among them would therefore be encoding design rather than the recording of established practice, and this document restates an encoding only where practice has already settled on one.
 
@@ -920,7 +926,7 @@ This is a separate decision from the one above. Section 3.1 of {{RFC9591}} rejec
 
 # Security Considerations  {#security-considerations}
 
-The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. As of 2026, as far as we've investigated the top cryptographic conferences, there are no fatal attacks that significantly reduce the security of pairing-friendly curves beyond what is already reflected in the security estimates cited in this memo ({{BD18}}, {{GMT19}}, {{KIK17}}). Work on the number field sieve and its tower variants has continued since those estimates were published, including record discrete-logarithm computations and refined complexity analyses. That work is within the same algorithm families rather than a new kind of attack, but this document has not re-derived the bit-level estimates in light of it.
+The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. A survey of the IACR Cryptology ePrint Archive covering submissions from January 2020 to August 2026 found no published result that lowers the security estimates for the curves recommended here ({{BD18}}, {{GMT19}}, {{G20}}, {{KIK17}}). Work on the number field sieve and its tower variants has continued over that period. It includes record discrete-logarithm computations, refinements of the asymptotic analysis, and constant-factor improvements to individual steps for fields of the extension degrees these curves use. That work is within the same algorithm families rather than a new kind of attack, and no re-derived bit-level estimate has been published for the curves recommended here; this document has not derived one either.
 
 BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level {{BD18}}. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used {{BD18}} {{GMT19}}.
 
@@ -934,7 +940,7 @@ The pairing-based protocols, such as the BLS signatures, use a scalar multiplica
 
 A coordinate that is read from a byte string has to be checked against the order of the field it is claimed to lie in; a coefficient outside that range gives one value several encodings, which can lead to vulnerabilities such as signature forgery {{IEEE1363}}. {{point-deserialization-procedure}} makes this requirement normative for the procedures defined in this document.
 
-The choice between the two identity-element behaviors described in {{identity-point-handling}} belongs to the calling protocol, because whether the identity element can legitimately appear is a property of the protocol rather than of the curve or the wire format. Treating the identity element as an unremarkable, always-valid deserialization result -- when the calling protocol does not actually expect it -- can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar ({{zero-scalar}}).
+The choice between the two identity-element behaviors described in {{identity-point-handling}} belongs to the calling protocol, because whether the identity element can legitimately appear is a property of the protocol rather than of the curve or the wire format. Treating the identity element as an unremarkable, always-valid deserialization result, when the calling protocol does not actually expect it, can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar ({{zero-scalar}}).
 
 Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem {{Cheon06}}. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ..., delta, then we find a secret K. For a divisor delta of r - 1, Cheon's algorithm recovers K in O(log r * (sqrt(r / delta) + sqrt(delta))) group operations {{Cheon06}}, whereas solving ECDLP by a generic method takes O(sqrt(r)) group operations, so for a well chosen delta the work of ECDLPwAI becomes dramatically smaller than that of ECDLP. Please refer to {{Cheon06}} for the details of Cheon's algorithm. The design of a cryptographic protocol based on the strong DH problem therefore has to take this attack into account. For example, in the case of Short Signatures, the attack can be prevented by carefully setting the maximum number of queries, which corresponds to the parameter delta.
 
@@ -999,6 +1005,17 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
               <organization />
             </author>
             <date year="2003" />
+          </front>
+        </reference>
+        <reference anchor="G20" target="https://doi.org/10.1007/978-3-030-45388-6_19">
+          <front>
+            <title>A Short-List of Pairing-Friendly Curves Resistant to Special TNFS at the 128-Bit Security Level</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-030-45388-6_19" />
+            <seriesInfo name="Public-Key Cryptography - PKC 2020" value="pp. 535-564" />
+            <author initials="A." surname="Guillevic" fullname="Aurore Guillevic">
+              <organization />
+            </author>
+            <date year="2020" />
           </front>
         </reference>
         <reference anchor="KB16">
@@ -3079,7 +3096,7 @@ Both leading-byte forms leave the coordinate encoding of {{point-serialization-p
 
 In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
 
-Two observations follow. First, implementations that support BN462 have converged on a dedicated leading byte rather than on packing metadata into the coordinate. Second, none of the implementations examined uses the two spare bits of the coordinate to carry metadata.
+Two observations follow. First, the implementations that support BN462 and do not mark it deprecated have converged on a dedicated leading byte rather than on packing metadata into the coordinate; {{mcl}}, which does mark it deprecated, is the exception and packs the sign of y into the coordinate. Second, none of the implementations examined carries the pair C_bit and I_bit in the two spare bits of the coordinate, which is the arrangement {{bn462-two-bit}} considers.
 
 ## Alternative Considered: Two Metadata Bits  {#bn462-two-bit}
 
@@ -3095,7 +3112,7 @@ Moving the metadata out of the coordinate and into a byte of its own removes the
 
 - The {{SEC1}} type byte: 0x04 for an uncompressed point, 0x02 or 0x03 for a compressed point with the value itself carrying the sign of y, followed by the coordinates in big-endian order. This is what {{MIRACL}} and {{pfcurve-js}} emit.
 
-- A flag byte carrying the same three metadata bits as {{point-serialization-procedure}} in the same positions -- C_bit at 0x80, I_bit at 0x40, S_bit at 0x20, with the remaining five bits zero and checked on input -- followed by the coordinates in big-endian order. This is what {{zig-pairings}} emits. These are the same bit positions that {{MIRACL}} uses in its bit-packing path, so this variant amounts to relocating the bit assignment of {{point-serialization}} into a leading byte, leaving the rest of the format unchanged.
+- A flag byte carrying the same three metadata bits as {{point-serialization-procedure}} in the same positions (C_bit at 0x80, I_bit at 0x40, S_bit at 0x20, with the remaining five bits zero and checked on input), followed by the coordinates in big-endian order. This is what {{zig-pairings}} emits. These are the same bit positions that {{MIRACL}} uses in its bit-packing path, so this variant amounts to relocating the bit assignment of {{point-serialization}} into a leading byte, leaving the rest of the format unchanged.
 
 Both variants yield the same encoded lengths (117 and 59 bytes for G_1, 233 and 117 bytes for G_2), so length alone does not distinguish them. The leading byte does: an uncompressed point other than the identity element begins with 0x04 in the first variant and 0x00 in the second. A decoder that validates the leading byte rather than skipping over it will therefore reject a string in the other format instead of misparsing it.
 
