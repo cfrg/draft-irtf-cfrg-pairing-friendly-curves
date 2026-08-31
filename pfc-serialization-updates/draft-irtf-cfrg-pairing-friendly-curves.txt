@@ -1682,21 +1682,17 @@ Table of Contents
    Implementers who will newly develop pairing-based cryptography
    applications SHOULD use the recommended parameters.  The estimates
    cited here ([BD18], [GMT19], [G20], [KIK17]) were reviewed against
-   the literature published between January 2020 and August 2026.  The
-   review covered peer-reviewed publications indexed by Crossref, among
-   them CRYPTO, ASIACRYPT, PKC, IACR Communications in Cryptology and
-   Designs, Codes and Cryptography, together with the IACR Cryptology
-   ePrint Archive and arXiv for work not yet in a peer-reviewed venue.
-   No result was found that lowers the estimates for the curves
-   recommended here.  Work on the number field sieve and its tower
-   variants has continued over that period: record discrete-logarithm
-   computations, refinements of the asymptotic analysis, unified
-   complexity formulae for the variants, and constant-factor
-   improvements to individual steps of the tower variant for fields of
-   the extension degrees these curves use.  That work is within the same
-   algorithm families rather than a new kind of attack, and no re-
-   derived bit-level estimate has been published for the curves
-   recommended here; this document has not derived one either.
+   the work published in the major peer-reviewed cryptography venues,
+   and in the IACR Cryptology ePrint Archive, between January 2020 and
+   August 2026.  No result was found that lowers the estimates for the
+   curves recommended here.  Work on the number field sieve and its
+   tower variants has continued over that period, including record
+   discrete-logarithm computations, refinements of the asymptotic
+   analysis, and improvements to individual steps of the tower variant
+   for fields of the extension degrees these curves use.  That work is
+   within the same algorithm families rather than a new kind of attack,
+   and no re-derived bit-level estimate has been published for the
+   curves recommended here; this document has not derived one either.
 
    BLS curves of embedding degree 12 typically require a characteristic
    p of 461 bits or larger to achieve the 128-bit security level [BD18].
