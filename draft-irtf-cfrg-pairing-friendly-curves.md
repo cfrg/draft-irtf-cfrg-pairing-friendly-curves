@@ -794,13 +794,15 @@ This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_
 
 This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G_2 respectively, or INVALID. A string that deserializes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.
 
-This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and they are what the specifications citing this document exchange. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires the subgroup check of conforming implementations for the same reason, and Section 6.2 of {{I-D.irtf-cfrg-bbs-signatures}} describes the combined operation as the one that libraries provide.
+This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and they are what the specifications citing this document exchange. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires conforming implementations to perform the subgroup check for the same reason, and Section 6.2 of {{I-D.irtf-cfrg-bbs-signatures}} describes the combined operation as the one that libraries provide.
 
-The procedure below is stated once, for a string s_string and the parameters n and m of {{point-serialization-params}}. It uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{point-serialization-params}}. octets_to_point_G1 is the case in which step 2 determines the curve E, and octets_to_point_G2 the case in which it determines E'.
+The procedure below is stated once, for a string s_string and the parameters n and m of {{point-serialization-params}}. It uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{point-serialization-params}}.
+
+Each of the two functions fixes the group it returns, and the curve that step 2 determines is what selects between them. octets_to_point_G1 MUST return INVALID if step 2 determines E', and octets_to_point_G2 MUST return INVALID if step 2 determines E. This check is not redundant: the encodings of the two groups can have the same length. For BLS12-381, for instance, a 96-byte string is a compressed point on E' when C_bit is 1 and an uncompressed point on E when C_bit is 0, so without this rule a compressed element of G_2 passed to octets_to_point_G1 would be decoded and returned rather than rejected.
 
 Every GF(p) coefficient recovered by this procedure MUST be an integer in the inclusive range [0, p - 1]. A byte string that encodes a coordinate, or a coefficient of a coordinate, as a value greater than or equal to p is not a canonical encoding of a field element; implementations MUST return INVALID in that case. This applies to coordinates on E, recovered with OS2IP, as well as to the coefficients of coordinates on E', recovered with OS2FE.
 
-1. Let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0. If m_byte equals any of 0x20, 0x60, or 0xE0, return INVALID. Otherwise:
+1. If s_string is empty, return INVALID. Otherwise, let m_byte = s_string[0] AND 0xE0, where AND is computed bitwise. In other words, the three most significant bits of m_byte equal the three most significant bits of s_string[0], and the remaining bits are 0. If m_byte equals any of 0x20, 0x60, or 0xE0, return INVALID. Otherwise:
    - Let C_bit equal the most significant bit of m_byte,
    - Let I_bit equal the second most significant bit of m_byte, and
    - Let S_bit equal the third most significant bit of m_byte.
@@ -810,6 +812,7 @@ Every GF(p) coefficient recovered by this procedure MUST be an integer in the in
    - If s_string has any other length, return INVALID.
 
    If C_bit is 0:
+
    - If s_string has length 2n bytes, the output point is on E.
    - If s_string has length 2\*m\*n bytes, the output point is on E'.
    - If s_string has any other length, return INVALID.
@@ -826,14 +829,14 @@ Every GF(p) coefficient recovered by this procedure MUST be an integer in the in
 
    - If the curve that was determined in step 2 is E:
 
-      - Let x = OS2IP(x_string).
-      - Let y = OS2IP(y_string).
+      - Let x = OS2IP(x_string). If x is greater than or equal to p, return INVALID.
+      - Let y = OS2IP(y_string). If y is greater than or equal to p, return INVALID.
       - If the point P = (x, y) is not a valid point on E, return INVALID.
 
    - Otherwise, (i.e., when the curve that was determined in step 2 is E'):
 
-      - Let x = OS2FE(x_string, n).
-      - Let y = OS2FE(y_string, n).
+      - Let x = OS2FE(x_string, n). If x is INVALID, return INVALID.
+      - Let y = OS2FE(y_string, n). If y is INVALID, return INVALID.
       - If the point P = (x, y) is not a valid point on E', return INVALID.
 
    Let P = (x, y) and continue at step 8.
@@ -843,13 +846,13 @@ Every GF(p) coefficient recovered by this procedure MUST be an integer in the in
 6. Let x_string be s_string.
 
     - If the curve determined in step 2 is E:
-      - Let x = OS2IP(x_string).
+      - Let x = OS2IP(x_string). If x is greater than or equal to p, return INVALID.
       - Let y2 = the right-hand side of the curve equation for E (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p).
       - If y2 is not square in GF(p), return INVALID.
       - Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit = sign_GF_p(y).
 
     - Otherwise, (i.e., when the curve that was determined in step 2 is E'):
-      - Let x = OS2FE(x_string, n).
+      - Let x = OS2FE(x_string, n). If x is INVALID, return INVALID.
       - Let y2 = the right-hand side of the curve equation for E' (given in {{secure_params}} for the curve in question), evaluated at x, in GF(p^m).
       - If y2 is not square in GF(p^m), return INVALID.
       - Otherwise, let y = sqrt(y2) in GF(p^m) and let Y_bit = sign_GF_p^m(y).
@@ -888,7 +891,7 @@ Implementations that nevertheless need to exchange BN462 points may find {{bn462
 
 ## Requirements on Calling Protocols  {#calling-protocol-requirements}
 
-The procedures above leave three decisions to the protocol that uses them. A specification that adopts this format SHOULD state its answer to each, rather than relying on an implicit default.
+The procedures above leave three decisions to the protocol that uses them. This document does not decide them, because the right answer depends on what the protocol does rather than on the curve or the wire format. A specification that adopts this format SHOULD state its answer to each.
 
 ### Accepted Point Form  {#accepted-point-form}
 
@@ -900,10 +903,12 @@ A protocol SHOULD state which forms it accepts. Accepting both means that one po
 
 {{point-serialization-procedure}} and {{point-deserialization-procedure}} define a byte representation for the identity element of G_1 and of G_2, via the I_bit, and deserialization returns it as it does any other group element. Whether a calling protocol should accept it depends on that protocol's own semantics and threat model, not on the wire format: some protocols (e.g., certain zero-knowledge proof constructions) legitimately reference the identity element as part of a public statement, while for others it cannot arise in normal operation.
 
-This document therefore defines two deserialization behaviors, and protocols using this document's serialization format SHOULD explicitly state which one they require, rather than relying on an implicit default:
+Because both kinds of protocol exist, this document does not name one of them as what happens when a protocol says nothing. It defines the two behaviors, and a protocol using this document's serialization format SHOULD state which one it requires:
 
-- **Reject identity (RECOMMENDED default)**: after running {{point-deserialization-procedure}}, if the resulting point is the identity element, treat the overall result as INVALID. This is the appropriate choice for protocols where the identity element is not an expected input in normal operation.
+- **Reject identity**: after running {{point-deserialization-procedure}}, if the resulting point is the identity element, treat the overall result as INVALID. This is the appropriate choice for protocols where the identity element is not an expected input in normal operation.
 - **Allow identity**: use the result of {{point-deserialization-procedure}} as-is, including when it is the identity element. This is appropriate for protocols with a specific, documented need to represent the identity element.
+
+Neither behavior is part of {{point-deserialization-procedure}} itself, which returns the identity element as it returns any other group element. Rejecting it is a step the calling protocol takes on the result.
 
 Section 5.2 of {{I-D.irtf-cfrg-bls-signature}} is an example of the first choice, and gives a protocol-level reason for it: the secret key corresponding to an identity public key is zero, and under such a key the identity element is a valid signature on every message.
 
@@ -915,7 +920,7 @@ This is a separate decision from the one above. Section 3.1 of {{RFC9591}} rejec
 
 # Security Considerations  {#security-considerations}
 
-The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. As of 2026, as far as we've investigated the top cryptographic conferences, there are no fatal attacks that significantly reduce the security of pairing-friendly curves beyond what is already reflected in the security estimates cited in this memo ({{BD18}}, {{GMT19}}, {{KIK17}}). Continued refinements to the number field sieve and its tower variants (e.g., record discrete-logarithm computations and complexity analyses) have been published since 2020, but these are improvements to known algorithm families already accounted for by the post-exTNFS estimates used here, not new attack types that change the qualitative security picture.
+The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. As of 2026, as far as we've investigated the top cryptographic conferences, there are no fatal attacks that significantly reduce the security of pairing-friendly curves beyond what is already reflected in the security estimates cited in this memo ({{BD18}}, {{GMT19}}, {{KIK17}}). Work on the number field sieve and its tower variants has continued since those estimates were published, including record discrete-logarithm computations and refined complexity analyses. That work is within the same algorithm families rather than a new kind of attack, but this document has not re-derived the bit-level estimates in light of it.
 
 BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level {{BD18}}. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used {{BD18}} {{GMT19}}.
 
@@ -923,15 +928,15 @@ BN254 is used in most of the existing implementations as shown in {{impl}} and {
 
 The following points also apply to implementations of pairing-based cryptographic applications that use the recommended curves. Regarding the use case and applications of pairing-based cryptographic applications, please refer to {{applications-of-pairing-based-cryptography}}.
 
-In applications such as key agreement protocols, users exchange the elements in G_1 and G_2 as public keys. Such an element has to be so-called subgroup secure {{BCM15}}, that is, it has to have the correct order r. A point obtained from a byte string through {{point-deserialization-procedure}} has already been checked, since those procedures return an element of G_1 or of G_2 or nothing at all. A point obtained in any other way, for instance as the result of point addition or scalar multiplication, has not been, and implementers SHOULD apply {{subgroup-check}} to it.
+In applications such as key agreement protocols, users exchange the elements in G_1 and G_2 as public keys. Such an element has to be so-called subgroup secure {{BCM15}}, that is, it has to have the correct order r. A point obtained from a byte string through {{point-deserialization-procedure}} has already been checked, since those procedures return an element of G_1 or of G_2 or nothing at all. Group operations preserve the property: a sum or a scalar multiple of elements of G_1 is again an element of G_1, and likewise for G_2, so a point computed from checked inputs does not need checking again. What does need checking is a point whose provenance does not establish membership, such as one built from coordinates supplied by another party or one whose group is no longer tracked by the implementation; implementers SHOULD apply {{subgroup-check}} to such a point before it is used as an argument to the pairing.
 
 The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G_2 and an exponentiation in G_T with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementers SHOULD apply countermeasure techniques such as the Montgomery ladder {{Montgomery}} {{CF06}} when they implement modules of a scalar multiplication and an exponentiation. Please refer to {{Montgomery}} and {{CF06}} for the detailed algorithms of the Montgomery ladder.
 
 A coordinate that is read from a byte string has to be checked against the order of the field it is claimed to lie in; a coefficient outside that range gives one value several encodings, which can lead to vulnerabilities such as signature forgery {{IEEE1363}}. {{point-deserialization-procedure}} makes this requirement normative for the procedures defined in this document.
 
-The serialization format in {{point-serialization}} leaves the choice between the two identity-element behaviors described in {{identity-point-handling}} to the calling protocol, and there is no default to fall back on. Treating the identity element as an unremarkable, always-valid deserialization result -- when the calling protocol does not actually expect it -- can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar ({{zero-scalar}}).
+The choice between the two identity-element behaviors described in {{identity-point-handling}} belongs to the calling protocol, because whether the identity element can legitimately appear is a property of the protocol rather than of the curve or the wire format. Treating the identity element as an unremarkable, always-valid deserialization result -- when the calling protocol does not actually expect it -- can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar ({{zero-scalar}}).
 
-Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem {{Cheon06}}. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ..., delta, then we find a secret K. By Cheon's algorithm the complexity of ECDLPwAI is O(sqrt((r-1)/delta) + sqrt(delta)) for a divisor delta of r-1, whereas the complexity of ECDLP is O(sqrt(r)), so for a well chosen delta the complexity of ECDLPwAI becomes dramatically smaller than that of ECDLP. Please refer to {{Cheon06}} for the details of Cheon's algorithm. The design of a cryptographic protocol based on the strong DH problem therefore has to take this attack into account. For example, in the case of Short Signatures, the attack can be prevented by carefully setting the maximum number of queries, which corresponds to the parameter delta.
+Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem {{Cheon06}}. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ..., delta, then we find a secret K. For a divisor delta of r - 1, Cheon's algorithm recovers K in O(log r * (sqrt(r / delta) + sqrt(delta))) group operations {{Cheon06}}, whereas solving ECDLP by a generic method takes O(sqrt(r)) group operations, so for a well chosen delta the work of ECDLPwAI becomes dramatically smaller than that of ECDLP. Please refer to {{Cheon06}} for the details of Cheon's algorithm. The design of a cryptographic protocol based on the strong DH problem therefore has to take this attack into account. For example, in the case of Short Signatures, the attack can be prevented by carefully setting the maximum number of queries, which corresponds to the parameter delta.
 
 
 # IANA Considerations  {#iana-considerations}
