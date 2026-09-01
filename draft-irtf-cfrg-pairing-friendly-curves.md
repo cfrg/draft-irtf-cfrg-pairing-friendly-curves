@@ -528,7 +528,7 @@ The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^8)), maps into
 psi(x', y') = (x' * xi^2, y' * xi^3)
 ~~~~~~~~~~
 
-where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per the tower defined in {{tower_bls48_581}}. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
+where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of the twist coefficient b' = -1 / w, per the tower defined in {{tower_bls48_581}}. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
 
 We then give the parameters for BLS48-581 as follows.
 
@@ -828,7 +828,7 @@ Every GF(p) coefficient recovered by this procedure MUST be an integer in the in
    - If s_string is not the all zeros string, return INVALID.
    - Otherwise (i.e., if s_string is the all zeros string), return the identity element of the group determined in step 2.
 
-   Otherwise, I_bit must be 0. Continue.
+   Otherwise, I_bit is 0. Continue.
 
 5. If C_bit is 0:
    - Let x_string be the first half of s_string.
@@ -848,7 +848,7 @@ Every GF(p) coefficient recovered by this procedure MUST be an integer in the in
 
    Let P = (x, y) and continue at step 8.
 
-   Otherwise, C_bit must be 1. Continue.
+   Otherwise, C_bit is 1. Continue.
 
 6. Let x_string be s_string.
 
@@ -927,7 +927,7 @@ This is a separate decision from the one above. Section 3.1 of {{RFC9591}} rejec
 
 # Security Considerations  {#security-considerations}
 
-The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here ({{BD18}}, {{GMT19}}, {{G20}}, {{KIK17}}) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; {{security-review-scope}} records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. {{APT26}} is an example of the last kind, accelerating the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a revised bit-level security estimate for the curves recommended here, and this document has not derived one either. Work published after this document is not covered, and has to be assessed separately.
+The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim and Barbulescu in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here ({{BD18}}, {{GMT19}}, {{G20}}, {{KIK17}}) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; {{security-review-scope}} records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. {{APT26}} is an example of the last kind, accelerating the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a revised bit-level security estimate for the curves recommended here, and this document has not derived one either. Work published after this document is not covered, and has to be assessed separately.
 
 BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level {{BD18}}. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used {{BD18}} {{GMT19}}.
 
@@ -1692,7 +1692,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
         <reference anchor="SG19" target="https://eprint.iacr.org/2018/193.pdf">
           <front>
             <title>A New Family of Pairing-Friendly elliptic curves</title>
-            <seriesInfo name="Cryptology ePrint Archive" value="Report 2019/193" />
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2018/193" />
             <author initials="M." surname="Scott">
               <organization />
             </author>
@@ -2084,7 +2084,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
 
 Before presenting the computation of the optimal ate pairing e(P, Q) satisfying the properties shown in {{pairing}}, we give the subfunctions used for the pairing computation.
 
-The following algorithm, Line_function, shows the computation of the line function. It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of G_T.
+The following algorithm, Line_function, shows the computation of the line function. It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).
 
 ~~~~~~~~~~
 if (Q_1 = Q_2) then
@@ -3043,6 +3043,8 @@ Identity on E: 73 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit
 
 Identity on E': 584 zero bytes with the leading byte set to 0xc0 when compressed, and 1168 zero bytes with the leading byte set to 0x40 when uncompressed.
 
+> Note: the BLS12-381 point values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
+
 ## Scalars  {#scalar-test-vectors}
 The values below are the boundary cases of {{scalar-serialization}}: the zero scalar, the smallest nonzero scalar, the largest scalar the procedure accepts, and the smallest value it rejects. The value kappa = 1 distinguishes the byte order, and kappa = r exercises the rejection of values that are not less than r.
 
@@ -3092,7 +3094,6 @@ kappa = r  (deserialization returns INVALID)
 2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e7
 41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
 ~~~~~~~~~~
-> Note: the BLS12-381 values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
 
 # Point Serialization for BN462  {#bn462-serialization-notes}
 
