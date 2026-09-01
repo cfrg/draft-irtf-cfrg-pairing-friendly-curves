@@ -267,7 +267,7 @@ Table of Contents
 
    This memo also specifies how the points and scalars that protocols
    exchange are serialized and deserialized.  That format does not
-   originate here: it comes from [ZCashRep] and is already relied upon
+   originate here: it comes from [ZcashRep] and is already relied upon
    by other specifications, which cite this document for it.  It is
    restated normatively in Section 5, together with what makes a
    deserialized value valid and which decisions are left to the calling
@@ -1126,7 +1126,7 @@ Table of Contents
 
    Section 5 defines a normative point serialization format for
    BLS48-581 (with test vectors in Appendix D), extending the format
-   defined by [ZCashRep] for BLS12-381 as specified in
+   defined by [ZcashRep] for BLS12-381 as specified in
    [I-D.ietf-cose-bls-key-representations].
 
 5.  Serialization and Validation
@@ -1138,7 +1138,7 @@ Table of Contents
    here are the objects that protocols transmit: points on E and on E',
    and scalars.  Elements of GF(p) and of GF(p^m) appear as coordinates
    of those points rather than as objects with encodings of their own.
-   The point format is based on the one originally defined by [ZCashRep]
+   The point format is based on the one originally defined by [ZcashRep]
    for BLS12-381 and is, in turn, based on the representation shown in
    [SEC1] with a small tweak to apply to GF(p^m).  It is already relied
    upon, directly or indirectly, by [I-D.irtf-cfrg-bbs-signatures] and
@@ -1160,7 +1160,7 @@ Table of Contents
    |            | against the group order                 | all three  |
    |            |                                         | curves     |
    +------------+-----------------------------------------+------------+
-   | BLS12-381  | [ZCashRep], which adapts the            | Restated   |
+   | BLS12-381  | [ZcashRep], which adapts the            | Restated   |
    | point      | representation of [SEC1] to GF(p^m)     | here as    |
    | encoding   |                                         | the        |
    |            |                                         | format in  |
@@ -1609,7 +1609,7 @@ Table of Contents
 
    This document specifies neither.  The format above is specified here
    because it is already widely used in applications, and because
-   specifications depend on it: it originates with [ZCashRep] and is
+   specifications depend on it: it originates with [ZcashRep] and is
    relied upon by [I-D.irtf-cfrg-bbs-signatures] and
    [I-D.ietf-cose-bls-key-representations].  For BN462 neither
    consideration holds: no specification examined requires a BN462 point
@@ -1636,7 +1636,7 @@ Table of Contents
 
    Both a compressed and an uncompressed form are defined.  The
    compressed form is RECOMMENDED for values that are transmitted: it is
-   the form [ZCashRep] places on the wire, and the form used by
+   the form [ZcashRep] places on the wire, and the form used by
    [I-D.irtf-cfrg-bbs-signatures],
    [I-D.ietf-cose-bls-key-representations] and
    [I-D.irtf-cfrg-bls-signature].  The uncompressed form is retained
@@ -2287,7 +2287,7 @@ Table of Contents
    [Zcash]    Zcash, "What are zk-SNARKs?",
               <https://z.cash/technology/zksnarks/>.
 
-   [ZCashRep] Hopwood, D-E., Bowe, S., Hornby, T., and N. Wilcox, "Zcash
+   [ZcashRep] Hopwood, D-E., Bowe, S., Hornby, T., and N. Wilcox, "Zcash
               Protocol Specification", Section 5.4.9.2, 2026,
               <https://zips.z.cash/protocol/protocol.pdf#blspairing>.
 
