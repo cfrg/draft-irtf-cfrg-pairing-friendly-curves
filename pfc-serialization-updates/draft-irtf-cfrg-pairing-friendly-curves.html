@@ -2291,7 +2291,7 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
       <h2 id="name-serialization-and-validatio">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-serialization-and-validatio" class="section-name selfRef">Serialization and Validation</a>
       </h2>
-<p id="section-5-1">This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by <span>[<a href="#ZcashRep" class="cite xref">ZcashRep</a>]</span> for BLS12-381 and is, in turn, based on the representation shown in <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> and <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span>; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in <a href="#bn462-applicability" class="auto internal xref">Section 5.5</a>.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. Elements of G_T, which lie in GF(p^k), are not encoded here either: this document defines no byte encoding for them. Should a protocol come to require one, a separate specification can define it. The point format is based on the one originally defined by <span>[<a href="#ZcashRep" class="cite xref">ZcashRep</a>]</span> for BLS12-381 and is, in turn, based on the representation shown in <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> and <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span>; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in <a href="#bn462-applicability" class="auto internal xref">Section 5.5</a>.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <table class="center" id="table-1">
         <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
@@ -2325,6 +2325,11 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
             <td class="text-left" rowspan="1" colspan="1">Not applicable</td>
             <td class="text-left" rowspan="1" colspan="1">Not specified here; see <a href="#bn462-applicability" class="auto internal xref">Section 5.5</a>
 </td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">G_T element encoding</td>
+            <td class="text-left" rowspan="1" colspan="1">Not applicable</td>
+            <td class="text-left" rowspan="1" colspan="1">Not specified here</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">Group membership and identity handling</td>
@@ -3176,8 +3181,12 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
 <span class="refAuthor">Denis, F.</span>, <span class="refTitle">"zig-pairings: Pairing-friendly curves in pure Zig (BLS12-381, BN462)"</span>, <time datetime="2026" class="refDate">2026</time>, <span>&lt;<a href="https://github.com/jedisct1/zig-pairings">https://github.com/jedisct1/zig-pairings</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="zkcrypto">[zkcrypto]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">zkcrypto</span>, <span class="refTitle">"zkcrypto - Pairing-friendly elliptic curve library"</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://github.com/zkcrypto/pairing">https://github.com/zkcrypto/pairing</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="zkcrypto-bls12-381">[zkcrypto-bls12-381]</dt>
+      <dd>
+<span class="refAuthor">zkcrypto</span>, <span class="refTitle">"bls12_381 - Implementation of the BLS12-381 pairing-friendly elliptic curve group"</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://github.com/zkcrypto/bls12_381">https://github.com/zkcrypto/bls12_381</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -4651,7 +4660,7 @@ kappa = r  (deserialization returns INVALID)
 </div>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="appendix-D.3-8.1">
-            <p id="appendix-D.3-8.1.1">Note: the BLS12-381 compressed values above are independently confirmed against multiple third-party implementations (e.g. zkcrypto/bls12_381, arkworks). The uncompressed values are derived from the same coordinates by the procedure of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span> to the BP' coordinates in <a href="#secure_params" class="auto internal xref">Section 4</a>; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.<a href="#appendix-D.3-8.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.3-8.1.1">Note: the BLS12-381 values above are the second entry of each of the valid test vector files distributed with <span>[<a href="#zkcrypto-bls12-381" class="cite xref">zkcrypto-bls12-381</a>]</span>, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span> to the BP' coordinates in <a href="#secure_params" class="auto internal xref">Section 4</a>; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.<a href="#appendix-D.3-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

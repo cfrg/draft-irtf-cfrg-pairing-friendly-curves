@@ -1142,8 +1142,11 @@ Table of Contents
    here are the objects that protocols transmit: points on E and on E',
    and scalars.  Elements of GF(p) and of GF(p^m) appear as coordinates
    of those points rather than as objects with encodings of their own.
-   The point format is based on the one originally defined by [ZcashRep]
-   for BLS12-381 and is, in turn, based on the representation shown in
+   Elements of G_T, which lie in GF(p^k), are not encoded here either:
+   this document defines no byte encoding for them.  Should a protocol
+   come to require one, a separate specification can define it.  The
+   point format is based on the one originally defined by [ZcashRep] for
+   BLS12-381 and is, in turn, based on the representation shown in
    [SEC1] with a small tweak to apply to GF(p^m).  It is already relied
    upon, directly or indirectly, by [I-D.irtf-cfrg-bbs-signatures] and
    [I-D.ietf-cose-bls-key-representations]; the latter extends it to
@@ -1181,6 +1184,10 @@ Table of Contents
    | encoding   |                                         | here; see  |
    |            |                                         | Section    |
    |            |                                         | 5.5        |
+   +------------+-----------------------------------------+------------+
+   | G_T        | Not applicable                          | Not        |
+   | element    |                                         | specified  |
+   | encoding   |                                         | here       |
    +------------+-----------------------------------------+------------+
    | Group      | This document                           | Specified  |
    | membership |                                         | here       |
@@ -2305,6 +2312,11 @@ Table of Contents
    [zkcrypto] zkcrypto, "zkcrypto - Pairing-friendly elliptic curve
               library", 2017, <https://github.com/zkcrypto/pairing>.
 
+   [zkcrypto-bls12-381]
+              zkcrypto, "bls12_381 - Implementation of the BLS12-381
+              pairing-friendly elliptic curve group", 2019,
+              <https://github.com/zkcrypto/bls12_381>.
+
 Appendix A.  Computing the Optimal Ate Pairing
 
    Before presenting the computation of the optimal ate pairing e(P, Q)
@@ -3165,16 +3177,16 @@ D.3.  Scalars
    2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e7
    41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
 
-      Note: the BLS12-381 compressed values above are independently
-      confirmed against multiple third-party implementations (e.g.
-      zkcrypto/bls12_381, arkworks).  The uncompressed values are
-      derived from the same coordinates by the procedure of Section 5.3,
-      and have been checked to deserialize back to those coordinates.
-      The BLS48-581 values are newly computed for this document by
-      applying the sign_GF_p^8 function of
-      [I-D.ietf-cose-bls-key-representations] to the BP' coordinates in
-      Section 4; independent cross-validation from COSE/BBS implementers
-      is welcome ahead of RGLC.
+      Note: the BLS12-381 values above are the second entry of each of
+      the valid test vector files distributed with [zkcrypto-bls12-381],
+      whose first entry is the identity; they have been compared byte
+      for byte.  The uncompressed values are derived from the same
+      coordinates by the procedure of Section 5.3, and have been checked
+      to deserialize back to those coordinates.  The BLS48-581 values
+      are newly computed for this document by applying the sign_GF_p^8
+      function of [I-D.ietf-cose-bls-key-representations] to the BP'
+      coordinates in Section 4; independent cross-validation from COSE/
+      BBS implementers is welcome ahead of RGLC.
 
 Appendix E.  Point Serialization for BN462
 
