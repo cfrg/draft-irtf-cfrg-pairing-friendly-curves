@@ -520,7 +520,7 @@ GF(p^24) = GF(p^8)[z] / (z^3 + w)
 GF(p^48)= GF(p^24)[s] / (s^2 + z).
 ~~~~~~~~~~
 
-The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.
+The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type. Concretely, in the tower above: w^2 = -v gives -1 / w = w / v, and v^2 = -(u + 1) gives w / v = w * v / v^2 = -w * v / (u + 1); since u^2 = -1, 1 / (u + 1) = (1 - u) / 2, so -1 / w = ((u - 1) / 2) * v * w.
 
 The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^8)), maps into E(GF(p^48)) and is given by
 
