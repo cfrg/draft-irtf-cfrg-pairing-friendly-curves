@@ -709,7 +709,7 @@ b':
 
 # Serialization and Validation  {#point-serialization}
 
-This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZcashRep}} for BLS12-381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-applicability}}.
+This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. Elements of G_T, which lie in GF(p^k), are not encoded here either: this document defines no byte encoding for them. Should a protocol come to require one, a separate specification can define it. The point format is based on the one originally defined by {{ZcashRep}} for BLS12-381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-applicability}}.
 
 Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.
 
@@ -719,6 +719,7 @@ Not all of what follows originates with this document. Where an existing format 
 | BLS12-381 point encoding | {{ZcashRep}}, which adapts the representation of {{SEC1}} to GF(p^m) | Restated here as the format in use |
 | BLS48-581 point encoding | The same format, extended to GF(p^8) in {{I-D.ietf-cose-bls-key-representations}} | That extension is adopted here |
 | BN462 point encoding | Not applicable | Not specified here; see {{bn462-applicability}} |
+| G_T element encoding | Not applicable | Not specified here |
 | Group membership and identity handling | This document | Specified here |
 
 At a high level, the point serialization format is defined as follows:
@@ -1542,6 +1543,15 @@ Tsunekazu Saito was a co-author of this document from its first version through 
               <organization>zkcrypto</organization>
             </author>
             <date year="2017" />
+          </front>
+        </reference>
+        <reference anchor="zkcrypto-bls12-381" target="https://github.com/zkcrypto/bls12_381">
+          <front>
+            <title>bls12_381 - Implementation of the BLS12-381 pairing-friendly elliptic curve group</title>
+            <author>
+              <organization>zkcrypto</organization>
+            </author>
+            <date year="2019" />
           </front>
         </reference>
         <reference anchor="CIRCL" target="https://github.com/cloudflare/circl">
@@ -3082,7 +3092,7 @@ kappa = r  (deserialization returns INVALID)
 2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e7
 41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
 ~~~~~~~~~~
-> Note: the BLS12-381 compressed values above are independently confirmed against multiple third-party implementations (e.g. zkcrypto/bls12_381, arkworks). The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
+> Note: the BLS12-381 values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
 
 # Point Serialization for BN462  {#bn462-serialization-notes}
 
