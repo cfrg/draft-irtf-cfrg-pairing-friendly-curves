@@ -75,7 +75,7 @@ In this memo, we list the security levels of certain pairing-friendly curves, an
 
 As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. This memo shows their specific test vectors.
 
-This memo also specifies how the points and scalars that protocols exchange are serialized and deserialized. That format does not originate here: it comes from {{ZCashRep}} and is already relied upon by other specifications, which cite this document for it. It is restated normatively in {{point-serialization}}, together with what makes a deserialized value valid and which decisions are left to the calling protocol. Point serialization is given for BLS12-381 and BLS48-581; scalar serialization applies to all three curves.
+This memo also specifies how the points and scalars that protocols exchange are serialized and deserialized. That format does not originate here: it comes from {{ZcashRep}} and is already relied upon by other specifications, which cite this document for it. It is restated normatively in {{point-serialization}}, together with what makes a deserialized value valid and which decisions are left to the calling protocol. Point serialization is given for BLS12-381 and BLS48-581; scalar serialization applies to all three curves.
 
 ## Requirements Terminology  {#requirements-terminology}
 
@@ -705,18 +705,18 @@ h':
 b':
 :   -1 / w
 
-{{point-serialization}} defines a normative point serialization format for BLS48-581 (with test vectors in {{point-serialization-test-vectors}}), extending the format defined by {{ZCashRep}} for BLS12-381 as specified in {{I-D.ietf-cose-bls-key-representations}}.
+{{point-serialization}} defines a normative point serialization format for BLS48-581 (with test vectors in {{point-serialization-test-vectors}}), extending the format defined by {{ZcashRep}} for BLS12-381 as specified in {{I-D.ietf-cose-bls-key-representations}}.
 
 # Serialization and Validation  {#point-serialization}
 
-This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZCashRep}} for BLS12-381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-applicability}}.
+This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. The point format is based on the one originally defined by {{ZcashRep}} for BLS12-381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-applicability}}.
 
 Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.
 
 | What | Where it comes from | How this document treats it |
 |---|---|---|
 | Scalar encoding | Existing practice: I2OSP and OS2IP {{RFC8017}}, together with a comparison against the group order | Specified here, for all three curves |
-| BLS12-381 point encoding | {{ZCashRep}}, which adapts the representation of {{SEC1}} to GF(p^m) | Restated here as the format in use |
+| BLS12-381 point encoding | {{ZcashRep}}, which adapts the representation of {{SEC1}} to GF(p^m) | Restated here as the format in use |
 | BLS48-581 point encoding | The same format, extended to GF(p^8) in {{I-D.ietf-cose-bls-key-representations}} | That extension is adopted here |
 | BN462 point encoding | Not applicable | Not specified here; see {{bn462-applicability}} |
 | Group membership and identity handling | This document | Specified here |
@@ -891,7 +891,7 @@ This document does not specify a point encoding for BN462. Scalar serialization,
 
 The coordinate encoding of {{point-serialization-procedure}} (coordinates as fixed-length big-endian integers, with the coefficients of an element of GF(p^m) in decreasing index order) carries over to BN462 unchanged. What does not fit is the placement of the metadata bits. BN462 has a 462-bit characteristic p, so its canonical GF(p) representation occupies n = ceil(462 / 8) = 58 bytes, that is 464 bits. This leaves 2 unused bits in the leading byte of a serialized coordinate, one short of the three (C_bit, I_bit, S_bit) that the scheme above places there. {{bn462-serialization-notes}} describes two ways of accommodating that: carrying the metadata in a byte of its own, following the general pattern of {{SEC1}}, which leaves the rest of the format unchanged; or restricting the format to uncompressed points, which need only C_bit and I_bit and therefore fit in the two bits available.
 
-This document specifies neither. The format above is specified here because it is already widely used in applications, and because specifications depend on it: it originates with {{ZCashRep}} and is relied upon by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. For BN462 neither consideration holds: no specification examined requires a BN462 point encoding, and the implementations that do emit BN462 points have not converged on one of the variants above. Choosing among them would therefore be encoding design rather than the recording of established practice, and this document restates an encoding only where practice has already settled on one.
+This document specifies neither. The format above is specified here because it is already widely used in applications, and because specifications depend on it: it originates with {{ZcashRep}} and is relied upon by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. For BN462 neither consideration holds: no specification examined requires a BN462 point encoding, and the implementations that do emit BN462 points have not converged on one of the variants above. Choosing among them would therefore be encoding design rather than the recording of established practice, and this document restates an encoding only where practice has already settled on one.
 
 Implementations that nevertheless need to exchange BN462 points may find {{bn462-serialization-notes}} useful. It records, informatively, the encodings that existing implementations use and the alternatives that have been considered. It defines no format.
 
@@ -901,7 +901,7 @@ The procedures above leave three decisions to the protocol that uses them. This 
 
 ### Accepted Point Form  {#accepted-point-form}
 
-Both a compressed and an uncompressed form are defined. The compressed form is RECOMMENDED for values that are transmitted: it is the form {{ZCashRep}} places on the wire, and the form used by {{I-D.irtf-cfrg-bbs-signatures}}, {{I-D.ietf-cose-bls-key-representations}} and {{I-D.irtf-cfrg-bls-signature}}. The uncompressed form is retained because it remains in use for stored values, such as verification keys that are validated once, where recovering y from x on every use is not worth the saved space.
+Both a compressed and an uncompressed form are defined. The compressed form is RECOMMENDED for values that are transmitted: it is the form {{ZcashRep}} places on the wire, and the form used by {{I-D.irtf-cfrg-bbs-signatures}}, {{I-D.ietf-cose-bls-key-representations}} and {{I-D.irtf-cfrg-bls-signature}}. The uncompressed form is retained because it remains in use for stored values, such as verification keys that are validated once, where recovering y from x on every use is not worth the saved space.
 
 A protocol SHOULD state which forms it accepts. Accepting both means that one point has two encodings, which matters wherever an encoded point is hashed or compared as a byte string.
 
@@ -1343,7 +1343,7 @@ The authors would like to appreciate a lot of authors including Akihiro Kato for
           </front>
         </reference>
 
-        <reference anchor="ZCashRep" target="https://zips.z.cash/protocol/protocol.pdf#blspairing">
+        <reference anchor="ZcashRep" target="https://zips.z.cash/protocol/protocol.pdf#blspairing">
           <front>
             <title>Zcash Protocol Specification</title>
             <author initials="D-E." surname="Hopwood">
