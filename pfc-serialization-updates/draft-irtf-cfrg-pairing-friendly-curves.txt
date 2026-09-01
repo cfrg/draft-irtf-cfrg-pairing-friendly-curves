@@ -950,10 +950,14 @@ Table of Contents
 
 4.3.  For 256-bit Security
 
-   As shown in the survey in Section 4.1, there are three candidates of
-   pairing-friendly curves for 256-bit security.  According to our
-   selection policy, we select BLS48-581, as it is the most widely
-   adopted by cryptographic libraries.
+   As shown in the survey in Section 4.1, there are three candidate
+   pairing-friendly curves for 256-bit security: BLS48-556, BLS48-575
+   and BLS48-581.  None of them is widely used in the sense of the
+   policy given in Section 4, so the preference for margin governs.  As
+   noted in Section 3.2, [KIK17] puts the minimum size of p^k for BLS48
+   curves at 27,410 bits, which is 572 bits of p.  BLS48-556 does not
+   reach that size; BLS48-575 and BLS48-581 both exceed it, and
+   BLS48-581 leaves the larger margin.  We therefore select BLS48-581.
 
    The selected BLS48 curve is shown in [KIK17] and it is defined by the
    parameter
@@ -1415,8 +1419,8 @@ Table of Contents
    operates, as described in Section 2.2.  Section 5.3 of
    [I-D.irtf-cfrg-bls-signature] requires conforming implementations to
    perform the subgroup check for the same reason, and Section 6.2 of
-   [I-D.irtf-cfrg-bbs-signatures] describes the combined operation as
-   the one that libraries provide.
+   [I-D.irtf-cfrg-bbs-signatures] notes that a library may combine the
+   two operations.
 
    The procedure below is stated once, for a string s_string and the
    parameters n and m of Section 5.1.  It uses the OS2IP function
