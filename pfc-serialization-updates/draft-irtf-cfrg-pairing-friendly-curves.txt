@@ -984,11 +984,11 @@ Table of Contents
 
    psi(x', y') = (x' * xi^2, y' * xi^3)
 
-   where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist
-   coefficient), per the tower defined in Section 4.3, Paragraph 5.
-   Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in
-   GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 =
-   u^6 * s^6 = (-1) * w = -w.
+   where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of
+   the twist coefficient b' = -1 / w, per the tower defined in
+   Section 4.3, Paragraph 5.  Concretely: u in GF(p^2) satisfies u^2 =
+   -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so
+   s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
 
    We then give the parameters for BLS48-581 as follows.
 
@@ -1483,7 +1483,7 @@ Table of Contents
        *  Otherwise (i.e., if s_string is the all zeros string), return
           the identity element of the group determined in step 2.
 
-       Otherwise, I_bit must be 0.  Continue.
+       Otherwise, I_bit is 0.  Continue.
 
    5.  If C_bit is 0:
 
@@ -1516,7 +1516,7 @@ Table of Contents
 
        Let P = (x, y) and continue at step 8.
 
-       Otherwise, C_bit must be 1.  Continue.
+       Otherwise, C_bit is 1.  Continue.
 
    6.  Let x_string be s_string.
 
@@ -1707,7 +1707,7 @@ Table of Contents
 6.  Security Considerations
 
    The recommended pairing-friendly curves are selected by considering
-   the exTNFS proposed by Kim et al. in 2016 [KB16] and they are
+   the exTNFS proposed by Kim and Barbulescu in 2016 [KB16] and they are
    categorized in each security level in accordance with [BD18].
    Implementers who will newly develop pairing-based cryptography
    applications SHOULD use the recommended parameters.  The estimates
@@ -2279,7 +2279,7 @@ Table of Contents
 
    [SG19]     Scott, M. and A. Guillevic, "A New Family of Pairing-
               Friendly elliptic curves", Cryptology ePrint
-              Archive Report 2019/193, 2019,
+              Archive Report 2018/193, 2019,
               <https://eprint.iacr.org/2018/193.pdf>.
 
    [TEPLA]    University of Tsukuba, "TEPLA: University of Tsukuba
@@ -2325,7 +2325,7 @@ Appendix A.  Computing the Optimal Ate Pairing
 
    The following algorithm, Line_function, shows the computation of the
    line function.  It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2,
-   and P = (x, y) in G_1 as input, and outputs an element of G_T.
+   and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).
 
    if (Q_1 = Q_2) then
        l := (3 * x_1^2) / (2 * y_1);
@@ -3128,6 +3128,18 @@ D.2.  BLS48-581 Points
    compressed, and 1168 zero bytes with the leading byte set to 0x40
    when uncompressed.
 
+      Note: the BLS12-381 point values above are the second entry of
+      each of the valid test vector files distributed with
+      [zkcrypto-bls12-381], whose first entry is the identity; they have
+      been compared byte for byte.  The uncompressed values are derived
+      from the same coordinates by the procedure of Section 5.3, and
+      have been checked to deserialize back to those coordinates.  The
+      BLS48-581 values are newly computed for this document by applying
+      the sign_GF_p^8 function of
+      [I-D.ietf-cose-bls-key-representations] to the BP' coordinates in
+      Section 4; independent cross-validation from COSE/BBS implementers
+      is welcome ahead of RGLC.
+
 D.3.  Scalars
 
    The values below are the boundary cases of Section 5.2: the zero
@@ -3176,17 +3188,6 @@ D.3.  Scalars
    kappa = r  (deserialization returns INVALID)
    2386f8a925e2885e233a9ccc1615c0d6c635387a3f0b3cbe003fad6bc972c2e6e7
    41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
-
-      Note: the BLS12-381 values above are the second entry of each of
-      the valid test vector files distributed with [zkcrypto-bls12-381],
-      whose first entry is the identity; they have been compared byte
-      for byte.  The uncompressed values are derived from the same
-      coordinates by the procedure of Section 5.3, and have been checked
-      to deserialize back to those coordinates.  The BLS48-581 values
-      are newly computed for this document by applying the sign_GF_p^8
-      function of [I-D.ietf-cose-bls-key-representations] to the BP'
-      coordinates in Section 4; independent cross-validation from COSE/
-      BBS implementers is welcome ahead of RGLC.
 
 Appendix E.  Point Serialization for BN462
 

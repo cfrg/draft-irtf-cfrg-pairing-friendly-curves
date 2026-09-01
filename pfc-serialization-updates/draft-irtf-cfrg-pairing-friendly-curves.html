@@ -2009,7 +2009,7 @@ GF(p^48)= GF(p^24)[s] / (s^2 + z).
 psi(x', y') = (x' * xi^2, y' * xi^3)
 </pre><a href="#section-4.3-9" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3-10">where xi = u * s in GF(p^48) satisfies xi^6 = -w (the twist coefficient), per the tower defined in <a href="#tower_bls48_581" class="auto internal xref">Section 4.3, Paragraph 5</a>. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
+<p id="section-4.3-10">where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of the twist coefficient b' = -1 / w, per the tower defined in <a href="#tower_bls48_581" class="auto internal xref">Section 4.3, Paragraph 5</a>. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
 <p id="section-4.3-11">We then give the parameters for BLS48-581 as follows.<a href="#section-4.3-11" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.3-12.1">
@@ -2584,7 +2584,7 @@ If C_bit is 0:<a href="#section-5.4-6.2.3" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-5.4-6.4.3">
-Otherwise, I_bit must be 0. Continue.<a href="#section-5.4-6.4.3" class="pilcrow">¶</a></p>
+Otherwise, I_bit is 0. Continue.<a href="#section-5.4-6.4.3" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.4-6.5">
             <p id="section-5.4-6.5.1">If C_bit is 0:<a href="#section-5.4-6.5.1" class="pilcrow">¶</a></p>
@@ -2627,7 +2627,7 @@ Otherwise, I_bit must be 0. Continue.<a href="#section-5.4-6.4.3" class="pilcrow
 <p id="section-5.4-6.5.3">
 Let P = (x, y) and continue at step 8.<a href="#section-5.4-6.5.3" class="pilcrow">¶</a></p>
 <p id="section-5.4-6.5.4">
-Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶</a></p>
+Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.4-6.6">
             <p id="section-5.4-6.6.1">Let x_string be s_string.<a href="#section-5.4-6.6.1" class="pilcrow">¶</a></p>
@@ -2768,7 +2768,7 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> and they are categorized in each security level in accordance with <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here (<span>[<a href="#BD18" class="cite xref">BD18</a>]</span>, <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, <span>[<a href="#G20" class="cite xref">G20</a>]</span>, <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; <a href="#security-review-scope" class="auto internal xref">Appendix G</a> records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. <span>[<a href="#APT26" class="cite xref">APT26</a>]</span> is an example of the last kind, accelerating the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a revised bit-level security estimate for the curves recommended here, and this document has not derived one either. Work published after this document is not covered, and has to be assessed separately.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim and Barbulescu in 2016 <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> and they are categorized in each security level in accordance with <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here (<span>[<a href="#BD18" class="cite xref">BD18</a>]</span>, <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, <span>[<a href="#G20" class="cite xref">G20</a>]</span>, <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; <a href="#security-review-scope" class="auto internal xref">Appendix G</a> records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. <span>[<a href="#APT26" class="cite xref">APT26</a>]</span> is an example of the last kind, accelerating the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a revised bit-level security estimate for the curves recommended here, and this document has not derived one either. Work published after this document is not covered, and has to be assessed separately.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">BN254 is used in most of the existing implementations as shown in <a href="#impl" class="auto internal xref">Section 4.1</a> and <a href="#adoption_status_100bit_security" class="auto internal xref">Appendix F</a>, however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">The following points also apply to implementations of pairing-based cryptographic applications that use the recommended curves. Regarding the use case and applications of pairing-based cryptographic applications, please refer to <a href="#applications-of-pairing-based-cryptography" class="auto internal xref">Section 1.2</a>.<a href="#section-6-4" class="pilcrow">¶</a></p>
@@ -3154,7 +3154,7 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
 <dd class="break"></dd>
 <dt id="SG19">[SG19]</dt>
         <dd>
-<span class="refAuthor">Scott, M.</span> and <span class="refAuthor">A. Guillevic</span>, <span class="refTitle">"A New Family of Pairing-Friendly elliptic curves"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2019/193</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2018/193.pdf">https://eprint.iacr.org/2018/193.pdf</a>&gt;</span>. </dd>
+<span class="refAuthor">Scott, M.</span> and <span class="refAuthor">A. Guillevic</span>, <span class="refTitle">"A New Family of Pairing-Friendly elliptic curves"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2018/193</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2018/193.pdf">https://eprint.iacr.org/2018/193.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TEPLA">[TEPLA]</dt>
         <dd>
@@ -3197,7 +3197,7 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-computing-the-optimal-ate-p" class="section-name selfRef">Computing the Optimal Ate Pairing</a>
       </h2>
 <p id="appendix-A-1">Before presenting the computation of the optimal ate pairing e(P, Q) satisfying the properties shown in <a href="#pairing" class="auto internal xref">Section 2.2</a>, we give the subfunctions used for the pairing computation.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2">The following algorithm, Line_function, shows the computation of the line function. It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of G_T.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">The following algorithm, Line_function, shows the computation of the line function. It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A-3">
 <pre>
 if (Q_1 = Q_2) then
@@ -4603,6 +4603,11 @@ f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d65
 </div>
 <p id="appendix-D.2-9">Identity on E: 73 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit = 1) when compressed, and 146 zero bytes with the leading byte set to 0x40 (I_bit = 1) when uncompressed.<a href="#appendix-D.2-9" class="pilcrow">¶</a></p>
 <p id="appendix-D.2-10">Identity on E': 584 zero bytes with the leading byte set to 0xc0 when compressed, and 1168 zero bytes with the leading byte set to 0x40 when uncompressed.<a href="#appendix-D.2-10" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="appendix-D.2-11.1">
+            <p id="appendix-D.2-11.1.1">Note: the BLS12-381 point values above are the second entry of each of the valid test vector files distributed with <span>[<a href="#zkcrypto-bls12-381" class="cite xref">zkcrypto-bls12-381</a>]</span>, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span> to the BP' coordinates in <a href="#secure_params" class="auto internal xref">Section 4</a>; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.<a href="#appendix-D.2-11.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="scalar-test-vectors">
@@ -4658,11 +4663,6 @@ kappa = r  (deserialization returns INVALID)
 41969d34c4c92016a85c7cd0562303c4ccbe599467c24da118a5fe6fcd671c01
 </pre><a href="#appendix-D.3-7" class="pilcrow">¶</a>
 </div>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="appendix-D.3-8.1">
-            <p id="appendix-D.3-8.1.1">Note: the BLS12-381 values above are the second entry of each of the valid test vector files distributed with <span>[<a href="#zkcrypto-bls12-381" class="cite xref">zkcrypto-bls12-381</a>]</span>, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span> to the BP' coordinates in <a href="#secure_params" class="auto internal xref">Section 4</a>; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.<a href="#appendix-D.3-8.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
 </section>
 </div>
 </section>
