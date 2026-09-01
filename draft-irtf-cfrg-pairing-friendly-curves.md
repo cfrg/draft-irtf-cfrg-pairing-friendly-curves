@@ -499,7 +499,7 @@ b':
 
 ## For 256-bit Security  {#for-256-bits-of-security}
 
-As shown in the survey in {{impl}}, there are three candidates of pairing-friendly curves for 256-bit security. According to our selection policy, we select BLS48-581, as it is the most widely adopted by cryptographic libraries.
+As shown in the survey in {{impl}}, there are three candidate pairing-friendly curves for 256-bit security: BLS48-556, BLS48-575 and BLS48-581. None of them is widely used in the sense of the policy given in {{secure_params}}, so the preference for margin governs. As noted in {{impact}}, {{KIK17}} puts the minimum size of p^k for BLS48 curves at 27,410 bits, which is 572 bits of p. BLS48-556 does not reach that size; BLS48-575 and BLS48-581 both exceed it, and BLS48-581 leaves the larger margin. We therefore select BLS48-581.
 
 The selected BLS48 curve is shown in {{KIK17}} and it is defined by the parameter
 
@@ -801,7 +801,7 @@ This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_
 
 This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G'_2 respectively, or INVALID. A string that deserializes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.
 
-This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and elements of G_1 and of G'_2 are what the specifications citing this document exchange; psi carries an element of G'_2 to the corresponding element of G_2, on which the pairing operates, as described in {{pairing}}. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires conforming implementations to perform the subgroup check for the same reason, and Section 6.2 of {{I-D.irtf-cfrg-bbs-signatures}} describes the combined operation as the one that libraries provide.
+This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and elements of G_1 and of G'_2 are what the specifications citing this document exchange; psi carries an element of G'_2 to the corresponding element of G_2, on which the pairing operates, as described in {{pairing}}. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires conforming implementations to perform the subgroup check for the same reason, and Section 6.2 of {{I-D.irtf-cfrg-bbs-signatures}} notes that a library may combine the two operations.
 
 The procedure below is stated once, for a string s_string and the parameters n and m of {{point-serialization-params}}. It uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{point-serialization-params}}.
 
