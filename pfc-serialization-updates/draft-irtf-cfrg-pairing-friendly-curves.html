@@ -1043,11 +1043,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Pairing-Friendly Curves</td>
-<td class="right">August 2026</td>
+<td class="right">September 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sakemi, et al.</td>
-<td class="center">Expires 4 March 2027</td>
+<td class="center">Expires 5 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1060,12 @@ svg {
 <dd class="internet-draft">draft-irtf-cfrg-pairing-friendly-curves-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-08-31" class="published">31 August 2026</time>
+<time datetime="2026-09-01" class="published">1 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-04">4 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-05">5 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1345,7 +1345,10 @@ svg {
             <p id="section-toc.1-1.15.1"><a href="#appendix-F" class="auto internal xref">Appendix F</a>.  <a href="#name-adoption-status-of-pairing-f" class="internal xref">Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#appendix-G" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.16.1"><a href="#appendix-G" class="auto internal xref">Appendix G</a>.  <a href="#name-scope-of-the-security-estim" class="internal xref">Scope of the Security Estimate Review</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
+            <p id="section-toc.1-1.17.1"><a href="#appendix-H" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1439,7 +1442,7 @@ G_2 = E(GF(p^k))[r] intersect ker(pi - [p]),
 </pre><a href="#section-2.2-3" class="pilcrow">¶</a>
 </div>
 <p id="section-2.2-4">where ker(pi - [a]) denotes the set of points T with pi(T) = [a]T. For the curves considered in this document, both G_1 and G_2 have order r. G_2 is identified by the eigenvalue p, and not merely as an order r subgroup of E(GF(p^k)): that weaker description is satisfied by G_1 as well, and the pairing computed in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> is degenerate when both of its arguments are taken from G_1.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
-<p id="section-2.2-5">Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If there is an isomorphism psi from E'(GF(p^k)) to E(GF(p^k)), then E' is called the twist of E, and psi is given for each curve in <a href="#secure_params" class="auto internal xref">Section 4</a>. It is more efficient to hold elements of G_2 as points of E'(GF(p^(k/d))), whose coordinates lie in a smaller field. Write G'_2 for the preimage of G_2 under psi, that is, the set of points Q of E'(GF(p^(k/d))) with psi(Q) in G_2. Where a point of G_2 is written with coordinates in this document, as in <a href="#secure_params" class="auto internal xref">Section 4</a> and in <a href="#point-serialization" class="auto internal xref">Section 5</a>, it is the corresponding point of G'_2 that is written; psi carries it back to G_2 when the pairing is evaluated. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If there is an isomorphism psi from E'(GF(p^k)) to E(GF(p^k)), then E' is called the twist of E. It is more efficient to hold elements of G_2 as points of E'(GF(p^(k/d))), whose coordinates lie in a smaller field. Write G'_2 for the preimage of G_2 under psi, that is, the set of points Q of E'(GF(p^(k/d))) with psi(Q) in G_2. For the curves in this document, G_2 lies in the image of E'(GF(p^(k/d))) under psi, which is what makes that representation possible; since psi is injective, G'_2 is a subgroup of order r, and psi restricted to G'_2 is an isomorphism onto G_2. The formula for psi is given for each curve in <a href="#secure_params" class="auto internal xref">Section 4</a>. What is given there is the restriction of psi to E'(GF(p^(k/d))), which is an injective homomorphism into E(GF(p^k)) and not an isomorphism, since E'(GF(p^(k/d))) and E(GF(p^k)) differ in size. The formula is the same in either case. Where a point of G_2 is written with coordinates in this document, as in <a href="#secure_params" class="auto internal xref">Section 4</a> and in <a href="#point-serialization" class="auto internal xref">Section 5</a>, it is the corresponding point of G'_2 that is written; psi carries it back to G_2 when the pairing is evaluated. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <p id="section-2.2-6">A pairing is defined as a bilinear map e: (G_1, G_2) -&gt; G_T satisfying the following properties:<a href="#section-2.2-6" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-2.2-7">
 <li id="section-2.2-7.1">
@@ -1546,7 +1549,7 @@ r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
 <p id="section-2.3-4">for an integer t.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <p id="section-2.3-5">The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (GF(p))^* of order (p - 1).<a href="#section-2.3-5" class="pilcrow">¶</a></p>
 <p id="section-2.3-6">In the case of BN curves, we can use twists of the degree 6. If nu is an element that is neither a square nor a cube in an extension field GF(p^2), the twist E' of E is defined over an extension field GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / nu or b' = b * nu. BN curves are called D-type if b' = b / nu, and M-type if b' = b * nu. The embedding degree k is 12.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
-<p id="section-2.3-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as a subgroup of E'(GF(p^2)), and G_T as an order r subgroup of the multiplicative group (GF(p^12))^*.<a href="#section-2.3-7" class="pilcrow">¶</a></p>
+<p id="section-2.3-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as defined in <a href="#pairing" class="auto internal xref">Section 2.2</a> and represented by the subgroup G'_2 of E'(GF(p^2)), and G_T as an order r subgroup of the multiplicative group (GF(p^12))^*.<a href="#section-2.3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="BLSdef">
@@ -1569,7 +1572,7 @@ BLS48:
 </pre><a href="#section-2.4-5" class="pilcrow">¶</a>
 </div>
 <p id="section-2.4-6">for a well chosen integer t where t must be 1 (mod 3).<a href="#section-2.4-6" class="pilcrow">¶</a></p>
-<p id="section-2.4-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as an order r subgroup of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of the multiplicative group (GF(p^12))^* for BLS12 and of the multiplicative group (GF(p^48))^* for BLS48.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
+<p id="section-2.4-7">A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as defined in <a href="#pairing" class="auto internal xref">Section 2.2</a> and represented by the subgroup G'_2 of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of the multiplicative group (GF(p^12))^* for BLS12 and of the multiplicative group (GF(p^48))^* for BLS48.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1695,7 +1698,7 @@ GF(p^12) = GF(p^6)[w] / (w^2 - v).
 </pre><a href="#section-4.2.1-6" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.1-7">Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4(u + 1). BLS12-381 is categorized as M-type.<a href="#section-4.2.1-7" class="pilcrow">¶</a></p>
-<p id="section-4.2.1-8">The untwist isomorphism psi: E'(GF(p^2)) -&gt; E(GF(p^12)) is given by<a href="#section-4.2.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-8">The untwist isomorphism psi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, restricted to E'(GF(p^2)), maps into E(GF(p^12)) and is given by<a href="#section-4.2.1-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.2.1-9">
 <pre>
 psi(x', y') = (x' / w^2, y' / w^3)
@@ -1709,7 +1712,7 @@ psi(x', y') = (x' / w^2, y' / w^3)
               <p id="section-4.2.1-13.1.1">G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1<a href="#section-4.2.1-13.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.2.1-13.2">
-              <p id="section-4.2.1-13.2.1">G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.1-13.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.1-13.2.1">G'_2 is the r-order subgroup of E'(GF(p^2)) corresponding to G_2 under psi - BP' = (x',y') : a 'base point', i.e., a generator of G'_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.1-13.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <span class="break"></span><dl class="dlParallel" id="section-4.2.1-14">
@@ -1845,7 +1848,7 @@ GF(p^12) = GF(p^6)[w] / (w^2 - v).
 </pre><a href="#section-4.2.2-5" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.2-6">Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462-bit length. BN462 is categorized as D-type.<a href="#section-4.2.2-6" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-7">The untwist isomorphism psi: E'(GF(p^2)) -&gt; E(GF(p^12)) is given by<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-7">The untwist isomorphism psi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, restricted to E'(GF(p^2)), maps into E(GF(p^12)) and is given by<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.2.2-8">
 <pre>
 psi(x', y') = (x' * w^2, y' * w^3)
@@ -1860,7 +1863,7 @@ psi(x', y') = (x' * w^2, y' * w^3)
               <p id="section-4.2.2-13.1.1">G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1<a href="#section-4.2.2-13.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-4.2.2-13.2">
-              <p id="section-4.2.2-13.2.1">G_2 is an r-order subgroup of E'(GF(p^2)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.2-13.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.2-13.2.1">G'_2 is the r-order subgroup of E'(GF(p^2)) corresponding to G_2 under psi - BP' = (x',y') : a 'base point', i.e., a generator of G'_2 - x' = x'_0 + x'_1 * u (x'_0, x'_1 in GF(p)) - y' = y'_0 + y'_1 * u (y'_0, y'_1 in GF(p)) - h' : the cofactor #E'(GF(p^2))/r<a href="#section-4.2.2-13.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <span class="break"></span><dl class="dlParallel" id="section-4.2.2-14">
@@ -2000,7 +2003,7 @@ GF(p^48)= GF(p^24)[s] / (s^2 + z).
 </pre><a href="#section-4.3-6" class="pilcrow">¶</a>
 </div>
 <p id="section-4.3-7">The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.<a href="#section-4.3-7" class="pilcrow">¶</a></p>
-<p id="section-4.3-8">The untwist isomorphism psi: E'(GF(p^8)) -&gt; E(GF(p^48)) is given by<a href="#section-4.3-8" class="pilcrow">¶</a></p>
+<p id="section-4.3-8">The untwist isomorphism psi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, restricted to E'(GF(p^8)), maps into E(GF(p^48)) and is given by<a href="#section-4.3-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-9">
 <pre>
 psi(x', y') = (x' * xi^2, y' * xi^3)
@@ -2013,7 +2016,7 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
             <p id="section-4.3-12.1.1">G_1 is the largest prime-order subgroup of E(GF(p)) - BP = (x,y) : a 'base point', i.e., a generator of G_1<a href="#section-4.3-12.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.3-12.2">
-            <p id="section-4.3-12.2.1">G_2 is an r-order subgroup of E'(GF(p^8)) - BP' = (x',y') : a 'base point', i.e., a generator of G_2 - x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p)) - h' : the cofactor #E'(GF(p^8))/r<a href="#section-4.3-12.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.3-12.2.1">G'_2 is the r-order subgroup of E'(GF(p^8)) corresponding to G_2 under psi - BP' = (x',y') : a 'base point', i.e., a generator of G'_2 - x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v + x'_4 * w + x'_5 * u * w + x'_6 * v * w + x'_7 * u * v * w (x'_0, ..., x'_7 in GF(p)) - y' = y'_0 + y'_1 * u + y'_2 * v + y'_3 * u * v + y'_4 * w + y'_5 * u * w + y'_6 * v * w + y'_7 * u * v * w (y'_0, ..., y'_7 in GF(p)) - h' : the cofactor #E'(GF(p^8))/r<a href="#section-4.3-12.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <span class="break"></span><dl class="dlParallel" id="section-4.3-13">
@@ -2390,7 +2393,7 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
             <p id="section-5.1-3.1.1">Elements of GF(p^m) are represented as a vector of m coefficients in GF(p), (y_0, ..., y_{m-1}), using the basis and coefficient ordering already defined for each curve in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#section-5.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.2">
-            <p id="section-5.1-3.2.1">The identity element of G_1 and of G_2 is the point at infinity O_E of <a href="#elliptic-curve" class="auto internal xref">Section 2.1</a>; the two names are used interchangeably below.<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.2.1">The identity element of G_1 is the point at infinity O_E of <a href="#elliptic-curve" class="auto internal xref">Section 2.1</a>, and the identity element of G'_2 is the point at infinity on E'. Below, 'the point at infinity' refers to whichever of the two curves is in question.<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.3">
             <p id="section-5.1-3.3.1">For a byte string str, str[0] is defined as the first byte of str.<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
@@ -2459,7 +2462,7 @@ sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
         <h3 id="name-point-serialization">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-point-serialization" class="section-name selfRef">Point Serialization</a>
         </h3>
-<p id="section-5.3-1">This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_G1 takes an element of G_1, which is a point on E, and point_to_octets_G2 takes an element of G_2, which is a point on E'; each returns a byte string. Both are given by the single procedure below, stated for a point P = (x, y) and the parameters n and m of <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>. This procedure uses the I2OSP function defined in <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-1">This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_G1 takes an element of G_1, which is a point on E, and point_to_octets_G2 takes an element of G'_2, which is a point on E'; each returns a byte string. Both are given by the single procedure below, stated for a point P = (x, y) and the parameters n and m of <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>. This procedure uses the I2OSP function defined in <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.3-2">
 <li id="section-5.3-2.1">
             <p id="section-5.3-2.1.1">Compute the metadata bits C_bit, I_bit, and S_bit, as follows:<a href="#section-5.3-2.1.1" class="pilcrow">¶</a></p>
@@ -2515,10 +2518,10 @@ sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
         <h3 id="name-point-deserialization">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-point-deserialization" class="section-name selfRef">Point Deserialization</a>
         </h3>
-<p id="section-5.4-1">This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G_2 respectively, or INVALID. A string that deserializes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of <a href="#pairing" class="auto internal xref">Section 2.2</a> is defined, and they are what the specifications citing this document exchange. Section 5.3 of <span>[<a href="#I-D.irtf-cfrg-bls-signature" class="cite xref">I-D.irtf-cfrg-bls-signature</a>]</span> requires conforming implementations to perform the subgroup check for the same reason, and Section 6.2 of <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> describes the combined operation as the one that libraries provide.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G'_2 respectively, or INVALID. A string that deserializes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of <a href="#pairing" class="auto internal xref">Section 2.2</a> is defined, and elements of G_1 and of G'_2 are what the specifications citing this document exchange; psi carries an element of G'_2 to the corresponding element of G_2, on which the pairing operates, as described in <a href="#pairing" class="auto internal xref">Section 2.2</a>. Section 5.3 of <span>[<a href="#I-D.irtf-cfrg-bls-signature" class="cite xref">I-D.irtf-cfrg-bls-signature</a>]</span> requires conforming implementations to perform the subgroup check for the same reason, and Section 6.2 of <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> describes the combined operation as the one that libraries provide.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 <p id="section-5.4-3">The procedure below is stated once, for a string s_string and the parameters n and m of <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>. It uses the OS2IP function defined in <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span> and the OS2FE function defined in <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
-<p id="section-5.4-4">Each of the two functions fixes the group it returns, and the curve that step 2 determines is what selects between them. octets_to_point_G1 MUST return INVALID if step 2 determines E', and octets_to_point_G2 MUST return INVALID if step 2 determines E. This check is not redundant: the encodings of the two groups can have the same length. For BLS12-381, for instance, a 96-byte string is a compressed point on E' when C_bit is 1 and an uncompressed point on E when C_bit is 0, so without this rule a compressed element of G_2 passed to octets_to_point_G1 would be decoded and returned rather than rejected.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">Each of the two functions fixes the group it returns, and the curve that step 2 determines is what selects between them. octets_to_point_G1 MUST return INVALID if step 2 determines E', and octets_to_point_G2 MUST return INVALID if step 2 determines E. This check is not redundant: the encodings of the two groups can have the same length. For BLS12-381, for instance, a 96-byte string is a compressed point on E' when C_bit is 1 and an uncompressed point on E when C_bit is 0, so without this rule a compressed element of G'_2 passed to octets_to_point_G1 would be decoded and returned rather than rejected.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
 <p id="section-5.4-5">Every GF(p) coefficient recovered by this procedure MUST be an integer in the inclusive range [0, p - 1]. A byte string that encodes a coordinate, or a coefficient of a coordinate, as a value greater than or equal to p is not a canonical encoding of a field element; implementations MUST return INVALID in that case. This applies to coordinates on E, recovered with OS2IP, as well as to the coefficients of coordinates on E', recovered with OS2FE.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.4-6">
 <li id="section-5.4-6.1">
@@ -2681,8 +2684,8 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
           <h4 id="name-subgroup-membership">
 <a href="#section-5.4.1" class="section-number selfRef">5.4.1. </a><a href="#name-subgroup-membership" class="section-name selfRef">Subgroup Membership</a>
           </h4>
-<p id="section-5.4.1-1">subgroup_check_G1(P) takes a point P on E and returns TRUE if P is an element of G_1 and FALSE otherwise. subgroup_check_G2(Q) does the same for a point Q on E' and the group G_2. Both are used by <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a>, and both are specified here as operations in their own right, because a point can also arise from point addition or scalar multiplication rather than from a byte string, and a caller may need to check such a point.<a href="#section-5.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.4.1-2">For every curve in this document, r^2 divides neither the order of E(GF(p)) nor the order of E'(GF(p^m)): those orders are h * r and h' * r, and gcd(h, r) = gcd(h', r) = 1 by the definitions of h and h' in <a href="#pairing" class="auto internal xref">Section 2.2</a>. Consequently a point of order dividing r is an element of G_1, or of G_2, respectively, and both checks can be carried out as follows:<a href="#section-5.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.4.1-1">subgroup_check_G1(P) takes a point P on E and returns TRUE if P is an element of G_1 and FALSE otherwise. subgroup_check_G2(Q) does the same for a point Q on E' and the group G'_2. Both are used by <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a>, and both are specified here as operations in their own right, because a point can also arise from point addition or scalar multiplication rather than from a byte string, and a caller may need to check such a point.<a href="#section-5.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.1-2">For every curve in this document, r^2 divides neither the order of E(GF(p)) nor the order of E'(GF(p^m)): those orders are h * r and h' * r, and gcd(h, r) = gcd(h', r) = 1 by the definitions of h and h' in <a href="#pairing" class="auto internal xref">Section 2.2</a>. Consequently a point of order dividing r is an element of G_1, or of G'_2, respectively, and both checks can be carried out as follows:<a href="#section-5.4.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.4.1-3.1">
               <p id="section-5.4.1-3.1.1">subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity on E, and FALSE otherwise.<a href="#section-5.4.1-3.1.1" class="pilcrow">¶</a></p>
@@ -2728,7 +2731,7 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
           <h4 id="name-identity-element">
 <a href="#section-5.6.2" class="section-number selfRef">5.6.2. </a><a href="#name-identity-element" class="section-name selfRef">Identity Element</a>
           </h4>
-<p id="section-5.6.2-1"><a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> and <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> define a byte representation for the identity element of G_1 and of G_2, via the I_bit, and deserialization returns it as it does any other group element. Whether a calling protocol should accept it depends on that protocol's own semantics and threat model, not on the wire format: some protocols (e.g., certain zero-knowledge proof constructions) legitimately reference the identity element as part of a public statement, while for others it cannot arise in normal operation.<a href="#section-5.6.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.6.2-1"><a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> and <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> define a byte representation for the identity element of G_1 and of G'_2, via the I_bit, and deserialization returns it as it does any other group element. Whether a calling protocol should accept it depends on that protocol's own semantics and threat model, not on the wire format: some protocols (e.g., certain zero-knowledge proof constructions) legitimately reference the identity element as part of a public statement, while for others it cannot arise in normal operation.<a href="#section-5.6.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.6.2-2">Because both kinds of protocol exist, this document does not name one of them as what happens when a protocol says nothing. It defines the two behaviors, and a protocol using this document's serialization format SHOULD state which one it requires:<a href="#section-5.6.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.6.2-3.1">
@@ -2760,15 +2763,16 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> and they are categorized in each security level in accordance with <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here (<span>[<a href="#BD18" class="cite xref">BD18</a>]</span>, <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, <span>[<a href="#G20" class="cite xref">G20</a>]</span>, <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026. No result was found that lowers the estimates for the curves recommended here. Work on the number field sieve and its tower variants has continued over that period, including record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. That work is within the same algorithm families rather than a new kind of attack, and no re-derived bit-level estimate has been published for the curves recommended here; this document has not derived one either.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim et al. in 2016 <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> and they are categorized in each security level in accordance with <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here (<span>[<a href="#BD18" class="cite xref">BD18</a>]</span>, <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, <span>[<a href="#G20" class="cite xref">G20</a>]</span>, <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; <a href="#security-review-scope" class="auto internal xref">Appendix G</a> records what that review covered. The work published in that period stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. <span>[<a href="#APT26" class="cite xref">APT26</a>]</span> is an example of the last kind, accelerating the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a revised bit-level security estimate for the curves recommended here, and this document has not derived one either. Work published after this document is not covered, and has to be assessed separately.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">BN254 is used in most of the existing implementations as shown in <a href="#impl" class="auto internal xref">Section 4.1</a> and <a href="#adoption_status_100bit_security" class="auto internal xref">Appendix F</a>, however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">The following points also apply to implementations of pairing-based cryptographic applications that use the recommended curves. Regarding the use case and applications of pairing-based cryptographic applications, please refer to <a href="#applications-of-pairing-based-cryptography" class="auto internal xref">Section 1.2</a>.<a href="#section-6-4" class="pilcrow">¶</a></p>
-<p id="section-6-5">In applications such as key agreement protocols, users exchange the elements in G_1 and G_2 as public keys. Such an element has to be so-called subgroup secure <span>[<a href="#BCM15" class="cite xref">BCM15</a>]</span>, that is, it has to have the correct order r. A point obtained from a byte string through <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> has already been checked, since those procedures return an element of G_1 or of G_2 or nothing at all. Group operations preserve the property: a sum or a scalar multiple of elements of G_1 is again an element of G_1, and likewise for G_2, so a point computed from checked inputs does not need checking again. What does need checking is a point whose provenance does not establish membership, such as one built from coordinates supplied by another party or one whose group is no longer tracked by the implementation; implementers SHOULD apply <a href="#subgroup-check" class="auto internal xref">Section 5.4.1</a> to such a point before it is used as an argument to the pairing.<a href="#section-6-5" class="pilcrow">¶</a></p>
-<p id="section-6-6">The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G_2 and an exponentiation in G_T with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementers SHOULD apply countermeasure techniques such as the Montgomery ladder <span>[<a href="#Montgomery" class="cite xref">Montgomery</a>]</span> <span>[<a href="#CF06" class="cite xref">CF06</a>]</span> when they implement modules of a scalar multiplication and an exponentiation. Please refer to <span>[<a href="#Montgomery" class="cite xref">Montgomery</a>]</span> and <span>[<a href="#CF06" class="cite xref">CF06</a>]</span> for the detailed algorithms of the Montgomery ladder.<a href="#section-6-6" class="pilcrow">¶</a></p>
-<p id="section-6-7">A coordinate that is read from a byte string has to be checked against the order of the field it is claimed to lie in; a coefficient outside that range gives one value several encodings, which can lead to vulnerabilities such as signature forgery <span>[<a href="#IEEE1363" class="cite xref">IEEE1363</a>]</span>. <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> makes this requirement normative for the procedures defined in this document.<a href="#section-6-7" class="pilcrow">¶</a></p>
-<p id="section-6-8">The choice between the two identity-element behaviors described in <a href="#identity-point-handling" class="auto internal xref">Section 5.6.2</a> belongs to the calling protocol, because whether the identity element can legitimately appear is a property of the protocol rather than of the curve or the wire format. Treating the identity element as an unremarkable, always-valid deserialization result, when the calling protocol does not actually expect it, can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar (<a href="#zero-scalar" class="auto internal xref">Section 5.6.3</a>).<a href="#section-6-8" class="pilcrow">¶</a></p>
-<p id="section-6-9">Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span>. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ..., delta, then we find a secret K. For a divisor delta of r - 1, Cheon's algorithm recovers K in O(log r * (sqrt(r / delta) + sqrt(delta))) group operations <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span>, whereas solving ECDLP by a generic method takes O(sqrt(r)) group operations, so for a well chosen delta the work of ECDLPwAI becomes dramatically smaller than that of ECDLP. Please refer to <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span> for the details of Cheon's algorithm. The design of a cryptographic protocol based on the strong DH problem therefore has to take this attack into account. For example, in the case of Short Signatures, the attack can be prevented by carefully setting the maximum number of queries, which corresponds to the parameter delta.<a href="#section-6-9" class="pilcrow">¶</a></p>
+<p id="section-6-5">In applications such as key agreement protocols, users exchange elements of G_1 and of G'_2 as public keys. What such an exchange has to establish is that a received point belongs to the intended prime-order subgroup. A point obtained from a byte string through <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> already satisfies this, since those procedures return an element of G_1 or of G'_2 or nothing at all. Group operations preserve the property: a sum or a scalar multiple of elements of G_1 is again an element of G_1, and likewise for G'_2, so a point computed from checked inputs does not need checking again. What does need checking is a point whose provenance does not establish membership, such as one built from coordinates supplied by another party or one whose group is no longer tracked by the implementation. Before such a point is used as an argument to the pairing, the implementation MUST establish that it belongs to the corresponding subgroup. This is a condition on the domain of the map rather than a defensive measure: the pairing of <a href="#pairing" class="auto internal xref">Section 2.2</a> is defined on the r-torsion points, and a point outside the subgroup is not an admissible argument. Applying the checks of <a href="#subgroup-check" class="auto internal xref">Section 5.4.1</a>, or any other method deciding the same predicate, satisfies this requirement.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">Membership in the subgroup does not on its own exclude the identity element, which <a href="#subgroup-check" class="auto internal xref">Section 5.4.1</a> accepts; whether a protocol accepts it is the separate decision described in <a href="#identity-point-handling" class="auto internal xref">Section 5.6.2</a>. Note also that subgroup security in the sense of <span>[<a href="#BCM15" class="cite xref">BCM15</a>]</span> is a property of a curve rather than of a point: it asks that the cofactors of the pairing groups, whenever they are as large as r or larger, contain only prime factors larger than r. It is therefore a criterion applied when curves are selected, and not a check an implementation performs on a received value.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-7">The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G_2 and an exponentiation in G_T with the secret key. In order to prevent the leakage of secret key due to side channel attacks, implementers SHOULD apply countermeasure techniques such as the Montgomery ladder <span>[<a href="#Montgomery" class="cite xref">Montgomery</a>]</span> <span>[<a href="#CF06" class="cite xref">CF06</a>]</span> when they implement modules of a scalar multiplication and an exponentiation. Please refer to <span>[<a href="#Montgomery" class="cite xref">Montgomery</a>]</span> and <span>[<a href="#CF06" class="cite xref">CF06</a>]</span> for the detailed algorithms of the Montgomery ladder.<a href="#section-6-7" class="pilcrow">¶</a></p>
+<p id="section-6-8">A coordinate that is read from a byte string has to be checked against the order of the field it is claimed to lie in; a coefficient outside that range gives one value several encodings, which can lead to vulnerabilities such as signature forgery <span>[<a href="#IEEE1363" class="cite xref">IEEE1363</a>]</span>. <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> makes this requirement normative for the procedures defined in this document.<a href="#section-6-8" class="pilcrow">¶</a></p>
+<p id="section-6-9">The choice between the two identity-element behaviors described in <a href="#identity-point-handling" class="auto internal xref">Section 5.6.2</a> belongs to the calling protocol, because whether the identity element can legitimately appear is a property of the protocol rather than of the curve or the wire format. Treating the identity element as an unremarkable, always-valid deserialization result, when the calling protocol does not actually expect it, can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar (<a href="#zero-scalar" class="auto internal xref">Section 5.6.3</a>).<a href="#section-6-9" class="pilcrow">¶</a></p>
+<p id="section-6-10">Recommended parameters are affected by the Cheon's attack which is a solving algorithm for the strong DH problem <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span>. The mathematical problem that provides the security of the strong DH problem is called ECDLP with Auxiliary Inputs (ECDLPwAI). In ECDLPwAI, given rational points P, [K]P, [K^i]P for i = 1, ..., delta, then we find a secret K. For a divisor delta of r - 1, Cheon's algorithm recovers K in O(log r * (sqrt(r / delta) + sqrt(delta))) group operations <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span>, whereas solving ECDLP by a generic method takes O(sqrt(r)) group operations, so for a well chosen delta the work of ECDLPwAI becomes dramatically smaller than that of ECDLP. A second variant applies when delta divides r + 1 rather than r - 1, and has a different complexity. Please refer to <span>[<a href="#Cheon06" class="cite xref">Cheon06</a>]</span> for the details of both. The design of a cryptographic protocol based on the strong DH problem therefore has to take this attack into account. For example, in the case of Short Signatures, the attack can be prevented by carefully setting the maximum number of queries, which corresponds to the parameter delta.<a href="#section-6-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -2814,7 +2818,7 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
 <dd class="break"></dd>
 <dt id="GMT19">[GMT19]</dt>
         <dd>
-<span class="refAuthor">Guillevic, A.</span>, <span class="refAuthor">Masson, S.</span>, and <span class="refAuthor">E. Thome</span>, <span class="refTitle">"Cocks–Pinch curves of embedding degrees five to eight and optimal ate pairing computation"</span>, <span class="seriesInfo">DOI 10.1007/s10623-020-00727-w</span>, <span class="seriesInfo">International Journal of Designs, Codes and Cryptography vol. 88, pp. 1047-1081</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://doi.org/10.1007/s10623-020-00727-w">https://doi.org/10.1007/s10623-020-00727-w</a>&gt;</span>. </dd>
+<span class="refAuthor">Guillevic, A.</span>, <span class="refAuthor">Masson, S.</span>, and <span class="refAuthor">E. Thomé</span>, <span class="refTitle">"Cocks–Pinch curves of embedding degrees five to eight and optimal ate pairing computation"</span>, <span class="seriesInfo">DOI 10.1007/s10623-020-00727-w</span>, <span class="seriesInfo">International Journal of Designs, Codes and Cryptography vol. 88, pp. 1047-1081</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://doi.org/10.1007/s10623-020-00727-w">https://doi.org/10.1007/s10623-020-00727-w</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="KB16">[KB16]</dt>
         <dd>
@@ -2874,6 +2878,10 @@ Otherwise, C_bit must be 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow
 <dt id="AMCLv2">[AMCLv2]</dt>
         <dd>
 <span class="refAuthor">The Apache Software Foundation</span>, <span class="refTitle">"Old version of the Apache Milagro Cryptographic Library"</span>, <time datetime="2016" class="refDate">2016</time>, <span>&lt;<a href="https://github.com/miracl/amcl/tree/master/version22">https://github.com/miracl/amcl/tree/master/version22</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="APT26">[APT26]</dt>
+        <dd>
+<span class="refAuthor">Al Aswad, H.</span>, <span class="refAuthor">Pierrot, C.</span>, and <span class="refAuthor">E. Thomé</span>, <span class="refTitle">"High-Order Galois Automorphisms for TNFS Linear Algebra"</span>, <span class="seriesInfo">Advances in Cryptology - CRYPTO 2026 </span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2026/560</span>, <time datetime="2026" class="refDate">2026</time>, <span>&lt;<a href="https://eprint.iacr.org/2026/560">https://eprint.iacr.org/2026/560</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="arkworks">[arkworks]</dt>
         <dd>
@@ -3314,7 +3322,7 @@ e_lib(P, Q) = e_pseudocode(P, Q)^alpha
 <a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-test-vectors-of-optimal-ate" class="section-name selfRef">Test Vectors of Optimal Ate Pairing</a>
       </h2>
 <p id="appendix-C-1">We provide test vectors for Optimal Ate Pairing e(P, Q) given in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> for the curves BLS12-381, BN462 and BLS48-581 given in <a href="#secure_params" class="auto internal xref">Section 4</a>. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
-<p id="appendix-C-2">Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, i.e., as coordinates over E'(GF(p^(k/d))), which gives a compact representation. The pseudocode in Appendix A operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in <a href="#secure_params" class="auto internal xref">Section 4</a> to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates over E'(GF(p^(k/d))), which gives a compact representation. The pseudocode in Appendix A operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in <a href="#secure_params" class="auto internal xref">Section 4</a> to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3">For BLS12-381 and BN462, Q = (x', y') is given by<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-C-4">
 <pre>
@@ -4472,7 +4480,7 @@ i = i1 + 2 * i2 + 4 * i3 + 8 * i4 + 24 * i5.
 fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1
 </pre><a href="#appendix-D.1-4" class="pilcrow">¶</a>
 </div>
-<p id="appendix-D.1-5">G_2 (BP'), compressed (96 bytes):<a href="#appendix-D.1-5" class="pilcrow">¶</a></p>
+<p id="appendix-D.1-5">G'_2 (BP'), compressed (96 bytes):<a href="#appendix-D.1-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-D.1-6">
 <pre>
 93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049
@@ -4480,7 +4488,7 @@ fcf5e095d5d00af600db18cb2c04b3edd03cc744a2888ae40caa232946c5e7e1
 c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8
 </pre><a href="#appendix-D.1-6" class="pilcrow">¶</a>
 </div>
-<p id="appendix-D.1-7">G_2 (BP'), uncompressed (192 bytes):<a href="#appendix-D.1-7" class="pilcrow">¶</a></p>
+<p id="appendix-D.1-7">G'_2 (BP'), uncompressed (192 bytes):<a href="#appendix-D.1-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-D.1-8">
 <pre>
 13e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049
@@ -4518,7 +4526,7 @@ a2af59b7ac340f2baf2b73df1e93f860de3f257e0e86868cf61abdbaedffb9f7
 1b2e35f37aef7b926b576dbb5de3e2587a70
 </pre><a href="#appendix-D.2-4" class="pilcrow">¶</a>
 </div>
-<p id="appendix-D.2-5">G_2 (BP'), compressed (584 bytes):<a href="#appendix-D.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-D.2-5">G'_2 (BP'), compressed (584 bytes):<a href="#appendix-D.2-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-D.2-6">
 <pre>
 8827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7
@@ -4542,7 +4550,7 @@ d615d9a7871e4a38237fa45a2775debabbefc70344dbccb7de64db3a2ef156c4
 c34fd0b4ace8bfab
 </pre><a href="#appendix-D.2-6" class="pilcrow">¶</a>
 </div>
-<p id="appendix-D.2-7">G_2 (BP'), uncompressed (1168 bytes):<a href="#appendix-D.2-7" class="pilcrow">¶</a></p>
+<p id="appendix-D.2-7">G'_2 (BP'), uncompressed (1168 bytes):<a href="#appendix-D.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-D.2-8">
 <pre>
 0827d5c22fb2bdec5282624c4f4aaa2b1e5d7a9defaf47b5211cf741719728a7
@@ -4726,7 +4734,7 @@ kappa = r  (deserialization returns INVALID)
             </tr>
           </tbody>
         </table>
-<p id="appendix-E.2-3">For <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> and <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>, the corresponding G_2 sizes are 233 bytes uncompressed and 117 bytes compressed.<a href="#appendix-E.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-3">For <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> and <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>, the corresponding G'_2 sizes are 233 bytes uncompressed and 117 bytes compressed.<a href="#appendix-E.2-3" class="pilcrow">¶</a></p>
 <p id="appendix-E.2-4">Both leading-byte forms leave the coordinate encoding of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> untouched: <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>. The two differ only in what the leading byte means. Note that <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> itself defines point encoding over GF(p) and GF(2^m) only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> rather than <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> as written.<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
 <p id="appendix-E.2-5">In <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of <a href="#point-serialization" class="auto internal xref">Section 5</a>, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol (<a href="#identity-point-handling" class="auto internal xref">Section 5.6.2</a>).<a href="#appendix-E.2-5" class="pilcrow">¶</a></p>
 <p id="appendix-E.2-6">Two observations follow. First, the implementations that support BN462 and do not mark it deprecated have converged on a dedicated leading byte rather than on packing metadata into the coordinate; <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, which does mark it deprecated, is the exception and packs the sign of y into the coordinate. Second, none of the implementations examined carries the pair C_bit and I_bit in the two spare bits of the coordinate, which is the arrangement <a href="#bn462-two-bit" class="auto internal xref">Appendix E.3</a> considers.<a href="#appendix-E.2-6" class="pilcrow">¶</a></p>
@@ -4756,7 +4764,7 @@ kappa = r  (deserialization returns INVALID)
             <p id="appendix-E.4-2.2.1">A flag byte carrying the same three metadata bits as <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> in the same positions (C_bit at 0x80, I_bit at 0x40, S_bit at 0x20, with the remaining five bits zero and checked on input), followed by the coordinates in big-endian order. This is what <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span> emits. These are the same bit positions that <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> uses in its bit-packing path, so this variant amounts to relocating the bit assignment of <a href="#point-serialization" class="auto internal xref">Section 5</a> into a leading byte, leaving the rest of the format unchanged.<a href="#appendix-E.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-E.4-3">Both variants yield the same encoded lengths (117 and 59 bytes for G_1, 233 and 117 bytes for G_2), so length alone does not distinguish them. The leading byte does: an uncompressed point other than the identity element begins with 0x04 in the first variant and 0x00 in the second. A decoder that validates the leading byte rather than skipping over it will therefore reject a string in the other format instead of misparsing it.<a href="#appendix-E.4-3" class="pilcrow">¶</a></p>
+<p id="appendix-E.4-3">Both variants yield the same encoded lengths (117 and 59 bytes for G_1, 233 and 117 bytes for G'_2), so length alone does not distinguish them. The leading byte does: an uncompressed point other than the identity element begins with 0x04 in the first variant and 0x00 in the second. A decoder that validates the leading byte rather than skipping over it will therefore reject a string in the other format instead of misparsing it.<a href="#appendix-E.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="bn462-not-defined">
@@ -4915,8 +4923,19 @@ kappa = r  (deserialization returns INVALID)
       </table>
 </section>
 </div>
-<div id="authors-addresses">
+<div id="security-review-scope">
 <section id="appendix-G">
+      <h2 id="name-scope-of-the-security-estim">
+<a href="#appendix-G" class="section-number selfRef">Appendix G. </a><a href="#name-scope-of-the-security-estim" class="section-name selfRef">Scope of the Security Estimate Review</a>
+      </h2>
+<p id="appendix-G-1"><a href="#security-considerations" class="auto internal xref">Section 6</a> states that the security estimates this document cites were reviewed against subsequent work. This appendix records what that review covered and what it did not.<a href="#appendix-G-1" class="pilcrow">¶</a></p>
+<p id="appendix-G-2">The review covered work published between January 2020 and August 2026. Peer-reviewed publications were searched through Crossref, the IACR Cryptology ePrint Archive was searched for preprints, and arXiv was used as a cross-check for work appearing in neither. A result was assessed if it bears on the cost of computing discrete logarithms in the fields GF(p^12) or GF(p^48), or in the elliptic curve groups of the curves recommended here, or on the special and tower variants of the number field sieve that apply to them.<a href="#appendix-G-2" class="pilcrow">¶</a></p>
+<p id="appendix-G-3">The estimates given in <a href="#security_pfc" class="auto internal xref">Section 3</a> and <a href="#secure_params" class="auto internal xref">Section 4</a> rest on peer-reviewed results. Preprints were used to find work that had not yet appeared in a peer-reviewed venue; <span>[<a href="#APT26" class="cite xref">APT26</a>]</span>, the one result of that kind bearing directly on one of the fields these curves use, has since been accepted to CRYPTO 2026.<a href="#appendix-G-3" class="pilcrow">¶</a></p>
+<p id="appendix-G-4">The review is bounded by its end date: it describes what had been published by August 2026, and says nothing about what has been published since.<a href="#appendix-G-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-H">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
