@@ -1817,15 +1817,17 @@ Table of Contents
 
 8.  Acknowledgements
 
-   The authors would like to appreciate a lot of authors including
-   Akihiro Kato for their significant contribution to early versions of
-   this memo.  The authors would also like to acknowledge Kim Taechan,
-   Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an
-   Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F.
-   Aranha for their valuable comments.  The authors would further like
-   to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, Michele Orrù,
-   and Mamy Ratsimbazafy for their detailed reviews of recent revisions,
-   which shaped Section 5 in particular.
+   Tsunekazu Saito was a co-author of this document from its first
+   version through revision 11, and much of what it contains comes from
+   that work.  The authors would like to appreciate a lot of authors
+   including Akihiro Kato for their significant contribution to early
+   versions of this memo.  The authors would also like to acknowledge
+   Kim Taechan, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe
+   Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene
+   Struik, and Diego F.  Aranha for their valuable comments.  The
+   authors would further like to thank Thomas Bellebaum, Frank Denis,
+   Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed
+   reviews of recent revisions, which shaped Section 5 in particular.
 
 9.  References
 
