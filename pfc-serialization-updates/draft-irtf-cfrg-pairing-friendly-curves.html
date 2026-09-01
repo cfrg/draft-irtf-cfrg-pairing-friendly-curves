@@ -2002,7 +2002,7 @@ GF(p^24) = GF(p^8)[z] / (z^3 + w)
 GF(p^48)= GF(p^24)[s] / (s^2 + z).
 </pre><a href="#section-4.3-6" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3-7">The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type.<a href="#section-4.3-7" class="pilcrow">¶</a></p>
+<p id="section-4.3-7">The elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w. BLS48-581 is categorized as D-type. Concretely, in the tower above: w^2 = -v gives -1 / w = w / v, and v^2 = -(u + 1) gives w / v = w * v / v^2 = -w * v / (u + 1); since u^2 = -1, 1 / (u + 1) = (1 - u) / 2, so -1 / w = ((u - 1) / 2) * v * w.<a href="#section-4.3-7" class="pilcrow">¶</a></p>
 <p id="section-4.3-8">The untwist isomorphism psi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, restricted to E'(GF(p^8)), maps into E(GF(p^48)) and is given by<a href="#section-4.3-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-9">
 <pre>
