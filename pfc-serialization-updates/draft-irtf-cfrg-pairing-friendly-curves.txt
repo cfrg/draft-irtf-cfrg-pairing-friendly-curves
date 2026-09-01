@@ -1704,8 +1704,8 @@ Table of Contents
    the work published in the major peer-reviewed cryptography venues,
    and in the IACR Cryptology ePrint Archive, between January 2020 and
    August 2026; Appendix G records what that review covered.  The work
-   published in that period stays within the number field sieve and its
-   tower variants rather than introducing a different kind of attack: it
+   that review covered stays within the number field sieve and its tower
+   variants rather than introducing a different kind of attack: it
    consists of record discrete-logarithm computations, refinements of
    the asymptotic analysis, and improvements to individual steps of the
    tower variant for fields of the extension degrees these curves use.
@@ -1756,14 +1756,13 @@ Table of Contents
    element, which Section 5.4.1 accepts; whether a protocol accepts it
    is the separate decision described in Section 5.6.2.  Note also that
    subgroup security in the sense of [BCM15] is a property of a curve
-   rather than of a point: it asks that the cofactors of the pairing
-   groups, whenever they are as large as r or larger, contain only prime
-   factors larger than r.  It is therefore a criterion applied when
-   curves are selected, and not a check an implementation performs on a
-   received value.
+   rather than of a point: it constrains the prime factors of the
+   cofactors of the pairing groups.  It is therefore a criterion applied
+   when curves are selected, and not a check an implementation performs
+   on a received value.
 
    The pairing-based protocols, such as the BLS signatures, use a scalar
-   multiplication in G_1, G_2 and an exponentiation in G_T with the
+   multiplication in G_1, G'_2 and an exponentiation in G_T with the
    secret key.  In order to prevent the leakage of secret key due to
    side channel attacks, implementers SHOULD apply countermeasure
    techniques such as the Montgomery ladder [Montgomery] [CF06] when
@@ -2326,9 +2325,10 @@ Appendix A.  Computing the Optimal Ate Pairing
    pseudocode operates on coordinates in untwisted form.
 
    The computation of the optimal ate pairing uses the p-power Frobenius
-   endomorphism pi of Section 2.2, applied to points Q = (x, y) over E'.
-   The pseudocode below writes it with the characteristic as an explicit
-   argument, pi(p, Q) = (x^p, y^p).
+   endomorphism pi of Section 2.2, applied to Q = (x, y) in G_2, that
+   is, to a point on E(GF(p^k)) in untwisted form.  The pseudocode below
+   writes it with the characteristic as an explicit argument, pi(p, Q) =
+   (x^p, y^p).
 
 A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
