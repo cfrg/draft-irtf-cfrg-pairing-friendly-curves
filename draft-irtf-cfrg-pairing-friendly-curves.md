@@ -2969,7 +2969,7 @@ Identity on E: 48 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit
 
 Identity on E': 96 zero bytes with the leading byte set to 0xc0 when compressed, and 192 zero bytes with the leading byte set to 0x40 when uncompressed.
 
-> Note: the point values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates.
+> Note: the point values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates. The same strings have also been checked against {{blst}} and {{gnark-crypto}}: each deserializes to the coordinates given in {{parameter-BLS12_381}} and serializes back to the same bytes. The BLS12-381 scalars of {{scalar-test-vectors}} were checked against the same two implementations.
 
 ## BLS48-581 Points  {#bls48-581-point-test-vectors}
 
