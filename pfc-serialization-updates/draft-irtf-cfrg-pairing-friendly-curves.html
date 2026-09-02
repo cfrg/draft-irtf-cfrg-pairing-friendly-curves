@@ -1047,7 +1047,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sakemi, et al.</td>
-<td class="center">Expires 5 March 2027</td>
+<td class="center">Expires 6 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1060,12 @@ svg {
 <dd class="internet-draft">draft-irtf-cfrg-pairing-friendly-curves-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-01" class="published">1 September 2026</time>
+<time datetime="2026-09-02" class="published">2 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-05">5 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-06">6 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1079,7 +1079,7 @@ svg {
 </div>
 <div class="author">
       <div class="author-name">R. Wahby</div>
-<div class="org">Stanford University</div>
+<div class="org">Carnegie Mellon University</div>
 </div>
 </dd>
 </dl>
@@ -1119,7 +1119,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1424,8 +1424,8 @@ E : y^2 = x^3 + a * x + b,
 </pre><a href="#section-2.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1-3">and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q. This is called the Weierstrass normal form of an elliptic curve.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1-4">A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number n, we define the set of (GF(q^n))-rational points of E, denoted by E(GF(q^n)), to be the set of all solutions (x,y) in GF(q^k), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.1-5">The set E(GF(q^k)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^k)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number n, we define the set of (GF(q^n))-rational points of E, denoted by E(GF(q^n)), to be the set of all solutions (x,y) in GF(q^n), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">The set E(GF(q^n)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^n)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="pairing">
@@ -1649,8 +1649,8 @@ BLS48:
 <p id="section-4.1.2-2"><span>[<a href="#blst" class="cite xref">blst</a>]</span> is a high-performance pairing library maintained by Supranational. It supports BLS12-381 and is used in production by Ethereum consensus clients, Filecoin, and other applications.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-3">Several additional actively maintained libraries support BLS12-381. <span>[<a href="#gnark-crypto" class="cite xref">gnark-crypto</a>]</span>, developed by Consensys, supports BLS12-381, BN254, BLS12-377, BLS24-315, and BW6-761. <span>[<a href="#noble-curves" class="cite xref">noble-curves</a>]</span> is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381. The arkworks ecosystem <span>[<a href="#arkworks" class="cite xref">arkworks</a>]</span> provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN254. <span>[<a href="#constantine" class="cite xref">constantine</a>]</span> is a cryptographic library written in Nim that supports BLS12-381, BN254, BLS12-377, and BW6-761. <span>[<a href="#CIRCL" class="cite xref">CIRCL</a>]</span> is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span> is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381.<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-4">PBC is a library for pairing-based cryptography published by Stanford University that supports BN curves, MNT curves, Freeman curves, and supersingular curves <span>[<a href="#PBC" class="cite xref">PBC</a>]</span>. Users can generate pairing parameters by using PBC and use pairing operations with the generated parameters.<a href="#section-4.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-5"><span>[<a href="#mcl" class="cite xref">mcl</a>]</span> is a library for pairing-based cryptography that supports four BN curves and BLS12-381 <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>. These BN curves include BN254 proposed by Nogami et al. <span>[<a href="#NASKM08" class="cite xref">NASKM08</a>]</span> (named BN254N), BN_SNARK1 suitable for SNARK applications <span>[<a href="#libsnark" class="cite xref">libsnark</a>]</span>, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports the BLS48-581 <span>[<a href="#BLS48" class="cite xref">BLS48</a>]</span>. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) <span>[<a href="#TEPLA" class="cite xref">TEPLA</a>]</span> supports two BN curves, BN254N and BN254 proposed by Beuchat et al. <span>[<a href="#BGMORT10" class="cite xref">BGMORT10</a>]</span> (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) <span>[<a href="#Intel-IPP" class="cite xref">Intel-IPP</a>]</span> and the library supports BN256I.<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-6"><span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN254B, BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, pairing-friendly curves constructed by Scott et al. <span>[<a href="#SG19" class="cite xref">SG19</a>]</span> based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>, a KSS curve <span>[<a href="#KSS08" class="cite xref">KSS08</a>]</span> of embedding degree 18 with 508-bit p (named KSS18-508) <span>[<a href="#AFKMR12" class="cite xref">AFKMR12</a>]</span>, Optimal TNFS-secure curve <span>[<a href="#FM19" class="cite xref">FM19</a>]</span> of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve <span>[<a href="#S86" class="cite xref">S86</a>]</span> with 1536-bit p (SS-1536).<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-5"><span>[<a href="#mcl" class="cite xref">mcl</a>]</span> is a library for pairing-based cryptography that supports four BN curves and BLS12-381 <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>. These BN curves include BN254 proposed by Nogami et al. <span>[<a href="#NASKM08" class="cite xref">NASKM08</a>]</span> (named BN254N), BN_SNARK1 suitable for SNARK applications <span>[<a href="#libsnark" class="cite xref">libsnark</a>]</span>, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports BLS48-581 <span>[<a href="#BLS48" class="cite xref">BLS48</a>]</span>. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) <span>[<a href="#TEPLA" class="cite xref">TEPLA</a>]</span> supports two BN curves, BN254N and BN254 proposed by Beuchat et al. <span>[<a href="#BGMORT10" class="cite xref">BGMORT10</a>]</span> (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) <span>[<a href="#Intel-IPP" class="cite xref">Intel-IPP</a>]</span> and the library supports BN256I.<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-6"><span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, pairing-friendly curves constructed by Scott et al. <span>[<a href="#SG19" class="cite xref">SG19</a>]</span> based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>, a KSS curve <span>[<a href="#KSS08" class="cite xref">KSS08</a>]</span> of embedding degree 18 with 508-bit p (named KSS18-508) <span>[<a href="#AFKMR12" class="cite xref">AFKMR12</a>]</span>, Optimal TNFS-secure curve <span>[<a href="#FM19" class="cite xref">FM19</a>]</span> of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve <span>[<a href="#S86" class="cite xref">S86</a>]</span> with 1536-bit p (SS-1536).<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-7">MIRACL Core <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> (the successor to the Apache Milagro Crypto Library (AMCL) <span>[<a href="#AMCL" class="cite xref">AMCL</a>]</span>) supports five BLS curves (BLS12-381, BLS12-461, BLS24-479, BLS48-556, and BLS48-581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).<a href="#section-4.1.2-7" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-8">Adjoint published a library that supports the BLS12-381 and six BN curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462) <span>[<a href="#AdjointLib" class="cite xref">AdjointLib</a>]</span>, where BN254S1 and BN254S2 are BN curves adopted by an old version of AMCL <span>[<a href="#AMCLv2" class="cite xref">AMCLv2</a>]</span>. The suffix 'S' of BN254S1 and BN254S2 is given from the initials of the name of the developer who proposed these parameters.<a href="#section-4.1.2-8" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-9">The Celo foundation published the bls12377js library <span>[<a href="#bls12377js" class="cite xref">bls12377js</a>]</span>. The supported curve is the BLS12-377 curve which is shown in <span>[<a href="#BCGMMW20" class="cite xref">BCGMMW20</a>]</span>.<a href="#section-4.1.2-9" class="pilcrow">¶</a></p>
@@ -1672,7 +1672,7 @@ BLS48:
         <h3 id="name-for-128-bit-security">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-for-128-bit-security" class="section-name selfRef">For 128-bit Security</a>
         </h3>
-<p id="section-4.2-1">The survey in <a href="#impl" class="auto internal xref">Section 4.1</a> shows a lot of cases of adopting BN and BLS curves. Among them, BLS12-381 and BN462 match our selection policy. In particular, the one that best matches the policy is BLS12-381 from the viewpoint of "widely used" and "efficiency", so we introduce the parameters of BLS12-381 in this memo.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">The survey in <a href="#impl" class="auto internal xref">Section 4.1</a> shows a lot of cases of adopting BN and BLS curves. Among them, BLS12-381 and BN462 match our selection policy. In particular, the one that best matches the policy is BLS12-381 from the viewpoint of "widely used": as <a href="#secure_params" class="auto internal xref">Section 4</a> states, its adoption in production deployments is what makes it the one exception to the preference for margin. We therefore introduce the parameters of BLS12-381 in this memo.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced. As shown in recent security evaluations for BLS12-381 <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, its security level is close to 128 bits but less than 128 bits. If the attack is improved even a little, BLS12-381 will not be suitable for the curve of the 128-bit security level. As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <div id="parameter-BLS12_381">
 <section id="section-4.2.1">
@@ -1704,7 +1704,7 @@ GF(p^12) = GF(p^6)[w] / (w^2 - v).
 psi(x', y') = (x' / w^2, y' / w^3)
 </pre><a href="#section-4.2.1-9" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.1-10">where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in <a href="#tower_bls12_381" class="auto internal xref">Section 4.2.1, Paragraph 5</a>.<a href="#section-4.2.1-10" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-10">where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower given above.<a href="#section-4.2.1-10" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-11">We have to note that the security level of this pairing is expected to be 126 rather than 128 bits <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>.<a href="#section-4.2.1-11" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-12">Parameters of BLS12-381 are given as follows.<a href="#section-4.2.1-12" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1875,7 +1875,7 @@ GF(p^12) = GF(p^6)[w] / (w^2 - v).
 psi(x', y') = (x' * w^2, y' * w^3)
 </pre><a href="#section-4.2.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-9">where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in <a href="#tower_bn462" class="auto internal xref">Section 4.2.2, Paragraph 4</a>.<a href="#section-4.2.2-9" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-9">where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower given above.<a href="#section-4.2.2-9" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-10">We have to note that BN462 is significantly slower than BLS12-381, but has a 134-bit security level <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, so may be more resistant to future small improvements to the exTNFS attack.<a href="#section-4.2.2-10" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-11">We note also that CP8-544 is about 20% faster than BN462 <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, has a 131-bit security level, and that, due to its construction, it will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.<a href="#section-4.2.2-11" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-12">We give the following parameters for BN462.<a href="#section-4.2.2-12" class="pilcrow">¶</a></p>
@@ -2051,7 +2051,7 @@ GF(p^48) = GF(p^24)[s] / (s^2 + z).
 psi(x', y') = (x' * xi^2, y' * xi^3)
 </pre><a href="#section-4.3-9" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3-10">where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of the twist coefficient b' = -1 / w, per the tower defined in <a href="#tower_bls48_581" class="auto internal xref">Section 4.3, Paragraph 5</a>. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
+<p id="section-4.3-10">where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of the twist coefficient b' = -1 / w, per the tower given above. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
 <p id="section-4.3-11">We then give the parameters for BLS48-581 as follows.<a href="#section-4.3-11" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.3-12.1">
@@ -3273,7 +3273,7 @@ end if
 return (l * (x - x_1) + y_1 - y);
 </pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A-4">When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span> <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
+<p id="appendix-A-4">When implementing the line function, the isomorphism of E and its twist curve E' can be used to reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span> <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
 <p id="appendix-A-5">The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <div id="optimal-ate-pairings-over-barreto-naehrig-curves">
 <section id="appendix-A.1">
@@ -3394,7 +3394,7 @@ e_lib(P, Q) = e_pseudocode(P, Q)^alpha
 <a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-test-vectors-of-optimal-ate" class="section-name selfRef">Test Vectors of Optimal Ate Pairing</a>
       </h2>
 <p id="appendix-C-1">We provide test vectors for Optimal Ate Pairing e(P, Q) given in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> for the curves BLS12-381, BN462 and BLS48-581 given in <a href="#secure_params" class="auto internal xref">Section 4</a>. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
-<p id="appendix-C-2">Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in <a href="#secure_params" class="auto internal xref">Section 4</a> to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> operates on points of the untwisted curve E(GF(p^k)). An implementation invoking that pseudocode directly has to apply the untwist isomorphism psi defined in <a href="#secure_params" class="auto internal xref">Section 4</a> first, to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3">For BLS12-381 and BN462, Q = (x', y') is given by<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-C-4">
 <pre>
@@ -4573,6 +4573,11 @@ adfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801
 </div>
 <p id="appendix-D.1-9">Identity on E: 48 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit = 1) when compressed, and 96 zero bytes with the leading byte set to 0x40 (I_bit = 1) when uncompressed.<a href="#appendix-D.1-9" class="pilcrow">¶</a></p>
 <p id="appendix-D.1-10">Identity on E': 96 zero bytes with the leading byte set to 0xc0 when compressed, and 192 zero bytes with the leading byte set to 0x40 when uncompressed.<a href="#appendix-D.1-10" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="appendix-D.1-11.1">
+            <p id="appendix-D.1-11.1.1">Note: the point values above are the second entry of each of the valid test vector files distributed with <span>[<a href="#zkcrypto-bls12-381" class="cite xref">zkcrypto-bls12-381</a>]</span>, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>, and have been checked to deserialize back to those coordinates.<a href="#appendix-D.1-11.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="bls48-581-point-test-vectors">
@@ -4668,7 +4673,7 @@ f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d65
 <p id="appendix-D.2-10">Identity on E': 584 zero bytes with the leading byte set to 0xc0 when compressed, and 1168 zero bytes with the leading byte set to 0x40 when uncompressed.<a href="#appendix-D.2-10" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="appendix-D.2-11.1">
-            <p id="appendix-D.2-11.1.1">Note: the BLS12-381 point values above are the second entry of each of the valid test vector files distributed with <span>[<a href="#zkcrypto-bls12-381" class="cite xref">zkcrypto-bls12-381</a>]</span>, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span> to the BP' coordinates in <a href="#secure_params" class="auto internal xref">Section 4</a>; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.<a href="#appendix-D.2-11.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.2-11.1.1">Note: the point values above are newly computed for this document by applying the sign_GF_p^8 function of <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span> to the BP' coordinates in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-D.2-11.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -4758,10 +4763,9 @@ kappa = r  (deserialization returns INVALID)
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Implementation</th>
-              <th class="text-left" rowspan="1" colspan="1">G_1 uncompressed</th>
-              <th class="text-left" rowspan="1" colspan="1">G_1 compressed</th>
+              <th class="text-left" rowspan="1" colspan="1">G_1 size</th>
               <th class="text-left" rowspan="1" colspan="1">Metadata placement</th>
-              <th class="text-left" rowspan="1" colspan="1">Coordinate byte order</th>
+              <th class="text-left" rowspan="1" colspan="1">Byte order</th>
             </tr>
           </thead>
           <tbody>
@@ -4769,44 +4773,39 @@ kappa = r  (deserialization returns INVALID)
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">117 bytes</td>
-              <td class="text-left" rowspan="1" colspan="1">59 bytes</td>
+              <td class="text-left" rowspan="1" colspan="1">117 / 59 bytes</td>
               <td class="text-left" rowspan="1" colspan="1">
-                <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> type byte (0x04 / 0x02 / 0x03)</td>
+                <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> type byte</td>
               <td class="text-left" rowspan="1" colspan="1">big-endian</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#pfcurve-js" class="cite xref">pfcurve-js</a>]</span>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">117 bytes</td>
-              <td class="text-left" rowspan="1" colspan="1">59 bytes</td>
+              <td class="text-left" rowspan="1" colspan="1">117 / 59 bytes</td>
               <td class="text-left" rowspan="1" colspan="1">
-                <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> type byte (0x04 / 0x02 / 0x03)</td>
+                <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> type byte</td>
               <td class="text-left" rowspan="1" colspan="1">big-endian</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">117 bytes</td>
-              <td class="text-left" rowspan="1" colspan="1">59 bytes</td>
-              <td class="text-left" rowspan="1" colspan="1">dedicated flag byte, see <a href="#bn462-leading-byte" class="auto internal xref">Appendix E.4</a>
-</td>
+              <td class="text-left" rowspan="1" colspan="1">117 / 59 bytes</td>
+              <td class="text-left" rowspan="1" colspan="1">dedicated flag byte</td>
               <td class="text-left" rowspan="1" colspan="1">big-endian</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">
                 <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">116 bytes</td>
-              <td class="text-left" rowspan="1" colspan="1">58 bytes</td>
+              <td class="text-left" rowspan="1" colspan="1">116 / 58 bytes</td>
               <td class="text-left" rowspan="1" colspan="1">none / packed into the coordinate</td>
-              <td class="text-left" rowspan="1" colspan="1">little-endian by default</td>
+              <td class="text-left" rowspan="1" colspan="1">little-endian</td>
             </tr>
           </tbody>
         </table>
-<p id="appendix-E.2-3">For <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> and <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>, the corresponding G'_2 sizes are 233 bytes uncompressed and 117 bytes compressed.<a href="#appendix-E.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-3">Sizes are given as uncompressed / compressed, for G_1. For <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> and <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>, the corresponding G'_2 sizes are 233 bytes uncompressed and 117 bytes compressed. The <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> type byte is 0x04 for an uncompressed point and 0x02 or 0x03 for a compressed one; the dedicated flag byte is described in <a href="#bn462-leading-byte" class="auto internal xref">Appendix E.4</a>. The byte order given for <span>[<a href="#mcl" class="cite xref">mcl</a>]</span> is its default.<a href="#appendix-E.2-3" class="pilcrow">¶</a></p>
 <p id="appendix-E.2-4">Both leading-byte forms leave the coordinate encoding of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> untouched: <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does <span>[<a href="#zig-pairings" class="cite xref">zig-pairings</a>]</span>. The two differ only in what the leading byte means. Note that <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> itself defines point encoding over GF(p) and GF(2^m) only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a> rather than <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> as written.<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
 <p id="appendix-E.2-5">In <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of <a href="#point-serialization" class="auto internal xref">Section 5</a>, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol (<a href="#identity-point-handling" class="auto internal xref">Section 5.6.2</a>).<a href="#appendix-E.2-5" class="pilcrow">¶</a></p>
 <p id="appendix-E.2-6">Two observations follow. First, the implementations that support BN462 and do not mark it deprecated have converged on a dedicated leading byte rather than on packing metadata into the coordinate; <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, which does mark it deprecated, is the exception and packs the sign of y into the coordinate. Second, none of the implementations examined carries the pair C_bit and I_bit in the two spare bits of the coordinate, which is the arrangement <a href="#bn462-two-bit" class="auto internal xref">Appendix E.3</a> considers.<a href="#appendix-E.2-6" class="pilcrow">¶</a></p>
@@ -4818,7 +4817,7 @@ kappa = r  (deserialization returns INVALID)
 <a href="#appendix-E.3" class="section-number selfRef">E.3. </a><a href="#name-alternative-considered-two-" class="section-name selfRef">Alternative Considered: Two Metadata Bits</a>
         </h3>
 <p id="appendix-E.3-1">S_bit is meaningful only for compressed points (see step 1 of <a href="#point-serialization-procedure" class="auto internal xref">Section 5.3</a>). An encoding restricted to uncompressed points therefore needs only C_bit and I_bit, which fit in the two spare bits that BN462 does have. The appeal of such an encoding is that BN462 would remain within the same bit-packing family as the other two curves: a decoder written for BLS12-381 could be extended to BN462 by masking two metadata bits instead of three, rather than by acquiring a second, leading-byte parser used only for BN462.<a href="#appendix-E.3-1" class="pilcrow">¶</a></p>
-<p id="appendix-E.3-2">It carries a pitfall. step 2 of <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> determines the curve jointly from C_bit and the length of the string. For BN462 (n = 58, and E' represented over GF(p^2)), an uncompressed point on E and a compressed point on E' both occupy 116 bytes. Under a two-bit variant, compressed forms cannot be represented and C_bit is always 0, so the two cases never both arise; but a decoder that reuses step 2 unmodified would accept a 116-byte string with C_bit set and interpret it as a compressed point on E'. An implementation of such a variant would have to reject a nonzero C_bit before the length-based determination in step 2. An encoding with a dedicated leading byte (<a href="#bn462-leading-byte" class="auto internal xref">Appendix E.4</a>) does not have this hazard, because the type byte separates the two cases structurally.<a href="#appendix-E.3-2" class="pilcrow">¶</a></p>
+<p id="appendix-E.3-2">It carries a pitfall. Step 2 of <a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> determines the curve jointly from C_bit and the length of the string. For BN462 (n = 58, and E' represented over GF(p^2)), an uncompressed point on E and a compressed point on E' both occupy 116 bytes. Under a two-bit variant, compressed forms cannot be represented and C_bit is always 0, so the two cases never both arise; but a decoder that reuses step 2 unmodified would accept a 116-byte string with C_bit set and interpret it as a compressed point on E'. An implementation of such a variant would have to reject a nonzero C_bit before the length-based determination in step 2. An encoding with a dedicated leading byte (<a href="#bn462-leading-byte" class="auto internal xref">Appendix E.4</a>) does not have this hazard, because the type byte separates the two cases structurally.<a href="#appendix-E.3-2" class="pilcrow">¶</a></p>
 <p id="appendix-E.3-3">The variant would also forgo point compression, which is the form most protocols transmit. No implementation of it was found.<a href="#appendix-E.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -4914,7 +4913,7 @@ kappa = r  (deserialization returns INVALID)
           <tr>
             <td class="text-center" rowspan="1" colspan="1">Library</td>
             <td class="text-center" rowspan="1" colspan="1">RELIC</td>
-            <td class="text-center" rowspan="1" colspan="1">BN256D</td>
+            <td class="text-center" rowspan="1" colspan="1">BN256R</td>
           </tr>
           <tr>
             <td class="text-center" rowspan="1" colspan="1">Library</td>
@@ -5029,7 +5028,7 @@ kappa = r  (deserialization returns INVALID)
 </address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Riad S. Wahby</span></div>
-<div dir="auto" class="left"><span class="org">Stanford University</span></div>
+<div dir="auto" class="left"><span class="org">Carnegie Mellon University</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:rsw@cs.stanford.edu" class="email">rsw@cs.stanford.edu</a>

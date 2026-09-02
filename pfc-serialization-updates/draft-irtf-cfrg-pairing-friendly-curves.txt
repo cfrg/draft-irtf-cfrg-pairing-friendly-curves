@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 5 March 2027                                           R. Wahby
-                                                     Stanford University
-                                                        1 September 2026
+Expires: 6 March 2027                                           R. Wahby
+                                              Carnegie Mellon University
+                                                        2 September 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 March 2027.
+   This Internet-Draft will expire on 6 March 2027.
 
 Copyright Notice
 
@@ -299,12 +299,12 @@ Table of Contents
    A solution (x,y) to the equation E can be thought of as a point on
    the corresponding curve.  For a natural number n, we define the set
    of (GF(q^n))-rational points of E, denoted by E(GF(q^n)), to be the
-   set of all solutions (x,y) in GF(q^k), together with a 'point at
+   set of all solutions (x,y) in GF(q^n), together with a 'point at
    infinity' O_E, which is defined to lie on every vertical line passing
    through the curve E.
 
-   The set E(GF(q^k)) forms a group under a group law that can be
-   defined geometrically as follows.  For P and Q in E(GF(q^k)) define P
+   The set E(GF(q^n)) forms a group under a group law that can be
+   defined geometrically as follows.  For P and Q in E(GF(q^n)) define P
    + Q to be the reflection around the x-axis of the unique third point
    R of intersection of the straight line passing through P and Q with
    the curve E.  If the straight line is tangent to E, we say that it
@@ -685,28 +685,28 @@ Table of Contents
    suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively
    given from the initials of the first author's name of the proposed
    paper and the library's name mcl.  Kyushu University published a
-   library that supports the BLS48-581 [BLS48].  The University of
-   Tsukuba Elliptic Curve and Pairing Library (TEPLA) [TEPLA] supports
-   two BN curves, BN254N and BN254 proposed by Beuchat et al.
-   [BGMORT10] (named BN254B).  The suffix 'B' of BN254B is given from
-   the initials of the first author's name of the proposed paper.  Intel
-   published a cryptographic library named Intel Integrated Performance
-   Primitives (Intel-IPP) [Intel-IPP] and the library supports BN256I.
+   library that supports BLS48-581 [BLS48].  The University of Tsukuba
+   Elliptic Curve and Pairing Library (TEPLA) [TEPLA] supports two BN
+   curves, BN254N and BN254 proposed by Beuchat et al.  [BGMORT10]
+   (named BN254B).  The suffix 'B' of BN254B is given from the initials
+   of the first author's name of the proposed paper.  Intel published a
+   cryptographic library named Intel Integrated Performance Primitives
+   (Intel-IPP) [Intel-IPP] and the library supports BN256I.
 
    [RELIC] uses various types of pairing-friendly curves including six
    BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where
    BN256R and BN382R are RELIC specific parameters that are different
-   from BN254B, BN256I, BN256D, and BN382M.  The suffix 'R' of BN256R
-   and BN382R is given from the initials of the library's name RELIC.
-   In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446,
-   BLS12-455, BLS12-638, BLS24-477, and BLS48-575 [MAF19]), a Cocks-
-   Pinch curve of embedding degree 8 with 544-bit p (named CP8-544)
-   [GMT19], pairing-friendly curves constructed by Scott et al.  [SG19]
-   based on Kachisa-Scott-Schaefer curves with embedding degree 54 with
-   569-bit p (named K54-569) [MAF19], a KSS curve [KSS08] of embedding
-   degree 18 with 508-bit p (named KSS18-508) [AFKMR12], Optimal TNFS-
-   secure curve [FM19] of embedding degree 8 with 511-bit p (OT8-511),
-   and a supersingular curve [S86] with 1536-bit p (SS-1536).
+   from BN256I, BN256D, and BN382M.  The suffix 'R' of BN256R and BN382R
+   is given from the initials of the library's name RELIC.  In addition,
+   RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455,
+   BLS12-638, BLS24-477, and BLS48-575 [MAF19]), a Cocks-Pinch curve of
+   embedding degree 8 with 544-bit p (named CP8-544) [GMT19], pairing-
+   friendly curves constructed by Scott et al.  [SG19] based on Kachisa-
+   Scott-Schaefer curves with embedding degree 54 with 569-bit p (named
+   K54-569) [MAF19], a KSS curve [KSS08] of embedding degree 18 with
+   508-bit p (named KSS18-508) [AFKMR12], Optimal TNFS-secure curve
+   [FM19] of embedding degree 8 with 511-bit p (OT8-511), and a
+   supersingular curve [S86] with 1536-bit p (SS-1536).
 
    MIRACL Core [MIRACL] (the successor to the Apache Milagro Crypto
    Library (AMCL) [AMCL]) supports five BLS curves (BLS12-381,
@@ -744,8 +744,10 @@ Table of Contents
    The survey in Section 4.1 shows a lot of cases of adopting BN and BLS
    curves.  Among them, BLS12-381 and BN462 match our selection policy.
    In particular, the one that best matches the policy is BLS12-381 from
-   the viewpoint of "widely used" and "efficiency", so we introduce the
-   parameters of BLS12-381 in this memo.
+   the viewpoint of "widely used": as Section 4 states, its adoption in
+   production deployments is what makes it the one exception to the
+   preference for margin.  We therefore introduce the parameters of
+   BLS12-381 in this memo.
 
    On the other hand, from the viewpoint of the future use, the
    parameter of BN462 is also introduced.  As shown in recent security
@@ -788,8 +790,7 @@ Table of Contents
 
    psi(x', y') = (x' / w^2, y' / w^3)
 
-   where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in
-   Section 4.2.1, Paragraph 5.
+   where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower given above.
 
    We have to note that the security level of this pairing is expected
    to be 126 rather than 128 bits [GMT19].
@@ -890,8 +891,7 @@ Table of Contents
 
    psi(x', y') = (x' * w^2, y' * w^3)
 
-   where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in
-   Section 4.2.2, Paragraph 4.
+   where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower given above.
 
    We have to note that BN462 is significantly slower than BLS12-381,
    but has a 134-bit security level [GMT19], so may be more resistant to
@@ -1003,10 +1003,10 @@ Table of Contents
    psi(x', y') = (x' * xi^2, y' * xi^3)
 
    where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of
-   the twist coefficient b' = -1 / w, per the tower defined in
-   Section 4.3, Paragraph 5.  Concretely: u in GF(p^2) satisfies u^2 =
-   -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so
-   s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
+   the twist coefficient b' = -1 / w, per the tower given above.
+   Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in
+   GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 =
+   u^6 * s^6 = (-1) * w = -w.
 
    We then give the parameters for BLS48-581 as follows.
 
@@ -2363,11 +2363,11 @@ Appendix A.  Computing the Optimal Ate Pairing
    end if
    return (l * (x - x_1) + y_1 - y);
 
-   When implementing the line function, implementers should consider the
-   isomorphism of E and its twist curve E' so that one can reduce the
-   computational cost of operations in G_2 [CLN09] [KIK17].  We note
-   that Line_function does not consider such an isomorphism; i.e., the
-   above pseudocode operates on coordinates in untwisted form.
+   When implementing the line function, the isomorphism of E and its
+   twist curve E' can be used to reduce the computational cost of
+   operations in G_2 [CLN09] [KIK17].  We note that Line_function does
+   not consider such an isomorphism; i.e., the above pseudocode operates
+   on coordinates in untwisted form.
 
    The computation of the optimal ate pairing uses the p-power Frobenius
    endomorphism pi of Section 2.2, applied to Q = (x, y) in G_2, that
@@ -2493,11 +2493,12 @@ Appendix C.  Test Vectors of Optimal Ate Pairing
    twisted form, that is, as the corresponding points of G'_2, with
    coordinates in GF(p^(k/d)), which gives a compact representation.
    The pseudocode in Appendix A operates on points of the untwisted
-   curve E(GF(p^k)).  Implementations invoking that pseudocode directly
-   must first apply the untwist isomorphism psi defined in Section 4 to
-   lift Q from E' to E(GF(p^k)).  Most existing libraries perform this
-   lifting implicitly by using twisted-form variants of Line_function,
-   which are mathematically equivalent and more efficient.
+   curve E(GF(p^k)).  An implementation invoking that pseudocode
+   directly has to apply the untwist isomorphism psi defined in
+   Section 4 first, to lift Q from E' to E(GF(p^k)).  Most existing
+   libraries perform this lifting implicitly by using twisted-form
+   variants of Line_function, which are mathematically equivalent and
+   more efficient.
 
    For BLS12-381 and BN462, Q = (x', y') is given by
 
@@ -3068,6 +3069,13 @@ D.1.  BLS12-381 Points
    compressed, and 192 zero bytes with the leading byte set to 0x40 when
    uncompressed.
 
+      Note: the point values above are the second entry of each of the
+      valid test vector files distributed with [zkcrypto-bls12-381],
+      whose first entry is the identity; they have been compared byte
+      for byte.  The uncompressed values are derived from the same
+      coordinates by the procedure of Section 5.3, and have been checked
+      to deserialize back to those coordinates.
+
 D.2.  BLS48-581 Points
 
    G_1 (BP), compressed (73 bytes):
@@ -3154,17 +3162,10 @@ D.2.  BLS48-581 Points
    compressed, and 1168 zero bytes with the leading byte set to 0x40
    when uncompressed.
 
-      Note: the BLS12-381 point values above are the second entry of
-      each of the valid test vector files distributed with
-      [zkcrypto-bls12-381], whose first entry is the identity; they have
-      been compared byte for byte.  The uncompressed values are derived
-      from the same coordinates by the procedure of Section 5.3, and
-      have been checked to deserialize back to those coordinates.  The
-      BLS48-581 values are newly computed for this document by applying
-      the sign_GF_p^8 function of
+      Note: the point values above are newly computed for this document
+      by applying the sign_GF_p^8 function of
       [I-D.ietf-cose-bls-key-representations] to the BP' coordinates in
-      Section 4; independent cross-validation from COSE/BBS implementers
-      is welcome ahead of RGLC.
+      Section 4.
 
 D.3.  Scalars
 
@@ -3265,36 +3266,30 @@ E.2.  Encodings Used by Existing Implementations
    [noble-curves] and [arkworks], each of which does implement
    BLS12-381.  The following do provide it:
 
-   +================+============+==========+============+=============+
-   | Implementation |G_1         |G_1       |Metadata    |Coordinate   |
-   |                |uncompressed|compressed|placement   |byte order   |
-   +================+============+==========+============+=============+
-   | [MIRACL]       |117 bytes   |59 bytes  |[SEC1] type |big-endian   |
-   |                |            |          |byte (0x04  |             |
-   |                |            |          |/ 0x02 /    |             |
-   |                |            |          |0x03)       |             |
-   +----------------+------------+----------+------------+-------------+
-   | [pfcurve-js]   |117 bytes   |59 bytes  |[SEC1] type |big-endian   |
-   |                |            |          |byte (0x04  |             |
-   |                |            |          |/ 0x02 /    |             |
-   |                |            |          |0x03)       |             |
-   +----------------+------------+----------+------------+-------------+
-   | [zig-pairings] |117 bytes   |59 bytes  |dedicated   |big-endian   |
-   |                |            |          |flag byte,  |             |
-   |                |            |          |see         |             |
-   |                |            |          |Appendix    |             |
-   |                |            |          |E.4         |             |
-   +----------------+------------+----------+------------+-------------+
-   | [mcl]          |116 bytes   |58 bytes  |none /      |little-endian|
-   |                |            |          |packed into |by default   |
-   |                |            |          |the         |             |
-   |                |            |          |coordinate  |             |
-   +----------------+------------+----------+------------+-------------+
+    +================+==========+====================+===============+
+    | Implementation | G_1 size | Metadata placement | Byte order    |
+    +================+==========+====================+===============+
+    | [MIRACL]       | 117 / 59 | [SEC1] type byte   | big-endian    |
+    |                | bytes    |                    |               |
+    +----------------+----------+--------------------+---------------+
+    | [pfcurve-js]   | 117 / 59 | [SEC1] type byte   | big-endian    |
+    |                | bytes    |                    |               |
+    +----------------+----------+--------------------+---------------+
+    | [zig-pairings] | 117 / 59 | dedicated flag     | big-endian    |
+    |                | bytes    | byte               |               |
+    +----------------+----------+--------------------+---------------+
+    | [mcl]          | 116 / 58 | none / packed into | little-endian |
+    |                | bytes    | the coordinate     |               |
+    +----------------+----------+--------------------+---------------+
 
-                                  Table 4
+                                 Table 4
 
-   For [MIRACL] and [zig-pairings], the corresponding G'_2 sizes are 233
-   bytes uncompressed and 117 bytes compressed.
+   Sizes are given as uncompressed / compressed, for G_1.  For [MIRACL]
+   and [zig-pairings], the corresponding G'_2 sizes are 233 bytes
+   uncompressed and 117 bytes compressed.  The [SEC1] type byte is 0x04
+   for an uncompressed point and 0x02 or 0x03 for a compressed one; the
+   dedicated flag byte is described in Appendix E.4.  The byte order
+   given for [mcl] is its default.
 
    Both leading-byte forms leave the coordinate encoding of Section 5.3
    untouched: [MIRACL] writes the coefficients of a GF(p^2) coordinate
@@ -3336,7 +3331,7 @@ E.3.  Alternative Considered: Two Metadata Bits
    masking two metadata bits instead of three, rather than by acquiring
    a second, leading-byte parser used only for BN462.
 
-   It carries a pitfall. step 2 of Section 5.4 determines the curve
+   It carries a pitfall.  Step 2 of Section 5.4 determines the curve
    jointly from C_bit and the length of the string.  For BN462 (n = 58,
    and E' represented over GF(p^2)), an uncompressed point on E and a
    compressed point on E' both occupy 116 bytes.  Under a two-bit
@@ -3430,7 +3425,7 @@ Appendix F.  Adoption Status of Pairing-Friendly Curves with the 100-bit
           +-------------+-----------+--------------------------+
           |   Library   |   RELIC   |          BN254N          |
           +-------------+-----------+--------------------------+
-          |   Library   |   RELIC   |          BN256D          |
+          |   Library   |   RELIC   |          BN256R          |
           +-------------+-----------+--------------------------+
           |   Library   |    AMCL   |          BN254N          |
           +-------------+-----------+--------------------------+
@@ -3503,5 +3498,5 @@ Authors' Addresses
 
 
    Riad S. Wahby
-   Stanford University
+   Carnegie Mellon University
    Email: rsw@cs.stanford.edu
