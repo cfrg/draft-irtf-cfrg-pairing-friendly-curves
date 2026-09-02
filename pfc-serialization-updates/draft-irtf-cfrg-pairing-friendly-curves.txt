@@ -3074,7 +3074,11 @@ D.1.  BLS12-381 Points
       whose first entry is the identity; they have been compared byte
       for byte.  The uncompressed values are derived from the same
       coordinates by the procedure of Section 5.3, and have been checked
-      to deserialize back to those coordinates.
+      to deserialize back to those coordinates.  The same strings have
+      also been checked against [blst] and [gnark-crypto]: each
+      deserializes to the coordinates given in Section 4.2.1 and
+      serializes back to the same bytes.  The BLS12-381 scalars of
+      Appendix D.3 were checked against the same two implementations.
 
 D.2.  BLS48-581 Points
 
