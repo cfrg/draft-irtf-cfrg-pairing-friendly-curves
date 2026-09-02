@@ -26,7 +26,7 @@ author:
   -
     ins: R. Wahby
     name: Riad S. Wahby
-    org: Stanford University
+    org: Carnegie Mellon University
     email: rsw@cs.stanford.edu
 
 --- abstract
