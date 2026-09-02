@@ -94,9 +94,9 @@ E : y^2 = x^3 + a * x + b,
 
 and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q. This is called the Weierstrass normal form of an elliptic curve.
 
-A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number n, we define the set of (GF(q^n))-rational points of E, denoted by E(GF(q^n)), to be the set of all solutions (x,y) in GF(q^k), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.
+A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number n, we define the set of (GF(q^n))-rational points of E, denoted by E(GF(q^n)), to be the set of all solutions (x,y) in GF(q^n), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.
 
-The set E(GF(q^k)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^k)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied.
+The set E(GF(q^n)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^n)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied.
 
 ## Pairings  {#pairing}
 
@@ -272,7 +272,7 @@ PBC is a library for pairing-based cryptography published by Stanford University
 
 {{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12-381 {{GMT19}}. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications {{libsnark}}, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports the BLS48-581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
 
-{{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN254B, BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG19}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
+{{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG19}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
 
 MIRACL Core {{MIRACL}} (the successor to the Apache Milagro Crypto Library (AMCL) {{AMCL}}) supports five BLS curves (BLS12-381, BLS12-461, BLS24-479, BLS48-556, and BLS48-581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).
 
@@ -321,7 +321,7 @@ The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^2)), maps into
 psi(x', y') = (x' / w^2, y' / w^3)
 ~~~~~~~~~~
 
-where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower defined in {{tower_bls12_381}}.
+where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower given above.
 
 We have to note that the security level of this pairing is expected to be 126 rather than 128 bits {{GMT19}}.
 
@@ -428,7 +428,7 @@ The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^2)), maps into
 psi(x', y') = (x' * w^2, y' * w^3)
 ~~~~~~~~~~
 
-where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower defined in {{tower_bn462}}.
+where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower given above.
 
 We have to note that BN462 is significantly slower than BLS12-381, but has a 134-bit security level {{GMT19}}, so may be more resistant to future small improvements to the exTNFS attack.
 
@@ -538,7 +538,7 @@ The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^8)), maps into
 psi(x', y') = (x' * xi^2, y' * xi^3)
 ~~~~~~~~~~
 
-where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of the twist coefficient b' = -1 / w, per the tower defined in {{tower_bls48_581}}. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
+where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of the twist coefficient b' = -1 / w, per the tower given above. Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 = u^6 * s^6 = (-1) * w = -w.
 
 We then give the parameters for BLS48-581 as follows.
 
@@ -2969,6 +2969,8 @@ Identity on E: 48 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit
 
 Identity on E': 96 zero bytes with the leading byte set to 0xc0 when compressed, and 192 zero bytes with the leading byte set to 0x40 when uncompressed.
 
+> Note: the point values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates.
+
 ## BLS48-581 Points  {#bls48-581-point-test-vectors}
 
 G_1 (BP), compressed (73 bytes):
@@ -3059,7 +3061,7 @@ Identity on E: 73 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit
 
 Identity on E': 584 zero bytes with the leading byte set to 0xc0 when compressed, and 1168 zero bytes with the leading byte set to 0x40 when uncompressed.
 
-> Note: the BLS12-381 point values above are the second entry of each of the valid test vector files distributed with {{zkcrypto-bls12-381}}, whose first entry is the identity; they have been compared byte for byte. The uncompressed values are derived from the same coordinates by the procedure of {{point-serialization-procedure}}, and have been checked to deserialize back to those coordinates. The BLS48-581 values are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
+> Note: the point values above are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
 
 ## Scalars  {#scalar-test-vectors}
 
@@ -3130,14 +3132,14 @@ The same criterion appears in implementations. {{MIRACL}} selects between two po
 
 Few libraries implement BN462 at all. Among those surveyed for this document, it is absent from {{RELIC}}, {{blst}}, {{gnark-crypto}}, {{noble-curves}} and {{arkworks}}, each of which does implement BLS12-381. The following do provide it:
 
-| Implementation | G_1 uncompressed | G_1 compressed | Metadata placement | Coordinate byte order |
-|---|---|---|---|---|
-| {{MIRACL}} | 117 bytes | 59 bytes | {{SEC1}} type byte (0x04 / 0x02 / 0x03) | big-endian |
-| {{pfcurve-js}} | 117 bytes | 59 bytes | {{SEC1}} type byte (0x04 / 0x02 / 0x03) | big-endian |
-| {{zig-pairings}} | 117 bytes | 59 bytes | dedicated flag byte, see {{bn462-leading-byte}} | big-endian |
-| {{mcl}} | 116 bytes | 58 bytes | none / packed into the coordinate | little-endian by default |
+| Implementation | G_1 size | Metadata placement | Byte order |
+|---|---|---|---|
+| {{MIRACL}} | 117 / 59 bytes | {{SEC1}} type byte | big-endian |
+| {{pfcurve-js}} | 117 / 59 bytes | {{SEC1}} type byte | big-endian |
+| {{zig-pairings}} | 117 / 59 bytes | dedicated flag byte | big-endian |
+| {{mcl}} | 116 / 58 bytes | none / packed into the coordinate | little-endian |
 
-For {{MIRACL}} and {{zig-pairings}}, the corresponding G'_2 sizes are 233 bytes uncompressed and 117 bytes compressed.
+Sizes are given as uncompressed / compressed, for G_1. For {{MIRACL}} and {{zig-pairings}}, the corresponding G'_2 sizes are 233 bytes uncompressed and 117 bytes compressed. The {{SEC1}} type byte is 0x04 for an uncompressed point and 0x02 or 0x03 for a compressed one; the dedicated flag byte is described in {{bn462-leading-byte}}. The byte order given for {{mcl}} is its default.
 
 Both leading-byte forms leave the coordinate encoding of {{point-serialization-procedure}} untouched: {{MIRACL}} writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does {{zig-pairings}}. The two differ only in what the leading byte means. Note that {{SEC1}} itself defines point encoding over GF(p) and GF(2^m) only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of {{point-serialization-procedure}} rather than {{SEC1}} as written.
 
@@ -3149,7 +3151,7 @@ Two observations follow. First, the implementations that support BN462 and do no
 
 S_bit is meaningful only for compressed points (see step 1 of {{point-serialization-procedure}}). An encoding restricted to uncompressed points therefore needs only C_bit and I_bit, which fit in the two spare bits that BN462 does have. The appeal of such an encoding is that BN462 would remain within the same bit-packing family as the other two curves: a decoder written for BLS12-381 could be extended to BN462 by masking two metadata bits instead of three, rather than by acquiring a second, leading-byte parser used only for BN462.
 
-It carries a pitfall. step 2 of {{point-deserialization-procedure}} determines the curve jointly from C_bit and the length of the string. For BN462 (n = 58, and E' represented over GF(p^2)), an uncompressed point on E and a compressed point on E' both occupy 116 bytes. Under a two-bit variant, compressed forms cannot be represented and C_bit is always 0, so the two cases never both arise; but a decoder that reuses step 2 unmodified would accept a 116-byte string with C_bit set and interpret it as a compressed point on E'. An implementation of such a variant would have to reject a nonzero C_bit before the length-based determination in step 2. An encoding with a dedicated leading byte ({{bn462-leading-byte}}) does not have this hazard, because the type byte separates the two cases structurally.
+It carries a pitfall. Step 2 of {{point-deserialization-procedure}} determines the curve jointly from C_bit and the length of the string. For BN462 (n = 58, and E' represented over GF(p^2)), an uncompressed point on E and a compressed point on E' both occupy 116 bytes. Under a two-bit variant, compressed forms cannot be represented and C_bit is always 0, so the two cases never both arise; but a decoder that reuses step 2 unmodified would accept a 116-byte string with C_bit set and interpret it as a compressed point on E'. An implementation of such a variant would have to reject a nonzero C_bit before the length-based determination in step 2. An encoding with a dedicated leading byte ({{bn462-leading-byte}}) does not have this hazard, because the type byte separates the two cases structurally.
 
 The variant would also forgo point compression, which is the form most protocols transmit. No implementation of it was found.
 
@@ -3184,7 +3186,7 @@ BN curves including BN254 that were estimated as the 128-bit security level befo
 | Library | TEPLA | BN254B |
 | Library | TEPLA | BN254N |
 | Library | RELIC | BN254N |
-| Library | RELIC | BN256D |
+| Library | RELIC | BN256R |
 | Library | AMCL | BN254N |
 | Library | AMCL | BN254CX |
 | Library | AMCL | BN256I |
