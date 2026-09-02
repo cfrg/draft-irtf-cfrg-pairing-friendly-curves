@@ -270,7 +270,7 @@ Several additional actively maintained libraries support BLS12-381. {{gnark-cryp
 
 PBC is a library for pairing-based cryptography published by Stanford University that supports BN curves, MNT curves, Freeman curves, and supersingular curves {{PBC}}. Users can generate pairing parameters by using PBC and use pairing operations with the generated parameters.
 
-{{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12-381 {{GMT19}}. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications {{libsnark}}, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports the BLS48-581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
+{{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12-381 {{GMT19}}. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications {{libsnark}}, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports BLS48-581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
 
 {{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG19}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
 
@@ -288,7 +288,7 @@ Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is 
 
 ## For 128-bit Security  {#for-128-bits-of-security}
 
-The survey in {{impl}} shows a lot of cases of adopting BN and BLS curves. Among them, BLS12-381 and BN462 match our selection policy. In particular, the one that best matches the policy is BLS12-381 from the viewpoint of "widely used" and "efficiency", so we introduce the parameters of BLS12-381 in this memo.
+The survey in {{impl}} shows a lot of cases of adopting BN and BLS curves. Among them, BLS12-381 and BN462 match our selection policy. In particular, the one that best matches the policy is BLS12-381 from the viewpoint of "widely used": as {{secure_params}} states, its adoption in production deployments is what makes it the one exception to the preference for margin. We therefore introduce the parameters of BLS12-381 in this memo.
 
 On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced. As shown in recent security evaluations for BLS12-381 {{BD18}} {{GMT19}}, its security level is close to 128 bits but less than 128 bits. If the attack is improved even a little, BLS12-381 will not be suitable for the curve of the 128-bit security level. As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
 
@@ -2112,7 +2112,7 @@ end if
 return (l * (x - x_1) + y_1 - y);
 ~~~~~~~~~~
 
-When implementing the line function, implementers should consider the isomorphism of E and its twist curve E' so that one can reduce the computational cost of operations in G_2 {{CLN09}} {{KIK17}}. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.
+When implementing the line function, the isomorphism of E and its twist curve E' can be used to reduce the computational cost of operations in G_2 {{CLN09}} {{KIK17}}. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.
 
 The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of {{pairing}}, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).
 
@@ -2200,7 +2200,7 @@ Standard references for the hard-part addition chain include {{SBCK09}} (the ori
 
 We provide test vectors for Optimal Ate Pairing e(P, Q) given in {{comp_pairing}} for the curves BLS12-381, BN462 and BLS48-581 given in {{secure_params}}. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in {{secure_params}}.
 
-Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in {{comp_pairing}} operates on points of the untwisted curve E(GF(p^k)). Implementations invoking that pseudocode directly must first apply the untwist isomorphism psi defined in {{secure_params}} to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
+Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in {{comp_pairing}} operates on points of the untwisted curve E(GF(p^k)). An implementation invoking that pseudocode directly has to apply the untwist isomorphism psi defined in {{secure_params}} first, to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
 
 For BLS12-381 and BN462, Q = (x', y') is given by
 
@@ -3061,7 +3061,7 @@ Identity on E: 73 zero bytes with the leading byte set to 0xc0 (C_bit = 1, I_bit
 
 Identity on E': 584 zero bytes with the leading byte set to 0xc0 when compressed, and 1168 zero bytes with the leading byte set to 0x40 when uncompressed.
 
-> Note: the point values above are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}; independent cross-validation from COSE/BBS implementers is welcome ahead of RGLC.
+> Note: the point values above are newly computed for this document by applying the sign_GF_p^8 function of {{I-D.ietf-cose-bls-key-representations}} to the BP' coordinates in {{secure_params}}.
 
 ## Scalars  {#scalar-test-vectors}
 
