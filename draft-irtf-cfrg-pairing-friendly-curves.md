@@ -266,13 +266,13 @@ There are a lot of cryptographic libraries that support pairing calculations.
 
 {{blst}} is a high-performance pairing library maintained by Supranational. It supports BLS12-381 and is used in production by Ethereum consensus clients, Filecoin, and other applications.
 
-Several additional actively maintained libraries support BLS12-381. {{gnark-crypto}}, developed by Consensys, supports BLS12-381, BN254, BLS12-377, BLS24-315, and BW6-761. {{noble-curves}} is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381. The arkworks ecosystem {{arkworks}} provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN254. {{constantine}} is a cryptographic library written in Nim that supports BLS12-381, BN254, BLS12-377, and BW6-761. {{CIRCL}} is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. {{zkcrypto}} is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381.
+Several additional actively maintained libraries support BLS12-381. {{gnark-crypto}}, developed by Consensys, supports BLS12-381, BN_SNARK1, BLS12-377, BLS24-315, and BW6-761. {{noble-curves}} is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381 and BN_SNARK1. The arkworks ecosystem {{arkworks}} provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN_SNARK1. {{constantine}} is a cryptographic library written in Nim that supports BLS12-381, BN254N, BN_SNARK1, BLS12-377, and BW6-761. {{CIRCL}} is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. {{zkcrypto}} is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381. These libraries name BN_SNARK1 after the size of its field, as bn254; {{EIP197}} calls the same curve alt_bn128.
 
 PBC is a library for pairing-based cryptography published by Stanford University that supports BN curves, MNT curves, Freeman curves, and supersingular curves {{PBC}}. Users can generate pairing parameters by using PBC and use pairing operations with the generated parameters.
 
 {{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12-381 {{GMT19}}. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications {{libsnark}}, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports BLS48-581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
 
-{{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG19}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
+{{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG18}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
 
 MIRACL Core {{MIRACL}} (the successor to the Apache Milagro Crypto Library (AMCL) {{AMCL}}) supports five BLS curves (BLS12-381, BLS12-461, BLS24-479, BLS48-556, and BLS48-581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).
 
@@ -284,7 +284,7 @@ The Celo foundation published the bls12377js library {{bls12377js}}. The support
 
 Zcash uses BN_SNARK1 in their library {{libsnark}}. In response to the exTNFS attacks, they proposed new parameters using the BLS12-381 curve {{BLS12-381}} {{GMT19}} and published its implementation {{zkcrypto}}.
 
-Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is also specified as an Ethereum precompile contract in EIP-2537 {{EIP2537}}, enabling on-chain pairing operations. {{Filecoin}} uses BLS12-381 via the blst library {{blst}}. Chia Network published their implementation {{Chia}}, which uses the blst library {{blst}}. DFINITY uses mcl, and Algorand published an implementation which supports BLS12-381.
+Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is also specified as an Ethereum precompile contract in EIP-2537 {{EIP2537}}, enabling on-chain pairing operations. {{Filecoin}} uses BLS12-381 via the blst library {{blst}}. Chia Network published their implementation {{Chia}}, which uses the blst library {{blst}}. DFINITY uses mcl, and Algorand published an implementation {{go-algorand}} whose virtual machine provides curve operations and a pairing check for BLS12-381 and for BN_SNARK1. The pairing check on BN_SNARK1 is also available on Ethereum, as the precompiled contract of {{EIP197}}.
 
 ## For 128-bit Security  {#for-128-bits-of-security}
 
@@ -1192,7 +1192,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
 
         <reference anchor="bls12377js" target="https://github.com/celo-org/bls12377js">
           <front>
-            <title>bls12377js</title>
+            <title>bls12377js: TypeScript implementation of BLS12-377-based Proofs of Possession</title>
             <author>
               <organization>The Celo Foundation</organization>
             </author>
@@ -1265,7 +1265,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
             <date year="2010" />
           </front>
         </reference>
-        <reference anchor="M-Pin" target="https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-zero-knowledge-authentication-protocol">
+        <reference anchor="M-Pin" target="https://miracl.com/blog/m-pin-a-multi-factor-zero-knowledge-authentication-protocol/">
           <front>
             <title>M-Pin: A Multi-Factor Zero Knowledge Authentication Protocol</title>
             <author initials="M." surname="Scott">
@@ -1349,7 +1349,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
           </front>
         </reference>
 
-        <reference anchor="Zcash" target="https://z.cash/technology/zksnarks/">
+        <reference anchor="Zcash" target="https://z.cash/learn/what-are-zk-snarks/">
           <front>
             <title>What are zk-SNARKs?</title>
             <author>
@@ -1407,11 +1407,11 @@ Tsunekazu Saito was a co-author of this document from its first version through 
         </reference>
         <reference anchor="Algorand" target="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">
           <front>
-            <title>Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains</title>
+            <title>Pixel-signatures: Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains</title>
             <author initials="S." surname="Gorbunov">
               <organization />
             </author>
-            <date />
+            <date year="2019" month="March" day="7" />
           </front>
         </reference>
         <reference anchor="Chia" target="https://github.com/Chia-Network/bls-signatures">
@@ -1704,7 +1704,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
           </front>
         </reference>
 
-        <reference anchor="SG19" target="https://eprint.iacr.org/2018/193.pdf">
+        <reference anchor="SG18" target="https://eprint.iacr.org/2018/193.pdf">
           <front>
             <title>A New Family of Pairing-Friendly elliptic curves</title>
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2018/193" />
@@ -1714,7 +1714,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
             <author initials="A." surname="Guillevic">
               <organization />
             </author>
-            <date year="2019" />
+            <date year="2018" />
           </front>
         </reference>
 
@@ -1900,7 +1900,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
           </front>
         </reference>
 
-        <reference anchor="AdjointLib" target="https://github.com/adjoint-io/pairing">
+        <reference anchor="AdjointLib" target="https://github.com/sdiehl/pairing">
           <front>
             <title>Optimised bilinear pairings over elliptic curves</title>
             <author>
@@ -1990,13 +1990,36 @@ Tsunekazu Saito was a co-author of this document from its first version through 
           </front>
         </reference>
 
-        <reference anchor="Filecoin" target="https://filecoin.io">
+        <reference anchor="Filecoin" target="https://research.protocol.ai/publications/filecoin-a-decentralized-storage-network/">
           <front>
             <title>Filecoin: A Decentralized Storage Network</title>
             <author>
               <organization>Protocol Labs</organization>
             </author>
             <date year="2017" />
+          </front>
+        </reference>
+
+        <reference anchor="EIP197" target="https://eips.ethereum.org/EIPS/eip-197">
+          <front>
+            <title>EIP-197: Precompiled contracts for optimal ate pairing check on the elliptic curve alt_bn128</title>
+            <author initials="V." surname="Buterin">
+              <organization />
+            </author>
+            <author initials="C." surname="Reitwiessner">
+              <organization />
+            </author>
+            <date year="2017" month="February" />
+          </front>
+        </reference>
+
+        <reference anchor="go-algorand" target="https://github.com/algorand/go-algorand">
+          <front>
+            <title>go-algorand: Algorand's official implementation in Go</title>
+            <author>
+              <organization>Algorand</organization>
+            </author>
+            <date year="2018" />
           </front>
         </reference>
 
@@ -3199,7 +3222,15 @@ BN curves including BN254 that were estimated as the 128-bit security level befo
 | Library | Adjoint | BN254N |
 | Library | Adjoint | BN254S1 |
 | Library | Adjoint | BN254S2 |
+| Library | libsnark | BN_SNARK1 |
+| Library | gnark-crypto | BN_SNARK1 |
+| Library | arkworks | BN_SNARK1 |
+| Library | noble-curves | BN_SNARK1 |
+| Library | constantine | BN254N |
+| Library | constantine | BN_SNARK1 |
 | Application | Zcash | BN_SNARK1 |
+| Application | Ethereum | BN_SNARK1 |
+| Application | Algorand | BN_SNARK1 |
 | Application | DFINITY | BN254N |
 | Application | DFINITY | BN_SNARK1 |
 
