@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 6 March 2027                                           R. Wahby
+Expires: 11 March 2027                                          R. Wahby
                                               Carnegie Mellon University
-                                                        2 September 2026
+                                                        7 September 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 March 2027.
+   This Internet-Draft will expire on 11 March 2027.
 
 Copyright Notice
 
@@ -662,16 +662,19 @@ Table of Contents
    Ethereum consensus clients, Filecoin, and other applications.
 
    Several additional actively maintained libraries support BLS12-381.
-   [gnark-crypto], developed by Consensys, supports BLS12-381, BN254,
-   BLS12-377, BLS24-315, and BW6-761. [noble-curves] is a JavaScript/
-   TypeScript library by Paul Miller supporting BLS12-381.  The arkworks
-   ecosystem [arkworks] provides Rust crates for pairing-friendly curves
-   used in zero-knowledge proof systems, including BLS12-381 and BN254.
-   [constantine] is a cryptographic library written in Nim that supports
-   BLS12-381, BN254, BLS12-377, and BW6-761.  [CIRCL] is the Cloudflare
-   Interoperable, Reusable Cryptographic Library and includes support
-   for BLS12-381. [zkcrypto] is a collection of Rust crates for zero-
-   knowledge cryptography supporting BLS12-381.
+   [gnark-crypto], developed by Consensys, supports BLS12-381,
+   BN_SNARK1, BLS12-377, BLS24-315, and BW6-761. [noble-curves] is a
+   JavaScript/TypeScript library by Paul Miller supporting BLS12-381 and
+   BN_SNARK1.  The arkworks ecosystem [arkworks] provides Rust crates
+   for pairing-friendly curves used in zero-knowledge proof systems,
+   including BLS12-381 and BN_SNARK1. [constantine] is a cryptographic
+   library written in Nim that supports BLS12-381, BN254N, BN_SNARK1,
+   BLS12-377, and BW6-761.  [CIRCL] is the Cloudflare Interoperable,
+   Reusable Cryptographic Library and includes support for BLS12-381.
+   [zkcrypto] is a collection of Rust crates for zero-knowledge
+   cryptography supporting BLS12-381.  These libraries name BN_SNARK1
+   after the size of its field, as bn254; [EIP197] calls the same curve
+   alt_bn128.
 
    PBC is a library for pairing-based cryptography published by Stanford
    University that supports BN curves, MNT curves, Freeman curves, and
@@ -701,7 +704,7 @@ Table of Contents
    RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455,
    BLS12-638, BLS24-477, and BLS48-575 [MAF19]), a Cocks-Pinch curve of
    embedding degree 8 with 544-bit p (named CP8-544) [GMT19], pairing-
-   friendly curves constructed by Scott et al.  [SG19] based on Kachisa-
+   friendly curves constructed by Scott et al.  [SG18] based on Kachisa-
    Scott-Schaefer curves with embedding degree 54 with 569-bit p (named
    K54-569) [MAF19], a KSS curve [KSS08] of embedding degree 18 with
    508-bit p (named KSS18-508) [AFKMR12], Optimal TNFS-secure curve
@@ -736,8 +739,11 @@ Table of Contents
    EIP-2537 [EIP2537], enabling on-chain pairing operations.  [Filecoin]
    uses BLS12-381 via the blst library [blst].  Chia Network published
    their implementation [Chia], which uses the blst library [blst].
-   DFINITY uses mcl, and Algorand published an implementation which
-   supports BLS12-381.
+   DFINITY uses mcl, and Algorand published an implementation
+   [go-algorand] whose virtual machine provides curve operations and a
+   pairing check for BLS12-381 and for BN_SNARK1.  The pairing check on
+   BN_SNARK1 is also available on Ethereum, as the precompiled contract
+   of [EIP197].
 
 4.2.  For 128-bit Security
 
@@ -1936,7 +1942,7 @@ Table of Contents
 
    [AdjointLib]
               Adjoint Inc., "Optimised bilinear pairings over elliptic
-              curves", 2018, <https://github.com/adjoint-io/pairing>.
+              curves", 2018, <https://github.com/sdiehl/pairing>.
 
    [AFKMR12]  Aranha, D.F., Fuentes-Castaneda, L., Knapp, E., Menezes,
               A., and F. Rodríguez-Henríquez, "Implementing Pairings at
@@ -1950,9 +1956,10 @@ Table of Contents
               over Ordinary Curves", EUROCRYPT 2011, 2011,
               <https://eprint.iacr.org/2010/526>.
 
-   [Algorand] Gorbunov, S., "Efficient and Secure Digital Signatures for
-              Proof-of-Stake Blockchains", <https://medium.com/algorand/
-              digital-signatures-for-blockchains-5820e15fbe95>.
+   [Algorand] Gorbunov, S., "Pixel-signatures: Efficient and Secure
+              Digital Signatures for Proof-of-Stake Blockchains", 7
+              March 2019, <https://medium.com/algorand/digital-
+              signatures-for-blockchains-5820e15fbe95>.
 
    [AMCL]     The Apache Software Foundation, "The Apache Milagro
               Cryptographic Library (AMCL)", 2016,
@@ -2008,8 +2015,9 @@ Table of Contents
               <https://github.com/mk-math-kyushu/bls48>.
 
    [bls12377js]
-              The Celo Foundation, "bls12377js", 2019,
-              <https://github.com/celo-org/bls12377js>.
+              The Celo Foundation, "bls12377js: TypeScript
+              implementation of BLS12-377-based Proofs of Possession",
+              2019, <https://github.com/celo-org/bls12377js>.
 
    [blst]     Supranational LLC, "blst: BLS12-381 signature library",
               2020, <https://github.com/supranational/blst>.
@@ -2067,6 +2075,11 @@ Table of Contents
    [ECRYPT]   ECRYPT, "Final Report on Main Computational Assumptions in
               Cryptography".
 
+   [EIP197]   Buterin, V. and C. Reitwiessner, "EIP-197: Precompiled
+              contracts for optimal ate pairing check on the elliptic
+              curve alt_bn128", February 2017,
+              <https://eips.ethereum.org/EIPS/eip-197>.
+
    [EIP2537]  Vlasov, A., "EIP-2537: Precompile for BLS12-381 curve
               operations", 2020,
               <https://eips.ethereum.org/EIPS/eip-2537>.
@@ -2093,7 +2106,9 @@ Table of Contents
               20180702.html>.
 
    [Filecoin] Protocol Labs, "Filecoin: A Decentralized Storage
-              Network", 2017, <https://filecoin.io>.
+              Network", 2017,
+              <https://research.protocol.ai/publications/filecoin-a-
+              decentralized-storage-network/>.
 
    [FK18]     Fotiadis, G. and E. Konstantinou, "TNFS Resistant Families
               of Pairing-Friendly Elliptic Curves", Cryptology ePrint
@@ -2122,6 +2137,10 @@ Table of Contents
               Consensys Software Inc., "gnark-crypto: Elliptic curve
               cryptography and pairing library", 2020,
               <https://github.com/consensys/gnark-crypto>.
+
+   [go-algorand]
+              Algorand, "go-algorand: Algorand's official implementation
+              in Go", 2018, <https://github.com/algorand/go-algorand>.
 
    [HHT20]    Hayashida, D., Hayasaka, K., and T. Teruya, "Efficient
               Final Exponentiation via Cyclotomic Structure for Pairings
@@ -2195,8 +2214,8 @@ Table of Contents
 
    [M-Pin]    Scott, M., "M-Pin: A Multi-Factor Zero Knowledge
               Authentication Protocol", July 2019,
-              <https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-
-              zero-knowledge-authentication-protocol>.
+              <https://miracl.com/blog/m-pin-a-multi-factor-zero-
+              knowledge-authentication-protocol/>.
 
    [MAF19]    Mbang, N.B., Aranha, D.F., and E. Fouotsa, "Computing the
               Optimal Ate Pairing over Elliptic Curves with Embedding
@@ -2304,9 +2323,9 @@ Table of Contents
               Elliptic Curve Cryptography", 2009,
               <https://www.secg.org/sec1-v2.pdf>.
 
-   [SG19]     Scott, M. and A. Guillevic, "A New Family of Pairing-
+   [SG18]     Scott, M. and A. Guillevic, "A New Family of Pairing-
               Friendly elliptic curves", Cryptology ePrint
-              Archive Report 2018/193, 2019,
+              Archive Report 2018/193, 2018,
               <https://eprint.iacr.org/2018/193.pdf>.
 
    [TEPLA]    University of Tsukuba, "TEPLA: University of Tsukuba
@@ -2325,7 +2344,7 @@ Table of Contents
               <https://www.w3.org/TR/2019/REC-webauthn-1-20190304/>.
 
    [Zcash]    Zcash, "What are zk-SNARKs?",
-              <https://z.cash/technology/zksnarks/>.
+              <https://z.cash/learn/what-are-zk-snarks/>.
 
    [ZcashRep] Hopwood, D-E., Bowe, S., Hornby, T., and N. Wilcox, "Zcash
               Protocol Specification", Section 5.4.9.2, 2026,
@@ -3408,61 +3427,77 @@ Appendix F.  Adoption Status of Pairing-Friendly Curves with the 100-bit
    Please refer to Section 4.1 for the naming conventions for each
    curve.
 
-          +=============+===========+==========================+
-          |   Category  |    Name   | Supported 100-bit Curves |
-          +=============+===========+==========================+
-          |   Standard  |  ISO/IEC  |          BN256I          |
-          +-------------+-----------+--------------------------+
-          |   Standard  |    TCG    |          BN256I          |
-          +-------------+-----------+--------------------------+
-          |   Standard  |  FIDO/W3C |          BN256I          |
-          +-------------+-----------+--------------------------+
-          |   Standard  |  FIDO/W3C |          BN256D          |
-          +-------------+-----------+--------------------------+
-          |   Library   |    mcl    |          BN254N          |
-          +-------------+-----------+--------------------------+
-          |   Library   |    mcl    |        BN_SNARK1         |
-          +-------------+-----------+--------------------------+
-          |   Library   |   TEPLA   |          BN254B          |
-          +-------------+-----------+--------------------------+
-          |   Library   |   TEPLA   |          BN254N          |
-          +-------------+-----------+--------------------------+
-          |   Library   |   RELIC   |          BN254N          |
-          +-------------+-----------+--------------------------+
-          |   Library   |   RELIC   |          BN256R          |
-          +-------------+-----------+--------------------------+
-          |   Library   |    AMCL   |          BN254N          |
-          +-------------+-----------+--------------------------+
-          |   Library   |    AMCL   |         BN254CX          |
-          +-------------+-----------+--------------------------+
-          |   Library   |    AMCL   |          BN256I          |
-          +-------------+-----------+--------------------------+
-          |   Library   | Intel IPP |          BN256I          |
-          +-------------+-----------+--------------------------+
-          |   Library   |   MIRACL  |          BN254N          |
-          +-------------+-----------+--------------------------+
-          |   Library   |   MIRACL  |         BN254CX          |
-          +-------------+-----------+--------------------------+
-          |   Library   |   MIRACL  |          BN256I          |
-          +-------------+-----------+--------------------------+
-          |   Library   |  Adjoint  |        BN_SNARK1         |
-          +-------------+-----------+--------------------------+
-          |   Library   |  Adjoint  |          BN254B          |
-          +-------------+-----------+--------------------------+
-          |   Library   |  Adjoint  |          BN254N          |
-          +-------------+-----------+--------------------------+
-          |   Library   |  Adjoint  |         BN254S1          |
-          +-------------+-----------+--------------------------+
-          |   Library   |  Adjoint  |         BN254S2          |
-          +-------------+-----------+--------------------------+
-          | Application |   Zcash   |        BN_SNARK1         |
-          +-------------+-----------+--------------------------+
-          | Application |  DFINITY  |          BN254N          |
-          +-------------+-----------+--------------------------+
-          | Application |  DFINITY  |        BN_SNARK1         |
-          +-------------+-----------+--------------------------+
+         +=============+==============+==========================+
+         |   Category  |     Name     | Supported 100-bit Curves |
+         +=============+==============+==========================+
+         |   Standard  |   ISO/IEC    |          BN256I          |
+         +-------------+--------------+--------------------------+
+         |   Standard  |     TCG      |          BN256I          |
+         +-------------+--------------+--------------------------+
+         |   Standard  |   FIDO/W3C   |          BN256I          |
+         +-------------+--------------+--------------------------+
+         |   Standard  |   FIDO/W3C   |          BN256D          |
+         +-------------+--------------+--------------------------+
+         |   Library   |     mcl      |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   |     mcl      |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         |   Library   |    TEPLA     |          BN254B          |
+         +-------------+--------------+--------------------------+
+         |   Library   |    TEPLA     |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   |    RELIC     |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   |    RELIC     |          BN256R          |
+         +-------------+--------------+--------------------------+
+         |   Library   |     AMCL     |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   |     AMCL     |         BN254CX          |
+         +-------------+--------------+--------------------------+
+         |   Library   |     AMCL     |          BN256I          |
+         +-------------+--------------+--------------------------+
+         |   Library   |  Intel IPP   |          BN256I          |
+         +-------------+--------------+--------------------------+
+         |   Library   |    MIRACL    |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   |    MIRACL    |         BN254CX          |
+         +-------------+--------------+--------------------------+
+         |   Library   |    MIRACL    |          BN256I          |
+         +-------------+--------------+--------------------------+
+         |   Library   |   Adjoint    |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         |   Library   |   Adjoint    |          BN254B          |
+         +-------------+--------------+--------------------------+
+         |   Library   |   Adjoint    |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   |   Adjoint    |         BN254S1          |
+         +-------------+--------------+--------------------------+
+         |   Library   |   Adjoint    |         BN254S2          |
+         +-------------+--------------+--------------------------+
+         |   Library   |   libsnark   |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         |   Library   | gnark-crypto |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         |   Library   |   arkworks   |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         |   Library   | noble-curves |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         |   Library   | constantine  |          BN254N          |
+         +-------------+--------------+--------------------------+
+         |   Library   | constantine  |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         | Application |    Zcash     |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         | Application |   Ethereum   |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         | Application |   Algorand   |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
+         | Application |   DFINITY    |          BN254N          |
+         +-------------+--------------+--------------------------+
+         | Application |   DFINITY    |        BN_SNARK1         |
+         +-------------+--------------+--------------------------+
 
-                                 Table 5
+                                  Table 5
 
 Appendix G.  Scope of the Security Estimate Review
 

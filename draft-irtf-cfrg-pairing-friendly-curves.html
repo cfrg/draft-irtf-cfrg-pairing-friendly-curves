@@ -23,11 +23,11 @@
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.5
+    platformdirs 4.11.7
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.2
+    wcwidth 0.8.3
 -->
 <link href="draft-irtf-cfrg-pairing-friendly-curves.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1047,7 +1047,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sakemi, et al.</td>
-<td class="center">Expires 6 March 2027</td>
+<td class="center">Expires 11 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1060,12 @@ svg {
 <dd class="internet-draft">draft-irtf-cfrg-pairing-friendly-curves-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-02" class="published">2 September 2026</time>
+<time datetime="2026-09-07" class="published">7 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-06">6 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-11">11 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1647,10 +1647,10 @@ BLS48:
           </h4>
 <p id="section-4.1.2-1">There are a lot of cryptographic libraries that support pairing calculations.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-2"><span>[<a href="#blst" class="cite xref">blst</a>]</span> is a high-performance pairing library maintained by Supranational. It supports BLS12-381 and is used in production by Ethereum consensus clients, Filecoin, and other applications.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-3">Several additional actively maintained libraries support BLS12-381. <span>[<a href="#gnark-crypto" class="cite xref">gnark-crypto</a>]</span>, developed by Consensys, supports BLS12-381, BN254, BLS12-377, BLS24-315, and BW6-761. <span>[<a href="#noble-curves" class="cite xref">noble-curves</a>]</span> is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381. The arkworks ecosystem <span>[<a href="#arkworks" class="cite xref">arkworks</a>]</span> provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN254. <span>[<a href="#constantine" class="cite xref">constantine</a>]</span> is a cryptographic library written in Nim that supports BLS12-381, BN254, BLS12-377, and BW6-761. <span>[<a href="#CIRCL" class="cite xref">CIRCL</a>]</span> is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span> is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381.<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-3">Several additional actively maintained libraries support BLS12-381. <span>[<a href="#gnark-crypto" class="cite xref">gnark-crypto</a>]</span>, developed by Consensys, supports BLS12-381, BN_SNARK1, BLS12-377, BLS24-315, and BW6-761. <span>[<a href="#noble-curves" class="cite xref">noble-curves</a>]</span> is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381 and BN_SNARK1. The arkworks ecosystem <span>[<a href="#arkworks" class="cite xref">arkworks</a>]</span> provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN_SNARK1. <span>[<a href="#constantine" class="cite xref">constantine</a>]</span> is a cryptographic library written in Nim that supports BLS12-381, BN254N, BN_SNARK1, BLS12-377, and BW6-761. <span>[<a href="#CIRCL" class="cite xref">CIRCL</a>]</span> is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span> is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381. These libraries name BN_SNARK1 after the size of its field, as bn254; <span>[<a href="#EIP197" class="cite xref">EIP197</a>]</span> calls the same curve alt_bn128.<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-4">PBC is a library for pairing-based cryptography published by Stanford University that supports BN curves, MNT curves, Freeman curves, and supersingular curves <span>[<a href="#PBC" class="cite xref">PBC</a>]</span>. Users can generate pairing parameters by using PBC and use pairing operations with the generated parameters.<a href="#section-4.1.2-4" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-5"><span>[<a href="#mcl" class="cite xref">mcl</a>]</span> is a library for pairing-based cryptography that supports four BN curves and BLS12-381 <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>. These BN curves include BN254 proposed by Nogami et al. <span>[<a href="#NASKM08" class="cite xref">NASKM08</a>]</span> (named BN254N), BN_SNARK1 suitable for SNARK applications <span>[<a href="#libsnark" class="cite xref">libsnark</a>]</span>, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports BLS48-581 <span>[<a href="#BLS48" class="cite xref">BLS48</a>]</span>. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) <span>[<a href="#TEPLA" class="cite xref">TEPLA</a>]</span> supports two BN curves, BN254N and BN254 proposed by Beuchat et al. <span>[<a href="#BGMORT10" class="cite xref">BGMORT10</a>]</span> (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) <span>[<a href="#Intel-IPP" class="cite xref">Intel-IPP</a>]</span> and the library supports BN256I.<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-6"><span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, pairing-friendly curves constructed by Scott et al. <span>[<a href="#SG19" class="cite xref">SG19</a>]</span> based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>, a KSS curve <span>[<a href="#KSS08" class="cite xref">KSS08</a>]</span> of embedding degree 18 with 508-bit p (named KSS18-508) <span>[<a href="#AFKMR12" class="cite xref">AFKMR12</a>]</span>, Optimal TNFS-secure curve <span>[<a href="#FM19" class="cite xref">FM19</a>]</span> of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve <span>[<a href="#S86" class="cite xref">S86</a>]</span> with 1536-bit p (SS-1536).<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-6"><span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, pairing-friendly curves constructed by Scott et al. <span>[<a href="#SG18" class="cite xref">SG18</a>]</span> based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>, a KSS curve <span>[<a href="#KSS08" class="cite xref">KSS08</a>]</span> of embedding degree 18 with 508-bit p (named KSS18-508) <span>[<a href="#AFKMR12" class="cite xref">AFKMR12</a>]</span>, Optimal TNFS-secure curve <span>[<a href="#FM19" class="cite xref">FM19</a>]</span> of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve <span>[<a href="#S86" class="cite xref">S86</a>]</span> with 1536-bit p (SS-1536).<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-7">MIRACL Core <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> (the successor to the Apache Milagro Crypto Library (AMCL) <span>[<a href="#AMCL" class="cite xref">AMCL</a>]</span>) supports five BLS curves (BLS12-381, BLS12-461, BLS24-479, BLS48-556, and BLS48-581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).<a href="#section-4.1.2-7" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-8">Adjoint published a library that supports the BLS12-381 and six BN curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462) <span>[<a href="#AdjointLib" class="cite xref">AdjointLib</a>]</span>, where BN254S1 and BN254S2 are BN curves adopted by an old version of AMCL <span>[<a href="#AMCLv2" class="cite xref">AMCLv2</a>]</span>. The suffix 'S' of BN254S1 and BN254S2 is given from the initials of the name of the developer who proposed these parameters.<a href="#section-4.1.2-8" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-9">The Celo foundation published the bls12377js library <span>[<a href="#bls12377js" class="cite xref">bls12377js</a>]</span>. The supported curve is the BLS12-377 curve which is shown in <span>[<a href="#BCGMMW20" class="cite xref">BCGMMW20</a>]</span>.<a href="#section-4.1.2-9" class="pilcrow">¶</a></p>
@@ -1662,7 +1662,7 @@ BLS48:
 <a href="#section-4.1.3" class="section-number selfRef">4.1.3. </a><a href="#name-applications" class="section-name selfRef">Applications</a>
           </h4>
 <p id="section-4.1.3-1">Zcash uses BN_SNARK1 in their library <span>[<a href="#libsnark" class="cite xref">libsnark</a>]</span>. In response to the exTNFS attacks, they proposed new parameters using the BLS12-381 curve <span>[<a href="#BLS12-381" class="cite xref">BLS12-381</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span> and published its implementation <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span>.<a href="#section-4.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-2">Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is also specified as an Ethereum precompile contract in EIP-2537 <span>[<a href="#EIP2537" class="cite xref">EIP2537</a>]</span>, enabling on-chain pairing operations. <span>[<a href="#Filecoin" class="cite xref">Filecoin</a>]</span> uses BLS12-381 via the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. Chia Network published their implementation <span>[<a href="#Chia" class="cite xref">Chia</a>]</span>, which uses the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. DFINITY uses mcl, and Algorand published an implementation which supports BLS12-381.<a href="#section-4.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.1.3-2">Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is also specified as an Ethereum precompile contract in EIP-2537 <span>[<a href="#EIP2537" class="cite xref">EIP2537</a>]</span>, enabling on-chain pairing operations. <span>[<a href="#Filecoin" class="cite xref">Filecoin</a>]</span> uses BLS12-381 via the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. Chia Network published their implementation <span>[<a href="#Chia" class="cite xref">Chia</a>]</span>, which uses the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. DFINITY uses mcl, and Algorand published an implementation <span>[<a href="#go-algorand" class="cite xref">go-algorand</a>]</span> whose virtual machine provides curve operations and a pairing check for BLS12-381 and for BN_SNARK1. The pairing check on BN_SNARK1 is also available on Ethereum, as the precompiled contract of <span>[<a href="#EIP197" class="cite xref">EIP197</a>]</span>.<a href="#section-4.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2925,7 +2925,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dl class="references">
 <dt id="AdjointLib">[AdjointLib]</dt>
         <dd>
-<span class="refAuthor">Adjoint Inc.</span>, <span class="refTitle">"Optimised bilinear pairings over elliptic curves"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://github.com/adjoint-io/pairing">https://github.com/adjoint-io/pairing</a>&gt;</span>. </dd>
+<span class="refAuthor">Adjoint Inc.</span>, <span class="refTitle">"Optimised bilinear pairings over elliptic curves"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://github.com/sdiehl/pairing">https://github.com/sdiehl/pairing</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="AFKMR12">[AFKMR12]</dt>
         <dd>
@@ -2937,7 +2937,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="Algorand">[Algorand]</dt>
         <dd>
-<span class="refAuthor">Gorbunov, S.</span>, <span class="refTitle">"Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains"</span>, <span>&lt;<a href="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95</a>&gt;</span>. </dd>
+<span class="refAuthor">Gorbunov, S.</span>, <span class="refTitle">"Pixel-signatures: Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains"</span>, <time datetime="2019-03-07" class="refDate">7 March 2019</time>, <span>&lt;<a href="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="AMCL">[AMCL]</dt>
         <dd>
@@ -2981,7 +2981,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="bls12377js">[bls12377js]</dt>
         <dd>
-<span class="refAuthor">The Celo Foundation</span>, <span class="refTitle">"bls12377js"</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://github.com/celo-org/bls12377js">https://github.com/celo-org/bls12377js</a>&gt;</span>. </dd>
+<span class="refAuthor">The Celo Foundation</span>, <span class="refTitle">"bls12377js: TypeScript implementation of BLS12-377-based Proofs of Possession"</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://github.com/celo-org/bls12377js">https://github.com/celo-org/bls12377js</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="blst">[blst]</dt>
         <dd>
@@ -3031,6 +3031,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">ECRYPT</span>, <span class="refTitle">"Final Report on Main Computational Assumptions in Cryptography"</span>. </dd>
 <dd class="break"></dd>
+<dt id="EIP197">[EIP197]</dt>
+        <dd>
+<span class="refAuthor">Buterin, V.</span> and <span class="refAuthor">C. Reitwiessner</span>, <span class="refTitle">"EIP-197: Precompiled contracts for optimal ate pairing check on the elliptic curve alt_bn128"</span>, <time datetime="2017-02" class="refDate">February 2017</time>, <span>&lt;<a href="https://eips.ethereum.org/EIPS/eip-197">https://eips.ethereum.org/EIPS/eip-197</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="EIP2537">[EIP2537]</dt>
         <dd>
 <span class="refAuthor">Vlasov, A.</span>, <span class="refTitle">"EIP-2537: Precompile for BLS12-381 curve operations"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://eips.ethereum.org/EIPS/eip-2537">https://eips.ethereum.org/EIPS/eip-2537</a>&gt;</span>. </dd>
@@ -3053,7 +3057,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="Filecoin">[Filecoin]</dt>
         <dd>
-<span class="refAuthor">Protocol Labs</span>, <span class="refTitle">"Filecoin: A Decentralized Storage Network"</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://filecoin.io">https://filecoin.io</a>&gt;</span>. </dd>
+<span class="refAuthor">Protocol Labs</span>, <span class="refTitle">"Filecoin: A Decentralized Storage Network"</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://research.protocol.ai/publications/filecoin-a-decentralized-storage-network/">https://research.protocol.ai/publications/filecoin-a-decentralized-storage-network/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="FK18">[FK18]</dt>
         <dd>
@@ -3074,6 +3078,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dt id="gnark-crypto">[gnark-crypto]</dt>
         <dd>
 <span class="refAuthor">Consensys Software Inc.</span>, <span class="refTitle">"gnark-crypto: Elliptic curve cryptography and pairing library"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://github.com/consensys/gnark-crypto">https://github.com/consensys/gnark-crypto</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="go-algorand">[go-algorand]</dt>
+        <dd>
+<span class="refAuthor">Algorand</span>, <span class="refTitle">"go-algorand: Algorand's official implementation in Go"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://github.com/algorand/go-algorand">https://github.com/algorand/go-algorand</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="HHT20">[HHT20]</dt>
         <dd>
@@ -3125,7 +3133,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="M-Pin">[M-Pin]</dt>
         <dd>
-<span class="refAuthor">Scott, M.</span>, <span class="refTitle">"M-Pin: A Multi-Factor Zero Knowledge Authentication Protocol"</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-zero-knowledge-authentication-protocol">https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-zero-knowledge-authentication-protocol</a>&gt;</span>. </dd>
+<span class="refAuthor">Scott, M.</span>, <span class="refTitle">"M-Pin: A Multi-Factor Zero Knowledge Authentication Protocol"</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://miracl.com/blog/m-pin-a-multi-factor-zero-knowledge-authentication-protocol/">https://miracl.com/blog/m-pin-a-multi-factor-zero-knowledge-authentication-protocol/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="MAF19">[MAF19]</dt>
         <dd>
@@ -3215,9 +3223,9 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Standards for Efficient Cryptography Group (SECG)</span>, <span class="refTitle">"SEC 1: Elliptic Curve Cryptography"</span>, <time datetime="2009" class="refDate">2009</time>, <span>&lt;<a href="https://www.secg.org/sec1-v2.pdf">https://www.secg.org/sec1-v2.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="SG19">[SG19]</dt>
+<dt id="SG18">[SG18]</dt>
         <dd>
-<span class="refAuthor">Scott, M.</span> and <span class="refAuthor">A. Guillevic</span>, <span class="refTitle">"A New Family of Pairing-Friendly elliptic curves"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2018/193</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2018/193.pdf">https://eprint.iacr.org/2018/193.pdf</a>&gt;</span>. </dd>
+<span class="refAuthor">Scott, M.</span> and <span class="refAuthor">A. Guillevic</span>, <span class="refTitle">"A New Family of Pairing-Friendly elliptic curves"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2018/193</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://eprint.iacr.org/2018/193.pdf">https://eprint.iacr.org/2018/193.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TEPLA">[TEPLA]</dt>
         <dd>
@@ -3233,7 +3241,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="Zcash">[Zcash]</dt>
         <dd>
-<span class="refAuthor">Zcash</span>, <span class="refTitle">"What are zk-SNARKs?"</span>, <span>&lt;<a href="https://z.cash/technology/zksnarks/">https://z.cash/technology/zksnarks/</a>&gt;</span>. </dd>
+<span class="refAuthor">Zcash</span>, <span class="refTitle">"What are zk-SNARKs?"</span>, <span>&lt;<a href="https://z.cash/learn/what-are-zk-snarks/">https://z.cash/learn/what-are-zk-snarks/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ZcashRep">[ZcashRep]</dt>
         <dd>
@@ -4976,8 +4984,48 @@ kappa = r  (deserialization returns INVALID)
             <td class="text-center" rowspan="1" colspan="1">BN254S2</td>
           </tr>
           <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">libsnark</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">gnark-crypto</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">arkworks</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">noble-curves</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">constantine</td>
+            <td class="text-center" rowspan="1" colspan="1">BN254N</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">constantine</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
             <td class="text-center" rowspan="1" colspan="1">Application</td>
             <td class="text-center" rowspan="1" colspan="1">Zcash</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Application</td>
+            <td class="text-center" rowspan="1" colspan="1">Ethereum</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Application</td>
+            <td class="text-center" rowspan="1" colspan="1">Algorand</td>
             <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
           </tr>
           <tr>
