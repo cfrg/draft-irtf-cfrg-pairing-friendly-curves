@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-08T03:32:35.924591+00:00",
+  "timestamp": "2026-09-10T03:35:13.839815+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2757,7 +2757,7 @@
       "labels": [],
       "body": "One of the fundamental operations needed for non-interactive sigma protocols is the ability of serializing and deserializing scalar field elements. Somehow this doesn't seem to be present in the specification right now. \n\nThis should be pretty easy to do: base field elements are encoded with I2OSP (and deserialized via O2ISP) and field extensions proceed similarly: encoding each coordinate of the base field element.\n\nCan this please be added to the spec?",
       "createdAt": "2026-06-18T22:01:12Z",
-      "updatedAt": "2026-09-02T04:01:59Z",
+      "updatedAt": "2026-09-09T22:57:33Z",
       "closedAt": "2026-09-02T04:01:59Z",
       "comments": [
         {
@@ -2773,6 +2773,13 @@
           "body": "This is now in the draft. Section 5.2 (Scalar Serialization) of -14 defines a format for\nelements of the scalar field GF(r): a scalar kappa in [0, r - 1] is serialized as\nI2OSP(kappa, n_s), and deserialization applies OS2IP and returns INVALID if kappa >= r, so\nthat every scalar has exactly one encoding. n_s is 32 bytes for BLS12-381, 58 for BN462 and\n65 for BLS48-581. Unlike point serialization, this format applies to all three curves in the\ndocument, since no metadata bits are involved.\n\nTwo details that came out of writing it, in case they matter to you:\n\n- The byte order is the big-endian order of I2OSP and OS2IP, which is what\n  draft-irtf-cfrg-bbs-signatures and draft-ietf-cose-bls-key-representations use. Section 5.2\n  notes that other specifications for prime-order groups encode scalars in little-endian\n  order, RFC 8032 among them, so an implementation working with both needs to convert.\n- The zero scalar has no distinct encoding. Whether a protocol accepts it is a protocol-level\n  decision, and Section 5.6.3 (Zero Scalar) sets out that choice rather than deciding it here.\n\nTest vectors are in Appendix D.3: scalars at 0, 1, r - 1 and r for each of the three curves,\nthe last of which deserialization rejects.\n\nThank you for raising this. Scalars ended up with a subsection of their own rather than being\nleft implicit in the coordinate encoding, which we think is the right shape, and this issue is\nwhy. Closing as addressed in -14.\n",
           "createdAt": "2026-09-02T04:01:58Z",
           "updatedAt": "2026-09-02T04:01:58Z"
+        },
+        {
+          "author": "mmaker",
+          "authorAssociation": "NONE",
+          "body": "thank you!",
+          "createdAt": "2026-09-09T22:57:32Z",
+          "updatedAt": "2026-09-09T22:57:32Z"
         }
       ]
     },
@@ -3135,7 +3142,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-03-04T15:26:22Z",
-      "updatedAt": "2026-08-30T01:11:27Z",
+      "updatedAt": "2026-09-09T22:58:58Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "48c75b394c50d3a47e17f878567662c6099d245c",
@@ -3181,6 +3188,13 @@
           "body": "Closing this in favour of Section 5 and #74, as @mmaker suggested in his reply on the\nCFRG list. The full reply to that message is now on the list:\nhttps://mailarchive.ietf.org/arch/msg/cfrg/sI2Khp7EH2_IKHSMD1LMs33RumA/\n\n@mmaker, thank you for your patience here, and @bellebaum, thank you for the detailed\nreview -- the points raised have not been lost.\n\nDraft -13 added Section 5, which specifies point serialization and deserialization for\nBLS12_381 and BLS48_581, and scalar serialization for all three curves; that is the work\ntracked in #74. Section 5 has been reworked again for -14, and three points from the\nreview of this PR land there:\n\n* Whether `Group` means the curve groups or their order-`r` subgroups. In -14,\n  `octets_to_point_G1` and `octets_to_point_G2` return an element of `G_1` or of `G_2`,\n  with the subgroup check included, so the type is fixed and stated in the name.\n  `subgroup_check_G1` and `subgroup_check_G2` are specified separately, since a point can\n  also arise from addition or scalar multiplication rather than from a byte string.\n\n* Distinguishing `INVALID` from a separate deserialization error. -14 uses a single\n  failure value, `INVALID`, throughout Section 5.\n\n* Naming the zero scalar directly. -14 has a \"Zero Scalar\" section, kept separate from\n  identity element handling.\n\nRather than adding a Group/Scalar abstraction to this document, -14 gives the operations\nnames and return types in Section 5. The linked reply sets out the reasoning, including\nthe places where we did not go as far as the alignment proposed on the list.\n",
           "createdAt": "2026-08-30T01:11:22Z",
           "updatedAt": "2026-08-30T01:11:22Z"
+        },
+        {
+          "author": "mmaker",
+          "authorAssociation": "NONE",
+          "body": "thanks for the update and for closing this! Will send a short follow-up in a few days on the CFRG after reading more into the draft.",
+          "createdAt": "2026-09-09T22:58:58Z",
+          "updatedAt": "2026-09-09T22:58:58Z"
         }
       ],
       "reviews": [
