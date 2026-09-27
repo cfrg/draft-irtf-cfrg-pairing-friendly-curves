@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-10T03:35:13.839815+00:00",
+  "timestamp": "2026-09-27T04:12:53.536813+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2961,6 +2961,22 @@
           "updatedAt": "2026-09-02T04:13:33Z"
         }
       ]
+    },
+    {
+      "number": 109,
+      "id": "I_kwDOD8wsds8AAAABTSABsg",
+      "title": "BLS12-381's security level",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/109",
+      "state": "OPEN",
+      "author": "ETCaton",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I have read other issues, particularly those from Sakemi including the one citing https://doi.org/10.1007/s10623-020-00727-w, but as the Last Call was initiated I figued it best to confirm.\n\nRight now the assumption is that BLS12-381 has a 126 bit security level, based on the above paper's Table 1 and 3 using STNFS. Further, Guillevic and Singh's \"On the alpha value of polynomials in the Tower Number Field Sieve Algorithm\" (https://ia.cr/2019/885)'s Table 10 agrees, but the papers differ on the p^k bit size that gets it, the former has 4572, the latter 4569.\n\nGuillevic also has yet another paper \"A short-list of pairing-friendly curves resistant to Special TNFS at the 128-bit security level\" (https://doi.org/10.62056/angyl86bm). It agrees with Guillevic and Singh on needing 448-bit primes but has a range of 440-448 while the former just has 448, and notes nothing in that paper decreases the estimate for BLS12-381 specifically.\n\nThere are a few other references to the security level of BLS12-381 or curves generally in literature that may be worth confirming do not impact the assumption of 126 bit security in the current draft as written?\n\n- The original \"BLS12-381: New zk-SNARK Elliptic Curve Construction\" used q ~= 2^384, embedding degree 12 for 128-bit security. It isn't peer reviewed, but Menezes, Sarkar, and Singh's paper \"Challenges with Assessing the Impact of NFS Advances on the Security of Pairing-based Cryptography\" (https://doi.org/10.1007/978-3-319-61273-7_5) is and picked 384 as well\n- Scott's \"Pairing Implementation Revisited\" (https://ia.cr/2019/077) cites Menezes, Sarkar and Singh, and in section 2 proposes a BLS12 curve with a 383-bit p and a 4596-bit field as \"sufficient\" for 128-bit security\n- Barbulescu and Duquesne's \"Updating Key Size Estimations for Pairings\" (https://doi.org/10.1007/s00145-018-9280-5) claims \"more precise than the analysis in a recent article of Menezes, Sarkar and Singh\", and their table 8 and section 8.4 seem to want larger values to get 128-bit security (F_{p^12} of 5530 bits, p of 461 bits). They also claim two 127-bit secure BLS12 curses[sic] communicated by a Zhaohui Cheng in section 7.1.2 Remark 2\n- The January 30, 2019 - Version 1.3 NCC Group's \"Zcash Overwinter Consensus and Sapling Cryptography Review\" cites Barbulescu and Duquesne for BLS12-381 to claim 117 to 120 bit security, but doesn't explain how they got to that number.\n\nIn confirming the DOI and authors, it appears this may have been discussed already: https://people.irisa.fr/Aurore.Guillevic/Pairing_friendly_curves.html. Unfortunately, I cannot resolve the https://chat.iacr.org/#narrow/stream/30-general/topic/Pairing.20Groups link provided (or that subdomain at all). If it covered this topic already, my apologies. I'm also by no means an expert on this topic so I may have missed an obvious point that makes these differences not as relevant.",
+      "createdAt": "2026-09-25T21:46:01Z",
+      "updatedAt": "2026-09-25T21:46:01Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
