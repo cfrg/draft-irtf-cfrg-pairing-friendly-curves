@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-27T04:12:53.536813+00:00",
+  "timestamp": "2026-09-29T04:45:52.075832+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2967,16 +2967,31 @@
       "id": "I_kwDOD8wsds8AAAABTSABsg",
       "title": "BLS12-381's security level",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/109",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ETCaton",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I have read other issues, particularly those from Sakemi including the one citing https://doi.org/10.1007/s10623-020-00727-w, but as the Last Call was initiated I figued it best to confirm.\n\nRight now the assumption is that BLS12-381 has a 126 bit security level, based on the above paper's Table 1 and 3 using STNFS. Further, Guillevic and Singh's \"On the alpha value of polynomials in the Tower Number Field Sieve Algorithm\" (https://ia.cr/2019/885)'s Table 10 agrees, but the papers differ on the p^k bit size that gets it, the former has 4572, the latter 4569.\n\nGuillevic also has yet another paper \"A short-list of pairing-friendly curves resistant to Special TNFS at the 128-bit security level\" (https://doi.org/10.62056/angyl86bm). It agrees with Guillevic and Singh on needing 448-bit primes but has a range of 440-448 while the former just has 448, and notes nothing in that paper decreases the estimate for BLS12-381 specifically.\n\nThere are a few other references to the security level of BLS12-381 or curves generally in literature that may be worth confirming do not impact the assumption of 126 bit security in the current draft as written?\n\n- The original \"BLS12-381: New zk-SNARK Elliptic Curve Construction\" used q ~= 2^384, embedding degree 12 for 128-bit security. It isn't peer reviewed, but Menezes, Sarkar, and Singh's paper \"Challenges with Assessing the Impact of NFS Advances on the Security of Pairing-based Cryptography\" (https://doi.org/10.1007/978-3-319-61273-7_5) is and picked 384 as well\n- Scott's \"Pairing Implementation Revisited\" (https://ia.cr/2019/077) cites Menezes, Sarkar and Singh, and in section 2 proposes a BLS12 curve with a 383-bit p and a 4596-bit field as \"sufficient\" for 128-bit security\n- Barbulescu and Duquesne's \"Updating Key Size Estimations for Pairings\" (https://doi.org/10.1007/s00145-018-9280-5) claims \"more precise than the analysis in a recent article of Menezes, Sarkar and Singh\", and their table 8 and section 8.4 seem to want larger values to get 128-bit security (F_{p^12} of 5530 bits, p of 461 bits). They also claim two 127-bit secure BLS12 curses[sic] communicated by a Zhaohui Cheng in section 7.1.2 Remark 2\n- The January 30, 2019 - Version 1.3 NCC Group's \"Zcash Overwinter Consensus and Sapling Cryptography Review\" cites Barbulescu and Duquesne for BLS12-381 to claim 117 to 120 bit security, but doesn't explain how they got to that number.\n\nIn confirming the DOI and authors, it appears this may have been discussed already: https://people.irisa.fr/Aurore.Guillevic/Pairing_friendly_curves.html. Unfortunately, I cannot resolve the https://chat.iacr.org/#narrow/stream/30-general/topic/Pairing.20Groups link provided (or that subdomain at all). If it covered this topic already, my apologies. I'm also by no means an expert on this topic so I may have missed an obvious point that makes these differences not as relevant.",
       "createdAt": "2026-09-25T21:46:01Z",
-      "updatedAt": "2026-09-25T21:46:01Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-09-28T22:09:28Z",
+      "closedAt": "2026-09-28T22:09:28Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for checking this carefully during the Last Call.\n\nFirst, on what the draft does: it does not evaluate the security of the curves itself. It\nselects curves based on security estimates from the academic literature, and Section 6 notes\nthat this document has not derived an estimate of its own. For BLS12-381, those estimates come\nfrom peer-reviewed journal papers: [GMT19] (Designs, Codes and Cryptography) and [BD18]\n(Journal of Cryptology). On that basis, it already treats BLS12-381 as slightly below\nthe 128-bit target, retained for its adoption (Section 4), and recommends BN462 alongside it\nas the more conservative option at that level (Section 4.2).\n\nThe figure of about 2^126 comes from [GMT19], and Guillevic\u2013Singh (Mathematical Cryptology\n1(1), 2021; ePrint 2019/885, Table 10) gives the same figure. The other works you list do not\nchange it:\n\n- **4572 vs 4569:** the same field. 4572 is 12 \u00d7 381; 4569 is the exact bit length of p^12\n  (log2 p \u2248 380.7).\n- **440\u2013448 bits:** this is from [G20] (PKC 2020), whose abstract says the estimated STNFS\n  cost goes down \"for all curves except BLS12 and BN\". The DOI in your comment resolves to\n  the later paper on the 192-bit level (Aranha, Fotiadis, Guillevic, IACR CiC 2024).\n- **The ~384-bit recommendations** (Menezes\u2013Sarkar\u2013Singh, the original BLS12-381 post,\n  ePrint 2019/077) rest on the Menezes\u2013Sarkar\u2013Singh analysis, which predates [BD18] and\n  [GMT19].\n- **[BD18]** gives the 461-bit minimum for BLS12 at 128 bits, which the draft states in\n  Sections 3.2 and 6, rather than a figure for BLS12-381 itself. The 127-bit curves in its\n  Remark 2 have p of about 440 bits.\n- **The NCC Group report** cites the December 2017 version of [BD18] for the 117\u2013120-bit\n  range, and predates [GMT19].\n\nThank you again for raising this.\n\n",
+          "createdAt": "2026-09-28T16:01:42Z",
+          "updatedAt": "2026-09-28T16:01:42Z"
+        },
+        {
+          "author": "ETCaton",
+          "authorAssociation": "NONE",
+          "body": "Thank you for the reply and catches on the papers Sakemi\n\n> it does not evaluate the security of the curves itself\n\nThis part I understood, I was more asking if the security/parameters reflected in the draft matched what was in literature",
+          "createdAt": "2026-09-28T22:09:28Z",
+          "updatedAt": "2026-09-28T22:09:28Z"
+        }
+      ]
     }
   ],
   "pulls": [
