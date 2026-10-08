@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-06T05:22:31.575318+00:00",
+  "timestamp": "2026-10-08T05:01:23.274374+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -3005,9 +3005,17 @@
       "labels": [],
       "body": "**Reviewer:** Michele Orr\u00f9\n**Raised in:** CFRG list, thread \"question on the scope of PR #71 (Group/Scalar interface)\", 2026-09-11 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/bokULgMfJvx6_A1sBkwv9HrKMs8/\n\n> Can we still drop uncompressed serialization? Is any adopter actively using\n> uncompressed serialization?\n> In practice: keep the same wire format, but drop uncompressed and add a\n> test vector that asserts rejection for C_bit = 0. That's what should happen\n> in practice.\n> In signatures and zero-knowledge proofs, having two possible encodings\n> (which occurs since there are two valid  serialization algorithms) leads to\n> malleability attacks.\n> An attacker can take a signature/proof in compressed form, re-encode it in\n> uncompressed form, and present it as a fresh forgery.\n> [...]\n> For those doing pseudonymous authentication, this is even worse because it\n> means that users have two different pseudonyms per scope.\n\nFollow-up in the same thread:\n\n- Watson Ladd, 2026-09-11 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Rv0qWe1nJz_fJXbsVinZCllJB54/\n\n  > That's not necessarily true: it depends on the details of the\n  > pseudonym and what kind of comparison is being done. If you just\n  > blindly pass in the data rather than normalize, you'll have a fun\n  > time. Having a single canonical encoding does help here, as does not\n  > accepting other options, but it isn't a necessary consequence.\n\n- Michele Orr\u00f9, 2026-10-01 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/05ZCtSGr3-hE80298E8DSVvFoUA/\n\n  > For the pairing editors: canonical encoding would simplify things for\n  > downstream protocols, but it doesn't block us.\n\nThe same request was raised earlier and tracked in #74.\n",
       "createdAt": "2026-10-04T11:09:14Z",
-      "updatedAt": "2026-10-04T11:09:14Z",
+      "updatedAt": "2026-10-06T14:16:19Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Follow-up on the CFRG list:\n\n- Nick Sullivan (for the CFRG chairs) asked the list during Last Call, 2026-10-05 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/dfx2zm4SNcs9uWZAUrLrJTNnefI/\n\n  > The question: should the document keep both the compressed and uncompressed\n  > forms, or drop the uncompressed one?\n\n- Jack Grigg, 2026-10-05 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/KeRDjZplRN2YWqlkf55uZBMIKE4/\n\n  > So the uncompressed encoding of BLS12-381 has been deployed in\n  > production since October 2018 for the Zcash Sapling parameters (hosted at\n  > various locations around the internet, such as the wagyu-zcash-parameters\n  > Rust crate [1]), and likely in every other ecosystem that built on (forks\n  > of) the bellman crate. However, in Zcash at least we don't \"rely\" on the\n  > uncompressed form other than as a performance optimisation (the in-band\n  > protocol uses the compressed encoding; we basically follow the Section\n  > 5.6.1 guidance already, if you don't count \"downloading the fixed public\n  > parameters once\" as \"transmitting\"). It would certainly be inconvenient if\n  > we needed to re-deploy the Sapling parameters in compressed encoding, but\n  > we can just Not Do That, no matter what the IETF says \ud83d\ude42\n  >\n  > I am definitely in favour of only supporting compressed encodings in-band\n  > for protocols, for the reason Michele outlines. If it's easier to ensure\n  > this in IETF protocols by removing uncompressed forms from the draft (and\n  > keeping their performance-related use off-books) then I'm fine with\n  > dropping uncompressed, but I'd say this mainly comes down to what the draft\n  > requires of implementers for equality checks. If a conforming\n  > implementation of the draft is permitted in any way to compare points\n  > without first parsing them, then dropping uncompressed seems necessary to\n  > ensure correctness.\n  >\n  > [1] https://crates.io/crates/wagyu-zcash-parameters\n\n- Mike Scott, RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/ (the rest of this paragraph is #119)\n\n  > I agree with others that it might be simpler to just support a compressed\n  > format for serialisation.\n",
+          "createdAt": "2026-10-06T14:16:19Z",
+          "updatedAt": "2026-10-06T14:16:19Z"
+        }
+      ]
     },
     {
       "number": 111,
@@ -3102,6 +3110,70 @@
       "body": "**Reviewer:** Emil Lundberg\n**Raised in:** RG Last Call on -14, 2026-10-02 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Zu3VIqg0Tilr5HkRSRBtj4MD0G4/\n(point 4 of 4)\n\n> I think that Table 1 and its preceding paragraph (\"Not all of what follows\n> originates with this document. [...]\") are not necessary and could be\n> deleted; I think the first paragraph in section 5 is enough of a summary.\n",
       "createdAt": "2026-10-04T11:16:09Z",
       "updatedAt": "2026-10-04T11:16:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 117,
+      "id": "I_kwDOD8wsds8AAAABVYesFg",
+      "title": "The curve parameter t can be confused with the trace of Frobenius",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/117",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 1 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> I think the use of t as the curve parameter in section 2 is a little\n> unfortunate, as readers may confuse this with the trace of the Frobenius,\n> commonly denoted by t. In the case of BLS curves the potential for\n> confusion is greater, as t only differs by 1 from the trace. Maybe use u\n> instead of t.\n",
+      "createdAt": "2026-10-06T14:14:32Z",
+      "updatedAt": "2026-10-06T14:14:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 118,
+      "id": "I_kwDOD8wsds8AAAABVYet8g",
+      "title": "Mention pairing inversion in the summary of attacks",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/118",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 2 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> In the paragraph summarising attacks on pairing based cryptography, perhaps\n> pairing inversion should be mentioned (https://eprint.iacr.org/2007/256.pdf)\n",
+      "createdAt": "2026-10-06T14:14:34Z",
+      "updatedAt": "2026-10-06T14:14:34Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 119,
+      "id": "I_kwDOD8wsds8AAAABVYevoQ",
+      "title": "BN462 point encoding: mandate an extra metadata byte and remove Section 5.5",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/119",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 3 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> I agree with others that it might be simpler to just support a compressed\n> format for serialisation. As it stands the situation for BN462 is rather\n> unsatisfactory - so maybe just mandate an extra byte for the metadata bits,\n> and remove section 5.5\n\nThe first sentence is also recorded in #110.\n",
+      "createdAt": "2026-10-06T14:14:36Z",
+      "updatedAt": "2026-10-06T14:14:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 120,
+      "id": "I_kwDOD8wsds8AAAABVYexEQ",
+      "title": "Point to faster square root methods for extension fields",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/120",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 4 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> Given that compressed representation is likely to be more popular, maybe\n> pointers to faster methods for calculating square roots in extension fields\n> might be appropriate - see section 6 of\n> https://eprint.iacr.org/2020/1497.pdf\n",
+      "createdAt": "2026-10-06T14:14:37Z",
+      "updatedAt": "2026-10-06T14:14:37Z",
       "closedAt": null,
       "comments": []
     }
