@@ -302,7 +302,7 @@ The BLS12-381 curve is shown in {{BLS12-381}} and it is defined by the parameter
 t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 ~~~~~~~~~~
 
-where the size of p becomes 381 bits.
+where t is the parameter in {{BLSdef}} and the size of p is 381 bits.
 
 {: #tower_bls12_381}
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
@@ -409,7 +409,7 @@ A BN curve with the 128-bit security level is shown in {{BD18}}, which we call B
 t = 2^114 + 2^101 - 2^14 - 1
 ~~~~~~~~~~
 
-for the definition in {{BNdef}}.
+where t is the parameter in {{BNdef}} and the size of p is 462 bits.
 
 {: #tower_bn462}
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:
@@ -514,10 +514,10 @@ As shown in the survey in {{impl}}, there are three candidate pairing-friendly c
 The selected BLS48 curve is shown in {{KIK17}} and it is defined by the parameter
 
 ~~~~~~~~~~
-t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+t = -1 + 2^7 - 2^10 - 2^30 - 2^32
 ~~~~~~~~~~
 
-In this case, the size of p becomes 581 bits.
+where t is the parameter in {{BLSdef}} and the size of p is 581 bits.
 
 {: #tower_bls48_581}
 For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:
