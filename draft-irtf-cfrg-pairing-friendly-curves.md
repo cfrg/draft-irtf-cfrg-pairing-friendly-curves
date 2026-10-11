@@ -171,14 +171,14 @@ BP':
 
 A BN curve {{BN05}} is a family of pairing-friendly curves proposed in 2005. A pairing over BN curves constructs optimal ate pairings.
 
-A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t. E is defined over GF(p), where p is a prime number and at least 5, and E(GF(p)) has a subgroup of prime order r. The characteristic p and the order r are parameterized by
+A BN curve is defined by elliptic curves E and E' parameterized by a well-chosen integer chi. E is defined over GF(p), where p is a prime number and at least 5, and E(GF(p)) has a subgroup of prime order r. The characteristic p and the order r are parameterized by
 
 ~~~~~~~~~~
-p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
-r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
+p = 36 * chi^4 + 36 * chi^3 + 24 * chi^2 + 6 * chi + 1
+r = 36 * chi^4 + 36 * chi^3 + 18 * chi^2 + 6 * chi + 1
 ~~~~~~~~~~
 
-for an integer t.
+for an integer chi.
 
 The elliptic curve E has an equation of the form E: y^2 = x^3 + b, where b is a primitive element of the multiplicative group (GF(p))^* of order (p - 1).
 
@@ -190,7 +190,7 @@ A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 a
 
 A BLS curve {{BLS02}} is another family of pairing-friendly curves proposed in 2002. Similar to BN curves, a pairing over BLS curves constructs optimal ate pairings.
 
-A BLS curve is defined by elliptic curves E and E' parameterized by a well-chosen integer t. E is defined over a finite field GF(p) by an equation of the form E: y^2 = x^3 + b, and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves. In contrast to BN curves, E(GF(p)) does not have a prime order. Instead, its order is divisible by a large parameterized prime r and denoted by h * r with cofactor h. The pairing is defined on the r-torsion points. In the same way as BN curves, BLS curves can be categorized as D-type and M-type.
+A BLS curve is defined by elliptic curves E and E' parameterized by a well-chosen integer chi. E is defined over a finite field GF(p) by an equation of the form E: y^2 = x^3 + b, and its twist E': y^2 = x^3 + b', is defined in the same way as BN curves. In contrast to BN curves, E(GF(p)) does not have a prime order. Instead, its order is divisible by a large parameterized prime r and denoted by h * r with cofactor h. The pairing is defined on the r-torsion points. In the same way as BN curves, BLS curves can be categorized as D-type and M-type.
 
 BLS curves vary in accordance with different embedding degrees. In this memo, we deal with the BLS12 and BLS48 families with embedding degrees 12 and 48 with respect to r, respectively.
 
@@ -198,14 +198,14 @@ In BLS curves, parameters p and r are given by the following equations:
 
 ~~~~~~~~~~
 BLS12:
-    p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
-    r = t^4 - t^2 + 1
+    p = (chi - 1)^2 * (chi^4 - chi^2 + 1) / 3 + chi
+    r = chi^4 - chi^2 + 1
 BLS48:
-    p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
-    r = t^16 - t^8 + 1
+    p = (chi - 1)^2 * (chi^16 - chi^8 + 1) / 3 + chi
+    r = chi^16 - chi^8 + 1
 ~~~~~~~~~~
 
-for a well chosen integer t where t must be 1 (mod 3).
+for a well chosen integer chi where chi must be 1 (mod 3).
 
 A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of order r, G_2 as defined in {{pairing}} and represented by the subgroup G'_2 of E'(GF(p^2)) for BLS12 and of E'(GF(p^8)) for BLS48, and G_T as an order r subgroup of the multiplicative group (GF(p^12))^* for BLS12 and of the multiplicative group (GF(p^48))^* for BLS48.
 
@@ -256,7 +256,7 @@ The security level for each curve is evaluated in accordance with {{BD18}}, {{GM
 
 ### International Standards  {#standardization}
 
-ISO/IEC 15946 series specifies public-key cryptographic techniques based on elliptic curves. The third edition of ISO/IEC 15946-5 {{ISOIEC15946-5}} (published 2022) reorganized the numerical examples and extended coverage to include BLS12, BLS24, and BLS48 curves. The BN462 parameter in this document matches the numerical example in Annex D.2.3 of {{ISOIEC15946-5}} exactly (t = 2^114 + 2^101 - 2^14 - 1, written u there), and the BLS48-581 parameter matches Annex D.3.5 exactly (t = -2^32 - 2^30 - 2^10 + 2^7 - 1). The same edition introduces a post-exTNFS security guideline that the characteristic p of BN and BLS12 curves should be at least 461 bits for the 128-bit security level. As described below, BN curves with 256-bit p and 512-bit p from earlier editions of ISO/IEC 15946-5 are referenced by other standards and libraries; these curves are denoted as BN256I and BN512I, where the suffix 'I' is given from the initials of the standard name ISO.
+ISO/IEC 15946 series specifies public-key cryptographic techniques based on elliptic curves. The third edition of ISO/IEC 15946-5 {{ISOIEC15946-5}} (published 2022) reorganized the numerical examples and extended coverage to include BLS12, BLS24, and BLS48 curves. The BN462 parameter in this document matches the numerical example in Annex D.2.3 of {{ISOIEC15946-5}} exactly (chi = 2^114 + 2^101 - 2^14 - 1, written u there), and the BLS48-581 parameter matches Annex D.3.5 exactly (chi = -2^32 - 2^30 - 2^10 + 2^7 - 1). The same edition introduces a post-exTNFS security guideline that the characteristic p of BN and BLS12 curves should be at least 461 bits for the 128-bit security level. As described below, BN curves with 256-bit p and 512-bit p from earlier editions of ISO/IEC 15946-5 are referenced by other standards and libraries; these curves are denoted as BN256I and BN512I, where the suffix 'I' is given from the initials of the standard name ISO.
 
 TCG adopts the BN256I and a BN curve with 638-bit p specified by their own {{TPM}}. FIDO Alliance {{FIDO}} and W3C {{W3C}} adopt BN256I, BN512I, the BN638 by TCG, and the BN curve with 256-bit p proposed by Devegili et al. {{DSD07}} (named BN256D). The suffix 'D' of BN256D is given from the initials of the first author's name of the paper which proposed the parameter.
 
@@ -299,7 +299,7 @@ In this part, we introduce the parameters of the Barreto-Lynn-Scott curve of emb
 The BLS12-381 curve is shown in {{BLS12-381}} and it is defined by the parameter
 
 ~~~~~~~~~~
-t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
+chi = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 ~~~~~~~~~~
 
 where the size of p becomes 381 bits.
@@ -313,7 +313,7 @@ GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
 GF(p^12) = GF(p^6)[w] / (w^2 - v).
 ~~~~~~~~~~
 
-Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4 * (u + 1). BLS12-381 is categorized as M-type.
+Defined by chi, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4 * (u + 1). BLS12-381 is categorized as M-type.
 
 The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^2)), maps into E(GF(p^12)) and is given by
 
@@ -406,7 +406,7 @@ In addition, many pairing-based cryptographic applications use a hash-to-curve p
 A BN curve with the 128-bit security level is shown in {{BD18}}, which we call BN462. BN462 is defined by the parameter
 
 ~~~~~~~~~~
-t = 2^114 + 2^101 - 2^14 - 1
+chi = 2^114 + 2^101 - 2^14 - 1
 ~~~~~~~~~~
 
 for the definition in {{BNdef}}.
@@ -420,7 +420,7 @@ GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
 GF(p^12) = GF(p^6)[w] / (w^2 - v).
 ~~~~~~~~~~
 
-Defined by t, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462 bits. BN462 is categorized as D-type.
+Defined by chi, the elliptic curve E and its twist E' are represented by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively. The size of p becomes 462 bits. BN462 is categorized as D-type.
 
 The untwist isomorphism psi of {{pairing}}, restricted to E'(GF(p^2)), maps into E(GF(p^12)) and is given by
 
@@ -514,7 +514,7 @@ As shown in the survey in {{impl}}, there are three candidate pairing-friendly c
 The selected BLS48 curve is shown in {{KIK17}} and it is defined by the parameter
 
 ~~~~~~~~~~
-t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+chi = -1 + 2^7 - 2^10 - 2^30 - 2^32.
 ~~~~~~~~~~
 
 In this case, the size of p becomes 581 bits.
@@ -2141,7 +2141,7 @@ The computation of the optimal ate pairing uses the p-power Frobenius endomorphi
 
 ## Optimal Ate Pairings over Barreto-Naehrig Curves  {#optimal-ate-pairings-over-barreto-naehrig-curves}
 
-Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
+Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
 The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
@@ -2167,7 +2167,7 @@ return f;
 
 ## Optimal Ate Pairings over Barreto-Lynn-Scott Curves  {#optimal-ate-pairings-over-barreto-lynn-scott-curves}
 
-Let c = t for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
+Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
 The following algorithm shows the computation of the optimal ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
@@ -2204,7 +2204,7 @@ e_lib(P, Q) = e_pseudocode(P, Q)^alpha
 where alpha is:
 
 - BLS12-381: alpha = 3 {{HHT20}}
-- BN462: alpha = 2t(6t^2 + 3t + 1) mod r {{FCKR11}}
+- BN462: alpha = 2 * chi * (6 * chi^2 + 3 * chi + 1) mod r {{FCKR11}}
 - BLS48-581: alpha = 3 {{HHT20}}
 
 Because gcd(alpha, r) = 1 for all three curves, the following properties hold:
@@ -2215,7 +2215,7 @@ Because gcd(alpha, r) = 1 for all three curves, the following properties hold:
 
 ## Final Exponentiation Decomposition  {#final-exponentiation-decomposition}
 
-The pseudocode in {{comp_pairing}} writes the final exponentiation as a single step, f := f^((p^k - 1) / r). In practice, implementations compute this via an easy/hard split: an easy part computed cheaply via the Frobenius endomorphism, and a hard part computed via an addition chain over the curve parameter t.
+The pseudocode in {{comp_pairing}} writes the final exponentiation as a single step, f := f^((p^k - 1) / r). In practice, implementations compute this via an easy/hard split: an easy part computed cheaply via the Frobenius endomorphism, and a hard part computed via an addition chain over the curve parameter chi.
 
 Standard references for the hard-part addition chain include {{SBCK09}} (the original approach for BLS curves) and {{AKLGL11}} (for BN curves). {{FCKR11}} and {{HHT20}} are cited in {{library-cofactors}} for a different reason: each evaluates a fixed multiple of the hard part rather than the hard part itself, which is where the exponent alpha given there comes from.
 
