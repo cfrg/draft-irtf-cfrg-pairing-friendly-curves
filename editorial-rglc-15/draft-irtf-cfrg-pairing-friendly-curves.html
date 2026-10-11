@@ -11,23 +11,23 @@
 <meta content='
        Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairings are special maps defined using elliptic curves and they can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve algorithm named exTNFS for the discrete logarithm problem in a finite field. Several types of pairing-friendly curves such as Barreto-Naehrig curves are affected by the attack. In particular, a Barreto-Naehrig curve with a 254-bit characteristic was adopted by a lot of cryptographic libraries as a parameter of 128-bit security; however, it ensures no more than the 100-bit security level due to the effect of the attack. In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in standards, libraries and applications, and consider them at the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", we select the recommended pairing-friendly curves considering exTNFS. This memo also specifies the serialization and deserialization of the points and scalars that protocols exchange, restating a format that is already in widespread use, and states which of the remaining decisions belong to the calling protocol. 
     ' name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.34.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-irtf-cfrg-pairing-friendly-curves-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
-    Python 3.14.7
-    ConfigArgParse 1.7.5
+  xml2rfc 3.34.1
+    Python 3.14.8
+    ConfigArgParse 1.8.0
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.5
+    platformdirs 4.12.2
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.2
+    wcwidth 0.9.1
 -->
 <link href="draft-irtf-cfrg-pairing-friendly-curves.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1043,11 +1043,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Pairing-Friendly Curves</td>
-<td class="right">September 2026</td>
+<td class="right">October 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sakemi, et al.</td>
-<td class="center">Expires 6 March 2027</td>
+<td class="center">Expires 14 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1060,12 @@ svg {
 <dd class="internet-draft">draft-irtf-cfrg-pairing-friendly-curves-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-02" class="published">2 September 2026</time>
+<time datetime="2026-10-11" class="published">11 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-06">6 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-14">14 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1390,7 +1390,7 @@ svg {
         <h3 id="name-motivation-and-contribution">
 <a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-motivation-and-contribution" class="section-name selfRef">Motivation and Contribution</a>
         </h3>
-<p id="section-1.3-1">At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j &gt; 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) <span>[<a href="#BN05" class="cite xref">BN05</a>]</span> and Barreto-Lynn-Scott curves (BLS curves) <span>[<a href="#BLS02" class="cite xref">BLS02</a>]</span> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#NIST" class="cite xref">NIST</a>]</span>.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-1">At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j &gt; 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) <span>[<a href="#BN05" class="cite xref">BN05</a>]</span> and Barreto-Lynn-Scott curves (BLS curves) <span>[<a href="#BLS02" class="cite xref">BLS02</a>]</span> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#SP800-57" class="cite xref">SP800-57</a>]</span>.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 <p id="section-1.3-2">To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#BLS12-381" class="cite xref">BLS12-381</a>]</span>.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
 <p id="section-1.3-3">In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and consider them at the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluation by Barbulescu and Duquesne <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
 <p id="section-1.3-4">As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. This memo shows their specific test vectors.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
@@ -1606,7 +1606,7 @@ BLS48:
         <h3 id="name-impact-of-recent-attacks">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-impact-of-recent-attacks" class="section-name selfRef">Impact of Recent Attacks</a>
         </h3>
-<p id="section-3.2-1">In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that can be written as k = i * j with gcd(i, j) = 1 and i, j &gt; 1. Any k divisible by 6 meets this condition, taking i to be the largest power of 2 dividing k and j to be k / i; <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> accordingly gives k = 6 as the first case it treats. BN curves and BLS curves, whose embedding degree is divisible by 6, are therefore affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving FFDLP is using subfield calculation. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Here, the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#NIST" class="cite xref">NIST</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that can be written as k = i * j with gcd(i, j) = 1 and i, j &gt; 1. Any k divisible by 6 meets this condition, taking i to be the largest power of 2 dividing k and j to be k / i; <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> accordingly gives k = 6 as the first case it treats. BN curves and BLS curves, whose embedding degree is divisible by 6, are therefore affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving FFDLP is using subfield calculation. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Here, the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#SP800-57" class="cite xref">SP800-57</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">There has since been research into the minimum bit length of the parameters of pairing-friendly curves for each security level when applying exTNFS as an attacking method for FFDLP. For 128-bit security, Barbulescu and Duquesne estimated the minimum bit length of p of BN curves and BLS12 curves after exTNFS as 461 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. For 256-bit security, Kiyomura et al. estimated the minimum bit length of p^k of BLS48 curves as 27,410 bits, which indicated 572 bits of p <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1647,10 +1647,10 @@ BLS48:
           </h4>
 <p id="section-4.1.2-1">There are a lot of cryptographic libraries that support pairing calculations.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-2"><span>[<a href="#blst" class="cite xref">blst</a>]</span> is a high-performance pairing library maintained by Supranational. It supports BLS12-381 and is used in production by Ethereum consensus clients, Filecoin, and other applications.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-3">Several additional actively maintained libraries support BLS12-381. <span>[<a href="#gnark-crypto" class="cite xref">gnark-crypto</a>]</span>, developed by Consensys, supports BLS12-381, BN254, BLS12-377, BLS24-315, and BW6-761. <span>[<a href="#noble-curves" class="cite xref">noble-curves</a>]</span> is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381. The arkworks ecosystem <span>[<a href="#arkworks" class="cite xref">arkworks</a>]</span> provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN254. <span>[<a href="#constantine" class="cite xref">constantine</a>]</span> is a cryptographic library written in Nim that supports BLS12-381, BN254, BLS12-377, and BW6-761. <span>[<a href="#CIRCL" class="cite xref">CIRCL</a>]</span> is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span> is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381.<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-3">Several additional actively maintained libraries support BLS12-381. <span>[<a href="#gnark-crypto" class="cite xref">gnark-crypto</a>]</span>, developed by Consensys, supports BLS12-381, BN_SNARK1, BLS12-377, BLS24-315, and BW6-761. <span>[<a href="#noble-curves" class="cite xref">noble-curves</a>]</span> is a JavaScript/TypeScript library by Paul Miller supporting BLS12-381 and BN_SNARK1. The arkworks ecosystem <span>[<a href="#arkworks" class="cite xref">arkworks</a>]</span> provides Rust crates for pairing-friendly curves used in zero-knowledge proof systems, including BLS12-381 and BN_SNARK1. <span>[<a href="#constantine" class="cite xref">constantine</a>]</span> is a cryptographic library written in Nim that supports BLS12-381, BN254N, BN_SNARK1, BLS12-377, and BW6-761. <span>[<a href="#CIRCL" class="cite xref">CIRCL</a>]</span> is the Cloudflare Interoperable, Reusable Cryptographic Library and includes support for BLS12-381. <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span> is a collection of Rust crates for zero-knowledge cryptography supporting BLS12-381. These libraries name BN_SNARK1 after the size of its field, as bn254; <span>[<a href="#EIP197" class="cite xref">EIP197</a>]</span> calls the same curve alt_bn128.<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-4">PBC is a library for pairing-based cryptography published by Stanford University that supports BN curves, MNT curves, Freeman curves, and supersingular curves <span>[<a href="#PBC" class="cite xref">PBC</a>]</span>. Users can generate pairing parameters by using PBC and use pairing operations with the generated parameters.<a href="#section-4.1.2-4" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-5"><span>[<a href="#mcl" class="cite xref">mcl</a>]</span> is a library for pairing-based cryptography that supports four BN curves and BLS12-381 <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>. These BN curves include BN254 proposed by Nogami et al. <span>[<a href="#NASKM08" class="cite xref">NASKM08</a>]</span> (named BN254N), BN_SNARK1 suitable for SNARK applications <span>[<a href="#libsnark" class="cite xref">libsnark</a>]</span>, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports BLS48-581 <span>[<a href="#BLS48" class="cite xref">BLS48</a>]</span>. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) <span>[<a href="#TEPLA" class="cite xref">TEPLA</a>]</span> supports two BN curves, BN254N and BN254 proposed by Beuchat et al. <span>[<a href="#BGMORT10" class="cite xref">BGMORT10</a>]</span> (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) <span>[<a href="#Intel-IPP" class="cite xref">Intel-IPP</a>]</span> and the library supports BN256I.<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-6"><span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, pairing-friendly curves constructed by Scott et al. <span>[<a href="#SG19" class="cite xref">SG19</a>]</span> based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>, a KSS curve <span>[<a href="#KSS08" class="cite xref">KSS08</a>]</span> of embedding degree 18 with 508-bit p (named KSS18-508) <span>[<a href="#AFKMR12" class="cite xref">AFKMR12</a>]</span>, Optimal TNFS-secure curve <span>[<a href="#FM19" class="cite xref">FM19</a>]</span> of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve <span>[<a href="#S86" class="cite xref">S86</a>]</span> with 1536-bit p (SS-1536).<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-6"><span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span>, pairing-friendly curves constructed by Scott et al. <span>[<a href="#SG18" class="cite xref">SG18</a>]</span> based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) <span>[<a href="#MAF19" class="cite xref">MAF19</a>]</span>, a KSS curve <span>[<a href="#KSS08" class="cite xref">KSS08</a>]</span> of embedding degree 18 with 508-bit p (named KSS18-508) <span>[<a href="#AFKMR12" class="cite xref">AFKMR12</a>]</span>, Optimal TNFS-secure curve <span>[<a href="#FM19" class="cite xref">FM19</a>]</span> of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve <span>[<a href="#S86" class="cite xref">S86</a>]</span> with 1536-bit p (SS-1536).<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-7">MIRACL Core <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> (the successor to the Apache Milagro Crypto Library (AMCL) <span>[<a href="#AMCL" class="cite xref">AMCL</a>]</span>) supports five BLS curves (BLS12-381, BLS12-461, BLS24-479, BLS48-556, and BLS48-581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).<a href="#section-4.1.2-7" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-8">Adjoint published a library that supports the BLS12-381 and six BN curves (BN_SNARK1, BN254B, BN254N, BN254S1, BN254S2, and BN462) <span>[<a href="#AdjointLib" class="cite xref">AdjointLib</a>]</span>, where BN254S1 and BN254S2 are BN curves adopted by an old version of AMCL <span>[<a href="#AMCLv2" class="cite xref">AMCLv2</a>]</span>. The suffix 'S' of BN254S1 and BN254S2 is given from the initials of the name of the developer who proposed these parameters.<a href="#section-4.1.2-8" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-9">The Celo foundation published the bls12377js library <span>[<a href="#bls12377js" class="cite xref">bls12377js</a>]</span>. The supported curve is the BLS12-377 curve which is shown in <span>[<a href="#BCGMMW20" class="cite xref">BCGMMW20</a>]</span>.<a href="#section-4.1.2-9" class="pilcrow">¶</a></p>
@@ -1662,7 +1662,7 @@ BLS48:
 <a href="#section-4.1.3" class="section-number selfRef">4.1.3. </a><a href="#name-applications" class="section-name selfRef">Applications</a>
           </h4>
 <p id="section-4.1.3-1">Zcash uses BN_SNARK1 in their library <span>[<a href="#libsnark" class="cite xref">libsnark</a>]</span>. In response to the exTNFS attacks, they proposed new parameters using the BLS12-381 curve <span>[<a href="#BLS12-381" class="cite xref">BLS12-381</a>]</span> <span>[<a href="#GMT19" class="cite xref">GMT19</a>]</span> and published its implementation <span>[<a href="#zkcrypto" class="cite xref">zkcrypto</a>]</span>.<a href="#section-4.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-2">Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is also specified as an Ethereum precompile contract in EIP-2537 <span>[<a href="#EIP2537" class="cite xref">EIP2537</a>]</span>, enabling on-chain pairing operations. <span>[<a href="#Filecoin" class="cite xref">Filecoin</a>]</span> uses BLS12-381 via the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. Chia Network published their implementation <span>[<a href="#Chia" class="cite xref">Chia</a>]</span>, which uses the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. DFINITY uses mcl, and Algorand published an implementation which supports BLS12-381.<a href="#section-4.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.1.3-2">Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is also specified as an Ethereum precompile contract in EIP-2537 <span>[<a href="#EIP2537" class="cite xref">EIP2537</a>]</span>, enabling on-chain pairing operations. <span>[<a href="#Filecoin" class="cite xref">Filecoin</a>]</span> uses BLS12-381 via the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. Chia Network published their implementation <span>[<a href="#Chia" class="cite xref">Chia</a>]</span>, which uses the blst library <span>[<a href="#blst" class="cite xref">blst</a>]</span>. DFINITY uses mcl, and Algorand published an implementation <span>[<a href="#go-algorand" class="cite xref">go-algorand</a>]</span> whose virtual machine provides curve operations and a pairing check for BLS12-381 and for BN_SNARK1. The pairing check on BN_SNARK1 is also available on Ethereum, as the precompiled contract of <span>[<a href="#EIP197" class="cite xref">EIP197</a>]</span>.<a href="#section-4.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1686,7 +1686,7 @@ BLS48:
 t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 </pre><a href="#section-4.2.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.1-4">where the size of p becomes 381 bits.<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-4">where t is the parameter in <a href="#BLSdef" class="auto internal xref">Section 2.4</a> and the size of p is 381 bits.<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
 <div id="tower_bls12_381">
 <p id="section-4.2.1-5">For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:<a href="#section-4.2.1-5" class="pilcrow">¶</a></p>
 </div>
@@ -1857,7 +1857,7 @@ psi(x', y') = (x' / w^2, y' / w^3)
 t = 2^114 + 2^101 - 2^14 - 1
 </pre><a href="#section-4.2.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-3">for the definition in <a href="#BNdef" class="auto internal xref">Section 2.3</a>.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-3">where t is the parameter in <a href="#BNdef" class="auto internal xref">Section 2.3</a> and the size of p is 462 bits.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <div id="tower_bn462">
 <p id="section-4.2.2-4">For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 </div>
@@ -2028,10 +2028,10 @@ psi(x', y') = (x' * w^2, y' * w^3)
 <p id="section-4.3-2">The selected BLS48 curve is shown in <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span> and it is defined by the parameter<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-3">
 <pre>
-t = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+t = -1 + 2^7 - 2^10 - 2^30 - 2^32
 </pre><a href="#section-4.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3-4">In this case, the size of p becomes 581 bits.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
+<p id="section-4.3-4">where t is the parameter in <a href="#BLSdef" class="auto internal xref">Section 2.4</a> and the size of p is 581 bits.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
 <div id="tower_bls48_581">
 <p id="section-4.3-5">For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:<a href="#section-4.3-5" class="pilcrow">¶</a></p>
 </div>
@@ -2896,10 +2896,6 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Kiyomura, Y.</span>, <span class="refAuthor">Inoue, A.</span>, <span class="refAuthor">Kawahara, Y.</span>, <span class="refAuthor">Yasuda, M.</span>, <span class="refAuthor">Takagi, T.</span>, and <span class="refAuthor">T. Kobayashi</span>, <span class="refTitle">"Secure and Efficient Pairing at 256-Bit Security Level"</span>, <span class="seriesInfo">DOI 10.1007/978-3-319-61204-1_4</span>, <span class="seriesInfo">Applied Cryptography and Network Security pp. 59-79</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-319-61204-1_4">https://doi.org/10.1007/978-3-319-61204-1_4</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="NIST">[NIST]</dt>
-        <dd>
-<span class="refAuthor">Barker, E.</span>, <span class="refTitle">"NIST special publication 800-57 part 1 (revised) : Recommendation for key management, part 1: General (revised)"</span>, <span class="seriesInfo">National Institute of Standards and Technology (NIST)</span>, <time datetime="2020" class="refDate">2020</time>. </dd>
-<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
@@ -2911,6 +2907,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SP800-57">[SP800-57]</dt>
+        <dd>
+<span class="refAuthor">Barker, E.</span>, <span class="refTitle">"Recommendation for Key Management: Part 1 – General"</span>, <span class="seriesInfo">NIST Special Publication 800-57 Part 1 Rev. 5</span>, <span class="seriesInfo">DOI 10.6028/NIST.SP.800-57pt1r5</span>, <time datetime="2020-05" class="refDate">May 2020</time>, <span>&lt;<a href="https://doi.org/10.6028/NIST.SP.800-57pt1r5">https://doi.org/10.6028/NIST.SP.800-57pt1r5</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="Ver09">[Ver09]</dt>
       <dd>
@@ -2925,7 +2925,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dl class="references">
 <dt id="AdjointLib">[AdjointLib]</dt>
         <dd>
-<span class="refAuthor">Adjoint Inc.</span>, <span class="refTitle">"Optimised bilinear pairings over elliptic curves"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://github.com/adjoint-io/pairing">https://github.com/adjoint-io/pairing</a>&gt;</span>. </dd>
+<span class="refAuthor">Adjoint Inc.</span>, <span class="refTitle">"Optimised bilinear pairings over elliptic curves"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://github.com/sdiehl/pairing">https://github.com/sdiehl/pairing</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="AFKMR12">[AFKMR12]</dt>
         <dd>
@@ -2937,7 +2937,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="Algorand">[Algorand]</dt>
         <dd>
-<span class="refAuthor">Gorbunov, S.</span>, <span class="refTitle">"Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains"</span>, <span>&lt;<a href="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95</a>&gt;</span>. </dd>
+<span class="refAuthor">Gorbunov, S.</span>, <span class="refTitle">"Pixel-signatures: Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains"</span>, <time datetime="2019-03-07" class="refDate">7 March 2019</time>, <span>&lt;<a href="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="AMCL">[AMCL]</dt>
         <dd>
@@ -2981,7 +2981,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="bls12377js">[bls12377js]</dt>
         <dd>
-<span class="refAuthor">The Celo Foundation</span>, <span class="refTitle">"bls12377js"</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://github.com/celo-org/bls12377js">https://github.com/celo-org/bls12377js</a>&gt;</span>. </dd>
+<span class="refAuthor">The Celo Foundation</span>, <span class="refTitle">"bls12377js: TypeScript implementation of BLS12-377-based Proofs of Possession"</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://github.com/celo-org/bls12377js">https://github.com/celo-org/bls12377js</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="blst">[blst]</dt>
         <dd>
@@ -3031,6 +3031,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">ECRYPT</span>, <span class="refTitle">"Final Report on Main Computational Assumptions in Cryptography"</span>. </dd>
 <dd class="break"></dd>
+<dt id="EIP197">[EIP197]</dt>
+        <dd>
+<span class="refAuthor">Buterin, V.</span> and <span class="refAuthor">C. Reitwiessner</span>, <span class="refTitle">"EIP-197: Precompiled contracts for optimal ate pairing check on the elliptic curve alt_bn128"</span>, <time datetime="2017-02" class="refDate">February 2017</time>, <span>&lt;<a href="https://eips.ethereum.org/EIPS/eip-197">https://eips.ethereum.org/EIPS/eip-197</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="EIP2537">[EIP2537]</dt>
         <dd>
 <span class="refAuthor">Vlasov, A.</span>, <span class="refTitle">"EIP-2537: Precompile for BLS12-381 curve operations"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://eips.ethereum.org/EIPS/eip-2537">https://eips.ethereum.org/EIPS/eip-2537</a>&gt;</span>. </dd>
@@ -3053,7 +3057,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="Filecoin">[Filecoin]</dt>
         <dd>
-<span class="refAuthor">Protocol Labs</span>, <span class="refTitle">"Filecoin: A Decentralized Storage Network"</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://filecoin.io">https://filecoin.io</a>&gt;</span>. </dd>
+<span class="refAuthor">Protocol Labs</span>, <span class="refTitle">"Filecoin: A Decentralized Storage Network"</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://research.protocol.ai/publications/filecoin-a-decentralized-storage-network/">https://research.protocol.ai/publications/filecoin-a-decentralized-storage-network/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="FK18">[FK18]</dt>
         <dd>
@@ -3074,6 +3078,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dt id="gnark-crypto">[gnark-crypto]</dt>
         <dd>
 <span class="refAuthor">Consensys Software Inc.</span>, <span class="refTitle">"gnark-crypto: Elliptic curve cryptography and pairing library"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://github.com/consensys/gnark-crypto">https://github.com/consensys/gnark-crypto</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="go-algorand">[go-algorand]</dt>
+        <dd>
+<span class="refAuthor">Algorand</span>, <span class="refTitle">"go-algorand: Algorand's official implementation in Go"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://github.com/algorand/go-algorand">https://github.com/algorand/go-algorand</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="HHT20">[HHT20]</dt>
         <dd>
@@ -3125,7 +3133,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="M-Pin">[M-Pin]</dt>
         <dd>
-<span class="refAuthor">Scott, M.</span>, <span class="refTitle">"M-Pin: A Multi-Factor Zero Knowledge Authentication Protocol"</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-zero-knowledge-authentication-protocol">https://www.miracl.com/miracl-labs/m-pin-a-multi-factor-zero-knowledge-authentication-protocol</a>&gt;</span>. </dd>
+<span class="refAuthor">Scott, M.</span>, <span class="refTitle">"M-Pin: A Multi-Factor Zero Knowledge Authentication Protocol"</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://miracl.com/blog/m-pin-a-multi-factor-zero-knowledge-authentication-protocol/">https://miracl.com/blog/m-pin-a-multi-factor-zero-knowledge-authentication-protocol/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="MAF19">[MAF19]</dt>
         <dd>
@@ -3215,9 +3223,9 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Standards for Efficient Cryptography Group (SECG)</span>, <span class="refTitle">"SEC 1: Elliptic Curve Cryptography"</span>, <time datetime="2009" class="refDate">2009</time>, <span>&lt;<a href="https://www.secg.org/sec1-v2.pdf">https://www.secg.org/sec1-v2.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="SG19">[SG19]</dt>
+<dt id="SG18">[SG18]</dt>
         <dd>
-<span class="refAuthor">Scott, M.</span> and <span class="refAuthor">A. Guillevic</span>, <span class="refTitle">"A New Family of Pairing-Friendly elliptic curves"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2018/193</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2018/193.pdf">https://eprint.iacr.org/2018/193.pdf</a>&gt;</span>. </dd>
+<span class="refAuthor">Scott, M.</span> and <span class="refAuthor">A. Guillevic</span>, <span class="refTitle">"A New Family of Pairing-Friendly elliptic curves"</span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2018/193</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://eprint.iacr.org/2018/193.pdf">https://eprint.iacr.org/2018/193.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TEPLA">[TEPLA]</dt>
         <dd>
@@ -3233,7 +3241,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dd class="break"></dd>
 <dt id="Zcash">[Zcash]</dt>
         <dd>
-<span class="refAuthor">Zcash</span>, <span class="refTitle">"What are zk-SNARKs?"</span>, <span>&lt;<a href="https://z.cash/technology/zksnarks/">https://z.cash/technology/zksnarks/</a>&gt;</span>. </dd>
+<span class="refAuthor">Zcash</span>, <span class="refTitle">"What are zk-SNARKs?"</span>, <span>&lt;<a href="https://z.cash/learn/what-are-zk-snarks/">https://z.cash/learn/what-are-zk-snarks/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ZcashRep">[ZcashRep]</dt>
         <dd>
@@ -3274,15 +3282,15 @@ return (l * (x - x_1) + y_1 - y);
 </pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
 <p id="appendix-A-4">When implementing the line function, the isomorphism of E and its twist curve E' can be used to reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span> <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
-<p id="appendix-A-5">The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <div id="optimal-ate-pairings-over-barreto-naehrig-curves">
 <section id="appendix-A.1">
         <h3 id="name-optimal-ate-pairings-over-b">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-optimal-ate-pairings-over-b" class="section-name selfRef">Optimal Ate Pairings over Barreto-Naehrig Curves</a>
         </h3>
-<p id="appendix-A.1-1">Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-2">The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-A.1-3">
+<p id="appendix-A.1-1">Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as <span>[<a href="#mcl" class="cite xref">mcl</a>]</span> and <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> compute c from t and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of t.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-2">The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-3">The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-A.1-4">
 <pre>
 f := 1; T := Q;
 if (c_N = -1) then
@@ -3301,7 +3309,7 @@ f := f * Line_function(T, Q_1, P); T := T + Q_1;
 f := f * Line_function(T, -Q_2, P);
 f := f^{(p^k - 1) / r}
 return f;
-</pre><a href="#appendix-A.1-3" class="pilcrow">¶</a>
+</pre><a href="#appendix-A.1-4" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -3393,7 +3401,7 @@ e_lib(P, Q) = e_pseudocode(P, Q)^alpha
       <h2 id="name-test-vectors-of-optimal-ate">
 <a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-test-vectors-of-optimal-ate" class="section-name selfRef">Test Vectors of Optimal Ate Pairing</a>
       </h2>
-<p id="appendix-C-1">We provide test vectors for Optimal Ate Pairing e(P, Q) given in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> for the curves BLS12-381, BN462 and BLS48-581 given in <a href="#secure_params" class="auto internal xref">Section 4</a>. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-1">We provide test vectors for the optimal ate pairing e(P, Q) given in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> for the curves BLS12-381, BN462 and BLS48-581 given in <a href="#secure_params" class="auto internal xref">Section 4</a>. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> operates on points of the untwisted curve E(GF(p^k)). An implementation invoking that pseudocode directly has to apply the untwist isomorphism psi defined in <a href="#secure_params" class="auto internal xref">Section 4</a> first, to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3">For BLS12-381 and BN462, Q = (x', y') is given by<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-C-4">
@@ -4976,8 +4984,48 @@ kappa = r  (deserialization returns INVALID)
             <td class="text-center" rowspan="1" colspan="1">BN254S2</td>
           </tr>
           <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">libsnark</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">gnark-crypto</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">arkworks</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">noble-curves</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">constantine</td>
+            <td class="text-center" rowspan="1" colspan="1">BN254N</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Library</td>
+            <td class="text-center" rowspan="1" colspan="1">constantine</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
             <td class="text-center" rowspan="1" colspan="1">Application</td>
             <td class="text-center" rowspan="1" colspan="1">Zcash</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Application</td>
+            <td class="text-center" rowspan="1" colspan="1">Ethereum</td>
+            <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">Application</td>
+            <td class="text-center" rowspan="1" colspan="1">Algorand</td>
             <td class="text-center" rowspan="1" colspan="1">BN_SNARK1</td>
           </tr>
           <tr>
