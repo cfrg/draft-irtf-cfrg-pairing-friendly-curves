@@ -221,6 +221,8 @@ The security of pairing-friendly curves is evaluated by the hardness of the foll
 
 There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography. Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, the bilinear Diffie-Hellman (BDH) problem, the decision bilinear Diffie-Hellman (DBDH) problem, the gap DBDH problem, etc. {{ECRYPT}}. Almost all of these variants are reduced to the hardness of discrete logarithm problems described above and are believed to be easier than the discrete logarithm problems.
 
+Pairing inversion is a related problem: given P in G_1 and z in G_T, find Q in G_2 such that e(P, Q) = z, or the same with the roles of G_1 and G_2 exchanged. Solving it for one of the two arguments is enough to solve a variant of the BDH problem {{GHV07}}. Solving the discrete logarithm problem in G_T also solves pairing inversion. {{GHV07}} examines approaches that invert the two stages of the pairing computation, Miller's algorithm and the final exponentiation, as well as approaches that invert the pairing in one step, and finds that none of them solves pairing inversion for curves of cryptographic interest.
+
 Although it would be sufficient to attack any of these problems to attack pairing-based cryptography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.
 
 The security levels of pairing-friendly curves are estimated by the computational cost of the most efficient algorithm for solving the above discrete logarithm problems. The best-known algorithms for solving the discrete logarithm problems are based on Pollard's rho algorithm {{Pollard78}} and Index Calculus {{HR83}}. To make index calculus algorithms more efficient, number field sieve (NFS) algorithms are utilized.
@@ -1500,6 +1502,22 @@ Tsunekazu Saito was a co-author of this document from its first version through 
               <organization />
             </author>
             <date year="1983" />
+          </front>
+        </reference>
+        <reference anchor="GHV07" target="https://eprint.iacr.org/2007/256">
+          <front>
+            <title>Aspects of Pairing Inversion</title>
+            <seriesInfo name="Cryptology ePrint Archive" value="Paper 2007/256" />
+            <author initials="S." surname="Galbraith">
+              <organization />
+            </author>
+            <author initials="F." surname="Hess">
+              <organization />
+            </author>
+            <author initials="F." surname="Vercauteren">
+              <organization />
+            </author>
+            <date year="2007" />
           </front>
         </reference>
 
