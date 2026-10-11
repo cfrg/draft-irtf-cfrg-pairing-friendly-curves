@@ -2140,7 +2140,7 @@ When implementing the line function, the isomorphism of E and its twist curve E'
 
 ## Optimal Ate Pairings over Barreto-Naehrig Curves  {#optimal-ate-pairings-over-barreto-naehrig-curves}
 
-Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
+Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as {{mcl}} and {{MIRACL}} compute c from t and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of t.
 
 The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of {{pairing}}, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).
 
