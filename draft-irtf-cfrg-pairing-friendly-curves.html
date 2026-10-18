@@ -2356,68 +2356,22 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-serialization-and-validatio" class="section-name selfRef">Serialization and Validation</a>
       </h2>
 <p id="section-5-1">This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. Elements of G_T, which lie in GF(p^k), are not encoded here either: this document defines no byte encoding for them. Should a protocol come to require one, a separate specification can define it. The point format is based on the one originally defined by <span>[<a href="#ZcashRep" class="cite xref">ZcashRep</a>]</span> for BLS12-381 and is, in turn, based on the representation shown in <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by <span>[<a href="#I-D.irtf-cfrg-bbs-signatures" class="cite xref">I-D.irtf-cfrg-bbs-signatures</a>]</span> and <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span>; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in <a href="#bn462-applicability" class="auto internal xref">Section 5.5</a>.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<table class="center" id="table-1">
-        <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
-<thead>
-          <tr>
-            <th class="text-left" rowspan="1" colspan="1">What</th>
-            <th class="text-left" rowspan="1" colspan="1">Where it comes from</th>
-            <th class="text-left" rowspan="1" colspan="1">How this document treats it</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">Scalar encoding</td>
-            <td class="text-left" rowspan="1" colspan="1">Existing practice: I2OSP and OS2IP <span>[<a href="#RFC8017" class="cite xref">RFC8017</a>]</span>, together with a comparison against the group order</td>
-            <td class="text-left" rowspan="1" colspan="1">Specified here, for all three curves</td>
-          </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">BLS12-381 point encoding</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <span>[<a href="#ZcashRep" class="cite xref">ZcashRep</a>]</span>, which adapts the representation of <span>[<a href="#SEC1" class="cite xref">SEC1</a>]</span> to GF(p^m)</td>
-            <td class="text-left" rowspan="1" colspan="1">Restated here as the format in use</td>
-          </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">BLS48-581 point encoding</td>
-            <td class="text-left" rowspan="1" colspan="1">The same format, extended to GF(p^8) in <span>[<a href="#I-D.ietf-cose-bls-key-representations" class="cite xref">I-D.ietf-cose-bls-key-representations</a>]</span>
-</td>
-            <td class="text-left" rowspan="1" colspan="1">That extension is adopted here</td>
-          </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">BN462 point encoding</td>
-            <td class="text-left" rowspan="1" colspan="1">Not applicable</td>
-            <td class="text-left" rowspan="1" colspan="1">Not specified here; see <a href="#bn462-applicability" class="auto internal xref">Section 5.5</a>
-</td>
-          </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">G_T element encoding</td>
-            <td class="text-left" rowspan="1" colspan="1">Not applicable</td>
-            <td class="text-left" rowspan="1" colspan="1">Not specified here</td>
-          </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">Group membership and identity handling</td>
-            <td class="text-left" rowspan="1" colspan="1">This document</td>
-            <td class="text-left" rowspan="1" colspan="1">Specified here</td>
-          </tr>
-        </tbody>
-      </table>
-<p id="section-5-4">At a high level, the point serialization format is defined as follows:<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-2">At a high level, the point serialization format is defined as follows:<a href="#section-5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5-5.1">
-          <p id="section-5-5.1.1">Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.<a href="#section-5-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5-3.1">
+          <p id="section-5-3.1.1">Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.<a href="#section-5-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-5-5.2">
-          <p id="section-5-5.2.1">For a curve with characteristic p represented in n = ceil(L / 8) bytes, where L is the bit length of p, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>, where m = k/d for the twist degree d of <a href="#pairing" class="auto internal xref">Section 2.2</a>, are serialized into m*n bytes (compressed) or 2*m*n bytes (uncompressed).<a href="#section-5-5.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-5-3.2">
+          <p id="section-5-3.2.1">For a curve with characteristic p represented in n = ceil(L / 8) bytes, where L is the bit length of p, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in <a href="#point-serialization-params" class="auto internal xref">Section 5.1</a>, where m = k/d for the twist degree d of <a href="#pairing" class="auto internal xref">Section 2.2</a>, are serialized into m*n bytes (compressed) or 2*m*n bytes (uncompressed).<a href="#section-5-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-5-5.3">
-          <p id="section-5-5.3.1">The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.<a href="#section-5-5.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-5-3.3">
+          <p id="section-5-3.3.1">The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.<a href="#section-5-3.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-5-5.4">
-          <p id="section-5-5.4.1">The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.<a href="#section-5-5.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-5-3.4">
+          <p id="section-5-3.4.1">The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.<a href="#section-5-3.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-5-5.5">
-          <p id="section-5-5.5.1">The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.<a href="#section-5-5.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-5-3.5">
+          <p id="section-5-3.5.1">The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.<a href="#section-5-3.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="point-serialization-params">
@@ -2425,8 +2379,8 @@ psi(x', y') = (x' * xi^2, y' * xi^3)
         <h3 id="name-parameters-and-notation">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-parameters-and-notation" class="section-name selfRef">Parameters and Notation</a>
         </h3>
-<table class="center" id="table-2">
-          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Curve</th>
@@ -2498,8 +2452,8 @@ sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
         </h3>
 <p id="section-5.2-1">This section defines a serialization format for elements of the scalar field GF(r), where r is the order of G_1 and G_2 as given for each curve in <a href="#secure_params" class="auto internal xref">Section 4</a>. Unlike point serialization, this format applies to all three curves in this document (BLS12-381, BN462, and BLS48-581), since no metadata bits are required.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">For a curve with scalar field order r represented in n_s = ceil(L_r / 8) bytes, where L_r is the bit length of r:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<table class="center" id="table-3">
-          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
+<table class="center" id="table-2">
+          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Curve</th>
@@ -4780,8 +4734,8 @@ kappa = r  (deserialization returns INVALID)
 <a href="#appendix-E.2" class="section-number selfRef">E.2. </a><a href="#name-encodings-used-by-existing-" class="section-name selfRef">Encodings Used by Existing Implementations</a>
         </h3>
 <p id="appendix-E.2-1">Few libraries implement BN462 at all. Among those surveyed for this document, it is absent from <span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span>, <span>[<a href="#blst" class="cite xref">blst</a>]</span>, <span>[<a href="#gnark-crypto" class="cite xref">gnark-crypto</a>]</span>, <span>[<a href="#noble-curves" class="cite xref">noble-curves</a>]</span> and <span>[<a href="#arkworks" class="cite xref">arkworks</a>]</span>, each of which does implement BLS12-381. The following do provide it:<a href="#appendix-E.2-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-4">
-          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
+<table class="center" id="table-3">
+          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Implementation</th>
@@ -4877,8 +4831,8 @@ kappa = r  (deserialization returns INVALID)
 <a href="#appendix-F" class="section-number selfRef">Appendix F. </a><a href="#name-adoption-status-of-pairing-f" class="section-name selfRef">Adoption Status of Pairing-Friendly Curves with the 100-bit Security Level</a>
       </h2>
 <p id="appendix-F-1">BN curves including BN254 that were estimated as the 128-bit security level before exTNFS ensure no more than the 100-bit security level by the effect of exTNFS. The following table summarizes the adoption status of the parameters that <a href="#secure_params" class="auto internal xref">Section 4</a> does not select, namely those whose security level is more than 5 bits below the 128-bit level. Please refer to <a href="#impl" class="auto internal xref">Section 4.1</a> for the naming conventions for each curve.<a href="#appendix-F-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-5">
-        <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<table class="center" id="table-4">
+        <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
 <thead>
           <tr>
             <th class="text-center" rowspan="1" colspan="1">Category</th>

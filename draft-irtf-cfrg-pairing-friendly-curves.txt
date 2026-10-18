@@ -1199,51 +1199,6 @@ Table of Contents
    BLS48-581, and the extension is adopted here.  Applicability to BN462
    is discussed in Section 5.5.
 
-   Not all of what follows originates with this document.  Where an
-   existing format is restated, it is restated normatively, because
-   other specifications already cite this document for it.
-
-   +============+=========================================+============+
-   | What       | Where it comes from                     | How this   |
-   |            |                                         | document   |
-   |            |                                         | treats it  |
-   +============+=========================================+============+
-   | Scalar     | Existing practice: I2OSP and OS2IP      | Specified  |
-   | encoding   | [RFC8017], together with a comparison   | here, for  |
-   |            | against the group order                 | all three  |
-   |            |                                         | curves     |
-   +------------+-----------------------------------------+------------+
-   | BLS12-381  | [ZcashRep], which adapts the            | Restated   |
-   | point      | representation of [SEC1] to GF(p^m)     | here as    |
-   | encoding   |                                         | the        |
-   |            |                                         | format in  |
-   |            |                                         | use        |
-   +------------+-----------------------------------------+------------+
-   | BLS48-581  | The same format, extended to GF(p^8) in | That       |
-   | point      | [I-D.ietf-cose-bls-key-representations] | extension  |
-   | encoding   |                                         | is         |
-   |            |                                         | adopted    |
-   |            |                                         | here       |
-   +------------+-----------------------------------------+------------+
-   | BN462      | Not applicable                          | Not        |
-   | point      |                                         | specified  |
-   | encoding   |                                         | here; see  |
-   |            |                                         | Section    |
-   |            |                                         | 5.5        |
-   +------------+-----------------------------------------+------------+
-   | G_T        | Not applicable                          | Not        |
-   | element    |                                         | specified  |
-   | encoding   |                                         | here       |
-   +------------+-----------------------------------------+------------+
-   | Group      | This document                           | Specified  |
-   | membership |                                         | here       |
-   | and        |                                         |            |
-   | identity   |                                         |            |
-   | handling   |                                         |            |
-   +------------+-----------------------------------------+------------+
-
-                                  Table 1
-
    At a high level, the point serialization format is defined as
    follows:
 
@@ -1282,7 +1237,7 @@ Table of Contents
    |           |           |          |   | bytes      | bytes        |
    +-----------+-----------+----------+---+------------+--------------+
 
-                                 Table 2
+                                 Table 1
 
    Below, we give detailed serialization and deserialization procedures,
    applicable to both curves using the parameters above.  The following
@@ -1371,7 +1326,7 @@ Table of Contents
                         | BLS48-581 | 65          |
                         +-----------+-------------+
 
-                                  Table 3
+                                  Table 2
 
    Serialization: a scalar kappa in the range [0, r - 1] is serialized
    as I2OSP(kappa, n_s).
@@ -3346,7 +3301,7 @@ E.2.  Encodings Used by Existing Implementations
     |                | bytes    | the coordinate     |               |
     +----------------+----------+--------------------+---------------+
 
-                                 Table 4
+                                 Table 3
 
    Sizes are given as uncompressed / compressed, for G_1.  For [MIRACL]
    and [zig-pairings], the corresponding G'_2 sizes are 233 bytes
@@ -3538,7 +3493,7 @@ Appendix F.  Adoption Status of Pairing-Friendly Curves with the 100-bit
          | Application |   DFINITY    |        BN_SNARK1         |
          +-------------+--------------+--------------------------+
 
-                                  Table 5
+                                  Table 4
 
 Appendix G.  Scope of the Security Estimate Review
 
