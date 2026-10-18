@@ -418,14 +418,14 @@ Table of Contents
    2005.  A pairing over BN curves constructs optimal ate pairings.
 
    A BN curve is defined by elliptic curves E and E' parameterized by a
-   well-chosen integer t.  E is defined over GF(p), where p is a prime
+   well-chosen integer chi.  E is defined over GF(p), where p is a prime
    number and at least 5, and E(GF(p)) has a subgroup of prime order r.
    The characteristic p and the order r are parameterized by
 
-   p = 36 * t^4 + 36 * t^3 + 24 * t^2 + 6 * t + 1
-   r = 36 * t^4 + 36 * t^3 + 18 * t^2 + 6 * t + 1
+   p = 36 * chi^4 + 36 * chi^3 + 24 * chi^2 + 6 * chi + 1
+   r = 36 * chi^4 + 36 * chi^3 + 18 * chi^2 + 6 * chi + 1
 
-   for an integer t.
+   for an integer chi.
 
    The elliptic curve E has an equation of the form E: y^2 = x^3 + b,
    where b is a primitive element of the multiplicative group (GF(p))^*
@@ -450,9 +450,9 @@ Table of Contents
    constructs optimal ate pairings.
 
    A BLS curve is defined by elliptic curves E and E' parameterized by a
-   well-chosen integer t.  E is defined over a finite field GF(p) by an
-   equation of the form E: y^2 = x^3 + b, and its twist E': y^2 = x^3 +
-   b', is defined in the same way as BN curves.  In contrast to BN
+   well-chosen integer chi.  E is defined over a finite field GF(p) by
+   an equation of the form E: y^2 = x^3 + b, and its twist E': y^2 = x^3
+   + b', is defined in the same way as BN curves.  In contrast to BN
    curves, E(GF(p)) does not have a prime order.  Instead, its order is
    divisible by a large parameterized prime r and denoted by h * r with
    cofactor h.  The pairing is defined on the r-torsion points.  In the
@@ -467,13 +467,13 @@ Table of Contents
    equations:
 
    BLS12:
-       p = (t - 1)^2 * (t^4 - t^2 + 1) / 3 + t
-       r = t^4 - t^2 + 1
+       p = (chi - 1)^2 * (chi^4 - chi^2 + 1) / 3 + chi
+       r = chi^4 - chi^2 + 1
    BLS48:
-       p = (t - 1)^2 * (t^16 - t^8 + 1) / 3 + t
-       r = t^16 - t^8 + 1
+       p = (chi - 1)^2 * (chi^16 - chi^8 + 1) / 3 + chi
+       r = chi^16 - chi^8 + 1
 
-   for a well chosen integer t where t must be 1 (mod 3).
+   for a well chosen integer chi where chi must be 1 (mod 3).
 
    A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of
    order r, G_2 as defined in Section 2.2 and represented by the
@@ -634,9 +634,9 @@ Table of Contents
    [ISOIEC15946-5] (published 2022) reorganized the numerical examples
    and extended coverage to include BLS12, BLS24, and BLS48 curves.  The
    BN462 parameter in this document matches the numerical example in
-   Annex D.2.3 of [ISOIEC15946-5] exactly (t = 2^114 + 2^101 - 2^14 - 1,
-   written u there), and the BLS48-581 parameter matches Annex D.3.5
-   exactly (t = -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition
+   Annex D.2.3 of [ISOIEC15946-5] exactly (chi = 2^114 + 2^101 - 2^14 -
+   1, written u there), and the BLS48-581 parameter matches Annex D.3.5
+   exactly (chi = -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition
    introduces a post-exTNFS security guideline that the characteristic p
    of BN and BLS12 curves should be at least 461 bits for the 128-bit
    security level.  As described below, BN curves with 256-bit p and
@@ -775,9 +775,9 @@ Table of Contents
    The BLS12-381 curve is shown in [BLS12-381] and it is defined by the
    parameter
 
-   t = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
+   chi = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 
-   where t is the parameter in Section 2.4 and the size of p is 381
+   where chi is the parameter in Section 2.4 and the size of p is 381
    bits.
 
    For the finite field GF(p), the towers of extension field GF(p^2),
@@ -788,7 +788,7 @@ Table of Contents
    GF(p^6) = GF(p^2)[v] / (v^3 - u - 1)
    GF(p^12) = GF(p^6)[w] / (w^2 - v).
 
-   Defined by t, the elliptic curve E and its twist E' are represented
+   Defined by chi, the elliptic curve E and its twist E' are represented
    by E: y^2 = x^3 + 4 and E': y^2 = x^3 + 4 * (u + 1).  BLS12-381 is
    categorized as M-type.
 
@@ -877,9 +877,9 @@ Table of Contents
    A BN curve with the 128-bit security level is shown in [BD18], which
    we call BN462.  BN462 is defined by the parameter
 
-   t = 2^114 + 2^101 - 2^14 - 1
+   chi = 2^114 + 2^101 - 2^14 - 1
 
-   where t is the parameter in Section 2.3 and the size of p is 462
+   where chi is the parameter in Section 2.3 and the size of p is 462
    bits.
 
    For the finite field GF(p), the towers of extension field GF(p^2),
@@ -890,7 +890,7 @@ Table of Contents
    GF(p^6) = GF(p^2)[v] / (v^3 - u - 2)
    GF(p^12) = GF(p^6)[w] / (w^2 - v).
 
-   Defined by t, the elliptic curve E and its twist E' are represented
+   Defined by chi, the elliptic curve E and its twist E' are represented
    by E: y^2 = x^3 + 5 and E': y^2 = x^3 - u + 2, respectively.  The
    size of p becomes 462 bits.  BN462 is categorized as D-type.
 
@@ -984,9 +984,9 @@ Table of Contents
    The selected BLS48 curve is shown in [KIK17] and it is defined by the
    parameter
 
-   t = -1 + 2^7 - 2^10 - 2^30 - 2^32
+   chi = -1 + 2^7 - 2^10 - 2^30 - 2^32
 
-   where t is the parameter in Section 2.4 and the size of p is 581
+   where chi is the parameter in Section 2.4 and the size of p is 581
    bits.
 
    For the finite field GF(p), the towers of extension field GF(p^2),
@@ -2393,11 +2393,11 @@ Appendix A.  Computing the Optimal Ate Pairing
 
 A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
-   Let c = 6 * t + 2 for a parameter t and c_0, c_1, ... , c_N in
+   Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in
    {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
-   Implementations such as [mcl] and [MIRACL] compute c from t and
+   Implementations such as [mcl] and [MIRACL] compute c from chi and
    choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage
-   of the low Hamming weight of t.
+   of the low Hamming weight of chi.
 
    The computation of the optimal ate pairing uses the p-power Frobenius
    endomorphism pi of Section 2.2, applied to Q = (x, y) in G_2, that
@@ -2431,8 +2431,8 @@ A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
 A.2.  Optimal Ate Pairings over Barreto-Lynn-Scott Curves
 
-   Let c = t for a parameter t and c_0, c_1, ... , c_N in {-1,0,1} such
-   that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
+   Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1}
+   such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
    The following algorithm shows the computation of the optimal ate
    pairing on Barreto-Lynn-Scott curves.  It takes P in G_1, Q in G_2,
@@ -2474,7 +2474,7 @@ B.1.  Cofactors in Existing Libraries
 
    *  BLS12-381: alpha = 3 [HHT20]
 
-   *  BN462: alpha = 2t(6t^2 + 3t + 1) mod r [FCKR11]
+   *  BN462: alpha = 2 * chi * (6 * chi^2 + 3 * chi + 1) mod r [FCKR11]
 
    *  BLS48-581: alpha = 3 [HHT20]
 
@@ -2498,7 +2498,7 @@ B.2.  Final Exponentiation Decomposition
    single step, f := f^((p^k - 1) / r).  In practice, implementations
    compute this via an easy/hard split: an easy part computed cheaply
    via the Frobenius endomorphism, and a hard part computed via an
-   addition chain over the curve parameter t.
+   addition chain over the curve parameter chi.
 
    Standard references for the hard-part addition chain include [SBCK09]
    (the original approach for BLS curves) and [AKLGL11] (for BN curves).
