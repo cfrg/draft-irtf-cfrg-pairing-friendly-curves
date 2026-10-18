@@ -1047,7 +1047,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sakemi, et al.</td>
-<td class="center">Expires 14 April 2027</td>
+<td class="center">Expires 21 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1060,12 @@ svg {
 <dd class="internet-draft">draft-irtf-cfrg-pairing-friendly-curves-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-11" class="published">11 October 2026</time>
+<time datetime="2026-10-18" class="published">18 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-14">14 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-21">21 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1390,7 +1390,7 @@ svg {
         <h3 id="name-motivation-and-contribution">
 <a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-motivation-and-contribution" class="section-name selfRef">Motivation and Contribution</a>
         </h3>
-<p id="section-1.3-1">At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j &gt; 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) <span>[<a href="#BN05" class="cite xref">BN05</a>]</span> and Barreto-Lynn-Scott curves (BLS curves) <span>[<a href="#BLS02" class="cite xref">BLS02</a>]</span> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#NIST" class="cite xref">NIST</a>]</span>.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-1">At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j &gt; 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) <span>[<a href="#BN05" class="cite xref">BN05</a>]</span> and Barreto-Lynn-Scott curves (BLS curves) <span>[<a href="#BLS02" class="cite xref">BLS02</a>]</span> are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, BN254 ensures no more than the 100-bit security level due to the effect of the attack, where the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#SP800-57" class="cite xref">SP800-57</a>]</span>.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 <p id="section-1.3-2">To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack <span>[<a href="#BD18" class="cite xref">BD18</a>]</span> <span>[<a href="#BLS12-381" class="cite xref">BLS12-381</a>]</span>.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
 <p id="section-1.3-3">In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and consider them at the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluation by Barbulescu and Duquesne <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
 <p id="section-1.3-4">As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. This memo shows their specific test vectors.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
@@ -1606,7 +1606,7 @@ BLS48:
         <h3 id="name-impact-of-recent-attacks">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-impact-of-recent-attacks" class="section-name selfRef">Impact of Recent Attacks</a>
         </h3>
-<p id="section-3.2-1">In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that can be written as k = i * j with gcd(i, j) = 1 and i, j &gt; 1. Any k divisible by 6 meets this condition, taking i to be the largest power of 2 dividing k and j to be k / i; <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> accordingly gives k = 6 as the first case it treats. BN curves and BLS curves, whose embedding degree is divisible by 6, are therefore affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving FFDLP is using subfield calculation. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Here, the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#NIST" class="cite xref">NIST</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP <span>[<a href="#KB16" class="cite xref">KB16</a>]</span>. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that can be written as k = i * j with gcd(i, j) = 1 and i, j &gt; 1. Any k divisible by 6 meets this condition, taking i to be the largest power of 2 dividing k and j to be k / i; <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> accordingly gives k = 6 as the first case it treats. BN curves and BLS curves, whose embedding degree is divisible by 6, are therefore affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving FFDLP is using subfield calculation. Please refer to <span>[<a href="#KB16" class="cite xref">KB16</a>]</span> for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. Here, the security levels described in this memo correspond to the security strength of NIST recommendation <span>[<a href="#SP800-57" class="cite xref">SP800-57</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">There has since been research into the minimum bit length of the parameters of pairing-friendly curves for each security level when applying exTNFS as an attacking method for FFDLP. For 128-bit security, Barbulescu and Duquesne estimated the minimum bit length of p of BN curves and BLS12 curves after exTNFS as 461 bits <span>[<a href="#BD18" class="cite xref">BD18</a>]</span>. For 256-bit security, Kiyomura et al. estimated the minimum bit length of p^k of BLS48 curves as 27,410 bits, which indicated 572 bits of p <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1686,7 +1686,7 @@ BLS48:
 chi = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 </pre><a href="#section-4.2.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.1-4">where the size of p becomes 381 bits.<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-4">where chi is the parameter in <a href="#BLSdef" class="auto internal xref">Section 2.4</a> and the size of p is 381 bits.<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
 <div id="tower_bls12_381">
 <p id="section-4.2.1-5">For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:<a href="#section-4.2.1-5" class="pilcrow">¶</a></p>
 </div>
@@ -1857,7 +1857,7 @@ psi(x', y') = (x' / w^2, y' / w^3)
 chi = 2^114 + 2^101 - 2^14 - 1
 </pre><a href="#section-4.2.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2.2-3">for the definition in <a href="#BNdef" class="auto internal xref">Section 2.3</a>.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-3">where chi is the parameter in <a href="#BNdef" class="auto internal xref">Section 2.3</a> and the size of p is 462 bits.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <div id="tower_bn462">
 <p id="section-4.2.2-4">For the finite field GF(p), the towers of extension field GF(p^2), GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as follows:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 </div>
@@ -2028,10 +2028,10 @@ psi(x', y') = (x' * w^2, y' * w^3)
 <p id="section-4.3-2">The selected BLS48 curve is shown in <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span> and it is defined by the parameter<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-3">
 <pre>
-chi = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+chi = -1 + 2^7 - 2^10 - 2^30 - 2^32
 </pre><a href="#section-4.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.3-4">In this case, the size of p becomes 581 bits.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
+<p id="section-4.3-4">where chi is the parameter in <a href="#BLSdef" class="auto internal xref">Section 2.4</a> and the size of p is 581 bits.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
 <div id="tower_bls48_581">
 <p id="section-4.3-5">For the finite field GF(p), the towers of extension field GF(p^2), GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates u, v, w, z, and s as follows:<a href="#section-4.3-5" class="pilcrow">¶</a></p>
 </div>
@@ -2896,10 +2896,6 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Kiyomura, Y.</span>, <span class="refAuthor">Inoue, A.</span>, <span class="refAuthor">Kawahara, Y.</span>, <span class="refAuthor">Yasuda, M.</span>, <span class="refAuthor">Takagi, T.</span>, and <span class="refAuthor">T. Kobayashi</span>, <span class="refTitle">"Secure and Efficient Pairing at 256-Bit Security Level"</span>, <span class="seriesInfo">DOI 10.1007/978-3-319-61204-1_4</span>, <span class="seriesInfo">Applied Cryptography and Network Security pp. 59-79</span>, <time datetime="2017" class="refDate">2017</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-319-61204-1_4">https://doi.org/10.1007/978-3-319-61204-1_4</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="NIST">[NIST]</dt>
-        <dd>
-<span class="refAuthor">Barker, E.</span>, <span class="refTitle">"NIST special publication 800-57 part 1 (revised) : Recommendation for key management, part 1: General (revised)"</span>, <span class="seriesInfo">National Institute of Standards and Technology (NIST)</span>, <time datetime="2020" class="refDate">2020</time>. </dd>
-<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
@@ -2911,6 +2907,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SP800-57">[SP800-57]</dt>
+        <dd>
+<span class="refAuthor">Barker, E.</span>, <span class="refTitle">"Recommendation for Key Management: Part 1 – General"</span>, <span class="seriesInfo">NIST Special Publication 800-57 Part 1 Rev. 5</span>, <span class="seriesInfo">DOI 10.6028/NIST.SP.800-57pt1r5</span>, <time datetime="2020-05" class="refDate">May 2020</time>, <span>&lt;<a href="https://doi.org/10.6028/NIST.SP.800-57pt1r5">https://doi.org/10.6028/NIST.SP.800-57pt1r5</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="Ver09">[Ver09]</dt>
       <dd>
@@ -3282,15 +3282,15 @@ return (l * (x - x_1) + y_1 - y);
 </pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
 <p id="appendix-A-4">When implementing the line function, the isomorphism of E and its twist curve E' can be used to reduce the computational cost of operations in G_2 <span>[<a href="#CLN09" class="cite xref">CLN09</a>]</span> <span>[<a href="#KIK17" class="cite xref">KIK17</a>]</span>. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
-<p id="appendix-A-5">The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <div id="optimal-ate-pairings-over-barreto-naehrig-curves">
 <section id="appendix-A.1">
         <h3 id="name-optimal-ate-pairings-over-b">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-optimal-ate-pairings-over-b" class="section-name selfRef">Optimal Ate Pairings over Barreto-Naehrig Curves</a>
         </h3>
-<p id="appendix-A.1-1">Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-2">The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-A.1-3">
+<p id="appendix-A.1-1">Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as <span>[<a href="#mcl" class="cite xref">mcl</a>]</span> and <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> compute c from chi and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of chi.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-2">The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-3">The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-A.1-4">
 <pre>
 f := 1; T := Q;
 if (c_N = -1) then
@@ -3309,7 +3309,7 @@ f := f * Line_function(T, Q_1, P); T := T + Q_1;
 f := f * Line_function(T, -Q_2, P);
 f := f^{(p^k - 1) / r}
 return f;
-</pre><a href="#appendix-A.1-3" class="pilcrow">¶</a>
+</pre><a href="#appendix-A.1-4" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -3401,7 +3401,7 @@ e_lib(P, Q) = e_pseudocode(P, Q)^alpha
       <h2 id="name-test-vectors-of-optimal-ate">
 <a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-test-vectors-of-optimal-ate" class="section-name selfRef">Test Vectors of Optimal Ate Pairing</a>
       </h2>
-<p id="appendix-C-1">We provide test vectors for Optimal Ate Pairing e(P, Q) given in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> for the curves BLS12-381, BN462 and BLS48-581 given in <a href="#secure_params" class="auto internal xref">Section 4</a>. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-1">We provide test vectors for the optimal ate pairing e(P, Q) given in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> for the curves BLS12-381, BN462 and BLS48-581 given in <a href="#secure_params" class="auto internal xref">Section 4</a>. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in <a href="#secure_params" class="auto internal xref">Section 4</a>.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in <a href="#comp_pairing" class="auto internal xref">Appendix A</a> operates on points of the untwisted curve E(GF(p^k)). An implementation invoking that pseudocode directly has to apply the untwist isomorphism psi defined in <a href="#secure_params" class="auto internal xref">Section 4</a> first, to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <p id="appendix-C-3">For BLS12-381 and BN462, Q = (x', y') is given by<a href="#appendix-C-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-C-4">

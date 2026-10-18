@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 14 April 2027                                          R. Wahby
+Expires: 21 April 2027                                          R. Wahby
                                               Carnegie Mellon University
-                                                         11 October 2026
+                                                         18 October 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 April 2027.
+   This Internet-Draft will expire on 21 April 2027.
 
 Copyright Notice
 
@@ -243,7 +243,7 @@ Table of Contents
    128-bit security level; however, BN254 ensures no more than the
    100-bit security level due to the effect of the attack, where the
    security levels described in this memo correspond to the security
-   strength of NIST recommendation [NIST].
+   strength of NIST recommendation [SP800-57].
 
    To resolve this effect immediately, several research groups and
    implementers re-evaluated the security of pairing-friendly curves and
@@ -539,7 +539,7 @@ Table of Contents
    which had been believed to provide 128-bit security (BN256, for
    example) was reduced to approximately 100 bits [BD18].  Here, the
    security levels described in this memo correspond to the security
-   strength of NIST recommendation [NIST].
+   strength of NIST recommendation [SP800-57].
 
    There has since been research into the minimum bit length of the
    parameters of pairing-friendly curves for each security level when
@@ -777,7 +777,8 @@ Table of Contents
 
    chi = -2^63 - 2^62 - 2^60 - 2^57 - 2^48 - 2^16
 
-   where the size of p becomes 381 bits.
+   where chi is the parameter in Section 2.4 and the size of p is 381
+   bits.
 
    For the finite field GF(p), the towers of extension field GF(p^2),
    GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as
@@ -878,7 +879,8 @@ Table of Contents
 
    chi = 2^114 + 2^101 - 2^14 - 1
 
-   for the definition in Section 2.3.
+   where chi is the parameter in Section 2.3 and the size of p is 462
+   bits.
 
    For the finite field GF(p), the towers of extension field GF(p^2),
    GF(p^6) and GF(p^12) are defined by indeterminates u, v, and w as
@@ -982,9 +984,10 @@ Table of Contents
    The selected BLS48 curve is shown in [KIK17] and it is defined by the
    parameter
 
-   chi = -1 + 2^7 - 2^10 - 2^30 - 2^32.
+   chi = -1 + 2^7 - 2^10 - 2^30 - 2^32
 
-   In this case, the size of p becomes 581 bits.
+   where chi is the parameter in Section 2.4 and the size of p is 581
+   bits.
 
    For the finite field GF(p), the towers of extension field GF(p^2),
    GF(p^4), GF(p^8), GF(p^24) and GF(p^48) are defined by indeterminates
@@ -1914,11 +1917,6 @@ Table of Contents
               Applied Cryptography and Network Security pp. 59-79, 2017,
               <https://doi.org/10.1007/978-3-319-61204-1_4>.
 
-   [NIST]     Barker, E., "NIST special publication 800-57 part 1
-              (revised) : Recommendation for key management, part 1:
-              General (revised)", National Institute of Standards and
-              Technology (NIST), 2020.
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1932,6 +1930,11 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [SP800-57] Barker, E., "Recommendation for Key Management: Part 1 –
+              General", NIST Special Publication 800-57 Part 1 Rev. 5,
+              DOI 10.6028/NIST.SP.800-57pt1r5, May 2020,
+              <https://doi.org/10.6028/NIST.SP.800-57pt1r5>.
 
    [Ver09]    Vercauteren, F., "Optimal Pairings",
               DOI 10.1109/tit.2009.2034881, IEEE Transactions on
@@ -2388,16 +2391,19 @@ Appendix A.  Computing the Optimal Ate Pairing
    not consider such an isomorphism; i.e., the above pseudocode operates
    on coordinates in untwisted form.
 
+A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
+
+   Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in
+   {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
+   Implementations such as [mcl] and [MIRACL] compute c from chi and
+   choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage
+   of the low Hamming weight of chi.
+
    The computation of the optimal ate pairing uses the p-power Frobenius
    endomorphism pi of Section 2.2, applied to Q = (x, y) in G_2, that
    is, to a point on E(GF(p^k)) in untwisted form.  The pseudocode below
    writes it with the characteristic as an explicit argument, pi(p, Q) =
    (x^p, y^p).
-
-A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
-
-   Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in
-   {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
    The following algorithm shows the computation of the optimal ate
    pairing on BN curves.  It takes P in G_1, Q in G_2, an integer c,
@@ -2503,7 +2509,7 @@ B.2.  Final Exponentiation Decomposition
 
 Appendix C.  Test Vectors of Optimal Ate Pairing
 
-   We provide test vectors for Optimal Ate Pairing e(P, Q) given in
+   We provide test vectors for the optimal ate pairing e(P, Q) given in
    Appendix A for the curves BLS12-381, BN462 and BLS48-581 given in
    Section 4.  Here, the inputs P = (x, y) and Q = (x', y') are the
    corresponding base points BP and BP' given in Section 4.
