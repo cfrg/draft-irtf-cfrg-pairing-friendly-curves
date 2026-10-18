@@ -2486,7 +2486,8 @@ sign_GF_p(y) := { 1 if y &gt; (p - 1) / 2, else
         </ul>
 <p id="section-5.1-6"><a href="#point-deserialization-procedure" class="auto internal xref">Section 5.4</a> requires deciding whether a field element y2 is a square and, where it is, computing a square root. This document does not specify how. The following pointers are provided for implementers and are not requirements.<a href="#section-5.1-6" class="pilcrow">¶</a></p>
 <p id="section-5.1-7">For y2 in GF(p), all curves in this document have p = 3 (mod 4). Appendix I.1 of <span>[<a href="#RFC9380" class="cite xref">RFC9380</a>]</span> therefore applies directly: y2 is a square exactly when y2^((p-1)/2) is 0 or 1, and a square root is given by y2^((p+1)/4).<a href="#section-5.1-7" class="pilcrow">¶</a></p>
-<p id="section-5.1-8">For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8 are both 1 (mod 4). Appendix I.4 of <span>[<a href="#RFC9380" class="cite xref">RFC9380</a>]</span> gives a constant-time Tonelli-Shanks procedure for a general field, and Appendix I.5 gives an is_square test for GF(p^2).<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+<p id="section-5.1-8">For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8 are both 1 (mod 4). For BN462 and BLS12-381, p^2 = 9 (mod 16), so Appendix I.3 of <span>[<a href="#RFC9380" class="cite xref">RFC9380</a>]</span> applies to GF(p^2). Appendix I.4 of <span>[<a href="#RFC9380" class="cite xref">RFC9380</a>]</span> gives a constant-time Tonelli-Shanks procedure for a general field, and Appendix I.5 gives an is_square test for GF(p^2).<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+<p id="section-5.1-9">A faster approach reduces a square root in GF(p^2) to square roots in GF(p) by way of the norm <span>[<a href="#AR14" class="cite xref">AR14</a>]</span>, and the exponentiations in GF(p) that it needs can be shared with the is_square test <span>[<a href="#Scott20" class="cite xref">Scott20</a>]</span>. Since GF(p^8) is built as a tower of quadratic extensions, the same reduction applies one level at a time for BLS48-581 <span>[<a href="#AR14" class="cite xref">AR14</a>]</span> <span>[<a href="#Scott20" class="cite xref">Scott20</a>]</span>. Implementations such as <span>[<a href="#blst" class="cite xref">blst</a>]</span>, <span>[<a href="#mcl" class="cite xref">mcl</a>]</span>, <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span>, and <span>[<a href="#RELIC" class="cite xref">RELIC</a>]</span> compute square roots in GF(p^2) in this way.<a href="#section-5.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="scalar-serialization">
@@ -2951,6 +2952,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
         <dd>
 <span class="refAuthor">Al Aswad, H.</span>, <span class="refAuthor">Pierrot, C.</span>, and <span class="refAuthor">E. Thomé</span>, <span class="refTitle">"High-Order Galois Automorphisms for TNFS Linear Algebra"</span>, <span class="seriesInfo">Advances in Cryptology - CRYPTO 2026 </span>, <span class="seriesInfo">Cryptology ePrint Archive Report 2026/560</span>, <time datetime="2026" class="refDate">2026</time>, <span>&lt;<a href="https://eprint.iacr.org/2026/560">https://eprint.iacr.org/2026/560</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="AR14">[AR14]</dt>
+        <dd>
+<span class="refAuthor">Adj, G.</span> and <span class="refAuthor">F. Rodríguez-Henríquez</span>, <span class="refTitle">"Square Root Computation over Even Extension Fields"</span>, <span class="seriesInfo">DOI 10.1109/TC.2013.145</span>, <span class="seriesInfo">IEEE Transactions on Computers Vol. 63, pp. 2829-2841</span>, <time datetime="2014-11" class="refDate">November 2014</time>, <span>&lt;<a href="https://doi.org/10.1109/TC.2013.145">https://doi.org/10.1109/TC.2013.145</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="arkworks">[arkworks]</dt>
         <dd>
 <span class="refAuthor">arkworks contributors</span>, <span class="refTitle">"arkworks: A Rust ecosystem for zkSNARK programming"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://github.com/arkworks-rs">https://github.com/arkworks-rs</a>&gt;</span>. </dd>
@@ -3218,6 +3223,10 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <dt id="SBCK09">[SBCK09]</dt>
         <dd>
 <span class="refAuthor">Scott, M.</span>, <span class="refAuthor">Benger, N.</span>, <span class="refAuthor">Charlemagne, M.</span>, <span class="refAuthor">Dominguez Perez, L.J.</span>, and <span class="refAuthor">E.J. Kachisa</span>, <span class="refTitle">"On the Final Exponentiation for Calculating Pairings on Ordinary Elliptic Curves"</span>, <span class="seriesInfo">Pairing 2009, LNCS vol. 5671, pp. 78-88</span>, <time datetime="2009" class="refDate">2009</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-03298-1_6">https://doi.org/10.1007/978-3-642-03298-1_6</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Scott20">[Scott20]</dt>
+        <dd>
+<span class="refAuthor">Scott, M.</span>, <span class="refTitle">"A note on the calculation of some functions in finite fields: Tricks of the Trade"</span>, <span class="seriesInfo">Cryptology ePrint Archive Paper 2020/1497</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://eprint.iacr.org/2020/1497">https://eprint.iacr.org/2020/1497</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SEC1">[SEC1]</dt>
         <dd>
