@@ -503,6 +503,17 @@ Table of Contents
    logarithm problems described above and are believed to be easier than
    the discrete logarithm problems.
 
+   Pairing inversion is a related problem: given P in G_1 and z in G_T,
+   find Q in G_2 such that e(P, Q) = z, or the same with the roles of
+   G_1 and G_2 exchanged.  Solving it for one of the two arguments is
+   enough to solve a variant of the BDH problem [GHV07].  Solving the
+   discrete logarithm problem in G_T also solves pairing inversion.
+   [GHV07] examines approaches that invert the two stages of the pairing
+   computation, Miller's algorithm and the final exponentiation, as well
+   as approaches that invert the pairing in one step, and finds that
+   none of them solves pairing inversion for curves of cryptographic
+   interest.
+
    Although it would be sufficient to attack any of these problems to
    attack pairing-based cryptography, the only known attacks thus far
    attack the discrete logarithm problem directly, so we focus on the
@@ -2150,6 +2161,10 @@ Table of Contents
               DOI 10.1007/978-3-642-17455-1_12, Lecture Notes in
               Computer Science pp. 187-205, 2010,
               <https://doi.org/10.1007/978-3-642-17455-1_12>.
+
+   [GHV07]    Galbraith, S., Hess, F., and F. Vercauteren, "Aspects of
+              Pairing Inversion", Cryptology ePrint Archive Paper
+              2007/256, 2007, <https://eprint.iacr.org/2007/256>.
 
    [gnark-crypto]
               Consensys Software Inc., "gnark-crypto: Elliptic curve
