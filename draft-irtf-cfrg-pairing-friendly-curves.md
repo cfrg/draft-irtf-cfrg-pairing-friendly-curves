@@ -728,17 +728,6 @@ b':
 
 This section defines normative serialization and deserialization procedures for BLS12-381, and also extends them to BLS48-581. It also states what makes a deserialized value valid, and which of the remaining decisions belong to the calling protocol. What is encoded here are the objects that protocols transmit: points on E and on E', and scalars. Elements of GF(p) and of GF(p^m) appear as coordinates of those points rather than as objects with encodings of their own. Elements of G_T, which lie in GF(p^k), are not encoded here either: this document defines no byte encoding for them. Should a protocol come to require one, a separate specification can define it. The point format is based on the one originally defined by {{ZcashRep}} for BLS12-381 and is, in turn, based on the representation shown in {{SEC1}} with a small tweak to apply to GF(p^m). It is already relied upon, directly or indirectly, by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}; the latter extends it to BLS48-581, and the extension is adopted here. Applicability to BN462 is discussed in {{bn462-applicability}}.
 
-Not all of what follows originates with this document. Where an existing format is restated, it is restated normatively, because other specifications already cite this document for it.
-
-| What | Where it comes from | How this document treats it |
-|---|---|---|
-| Scalar encoding | Existing practice: I2OSP and OS2IP {{RFC8017}}, together with a comparison against the group order | Specified here, for all three curves |
-| BLS12-381 point encoding | {{ZcashRep}}, which adapts the representation of {{SEC1}} to GF(p^m) | Restated here as the format in use |
-| BLS48-581 point encoding | The same format, extended to GF(p^8) in {{I-D.ietf-cose-bls-key-representations}} | That extension is adopted here |
-| BN462 point encoding | Not applicable | Not specified here; see {{bn462-applicability}} |
-| G_T element encoding | Not applicable | Not specified here |
-| Group membership and identity handling | This document | Specified here |
-
 At a high level, the point serialization format is defined as follows:
 
 - Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.
