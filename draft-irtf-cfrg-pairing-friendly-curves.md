@@ -771,7 +771,9 @@ sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
 
 For y2 in GF(p), all curves in this document have p = 3 (mod 4). Appendix I.1 of {{RFC9380}} therefore applies directly: y2 is a square exactly when y2^((p-1)/2) is 0 or 1, and a square root is given by y2^((p+1)/4).
 
-For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8 are both 1 (mod 4). Appendix I.4 of {{RFC9380}} gives a constant-time Tonelli-Shanks procedure for a general field, and Appendix I.5 gives an is_square test for GF(p^2).
+For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8 are both 1 (mod 4). For BN462 and BLS12-381, p^2 = 9 (mod 16), so Appendix I.3 of {{RFC9380}} applies to GF(p^2). Appendix I.4 of {{RFC9380}} gives a constant-time Tonelli-Shanks procedure for a general field, and Appendix I.5 gives an is_square test for GF(p^2).
+
+A faster approach reduces a square root in GF(p^2) to square roots in GF(p) by way of the norm {{AR14}}, and the exponentiations in GF(p) that it needs can be shared with the is_square test {{Scott20}}. Since GF(p^8) is built as a tower of quadratic extensions, the same reduction applies one level at a time for BLS48-581 {{AR14}} {{Scott20}}. Implementations such as {{blst}}, {{mcl}}, {{MIRACL}}, and {{RELIC}} compute square roots in GF(p^2) in this way.
 
 ## Scalar Serialization  {#scalar-serialization}
 
@@ -1396,6 +1398,31 @@ Tsunekazu Saito was a co-author of this document from its first version through 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9380.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-10.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-cose-bls-key-representations-08.xml" />
+
+        <reference anchor="AR14">
+          <front>
+            <title>Square Root Computation over Even Extension Fields</title>
+            <seriesInfo name="DOI" value="10.1109/TC.2013.145" />
+            <seriesInfo name="IEEE Transactions on Computers" value="Vol. 63, pp. 2829-2841" />
+            <author initials="G." surname="Adj" fullname="Gora Adj">
+              <organization />
+            </author>
+            <author initials="F." surname="Rodríguez-Henríquez" fullname="Francisco Rodríguez-Henríquez">
+              <organization />
+            </author>
+            <date year="2014" month="November" />
+          </front>
+        </reference>
+        <reference anchor="Scott20" target="https://eprint.iacr.org/2020/1497">
+          <front>
+            <title>A note on the calculation of some functions in finite fields: Tricks of the Trade</title>
+            <seriesInfo name="Cryptology ePrint Archive" value="Paper 2020/1497" />
+            <author initials="M." surname="Scott" fullname="Michael Scott">
+              <organization />
+            </author>
+            <date year="2020" />
+          </front>
+        </reference>
 
         <reference anchor="Ethereum" target="https://medium.com/prysmatic-labs/ethereum-2-0-development-update-17-prysmatic-labs-ed5bcf82ec00">
           <front>
