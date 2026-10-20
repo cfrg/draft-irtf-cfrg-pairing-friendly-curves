@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-13T05:54:16.676334+00:00",
+  "timestamp": "2026-10-20T03:53:21.550315+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -3005,7 +3005,7 @@
       "labels": [],
       "body": "**Reviewer:** Michele Orr\u00f9\n**Raised in:** CFRG list, thread \"question on the scope of PR #71 (Group/Scalar interface)\", 2026-09-11 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/bokULgMfJvx6_A1sBkwv9HrKMs8/\n\n> Can we still drop uncompressed serialization? Is any adopter actively using\n> uncompressed serialization?\n> In practice: keep the same wire format, but drop uncompressed and add a\n> test vector that asserts rejection for C_bit = 0. That's what should happen\n> in practice.\n> In signatures and zero-knowledge proofs, having two possible encodings\n> (which occurs since there are two valid  serialization algorithms) leads to\n> malleability attacks.\n> An attacker can take a signature/proof in compressed form, re-encode it in\n> uncompressed form, and present it as a fresh forgery.\n> [...]\n> For those doing pseudonymous authentication, this is even worse because it\n> means that users have two different pseudonyms per scope.\n\nFollow-up in the same thread:\n\n- Watson Ladd, 2026-09-11 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Rv0qWe1nJz_fJXbsVinZCllJB54/\n\n  > That's not necessarily true: it depends on the details of the\n  > pseudonym and what kind of comparison is being done. If you just\n  > blindly pass in the data rather than normalize, you'll have a fun\n  > time. Having a single canonical encoding does help here, as does not\n  > accepting other options, but it isn't a necessary consequence.\n\n- Michele Orr\u00f9, 2026-10-01 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/05ZCtSGr3-hE80298E8DSVvFoUA/\n\n  > For the pairing editors: canonical encoding would simplify things for\n  > downstream protocols, but it doesn't block us.\n\nThe same request was raised earlier and tracked in #74.\n",
       "createdAt": "2026-10-04T11:09:14Z",
-      "updatedAt": "2026-10-06T14:16:19Z",
+      "updatedAt": "2026-10-18T07:04:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -3014,6 +3014,13 @@
           "body": "Follow-up on the CFRG list:\n\n- Nick Sullivan (for the CFRG chairs) asked the list during Last Call, 2026-10-05 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/dfx2zm4SNcs9uWZAUrLrJTNnefI/\n\n  > The question: should the document keep both the compressed and uncompressed\n  > forms, or drop the uncompressed one?\n\n- Jack Grigg, 2026-10-05 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/KeRDjZplRN2YWqlkf55uZBMIKE4/\n\n  > So the uncompressed encoding of BLS12-381 has been deployed in\n  > production since October 2018 for the Zcash Sapling parameters (hosted at\n  > various locations around the internet, such as the wagyu-zcash-parameters\n  > Rust crate [1]), and likely in every other ecosystem that built on (forks\n  > of) the bellman crate. However, in Zcash at least we don't \"rely\" on the\n  > uncompressed form other than as a performance optimisation (the in-band\n  > protocol uses the compressed encoding; we basically follow the Section\n  > 5.6.1 guidance already, if you don't count \"downloading the fixed public\n  > parameters once\" as \"transmitting\"). It would certainly be inconvenient if\n  > we needed to re-deploy the Sapling parameters in compressed encoding, but\n  > we can just Not Do That, no matter what the IETF says \ud83d\ude42\n  >\n  > I am definitely in favour of only supporting compressed encodings in-band\n  > for protocols, for the reason Michele outlines. If it's easier to ensure\n  > this in IETF protocols by removing uncompressed forms from the draft (and\n  > keeping their performance-related use off-books) then I'm fine with\n  > dropping uncompressed, but I'd say this mainly comes down to what the draft\n  > requires of implementers for equality checks. If a conforming\n  > implementation of the draft is permitted in any way to compare points\n  > without first parsing them, then dropping uncompressed seems necessary to\n  > ensure correctness.\n  >\n  > [1] https://crates.io/crates/wagyu-zcash-parameters\n\n- Mike Scott, RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/ (the rest of this paragraph is #119)\n\n  > I agree with others that it might be simpler to just support a compressed\n  > format for serialisation.\n",
           "createdAt": "2026-10-06T14:16:19Z",
           "updatedAt": "2026-10-06T14:16:19Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you all for the discussion here and on the list. As the chairs\nconcluded on the list, the next version keeps both forms.\n\n#126 extends the paragraph of Section 5.6.1 that asks protocols to state\nwhich forms they accept:\n\n> A protocol SHOULD state which forms it accepts. Within one form, each\n> point has exactly one encoding, since Section 5.4 rejects non-canonical\n> coordinates and unused combinations of the metadata bits. Accepting both\n> forms means that one point has two encodings, which matters wherever an\n> encoded point is hashed or compared as a byte string: a value that\n> contains a point, such as a signature or a proof, can be re-encoded in\n> the other form and still be accepted, while its bytes and its hash\n> change. A protocol that hashes an encoded point, or compares encoded\n> points as byte strings, SHOULD accept exactly one form for that value.\n\nOn equality checks: comparing encoded points as byte strings gives the\nsame answer as comparing the points, as long as a protocol accepts a\nsingle form for that value.\n\nAs this is an Informational document, the requirement on protocols is a\nSHOULD, as with the other decisions in Section 5.6, rather than a MUST.\n",
+          "createdAt": "2026-10-18T07:04:58Z",
+          "updatedAt": "2026-10-18T07:04:58Z"
         }
       ]
     },
@@ -3022,15 +3029,15 @@
       "id": "I_kwDOD8wsds8AAAABU6sUxA",
       "title": "Reference for NIST SP 800-57 Part 1 has no URL, and its tag is not descriptive",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/111",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Michael StJohns\n**Raised in:** RG Last Call on -14, 2026-10-01 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/wolUJISnH5oOm6604SiAoOqks54/\n\n> Two small items - can be resolved in the editing pass,\n> 1) missing a url reference for NIST sp800-57 part 1 - also NIST isn't a\n> great reference tag here.\n\n",
       "createdAt": "2026-10-04T11:10:46Z",
-      "updatedAt": "2026-10-11T11:34:58Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:22:28Z",
+      "closedAt": "2026-10-18T06:22:28Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3038,6 +3045,13 @@
           "body": "Thank you, Michael. The reference now gives the bibliographic data of\nSP 800-57 Part 1 Rev. 5 (May 2020), the 2020 revision the draft cites,\ntogether with its DOI and URL, and the tag is now [SP800-57].\nThe change is in #121.\n",
           "createdAt": "2026-10-11T11:34:58Z",
           "updatedAt": "2026-10-11T11:34:58Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #121.",
+          "createdAt": "2026-10-18T06:22:27Z",
+          "updatedAt": "2026-10-18T06:22:27Z"
         }
       ]
     },
@@ -3046,15 +3060,15 @@
       "id": "I_kwDOD8wsds8AAAABU6tEBg",
       "title": "Inconsistent capitalization of \"optimal ate pairing\"",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/112",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Michael StJohns\n**Raised in:** RG Last Call on -14, 2026-10-01 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/wolUJISnH5oOm6604SiAoOqks54/\n\n> 2) capitalization of \u201coptimal ate pairing\u201d - AFAICT this is a name for a\n> particular pairing model and should be capitalized as such throughout -\n> Optimal Ate Pairing  or abbreviated throughout.   Or perhaps optimal Ate\n> pairing?  Since [ver09] is behind a paywall, I can\u2019t confirm this.\n",
       "createdAt": "2026-10-04T11:12:38Z",
-      "updatedAt": "2026-10-11T11:37:54Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:22:46Z",
+      "closedAt": "2026-10-18T06:22:46Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3062,6 +3076,13 @@
           "body": "Thank you, Michael. We checked the version of [Ver09] that is freely\navailable as IACR ePrint 2008/096 (https://eprint.iacr.org/2008/096):\nit writes \"optimal ate pairing\" in lower case in running text, and\ncapitalizes it only in section headings.\nThe draft now follows the same convention. The one capitalized\noccurrence in running text, at the start of Appendix C, now matches the\nother eight, and section headings keep title case, as all headings in the\ndraft do.\nThe change is in #121.\n",
           "createdAt": "2026-10-11T11:37:53Z",
           "updatedAt": "2026-10-11T11:37:53Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #121.",
+          "createdAt": "2026-10-18T06:22:45Z",
+          "updatedAt": "2026-10-18T06:22:45Z"
         }
       ]
     },
@@ -3070,15 +3091,15 @@
       "id": "I_kwDOD8wsds8AAAABU6tmkg",
       "title": "Move the Frobenius endomorphism paragraph from Appendix A into Appendix A.1",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/113",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Emil Lundberg\n**Raised in:** RG Last Call on -14, 2026-10-02 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Zu3VIqg0Tilr5HkRSRBtj4MD0G4/\n(point 1 of 4; the reviewer describes all four as non-essential)\n\n> Since the pseudocode uses pi only in Section A.1, but not in A.2, it may be\n> worth considering moving the paragraph about the Frobenius endomorphism\n> (\"The computation of the optimal ate pairing uses the p-power Frobenius\n> endomorphism pi [...], pi(p, Q) = (x^p, y^p).\") into section A.1 to keep it\n> closer to where it's most relevant (within the scope of this document).\n\n",
       "createdAt": "2026-10-04T11:13:59Z",
-      "updatedAt": "2026-10-11T11:40:00Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:28:28Z",
+      "closedAt": "2026-10-18T06:28:28Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3086,6 +3107,13 @@
           "body": "Thank you, Emil. The paragraph has been moved, unchanged, into\nAppendix A.1, ahead of the BN pseudocode that uses pi.\nThe change is in #121.\n",
           "createdAt": "2026-10-11T11:40:00Z",
           "updatedAt": "2026-10-11T11:40:00Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #121.",
+          "createdAt": "2026-10-18T06:28:28Z",
+          "updatedAt": "2026-10-18T06:28:28Z"
         }
       ]
     },
@@ -3094,15 +3122,15 @@
       "id": "I_kwDOD8wsds8AAAABU6uFMw",
       "title": "State how to expand c = 6 * t + 2 for BN curves in Appendix A.1",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/114",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Emil Lundberg\n**Raised in:** RG Last Call on -14, 2026-10-02 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Zu3VIqg0Tilr5HkRSRBtj4MD0G4/\n(point 2 of 4), with a follow-up on 2026-10-03 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/5xuqDQwnEKinEaDT9i9jTiUF1A8/\n\n> I also noted that the pairing for BN curves needs a decomposition of c =\n> 6 * t + 2, which the reader needs to compute themself since one is not\n> stated explicitly - unlike BLS curves which use c = t, whose decomposition\n> is given in section 4. It may be worth considering stating the\n> decomposition of c = 6 * t + 2 too, but it's not strictly necessary since\n> the stated constraints are enough to re-derive one.\n\nFollow-up:\n\n> [...] you can just write it as 6t + 2 = (2^2 + 2^1)t + 2^1 and the\n> rest follows immediately from the decomposition of t (and has one term less\n> than the one I gave in Python!).\n>\n> So if you'd like to make a change to address comment (2), it might suffice\n> to just add a small hint like the above to section A.1. For example,\n> perhaps change\n> \"Let c = 6 * t + 2 for a parameter t [...]\"\n> to:\n> \"Let c = 6 * t + 2 = (2^2 + 2) * t + 2 for a parameter t [...]\"\n",
       "createdAt": "2026-10-04T11:15:01Z",
-      "updatedAt": "2026-10-11T11:45:50Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:28:51Z",
+      "closedAt": "2026-10-18T06:28:51Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3110,6 +3138,13 @@
           "body": "Thank you, Emil. Rather than fixing one expansion of c in the draft,\nwe added a short note to Appendix A.1 that implementations such as\nmcl and MIRACL Core compute c from t and choose c_0, ..., c_N with\nfew nonzero digits.\n\nFor reference, a common choice is the non-adjacent form (NAF) of c,\nwhich is a valid choice of c_i in {-1, 0, 1}:\n\n- mcl computes |6 * t + 2| from t and uses its NAF when that has fewer\n  nonzero digits than plain binary, as is the case for BN462\n  (include/mcl/gmp_util.hpp, src/pairing_impl.hpp)\n- MIRACL Core computes n = 6 * u + 2 and walks the bits of 3n - n,\n  which gives the NAF of n (c/pair.c)\n\nFor BN462, the NAF of c has 7 nonzero digits, compared with 101 in\nplain binary.\nThe change is in #121.\n",
           "createdAt": "2026-10-11T11:45:50Z",
           "updatedAt": "2026-10-11T11:45:50Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #121.",
+          "createdAt": "2026-10-18T06:28:50Z",
+          "updatedAt": "2026-10-18T06:28:50Z"
         }
       ]
     },
@@ -3118,15 +3153,15 @@
       "id": "I_kwDOD8wsds8AAAABU6uSEA",
       "title": "Refer back to Section 2.4 after the parameter t in Sections 4.2.1 and 4.3",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/115",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Emil Lundberg\n**Raised in:** RG Last Call on -14, 2026-10-02 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Zu3VIqg0Tilr5HkRSRBtj4MD0G4/\n(point 3 of 4)\n\n> It may be worth adding a reference back to section 2.4 in sections 4.2.1\n> and 4.3 after the definition of t, like section 4.2.2 already has after its\n> definition of t.\n",
       "createdAt": "2026-10-04T11:15:30Z",
-      "updatedAt": "2026-10-11T11:47:29Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:29:19Z",
+      "closedAt": "2026-10-18T06:29:19Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3134,6 +3169,13 @@
           "body": "Thank you, Emil. Sections 4.2.1 and 4.3 now refer to Section 2.4 right\nafter the parameter t. To keep the three curves consistent, Section\n4.2.2 uses the same sentence, which now reads \"where t is the parameter\nin Section 2.3 and the size of p is 462 bits\".\nThe change is in #121.\n",
           "createdAt": "2026-10-11T11:47:29Z",
           "updatedAt": "2026-10-11T11:47:29Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #121.",
+          "createdAt": "2026-10-18T06:29:18Z",
+          "updatedAt": "2026-10-18T06:29:18Z"
         }
       ]
     },
@@ -3142,15 +3184,15 @@
       "id": "I_kwDOD8wsds8AAAABU6uhhw",
       "title": "Consider removing Table 1 and the preceding paragraph in Section 5",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/116",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Emil Lundberg\n**Raised in:** RG Last Call on -14, 2026-10-02 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Zu3VIqg0Tilr5HkRSRBtj4MD0G4/\n(point 4 of 4)\n\n> I think that Table 1 and its preceding paragraph (\"Not all of what follows\n> originates with this document. [...]\") are not necessary and could be\n> deleted; I think the first paragraph in section 5 is enough of a summary.\n",
       "createdAt": "2026-10-04T11:16:09Z",
-      "updatedAt": "2026-10-11T14:44:39Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:44:45Z",
+      "closedAt": "2026-10-18T06:44:45Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3158,6 +3200,13 @@
           "body": "Thank you, Emil. We agree: everything in Table 1 and the paragraph\nbefore it is already stated in the first paragraph of Section 5, in\nSection 5.2 for the scalar encoding, and in Section 5.5 for why the\nformat is specified here and why BN462 is not covered. Both have been\nremoved.\n\nThe change is in #124.",
           "createdAt": "2026-10-11T14:44:39Z",
           "updatedAt": "2026-10-11T14:44:39Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #124.",
+          "createdAt": "2026-10-18T06:44:44Z",
+          "updatedAt": "2026-10-18T06:44:44Z"
         }
       ]
     },
@@ -3166,15 +3215,15 @@
       "id": "I_kwDOD8wsds8AAAABVYesFg",
       "title": "The curve parameter t can be confused with the trace of Frobenius",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/117",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 1 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> I think the use of t as the curve parameter in section 2 is a little\n> unfortunate, as readers may confuse this with the trace of the Frobenius,\n> commonly denoted by t. In the case of BLS curves the potential for\n> confusion is greater, as t only differs by 1 from the trace. Maybe use u\n> instead of t.\n",
       "createdAt": "2026-10-06T14:14:32Z",
-      "updatedAt": "2026-10-11T16:18:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:37:07Z",
+      "closedAt": "2026-10-18T06:37:07Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3182,6 +3231,13 @@
           "body": "Thank you, Mike. We agree that t can be misread as the trace of\nFrobenius, so the curve parameter is now written chi throughout the\ndraft.\n\nWe did not use u, because u is already the indeterminate of GF(p^2) in\nthe towers of all three curves, and it also appears in the\nserialization of Section 5 and in the test vectors. The tower u, v, w\nof BLS12-381 also matches the one used by zkcrypto's bls12_381 crate.\nchi is not used elsewhere in the draft. Only the symbol changes; the\nparameters and test vectors are the same.\n\nThe change is in #125.\n",
           "createdAt": "2026-10-11T16:18:08Z",
           "updatedAt": "2026-10-11T16:18:08Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #125.",
+          "createdAt": "2026-10-18T06:37:06Z",
+          "updatedAt": "2026-10-18T06:37:06Z"
         }
       ]
     },
@@ -3190,15 +3246,15 @@
       "id": "I_kwDOD8wsds8AAAABVYet8g",
       "title": "Mention pairing inversion in the summary of attacks",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/118",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 2 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> In the paragraph summarising attacks on pairing based cryptography, perhaps\n> pairing inversion should be mentioned (https://eprint.iacr.org/2007/256.pdf)\n",
       "createdAt": "2026-10-06T14:14:34Z",
-      "updatedAt": "2026-10-11T13:04:49Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:43:44Z",
+      "closedAt": "2026-10-18T06:43:44Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3206,6 +3262,13 @@
           "body": "Thank you, Mike. Section 3.1 now has a short paragraph on pairing\ninversion, right after the list of problems related to the bilinear\nDiffie-Hellman problem. It cites the paper you pointed to as [GHV07]:\nsolving pairing inversion for one argument is enough to solve a variant\nof the BDH problem, solving the discrete logarithm problem in G_T also\nsolves it, and none of the approaches examined in [GHV07] solves it for\ncurves of cryptographic interest.\n\nThe change is in #123.",
           "createdAt": "2026-10-11T13:04:48Z",
           "updatedAt": "2026-10-11T13:04:48Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #123.",
+          "createdAt": "2026-10-18T06:43:43Z",
+          "updatedAt": "2026-10-18T06:43:43Z"
         }
       ]
     },
@@ -3214,31 +3277,39 @@
       "id": "I_kwDOD8wsds8AAAABVYevoQ",
       "title": "BN462 point encoding: mandate an extra metadata byte and remove Section 5.5",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/119",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 3 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> I agree with others that it might be simpler to just support a compressed\n> format for serialisation. As it stands the situation for BN462 is rather\n> unsatisfactory - so maybe just mandate an extra byte for the metadata bits,\n> and remove section 5.5\n\nThe first sentence is also recorded in #110.\n",
       "createdAt": "2026-10-06T14:14:36Z",
-      "updatedAt": "2026-10-06T14:14:36Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-19T00:31:42Z",
+      "closedAt": "2026-10-19T00:31:42Z",
+      "comments": [
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you, Mike. As the chairs concluded on the list (#110), the next\nversion keeps both the compressed and the uncompressed forms. The three\nmetadata bits therefore stay, and the 58-byte coordinates of BN462 leave\nonly two spare bits for them, as Section 5.5 explains. Section 5.5 stays\nas it is, and the document does not define a point encoding for BN462.\n\nA dedicated leading byte, as you suggest, is one of the approaches that\nAppendix E describes. The implementations that support BN462 have moved\nto a leading byte, but in two incompatible variants: the SEC1 type byte,\nand a flag byte carrying the bits of Section 5. No specification we\nexamined requires a BN462 point encoding, so choosing one here would be\ndesigning an encoding rather than recording established practice.\nAppendix E keeps both variants on record for implementations that need\nto exchange BN462 points.",
+          "createdAt": "2026-10-19T00:31:41Z",
+          "updatedAt": "2026-10-19T00:31:41Z"
+        }
+      ]
     },
     {
       "number": 120,
       "id": "I_kwDOD8wsds8AAAABVYexEQ",
       "title": "Point to faster square root methods for extension fields",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/120",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Mike Scott\n**Raised in:** RG Last Call on -14, 2026-10-06 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/ZW460RMOTTEWlz4PxhIqwvD_QYc/\n(point 4 of 4; the reviewer considers the draft ready to proceed with or without addressing these points)\n\n> Given that compressed representation is likely to be more popular, maybe\n> pointers to faster methods for calculating square roots in extension fields\n> might be appropriate - see section 6 of\n> https://eprint.iacr.org/2020/1497.pdf\n",
       "createdAt": "2026-10-06T14:14:37Z",
-      "updatedAt": "2026-10-11T12:30:26Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-18T06:42:30Z",
+      "closedAt": "2026-10-18T06:42:30Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3246,6 +3317,13 @@
           "body": "Thank you, Mike. Section 5.1 now points to the approach in Section 6\nof your note: a square root in GF(p^2) is reduced to square roots in\nGF(p) by way of the norm, as in Adj and Rodr\u00edguez-Henr\u00edquez [AR14], and\nthe exponentiations are shared with the is_square test [Scott20]. The\ntext also notes that the same reduction applies one level at a time to\nGF(p^8) for BLS48-581, and that blst, mcl, MIRACL and RELIC compute\nsquare roots in GF(p^2) in this way.\n\nIn the same paragraph, we also pointed to Appendix I.3 of RFC 9380,\nwhich applies directly to GF(p^2) for BN462 and BLS12-381, since\np^2 = 9 (mod 16) for both.\n\nThe change is in #122.",
           "createdAt": "2026-10-11T12:30:26Z",
           "updatedAt": "2026-10-11T12:30:26Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #122.",
+          "createdAt": "2026-10-18T06:42:27Z",
+          "updatedAt": "2026-10-18T06:42:27Z"
         }
       ]
     }
@@ -4288,24 +4366,26 @@
       "id": "PR_kwDOD8wsds8AAAABHzd5oQ",
       "title": "Editorial changes from the Last Call comments (#111-#115)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/121",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses the editorial comments raised during the RG Last Call\non -14. Each commit handles one issue.\n\n- #111: Give the NIST SP 800-57 Part 1 reference its Rev. 5 bibliographic\n  data, DOI and URL, and rename the tag from NIST to SP800-57\n- #112: Write \"optimal ate pairing\" in lower case in running text\n  (headings keep title case)\n- #113: Move the Frobenius endomorphism paragraph into Appendix A.1\n- #114: Note in Appendix A.1 how implementations such as mcl and\n  MIRACL Core choose c_0, ..., c_N\n- #115: Refer to Sections 2.3 and 2.4 right after the parameter t of\n  each curve, in the same sentence for all three curves\n\nNo parameter, algorithm or test vector changes.\n",
       "createdAt": "2026-10-11T11:24:28Z",
-      "updatedAt": "2026-10-11T11:24:28Z",
+      "updatedAt": "2026-10-18T06:18:47Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "9a291a37d69373d928ee8d5c2f3c65d742a58105",
       "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "editorial-rglc-15",
       "headRefOid": "92e4b8b84f18f66e4ea42b7d68ab84f850b41ea9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-18T06:18:47Z",
+      "mergedAt": "2026-10-18T06:18:47Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "2922fd1dde8c1fca6c8c9734b32ef53ff9d32d07"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4314,24 +4394,26 @@
       "id": "PR_kwDOD8wsds8AAAABHzzJWg",
       "title": "Point to faster square root methods for extension fields (#120)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/122",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses #120, raised by Mike Scott during the RG Last Call\non -14.\n\n- Section 5.1: point to the reduction of a square root in GF(p^2) to\n  square roots in GF(p) by way of the norm [AR14], with the\n  exponentiations shared with the is_square test [Scott20], and note\n  that blst, mcl, MIRACL and RELIC compute square roots in GF(p^2) in\n  this way\n- Section 5.1: also point to Appendix I.3 of RFC 9380, which applies to\n  GF(p^2) for BN462 and BLS12-381 (p^2 = 9 (mod 16))\n- Two new informative references: [AR14] and [Scott20]\n\nNo parameter, algorithm or test vector changes. The pointers remain\nnon-normative.",
       "createdAt": "2026-10-11T12:28:05Z",
-      "updatedAt": "2026-10-11T12:28:05Z",
+      "updatedAt": "2026-10-18T06:42:00Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "9a291a37d69373d928ee8d5c2f3c65d742a58105",
       "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "rglc-120-sqrt",
       "headRefOid": "069095f83b3143da626ded29794c2cc4700a216d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-18T06:42:00Z",
+      "mergedAt": "2026-10-18T06:42:00Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "6c6dda1becb0a00dc7fece02e7f2ab630fe9de3f"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4340,24 +4422,26 @@
       "id": "PR_kwDOD8wsds8AAAABHz-rdA",
       "title": "Mention pairing inversion among the related hard problems (#118)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/123",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses #118, raised by Mike Scott during the RG Last Call\non -14.\n\n- Section 3.1: add a paragraph on pairing inversion after the list of\n  problems related to the bilinear Diffie-Hellman problem. It states\n  that solving pairing inversion for one argument solves a variant of\n  the BDH problem, that solving the discrete logarithm problem in G_T\n  solves pairing inversion, and that the approaches examined in\n  [GHV07] do not solve it for curves of cryptographic interest\n- One new informative reference: [GHV07] (ePrint 2007/256, the paper\n  pointed to in #118)\n\nNo parameter, algorithm or test vector changes.",
       "createdAt": "2026-10-11T13:00:55Z",
-      "updatedAt": "2026-10-11T13:00:55Z",
+      "updatedAt": "2026-10-18T06:43:05Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "9a291a37d69373d928ee8d5c2f3c65d742a58105",
       "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "rglc-118-pairing-inversion",
       "headRefOid": "93c3c74687d090f5baaab554e200842dfa81f473",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-18T06:43:05Z",
+      "mergedAt": "2026-10-18T06:43:05Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "131a7f6407c956809668a94d60164cb9d415863b"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4366,24 +4450,26 @@
       "id": "PR_kwDOD8wsds8AAAABH0kyqw",
       "title": "Remove Table 1 and the paragraph before it from Section 5 (#116)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/124",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses #116, raised by Emil Lundberg during the RG Last Call\non -14.\n\n- Section 5: remove the paragraph \"Not all of what follows originates\n  with this document. [...]\" and Table 1. Everything they state is\n  already in the first paragraph of Section 5, in Section 5.2 for the\n  scalar encoding, and in Section 5.5 for why the format is specified\n  here and why BN462 is not covered\n\nThe tables that follow are renumbered. No text refers to a table by\nnumber. No parameter, algorithm or test vector changes.",
       "createdAt": "2026-10-11T14:41:29Z",
-      "updatedAt": "2026-10-11T14:41:29Z",
+      "updatedAt": "2026-10-18T06:44:23Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "9a291a37d69373d928ee8d5c2f3c65d742a58105",
       "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "rglc-116-table1",
       "headRefOid": "c44e3972085f2df2d4a25ce85f5fb2af47911fa2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-18T06:44:23Z",
+      "mergedAt": "2026-10-18T06:44:23Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "5a4517f529311992d49ebb1b4c549ea5ed3572f7"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4392,20 +4478,48 @@
       "id": "PR_kwDOD8wsds8AAAABH1ARew",
       "title": "Write the curve parameter as chi rather than t (#117)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/125",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR addresses #117, raised by Mike Scott during the RG Last Call\non -14.\n\n- Sections 2.4, 2.5, 4.1.1, 4.2, 4.3 and Appendices A and B: the curve\n  parameter is now written chi rather than t, since t usually denotes\n  the trace of Frobenius, and for BLS curves the trace is t + 1\n- The indeterminates of the extension field towers (u, v, w, z, s) are\n  unchanged. u was not used for the curve parameter because it is the\n  indeterminate of GF(p^2) for all three curves, including in the\n  serialization of Section 5 and in the test vectors\n- Appendix B.1: the BN462 exponent alpha is written with explicit\n  multiplication, as the other formulas are\n\nNo parameter, algorithm or test vector changes; only the symbol changes.\n\nThis PR conflicts with #121, which adds three sentences that use t. It\nwill be rebased onto master after #121 is merged, with the same\nreplacement applied to those sentences.\n",
       "createdAt": "2026-10-11T15:51:30Z",
-      "updatedAt": "2026-10-11T15:51:30Z",
+      "updatedAt": "2026-10-18T06:34:50Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
-      "baseRefOid": "9a291a37d69373d928ee8d5c2f3c65d742a58105",
+      "baseRefOid": "2922fd1dde8c1fca6c8c9734b32ef53ff9d32d07",
       "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "rglc-117-parameter-chi",
-      "headRefOid": "ca581b519f5f0fcb4824373fd80bcff73dd0d29a",
+      "headRefOid": "a8480452f24fb72a7337adfd879014c823fc7577",
+      "closedAt": "2026-10-18T06:34:50Z",
+      "mergedAt": "2026-10-18T06:34:50Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "a2eccab607e3a778ca57547a511c08a2c4dff409"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 126,
+      "id": "PR_kwDOD8wsds8AAAABJHzsYw",
+      "title": "Ask protocols that hash or compare encoded points to accept one form (#110)",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/126",
+      "state": "OPEN",
+      "author": "yumi-sakemi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses #110.\n\nBoth point forms are kept, as concluded on the list. The second paragraph of\nSection 5.6.1 now:\n\n- states that within one form each point has exactly one encoding, which\n  Section 5.4 already ensures;\n- explains what happens when a value that is hashed or compared as bytes\n  accepts both forms; and\n- asks a protocol that hashes encoded points, or compares them as byte\n  strings, to accept exactly one form for that value (SHOULD).\n\nNo change to the procedures, the parameters or the test vectors.\n",
+      "createdAt": "2026-10-18T07:03:39Z",
+      "updatedAt": "2026-10-18T07:03:39Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "baseRefName": "master",
+      "baseRefOid": "5a4517f529311992d49ebb1b4c549ea5ed3572f7",
+      "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
+      "headRefName": "rglc-110-accepted-form",
+      "headRefOid": "83a1ae8047588d7d68fad56f3a653c98f7e0bbb0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
