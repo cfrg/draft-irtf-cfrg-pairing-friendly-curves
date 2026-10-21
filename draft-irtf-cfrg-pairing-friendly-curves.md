@@ -912,7 +912,7 @@ The procedures above leave three decisions to the protocol that uses them. This 
 
 Both a compressed and an uncompressed form are defined. The compressed form is RECOMMENDED for values that are transmitted: it is the form {{ZcashRep}} places on the wire, and the form used by {{I-D.irtf-cfrg-bbs-signatures}}, {{I-D.ietf-cose-bls-key-representations}} and {{I-D.irtf-cfrg-bls-signature}}. The uncompressed form is retained because it remains in use for stored values, such as verification keys that are validated once, where recovering y from x on every use is not worth the saved space.
 
-A protocol SHOULD state which forms it accepts. Accepting both means that one point has two encodings, which matters wherever an encoded point is hashed or compared as a byte string.
+A protocol SHOULD state which forms it accepts. Within one form, each point has exactly one encoding, since {{point-deserialization-procedure}} rejects non-canonical coordinates and unused combinations of the metadata bits. Accepting both forms means that one point has two encodings, which matters wherever an encoded point is hashed or compared as a byte string: a value that contains a point, such as a signature or a proof, can be re-encoded in the other form and still be accepted, while its bytes and its hash change. A protocol that hashes an encoded point, or compares encoded points as byte strings, SHOULD accept exactly one form for that value.
 
 ### Identity Element  {#identity-point-handling}
 
