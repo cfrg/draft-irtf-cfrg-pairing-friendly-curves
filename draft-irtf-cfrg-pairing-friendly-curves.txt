@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 21 April 2027                                          R. Wahby
+Expires: 24 April 2027                                          R. Wahby
                                               Carnegie Mellon University
-                                                         18 October 2026
+                                                         21 October 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 April 2027.
+   This Internet-Draft will expire on 24 April 2027.
 
 Copyright Notice
 
@@ -1666,9 +1666,16 @@ Table of Contents
    keys that are validated once, where recovering y from x on every use
    is not worth the saved space.
 
-   A protocol SHOULD state which forms it accepts.  Accepting both means
-   that one point has two encodings, which matters wherever an encoded
-   point is hashed or compared as a byte string.
+   A protocol SHOULD state which forms it accepts.  Within one form,
+   each point has exactly one encoding, since Section 5.4 rejects non-
+   canonical coordinates and unused combinations of the metadata bits.
+   Accepting both forms means that one point has two encodings, which
+   matters wherever an encoded point is hashed or compared as a byte
+   string: a value that contains a point, such as a signature or a
+   proof, can be re-encoded in the other form and still be accepted,
+   while its bytes and its hash change.  A protocol that hashes an
+   encoded point, or compares encoded points as byte strings, SHOULD
+   accept exactly one form for that value.
 
 5.6.2.  Identity Element
 
