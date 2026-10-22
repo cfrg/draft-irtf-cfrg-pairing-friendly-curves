@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-20T03:53:21.550315+00:00",
+  "timestamp": "2026-10-22T03:42:55.391052+00:00",
   "repo": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
   "labels": [
     {
@@ -2998,15 +2998,15 @@
       "id": "I_kwDOD8wsds8AAAABU6rn4Q",
       "title": "Proposal to drop the uncompressed point serialization",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/issues/110",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "**Reviewer:** Michele Orr\u00f9\n**Raised in:** CFRG list, thread \"question on the scope of PR #71 (Group/Scalar interface)\", 2026-09-11 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/bokULgMfJvx6_A1sBkwv9HrKMs8/\n\n> Can we still drop uncompressed serialization? Is any adopter actively using\n> uncompressed serialization?\n> In practice: keep the same wire format, but drop uncompressed and add a\n> test vector that asserts rejection for C_bit = 0. That's what should happen\n> in practice.\n> In signatures and zero-knowledge proofs, having two possible encodings\n> (which occurs since there are two valid  serialization algorithms) leads to\n> malleability attacks.\n> An attacker can take a signature/proof in compressed form, re-encode it in\n> uncompressed form, and present it as a fresh forgery.\n> [...]\n> For those doing pseudonymous authentication, this is even worse because it\n> means that users have two different pseudonyms per scope.\n\nFollow-up in the same thread:\n\n- Watson Ladd, 2026-09-11 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/Rv0qWe1nJz_fJXbsVinZCllJB54/\n\n  > That's not necessarily true: it depends on the details of the\n  > pseudonym and what kind of comparison is being done. If you just\n  > blindly pass in the data rather than normalize, you'll have a fun\n  > time. Having a single canonical encoding does help here, as does not\n  > accepting other options, but it isn't a necessary consequence.\n\n- Michele Orr\u00f9, 2026-10-01 \u2014 https://mailarchive.ietf.org/arch/msg/cfrg/05ZCtSGr3-hE80298E8DSVvFoUA/\n\n  > For the pairing editors: canonical encoding would simplify things for\n  > downstream protocols, but it doesn't block us.\n\nThe same request was raised earlier and tracked in #74.\n",
       "createdAt": "2026-10-04T11:09:14Z",
-      "updatedAt": "2026-10-18T07:04:58Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-21T02:30:57Z",
+      "closedAt": "2026-10-21T02:30:57Z",
       "comments": [
         {
           "author": "yumi-sakemi",
@@ -3021,6 +3021,13 @@
           "body": "Thank you all for the discussion here and on the list. As the chairs\nconcluded on the list, the next version keeps both forms.\n\n#126 extends the paragraph of Section 5.6.1 that asks protocols to state\nwhich forms they accept:\n\n> A protocol SHOULD state which forms it accepts. Within one form, each\n> point has exactly one encoding, since Section 5.4 rejects non-canonical\n> coordinates and unused combinations of the metadata bits. Accepting both\n> forms means that one point has two encodings, which matters wherever an\n> encoded point is hashed or compared as a byte string: a value that\n> contains a point, such as a signature or a proof, can be re-encoded in\n> the other form and still be accepted, while its bytes and its hash\n> change. A protocol that hashes an encoded point, or compares encoded\n> points as byte strings, SHOULD accept exactly one form for that value.\n\nOn equality checks: comparing encoded points as byte strings gives the\nsame answer as comparing the points, as long as a protocol accepts a\nsingle form for that value.\n\nAs this is an Informational document, the requirement on protocols is a\nSHOULD, as with the other decisions in Section 5.6, rather than a MUST.\n",
           "createdAt": "2026-10-18T07:04:58Z",
           "updatedAt": "2026-10-18T07:04:58Z"
+        },
+        {
+          "author": "yumi-sakemi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged in #126.",
+          "createdAt": "2026-10-21T02:30:56Z",
+          "updatedAt": "2026-10-21T02:30:56Z"
         }
       ]
     },
@@ -4506,24 +4513,26 @@
       "id": "PR_kwDOD8wsds8AAAABJHzsYw",
       "title": "Ask protocols that hash or compare encoded points to accept one form (#110)",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-pairing-friendly-curves/pull/126",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yumi-sakemi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Addresses #110.\n\nBoth point forms are kept, as concluded on the list. The second paragraph of\nSection 5.6.1 now:\n\n- states that within one form each point has exactly one encoding, which\n  Section 5.4 already ensures;\n- explains what happens when a value that is hashed or compared as bytes\n  accepts both forms; and\n- asks a protocol that hashes encoded points, or compares them as byte\n  strings, to accept exactly one form for that value (SHOULD).\n\nNo change to the procedures, the parameters or the test vectors.\n",
       "createdAt": "2026-10-18T07:03:39Z",
-      "updatedAt": "2026-10-18T07:03:39Z",
+      "updatedAt": "2026-10-21T02:29:37Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "baseRefName": "master",
       "baseRefOid": "5a4517f529311992d49ebb1b4c549ea5ed3572f7",
       "headRepository": "cfrg/draft-irtf-cfrg-pairing-friendly-curves",
       "headRefName": "rglc-110-accepted-form",
       "headRefOid": "83a1ae8047588d7d68fad56f3a653c98f7e0bbb0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-21T02:29:37Z",
+      "mergedAt": "2026-10-21T02:29:37Z",
+      "mergedBy": "yumi-sakemi",
+      "mergeCommit": {
+        "oid": "d4ee46c7aa4be0172edfebf67a18be5df87df0e7"
+      },
       "comments": [],
       "reviews": []
     }
