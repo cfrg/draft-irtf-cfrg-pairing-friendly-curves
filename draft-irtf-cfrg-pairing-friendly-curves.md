@@ -1124,7 +1124,8 @@ Tsunekazu Saito was a co-author of this document from its first version through 
         <reference anchor="APT26" target="https://eprint.iacr.org/2026/560">
           <front>
             <title>High-Order Galois Automorphisms for TNFS Linear Algebra</title>
-            <seriesInfo name="Advances in Cryptology - CRYPTO 2026" value="" />
+            <seriesInfo name="DOI" value="10.1007/978-3-032-35398-6_3" />
+            <seriesInfo name="Advances in Cryptology - CRYPTO 2026" value="pp. 67-95" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2026/560" />
             <author initials="H." surname="Al Aswad" fullname="Haetham Al Aswad">
               <organization />
@@ -1878,17 +1879,18 @@ Tsunekazu Saito was a co-author of this document from its first version through 
           </front>
         </reference>
 
-        <reference anchor="FK18" target="https://eprint.iacr.org/2018/1017.pdf">
+        <reference anchor="FK18" target="https://doi.org/10.1016/j.tcs.2019.10.017">
           <front>
             <title>TNFS Resistant Families of Pairing-Friendly Elliptic Curves</title>
-            <seriesInfo name="Cryptology ePrint Archive" value="Report 2018/1017" />
+            <seriesInfo name="DOI" value="10.1016/j.tcs.2019.10.017" />
+            <seriesInfo name="Theoretical Computer Science" value="vol. 800, pp. 73-89" />
             <author initials="G." surname="Fotiadis">
               <organization />
             </author>
             <author initials="E." surname="Konstantinou">
               <organization />
             </author>
-            <date year="2018" />
+            <date year="2019" />
           </front>
         </reference>
 
@@ -3290,6 +3292,6 @@ BN curves including BN254 that were regarded as providing 128-bit security befor
 
 The review covered work published between January 2020 and August 2026. Peer-reviewed publications were searched through Crossref, the IACR Cryptology ePrint Archive was searched for preprints, and arXiv was used as a cross-check for work appearing in neither. A result was assessed if it bears on the cost of computing discrete logarithms in the fields GF(p^12) or GF(p^48), or in the elliptic curve groups of the curves recommended here, or on the special and tower variants of the number field sieve that apply to them.
 
-The estimates given in {{security_pfc}} and {{secure_params}} rest on peer-reviewed results. Preprints were used to find work that had not yet appeared in a peer-reviewed venue; {{APT26}}, the one result of that kind bearing directly on one of the fields these curves use, has since been accepted to CRYPTO 2026.
+The estimates given in {{security_pfc}} and {{secure_params}} rest on peer-reviewed results. Preprints were used to find work that had not yet appeared in a peer-reviewed venue; {{APT26}}, the one result of that kind bearing directly on one of the fields these curves use, has since appeared in the proceedings of CRYPTO 2026.
 
 The review is bounded by its end date: it describes what had been published by August 2026, and says nothing about what has been published since.
