@@ -1597,7 +1597,7 @@ BLS48:
 </li>
         </ul>
 <p id="section-3.1-3">There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography. Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, the bilinear Diffie-Hellman (BDH) problem, the decision bilinear Diffie-Hellman (DBDH) problem, the gap DBDH problem, etc. <span>[<a href="#ECRYPT" class="cite xref">ECRYPT</a>]</span>. Almost all of these variants are reduced to the hardness of discrete logarithm problems described above and are believed to be easier than the discrete logarithm problems.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">Pairing inversion is a related problem: given P in G_1 and z in G_T, find Q in G_2 such that e(P, Q) = z, or the same with the roles of G_1 and G_2 exchanged. Solving it for one of the two arguments is enough to solve a variant of the BDH problem <span>[<a href="#GHV07" class="cite xref">GHV07</a>]</span>. Solving the discrete logarithm problem in G_T also solves pairing inversion. <span>[<a href="#GHV07" class="cite xref">GHV07</a>]</span> examines approaches that invert the two stages of the pairing computation, Miller's algorithm and the final exponentiation, as well as approaches that invert the pairing in one step, and finds that none of them solves pairing inversion for curves of cryptographic interest.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">Pairing inversion is a related problem: given P in G_1 other than O_E and an element of G_T, find Q in G_2 such that e(P, Q) equals that element, or the same with the roles of G_1 and G_2 exchanged. Solving it for one of the two arguments is enough to solve a variant of the BDH problem <span>[<a href="#GHV07" class="cite xref">GHV07</a>]</span>. Solving the discrete logarithm problem in G_T also solves pairing inversion. <span>[<a href="#GHV07" class="cite xref">GHV07</a>]</span> examines approaches that invert the two stages of the pairing computation, Miller's algorithm and the final exponentiation, as well as approaches that invert the pairing in one step, and finds that none of them solves pairing inversion for curves of cryptographic interest.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">Although it would be sufficient to attack any of these problems to attack pairing-based cryptography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">The security levels of pairing-friendly curves are estimated by the computational cost of the most efficient algorithm for solving the above discrete logarithm problems. The best-known algorithms for solving the discrete logarithm problems are based on Pollard's rho algorithm <span>[<a href="#Pollard78" class="cite xref">Pollard78</a>]</span> and Index Calculus <span>[<a href="#HR83" class="cite xref">HR83</a>]</span>. To make index calculus algorithms more efficient, number field sieve (NFS) algorithms are utilized.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
@@ -3239,7 +3239,7 @@ Otherwise, C_bit is 1. Continue.<a href="#section-5.4-6.5.4" class="pilcrow">¶<
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-computing-the-optimal-ate-p" class="section-name selfRef">Computing the Optimal Ate Pairing</a>
       </h2>
 <p id="appendix-A-1">Before presenting the computation of the optimal ate pairing e(P, Q) satisfying the properties shown in <a href="#pairing" class="auto internal xref">Section 2.2</a>, we give the subfunctions used for the pairing computation.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2">The following algorithm, Line_function, shows the computation of the line function. It takes A = (x_A, y_A), B = (x_B, y_B) in G_2, and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">The following algorithm, Line_function, shows the computation of the line function. It takes nonidentity points A = (x_A, y_A), B = (x_B, y_B) in G_2, and a nonidentity point P = (x, y) in G_1 as input, and outputs an element of GF(p^k).<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A-3">
 <pre>
 if (A = B) then
@@ -3258,11 +3258,14 @@ return (l * (x - x_A) + y_A - y);
         <h3 id="name-optimal-ate-pairings-over-b">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-optimal-ate-pairings-over-b" class="section-name selfRef">Optimal Ate Pairings over Barreto-Naehrig Curves</a>
         </h3>
-<p id="appendix-A.1-1">Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as <span>[<a href="#mcl" class="cite xref">mcl</a>]</span> and <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> compute c from chi and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of chi.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-1">Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as <span>[<a href="#mcl" class="cite xref">mcl</a>]</span> and <span>[<a href="#MIRACL" class="cite xref">MIRACL</a>]</span> compute c from chi and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of chi.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.1-2">The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of <a href="#pairing" class="auto internal xref">Section 2.2</a>, applied to Q = (x_Q, y_Q) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x_Q^p, y_Q^p).<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-3">The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-3">The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q). If P or Q is the point at infinity O_E, the output is 1, as required by <a href="#pairing" class="auto internal xref">Section 2.2</a>.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A.1-4">
 <pre>
+if (P = O_E or Q = O_E) then
+    return 1;
+end if
 f := 1; T := Q;
 if (c_N = -1) then
     T := -T;
@@ -3289,10 +3292,13 @@ return f;
         <h3 id="name-optimal-ate-pairings-over-ba">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-optimal-ate-pairings-over-ba" class="section-name selfRef">Optimal Ate Pairings over Barreto-Lynn-Scott Curves</a>
         </h3>
-<p id="appendix-A.2-1">Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.2-2">The following algorithm shows the computation of the optimal ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).<a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-2">The following algorithm shows the computation of the optimal ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q). If P or Q is the point at infinity O_E, the output is 1, as required by <a href="#pairing" class="auto internal xref">Section 2.2</a>.<a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A.2-3">
 <pre>
+if (P = O_E or Q = O_E) then
+    return 1;
+end if
 f := 1; T := Q;
 if (c_N = -1) then
     T := -T;
