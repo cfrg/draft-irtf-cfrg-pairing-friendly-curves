@@ -3203,7 +3203,7 @@ Both leading-byte forms leave the coordinate encoding of {{point-serialization-p
 
 In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
 
-Two observations follow. First, the implementations that support BN462 and do not mark it deprecated have converged on a dedicated leading byte rather than on packing metadata into the coordinate; {{mcl}}, which does mark it deprecated, is the exception and packs the sign of y into the coordinate. Second, none of the implementations examined carries the pair C_bit and I_bit in the two spare bits of the coordinate, which is the arrangement {{bn462-two-bit}} considers.
+Two observations follow. First, the implementations that support BN462 and do not mark it deprecated have converged on a dedicated leading byte rather than on packing metadata into the coordinate; {{mcl}}, which does mark it deprecated, is the exception and packs the parity of y into the coordinate. Second, none of the implementations examined carries the pair C_bit and I_bit in the two spare bits of the coordinate, which is the arrangement {{bn462-two-bit}} considers.
 
 ## Alternative Considered: Two Metadata Bits  {#bn462-two-bit}
 
@@ -3217,7 +3217,7 @@ The variant would also forgo point compression, which is the form most protocols
 
 Moving the metadata out of the coordinate and into a byte of its own removes the constraint of {{bn462-constraint}} entirely and keeps point compression available, at a cost of one byte. Two mutually incompatible variants are in use:
 
-- The {{SEC1}} type byte: 0x04 for an uncompressed point, 0x02 or 0x03 for a compressed point with the value itself carrying the sign of y, followed by the coordinates in big-endian order. This is what {{MIRACL}} and {{pfcurve-js}} emit.
+- The {{SEC1}} type byte: 0x04 for an uncompressed point, 0x02 or 0x03 for a compressed point with the value itself carrying the parity of y, followed by the coordinates in big-endian order. This is what {{MIRACL}} and {{pfcurve-js}} emit.
 
 - A flag byte carrying the same three metadata bits as {{point-serialization-procedure}} in the same positions (C_bit at 0x80, I_bit at 0x40, S_bit at 0x20, with the remaining five bits zero and checked on input), followed by the coordinates in big-endian order. This is what {{zig-pairings}} emits. These are the same bit positions that {{MIRACL}} uses in its bit-packing path, so this variant amounts to relocating the bit assignment of {{point-serialization}} into a leading byte, leaving the rest of the format unchanged.
 
