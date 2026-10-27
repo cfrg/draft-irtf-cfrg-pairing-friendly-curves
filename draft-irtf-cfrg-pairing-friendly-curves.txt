@@ -26,15 +26,15 @@ Abstract
    pairing-friendly curves such as Barreto-Naehrig curves are affected
    by the attack.  In particular, a Barreto-Naehrig curve with a 254-bit
    characteristic was adopted by a lot of cryptographic libraries as a
-   parameter of 128-bit security; however, it ensures no more than the
-   100-bit security level due to the effect of the attack.  In this
-   memo, we list the security levels of certain pairing-friendly curves,
-   and motivate our choices of curves.  First, we summarize the adoption
-   status of pairing-friendly curves in standards, libraries and
-   applications, and consider them at the 128-bit, 192-bit, and 256-bit
-   security levels.  Then, from the viewpoints of "security" and "widely
-   used", we select the recommended pairing-friendly curves considering
-   exTNFS.  This memo also specifies the serialization and
+   parameter of 128-bit security; however, its security level is
+   estimated at approximately 100 bits due to the effect of the attack.
+   In this memo, we list the security levels of certain pairing-friendly
+   curves, and motivate our choices of curves.  First, we summarize the
+   adoption status of pairing-friendly curves in standards, libraries
+   and applications, and consider them at the 128-bit, 192-bit, and
+   256-bit security levels.  Then, from the viewpoints of "security" and
+   "widely used", we select the recommended pairing-friendly curves
+   considering exTNFS.  This memo also specifies the serialization and
    deserialization of the points and scalars that protocols exchange,
    restating a format that is already in widespread use, and states
    which of the remaining decisions belong to the calling protocol.
@@ -136,8 +136,8 @@ Table of Contents
      E.3.  Alternative Considered: Two Metadata Bits
      E.4.  Alternative Considered: A Dedicated Leading Byte
      E.5.  Why This Document Does Not Define a Format
-   Appendix F.  Adoption Status of Pairing-Friendly Curves with the
-           100-bit Security Level
+   Appendix F.  Adoption Status of Pairing-Friendly Curves at
+           Approximately the 100-bit Security Level
    Appendix G.  Scope of the Security Estimate Review
    Authors' Addresses
 
@@ -239,10 +239,10 @@ Table of Contents
    algorithms of the attack.  In particular, BN254, which is a BN curve
    with a 254-bit characteristic effective for pairing calculations, was
    adopted by a lot of cryptographic libraries as a parameter of the
-   128-bit security level; however, BN254 ensures no more than the
-   100-bit security level due to the effect of the attack, where the
-   security levels described in this memo correspond to the security
-   strength of NIST recommendation [SP800-57].
+   128-bit security level; however, the security level of BN254 is
+   estimated at approximately 100 bits due to the effect of the attack
+   [BD18], where the security levels described in this memo correspond
+   to the security strength of NIST recommendation [SP800-57].
 
    To resolve this effect immediately, several research groups and
    implementers re-evaluated the security of pairing-friendly curves and
@@ -628,7 +628,8 @@ Table of Contents
    recommends against using parameters that fall that far below the
    128-bit level.  They are still named in the subsections below
    wherever a standard or a library supports them, and Appendix F
-   tabulates that adoption, which is useful information for
+   tabulates the adoption of the BN curves among them that are estimated
+   at approximately 100 bits, which is useful information for
    implementers.
 
    The security level for each curve is evaluated in accordance with
@@ -636,11 +637,11 @@ Table of Contents
    revisits the Special variant of the tower number field sieve, which
    applies to pairing-friendly curves because their characteristic is a
    polynomial of moderate degree with tiny coefficients evaluated at a
-   seed.  It revises the estimates of earlier work downward for the
-   families it examines, with BLS12 and BN as the exceptions that it
-   leaves unchanged.  Note that the Freeman curves [Freeman06] and MNT
-   curves [MNT01] are not included in this survey because [BD18] does
-   not show the security levels of these curves.
+   seed.  It obtains lower cost estimates than an earlier estimate for
+   all the families it examines except BLS12 and BN.  Note that the
+   Freeman curves [Freeman06] and MNT curves [MNT01] are not included in
+   this survey because [BD18] does not show the security levels of these
+   curves.
 
 4.1.1.  International Standards
 
@@ -698,19 +699,19 @@ Table of Contents
    using PBC and use pairing operations with the generated parameters.
 
    [mcl] is a library for pairing-based cryptography that supports four
-   BN curves and BLS12-381 [GMT19].  These BN curves include BN254
-   proposed by Nogami et al.  [NASKM08] (named BN254N), BN_SNARK1
-   suitable for SNARK applications [libsnark], BN382M, and BN462.  The
-   suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively
-   given from the initials of the first author's name of the proposed
-   paper and the library's name mcl.  Kyushu University published a
-   library that supports BLS48-581 [BLS48].  The University of Tsukuba
-   Elliptic Curve and Pairing Library (TEPLA) [TEPLA] supports two BN
-   curves, BN254N and BN254 proposed by Beuchat et al.  [BGMORT10]
-   (named BN254B).  The suffix 'B' of BN254B is given from the initials
-   of the first author's name of the proposed paper.  Intel published a
-   cryptographic library named Intel Integrated Performance Primitives
-   (Intel-IPP) [Intel-IPP] and the library supports BN256I.
+   BN curves and BLS12-381.  These BN curves include BN254 proposed by
+   Nogami et al.  [NASKM08] (named BN254N), BN_SNARK1 suitable for SNARK
+   applications [libsnark], BN382M, and BN462.  The suffix 'N' of BN254N
+   and the suffix 'M' of BN382M are respectively given from the initials
+   of the first author's name of the proposed paper and the library's
+   name mcl.  Kyushu University published a library that supports
+   BLS48-581 [BLS48].  The University of Tsukuba Elliptic Curve and
+   Pairing Library (TEPLA) [TEPLA] supports two BN curves, BN254N and
+   BN254 proposed by Beuchat et al.  [BGMORT10] (named BN254B).  The
+   suffix 'B' of BN254B is given from the initials of the first author's
+   name of the proposed paper.  Intel published a cryptographic library
+   named Intel Integrated Performance Primitives (Intel-IPP) [Intel-IPP]
+   and the library supports BN256I.
 
    [RELIC] uses various types of pairing-friendly curves including six
    BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where
@@ -747,8 +748,7 @@ Table of Contents
 
    Zcash uses BN_SNARK1 in their library [libsnark].  In response to the
    exTNFS attacks, they proposed new parameters using the BLS12-381
-   curve [BLS12-381] [GMT19] and published its implementation
-   [zkcrypto].
+   curve [BLS12-381] and published its implementation [zkcrypto].
 
    Ethereum adopted BLS12-381 for its consensus layer.  The BLS12-381
    precompile is also specified as an Ethereum precompile contract in
@@ -922,10 +922,11 @@ Table of Contents
    future small improvements to the exTNFS attack.
 
    We note also that CP8-544 is about 20% faster than BN462 [GMT19], has
-   a 131-bit security level, and that, due to its construction, it will
-   not be affected by future small improvements to the exTNFS attack.
-   However, as this curve is not widely used (it is only implemented in
-   one library), we instead chose BN462 for our 'safe' option.
+   a 131-bit security level, and that [GMT19] describes it as the more
+   conservative choice for users concerned about progress in variants of
+   the number field sieve.  However, as this curve is not widely used
+   (it is only implemented in one library), we instead chose BN462 for
+   our 'safe' option.
 
    We give the following parameters for BN462.
 
@@ -988,14 +989,14 @@ Table of Contents
 
 4.3.  For 256-bit Security
 
-   As shown in the survey in Section 4.1, there are three candidate
-   pairing-friendly curves for 256-bit security: BLS48-556, BLS48-575
-   and BLS48-581.  None of them is widely used in the sense of the
-   policy given in Section 4, so the preference for margin governs.  As
-   noted in Section 3.2, [KIK17] puts the minimum size of p^k for BLS48
-   curves at 27,410 bits, which is 572 bits of p.  BLS48-556 does not
-   reach that size; BLS48-575 and BLS48-581 both exceed it, and
-   BLS48-581 leaves the larger margin.  We therefore select BLS48-581.
+   As shown in the survey in Section 4.1, there are three BLS48
+   candidates for 256-bit security: BLS48-556, BLS48-575 and BLS48-581.
+   None of them is widely used in the sense of the policy given in
+   Section 4, so the preference for margin governs.  As noted in
+   Section 3.2, [KIK17] puts the minimum size of p^k for BLS48 curves at
+   27,410 bits, which is 572 bits of p.  BLS48-556 does not reach that
+   size; BLS48-575 and BLS48-581 both exceed it, and BLS48-581 leaves
+   the larger margin.  We therefore select BLS48-581.
 
    The selected BLS48 curve is shown in [KIK17] and it is defined by the
    parameter
@@ -1301,9 +1302,9 @@ Table of Contents
    and are not requirements.
 
    For y2 in GF(p), all curves in this document have p = 3 (mod 4).
-   Appendix I.1 of [RFC9380] therefore applies directly: y2 is a square
-   exactly when y2^((p-1)/2) is 0 or 1, and a square root is given by
-   y2^((p+1)/4).
+   Section 4 and Appendix I.1 of [RFC9380] therefore apply directly: y2
+   is a square exactly when y2^((p-1)/2) is 0 or 1, and a square root is
+   given by y2^((p+1)/4).
 
    For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8
    are both 1 (mod 4).  For BN462 and BLS12-381, p^2 = 9 (mod 16), so
@@ -1354,9 +1355,9 @@ Table of Contents
    hashed or compared as bytes.  The byte order is the big-endian order
    of I2OSP and OS2IP [RFC8017], which is the order used by
    [I-D.irtf-cfrg-bbs-signatures] and
-   [I-D.ietf-cose-bls-key-representations].  Other specifications for
-   prime-order groups encode scalars in little-endian order, [RFC8032]
-   among them, so an implementation working with both needs to convert.
+   [I-D.ietf-cose-bls-key-representations].  Other specifications encode
+   scalars in little-endian order, [RFC8032] among them, so an
+   implementation working with both needs to convert.
 
    This document does not define a distinct encoding for the zero
    scalar.  Whether a protocol accepts it is a protocol-level decision,
@@ -1439,7 +1440,7 @@ Table of Contents
    of G'_2 to the corresponding element of G_2, on which the pairing
    operates, as described in Section 2.2.  Section 5.3 of
    [I-D.irtf-cfrg-bls-signature] requires conforming implementations to
-   perform the subgroup check for the same reason, and Section 6.2 of
+   perform the subgroup check for the same reason, and Section 6.3 of
    [I-D.irtf-cfrg-bbs-signatures] notes that a library may combine the
    two operations.
 
@@ -1731,9 +1732,9 @@ Table of Contents
    Section 5.2 accepts the zero scalar, and a protocol using it SHOULD
    state whether it does the same.
 
-   This is a separate decision from the one above.  Section 3.1 of
-   [RFC9591] rejects the identity element when deserializing a group
-   element while accepting zero scalars, so the two choices are made
+   This is a separate decision from the one above.  [RFC9591] rejects
+   the identity element when deserializing a group element (Section 3.1)
+   while accepting zero scalars (Section 6), so the two choices are made
    independently in at least one existing specification.
 
 6.  Security Considerations
@@ -1753,24 +1754,26 @@ Table of Contents
    consists of record discrete-logarithm computations, refinements of
    the asymptotic analysis, and improvements to individual steps of the
    tower variant for fields of the extension degrees these curves use.
-   [APT26] is an example of the last kind, accelerating the linear
-   algebra step over GF(p^12), the field that BLS12-381 and BN462 use,
-   by a factor of approximately 144.  None of that work gives a revised
-   bit-level security estimate for the curves recommended here, and this
-   document has not derived one either.  Work published after this
-   document is not covered, and has to be assessed separately.
+   [APT26] is an example of the last kind: for the Conjugation method of
+   polynomial selection, it accelerates the linear algebra step over
+   GF(p^12), the field that BLS12-381 and BN462 use, by a factor of
+   approximately 144.  None of that work gives a bit-level security
+   estimate for the curves recommended here that is lower than those
+   this document cites, and this document has not derived estimates of
+   its own.  Work published after this document is not covered, and has
+   to be assessed separately.
 
-   BLS curves of embedding degree 12 typically require a characteristic
-   p of 461 bits or larger to achieve the 128-bit security level [BD18].
-   Note that the security level of BLS12-381, which is adopted by a lot
-   of libraries and applications, is slightly below 128 bits: its
-   381-bit characteristic is below that minimum, and its security level
-   is estimated at approximately 126 bits [GMT19] [GS21].
+   [BD18] estimated that BLS curves of embedding degree 12 require a
+   characteristic p of 461 bits or larger to achieve the 128-bit
+   security level.  Note that the security level of BLS12-381, which is
+   adopted by a lot of libraries and applications, is slightly below 128
+   bits: its 381-bit characteristic is below that size, and its security
+   level is estimated at approximately 126 bits [GMT19] [GS21].
 
    BN254 is used in most of the existing implementations as shown in
-   Section 4.1 and Appendix F; however, BN curves that were estimated as
-   the 128-bit security level before exTNFS including BN254 ensure no
-   more than the 100-bit security level by the effect of exTNFS.
+   Section 4.1 and Appendix F; however, BN curves that were regarded as
+   providing 128-bit security before exTNFS, including BN254, are
+   estimated at approximately 100 bits after exTNFS [BD18].
 
    The following points also apply to implementations of pairing-based
    cryptographic applications that use the recommended curves.
@@ -1816,11 +1819,11 @@ Table of Contents
    detailed algorithms of the Montgomery ladder.
 
    A coordinate that is read from a byte string has to be checked
-   against the order of the field it is claimed to lie in; a coefficient
-   outside that range gives one value several encodings, which can lead
-   to vulnerabilities such as signature forgery [IEEE1363].  Section 5.4
-   makes this requirement normative for the procedures defined in this
-   document.
+   against the order of the field it is claimed to lie in [IEEE1363]; a
+   coefficient outside that range gives one value several encodings,
+   which can lead to vulnerabilities such as signature forgery.
+   Section 5.4 makes this requirement normative for the procedures
+   defined in this document.
 
    The choice between the two identity-element behaviors described in
    Section 5.6.2 belongs to the calling protocol, because whether the
@@ -1970,10 +1973,10 @@ Table of Contents
               <https://github.com/miracl/amcl/tree/master/version22>.
 
    [APT26]    Al Aswad, H., Pierrot, C., and E. Thomé, "High-Order
-              Galois Automorphisms for TNFS Linear Algebra", Advances in
-              Cryptology - CRYPTO 2026 , Cryptology ePrint
-              Archive Report 2026/560, 2026,
-              <https://eprint.iacr.org/2026/560>.
+              Galois Automorphisms for TNFS Linear Algebra",
+              DOI 10.1007/978-3-032-35398-6_3, Advances in Cryptology -
+              CRYPTO 2026 pp. 67-95, Cryptology ePrint Archive Report
+              2026/560, 2026, <https://eprint.iacr.org/2026/560>.
 
    [AR14]     Adj, G. and F. Rodríguez-Henríquez, "Square Root
               Computation over Even Extension Fields",
@@ -2117,9 +2120,10 @@ Table of Contents
               decentralized-storage-network/>.
 
    [FK18]     Fotiadis, G. and E. Konstantinou, "TNFS Resistant Families
-              of Pairing-Friendly Elliptic Curves", Cryptology ePrint
-              Archive Report 2018/1017, 2018,
-              <https://eprint.iacr.org/2018/1017.pdf>.
+              of Pairing-Friendly Elliptic Curves",
+              DOI 10.1016/j.tcs.2019.10.017, Theoretical Computer
+              Science vol. 800, pp. 73-89, 2019,
+              <https://doi.org/10.1016/j.tcs.2019.10.017>.
 
    [FM19]     Fotiadis, G. and C. Martindale, "Optimal TNFS-secure
               pairings on elliptic curves with composite embedding
@@ -2178,11 +2182,12 @@ Table of Contents
               bls-key-representations-08>.
 
    [I-D.irtf-cfrg-bbs-signatures]
-              Looker, T., Kalos, V., Whitehead, A., and M. Lodder, "The
-              BBS Signature Scheme", Work in Progress, Internet-Draft,
-              draft-irtf-cfrg-bbs-signatures-10, 8 January 2026,
+              Looker, T., Kalos, V., Whitehead, A., Lodder, M., and G.
+              M. Bernstein, "The BBS Signature Scheme", Work in
+              Progress, Internet-Draft, draft-irtf-cfrg-bbs-signatures-
+              13, 13 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
-              bbs-signatures-10>.
+              bbs-signatures-13>.
 
    [I-D.irtf-cfrg-bls-signature]
               Boneh, D., Bradley, J., Gorbunov, S., Wahby, R. S., Wee,
@@ -3452,86 +3457,76 @@ E.5.  Why This Document Does Not Define a Format
    form an implementer is most likely to encounter when interoperating
    with existing BN462 code.
 
-Appendix F.  Adoption Status of Pairing-Friendly Curves with the 100-bit
-             Security Level
+Appendix F.  Adoption Status of Pairing-Friendly Curves at Approximately
+             the 100-bit Security Level
 
-   BN curves including BN254 that were estimated as the 128-bit security
-   level before exTNFS ensure no more than the 100-bit security level by
-   the effect of exTNFS.  The following table summarizes the adoption
-   status of the parameters that Section 4 does not select, namely those
-   whose security level is more than 5 bits below the 128-bit level.
-   Please refer to Section 4.1 for the naming conventions for each
-   curve.
+   BN curves including BN254 that were regarded as providing 128-bit
+   security before exTNFS are estimated at approximately 100 bits after
+   exTNFS [BD18].  The following table summarizes the adoption status of
+   the BN curves with a 254- or 256-bit characteristic, which Section 4
+   does not select because their security level is more than 5 bits
+   below the 128-bit level.  Please refer to Section 4.1 for the naming
+   conventions for each curve.
 
-         +=============+==============+==========================+
-         |   Category  |     Name     | Supported 100-bit Curves |
-         +=============+==============+==========================+
-         |   Standard  |   ISO/IEC    |          BN256I          |
-         +-------------+--------------+--------------------------+
-         |   Standard  |     TCG      |          BN256I          |
-         +-------------+--------------+--------------------------+
-         |   Standard  |   FIDO/W3C   |          BN256I          |
-         +-------------+--------------+--------------------------+
-         |   Standard  |   FIDO/W3C   |          BN256D          |
-         +-------------+--------------+--------------------------+
-         |   Library   |     mcl      |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   |     mcl      |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         |   Library   |    TEPLA     |          BN254B          |
-         +-------------+--------------+--------------------------+
-         |   Library   |    TEPLA     |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   |    RELIC     |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   |    RELIC     |          BN256R          |
-         +-------------+--------------+--------------------------+
-         |   Library   |     AMCL     |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   |     AMCL     |         BN254CX          |
-         +-------------+--------------+--------------------------+
-         |   Library   |     AMCL     |          BN256I          |
-         +-------------+--------------+--------------------------+
-         |   Library   |  Intel IPP   |          BN256I          |
-         +-------------+--------------+--------------------------+
-         |   Library   |    MIRACL    |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   |    MIRACL    |         BN254CX          |
-         +-------------+--------------+--------------------------+
-         |   Library   |    MIRACL    |          BN256I          |
-         +-------------+--------------+--------------------------+
-         |   Library   |   Adjoint    |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         |   Library   |   Adjoint    |          BN254B          |
-         +-------------+--------------+--------------------------+
-         |   Library   |   Adjoint    |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   |   Adjoint    |         BN254S1          |
-         +-------------+--------------+--------------------------+
-         |   Library   |   Adjoint    |         BN254S2          |
-         +-------------+--------------+--------------------------+
-         |   Library   |   libsnark   |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         |   Library   | gnark-crypto |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         |   Library   |   arkworks   |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         |   Library   | noble-curves |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         |   Library   | constantine  |          BN254N          |
-         +-------------+--------------+--------------------------+
-         |   Library   | constantine  |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         | Application |    Zcash     |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         | Application |   Ethereum   |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         | Application |   Algorand   |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
-         | Application |   DFINITY    |          BN254N          |
-         +-------------+--------------+--------------------------+
-         | Application |   DFINITY    |        BN_SNARK1         |
-         +-------------+--------------+--------------------------+
+             +=============+==============+==================+
+             |   Category  |     Name     | Supported Curves |
+             +=============+==============+==================+
+             |   Standard  |   ISO/IEC    |      BN256I      |
+             +-------------+--------------+------------------+
+             |   Standard  |     TCG      |      BN256I      |
+             +-------------+--------------+------------------+
+             |   Standard  |   FIDO/W3C   |      BN256I      |
+             +-------------+--------------+------------------+
+             |   Standard  |   FIDO/W3C   |      BN256D      |
+             +-------------+--------------+------------------+
+             |   Library   |     mcl      |      BN254N      |
+             +-------------+--------------+------------------+
+             |   Library   |     mcl      |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             |   Library   |    TEPLA     |      BN254B      |
+             +-------------+--------------+------------------+
+             |   Library   |    TEPLA     |      BN254N      |
+             +-------------+--------------+------------------+
+             |   Library   |    RELIC     |      BN254N      |
+             +-------------+--------------+------------------+
+             |   Library   |    RELIC     |      BN256R      |
+             +-------------+--------------+------------------+
+             |   Library   |  Intel IPP   |      BN256I      |
+             +-------------+--------------+------------------+
+             |   Library   |    MIRACL    |      BN254N      |
+             +-------------+--------------+------------------+
+             |   Library   |    MIRACL    |     BN254CX      |
+             +-------------+--------------+------------------+
+             |   Library   |    MIRACL    |      BN256I      |
+             +-------------+--------------+------------------+
+             |   Library   |   Adjoint    |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             |   Library   |   Adjoint    |      BN254B      |
+             +-------------+--------------+------------------+
+             |   Library   |   Adjoint    |      BN254N      |
+             +-------------+--------------+------------------+
+             |   Library   |   Adjoint    |     BN254S1      |
+             +-------------+--------------+------------------+
+             |   Library   |   Adjoint    |     BN254S2      |
+             +-------------+--------------+------------------+
+             |   Library   |   libsnark   |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             |   Library   | gnark-crypto |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             |   Library   |   arkworks   |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             |   Library   | noble-curves |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             |   Library   | constantine  |      BN254N      |
+             +-------------+--------------+------------------+
+             |   Library   | constantine  |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             | Application |    Zcash     |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             | Application |   Ethereum   |    BN_SNARK1     |
+             +-------------+--------------+------------------+
+             | Application |   Algorand   |    BN_SNARK1     |
+             +-------------+--------------+------------------+
 
                                   Table 4
 
@@ -3554,7 +3549,7 @@ Appendix G.  Scope of the Security Estimate Review
    results.  Preprints were used to find work that had not yet appeared
    in a peer-reviewed venue; [APT26], the one result of that kind
    bearing directly on one of the fields these curves use, has since
-   been accepted to CRYPTO 2026.
+   appeared in the proceedings of CRYPTO 2026.
 
    The review is bounded by its end date: it describes what had been
    published by August 2026, and says nothing about what has been
