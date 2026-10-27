@@ -242,7 +242,7 @@ First, we show the adoption status of pairing-friendly curves in standards, libr
 
 In our selection policy, it is important that selected curves are shown in peer-reviewed papers for security and that they are widely used in cryptographic libraries. In addition, "efficiency" is one of the important aspects but greatly dependent on implementations, so we choose to prioritize "security" and "widely used" over "efficiency" in consideration of future interconnections and interoperability over the internet.
 
-Within this policy, when "widely used" does not by itself distinguish between candidate curves at a given security level, we prefer the curve that provides security margin above the nominal security level: a margin advantage is a security consideration, and by the priority above it outranks an efficiency advantage of a lower-margin alternative. BLS12-381 is the one exception to this preference for margin: although its security level is estimated at approximately 126 bits {{GMT19}}, slightly below the nominal 128-bit target, it is retained because its adoption in production deployments (see {{impl}}) decisively satisfies the "widely used" criterion. Where no candidate at a given security level satisfies "widely used", as is currently the case at the 256-bit level, this exception does not apply, and the preference for margin governs without qualification.
+Within this policy, when "widely used" does not by itself distinguish between candidate curves at a given security level, we prefer the curve that provides security margin above the nominal security level: a margin advantage is a security consideration, and by the priority above it outranks an efficiency advantage of a lower-margin alternative. BLS12-381 is the one exception to this preference for margin: although its security level is estimated at approximately 126 bits {{GMT19}} {{GS21}}, slightly below the nominal 128-bit target, it is retained because its adoption in production deployments (see {{impl}}) decisively satisfies the "widely used" criterion. Where no candidate at a given security level satisfies "widely used", as is currently the case at the 256-bit level, this exception does not apply, and the preference for margin governs without qualification.
 
 As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
 
@@ -292,7 +292,7 @@ Ethereum adopted BLS12-381 for its consensus layer. The BLS12-381 precompile is 
 
 The survey in {{impl}} shows a lot of cases of adopting BN and BLS curves. Among them, BLS12-381 and BN462 match our selection policy. In particular, the one that best matches the policy is BLS12-381 from the viewpoint of "widely used": as {{secure_params}} states, its adoption in production deployments is what makes it the one exception to the preference for margin. We therefore introduce the parameters of BLS12-381 in this memo.
 
-On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced. As shown in recent security evaluations for BLS12-381 {{BD18}} {{GMT19}}, its security level is close to 128 bits but less than 128 bits. If the attack is improved even a little, BLS12-381 will not be suitable for the curve of the 128-bit security level. As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
+On the other hand, from the viewpoint of the future use, the parameter of BN462 is also introduced. As shown in recent security evaluations for BLS12-381 {{GMT19}} {{GS21}}, its security level is close to 128 bits but less than 128 bits. If the attack is improved even a little, BLS12-381 will not be suitable for the curve of the 128-bit security level. As curves of 128-bit security level are currently the most widely used, we recommend both BLS12-381 and BN462 in this memo in order to have a more efficient and a more prudent option respectively.
 
 ### BLS Curves for the 128-bit Security Level (BLS12-381)  {#parameter-BLS12_381}
 
@@ -325,7 +325,7 @@ psi(x', y') = (x' / w^2, y' / w^3)
 
 where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower given above.
 
-We have to note that the security level of this pairing is expected to be 126 rather than 128 bits {{GMT19}}.
+We have to note that the security level of this pairing is expected to be 126 rather than 128 bits {{GMT19}} {{GS21}}.
 
 Parameters of BLS12-381 are given as follows.
 
@@ -938,7 +938,7 @@ This is a separate decision from the one above. Section 3.1 of {{RFC9591}} rejec
 
 The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim and Barbulescu in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}}. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here ({{BD18}}, {{GMT19}}, {{G20}}, {{KIK17}}) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; {{security-review-scope}} records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. {{APT26}} is an example of the last kind, accelerating the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a revised bit-level security estimate for the curves recommended here, and this document has not derived one either. Work published after this document is not covered, and has to be assessed separately.
 
-BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level {{BD18}}. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits because a 381-bit characteristic is used {{BD18}} {{GMT19}}.
+BLS curves of embedding degree 12 typically require a characteristic p of 461 bits or larger to achieve the 128-bit security level {{BD18}}. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits: its 381-bit characteristic is below that minimum, and its security level is estimated at approximately 126 bits {{GMT19}} {{GS21}}.
 
 BN254 is used in most of the existing implementations as shown in {{impl}} and {{adoption_status_100bit_security}}; however, BN curves that were estimated as the 128-bit security level before exTNFS including BN254 ensure no more than the 100-bit security level by the effect of exTNFS.
 
@@ -1136,6 +1136,19 @@ Tsunekazu Saito was a co-author of this document from its first version through 
               <organization />
             </author>
             <date year="2026" />
+          </front>
+        </reference>
+        <reference anchor="GS21" target="https://journals.flvc.org/mathcryptology/article/view/125142">
+          <front>
+            <title>On the Alpha Value of Polynomials in the Tower Number Field Sieve Algorithm</title>
+            <seriesInfo name="Mathematical Cryptology" value="vol. 1, no. 1, pp. 1-39" />
+            <author initials="A." surname="Guillevic" fullname="Aurore Guillevic">
+              <organization />
+            </author>
+            <author initials="S." surname="Singh" fullname="Shashank Singh">
+              <organization />
+            </author>
+            <date year="2021" />
           </front>
         </reference>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.5091.xml" />
