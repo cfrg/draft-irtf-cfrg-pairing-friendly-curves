@@ -221,7 +221,7 @@ The security of pairing-friendly curves is evaluated by the hardness of the foll
 
 There are other hard problems over pairing-friendly curves used for proving the security of pairing-based cryptography. Such problems include the computational bilinear Diffie-Hellman (CBDH) problem, the bilinear Diffie-Hellman (BDH) problem, the decision bilinear Diffie-Hellman (DBDH) problem, the gap DBDH problem, etc. {{ECRYPT}}. Almost all of these variants are reduced to the hardness of discrete logarithm problems described above and are believed to be easier than the discrete logarithm problems.
 
-Pairing inversion is a related problem: given P in G_1 and z in G_T, find Q in G_2 such that e(P, Q) = z, or the same with the roles of G_1 and G_2 exchanged. Solving it for one of the two arguments is enough to solve a variant of the BDH problem {{GHV07}}. Solving the discrete logarithm problem in G_T also solves pairing inversion. {{GHV07}} examines approaches that invert the two stages of the pairing computation, Miller's algorithm and the final exponentiation, as well as approaches that invert the pairing in one step, and finds that none of them solves pairing inversion for curves of cryptographic interest.
+Pairing inversion is a related problem: given P in G_1 other than O_E and an element of G_T, find Q in G_2 such that e(P, Q) equals that element, or the same with the roles of G_1 and G_2 exchanged. Solving it for one of the two arguments is enough to solve a variant of the BDH problem {{GHV07}}. Solving the discrete logarithm problem in G_T also solves pairing inversion. {{GHV07}} examines approaches that invert the two stages of the pairing computation, Miller's algorithm and the final exponentiation, as well as approaches that invert the pairing in one step, and finds that none of them solves pairing inversion for curves of cryptographic interest.
 
 Although it would be sufficient to attack any of these problems to attack pairing-based cryptography, the only known attacks thus far attack the discrete logarithm problem directly, so we focus on the discrete logarithm in this memo.
 
@@ -2158,7 +2158,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
 
 Before presenting the computation of the optimal ate pairing e(P, Q) satisfying the properties shown in {{pairing}}, we give the subfunctions used for the pairing computation.
 
-The following algorithm, Line_function, shows the computation of the line function. It takes A = (x_A, y_A), B = (x_B, y_B) in G_2, and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).
+The following algorithm, Line_function, shows the computation of the line function. It takes nonidentity points A = (x_A, y_A), B = (x_B, y_B) in G_2, and a nonidentity point P = (x, y) in G_1 as input, and outputs an element of GF(p^k).
 
 ~~~~~~~~~~
 if (A = B) then
@@ -2175,13 +2175,16 @@ When implementing the line function, the isomorphism of E and its twist curve E'
 
 ## Optimal Ate Pairings over Barreto-Naehrig Curves  {#optimal-ate-pairings-over-barreto-naehrig-curves}
 
-Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as {{mcl}} and {{MIRACL}} compute c from chi and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of chi.
+Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as {{mcl}} and {{MIRACL}} compute c from chi and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of chi.
 
 The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of {{pairing}}, applied to Q = (x_Q, y_Q) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x_Q^p, y_Q^p).
 
-The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).
+The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q). If P or Q is the point at infinity O_E, the output is 1, as required by {{pairing}}.
 
 ~~~~~~~~~~
+if (P = O_E or Q = O_E) then
+    return 1;
+end if
 f := 1; T := Q;
 if (c_N = -1) then
     T := -T;
@@ -2203,11 +2206,14 @@ return f;
 
 ## Optimal Ate Pairings over Barreto-Lynn-Scott Curves  {#optimal-ate-pairings-over-barreto-lynn-scott-curves}
 
-Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
+Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c.
 
-The following algorithm shows the computation of the optimal ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).
+The following algorithm shows the computation of the optimal ate pairing on Barreto-Lynn-Scott curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q). If P or Q is the point at infinity O_E, the output is 1, as required by {{pairing}}.
 
 ~~~~~~~~~~
+if (P = O_E or Q = O_E) then
+    return 1;
+end if
 f := 1; T := Q;
 if (c_N = -1) then
     T := -T;
