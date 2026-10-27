@@ -209,9 +209,8 @@ Table of Contents
    centers.  To achieve this functionality, ABE is used, and pairings
    take a role as a building block.  In addition, Cloudflare published a
    new cryptographic library, the Cloudflare Interoperable, Reusable
-   Cryptographic Library (CIRCL) [CIRCL] in 2019.  They plan to include
-   securely implemented subroutines for pairing computations on certain
-   secure pairing-friendly curves in CIRCL.
+   Cryptographic Library (CIRCL) [CIRCL] in 2019.  CIRCL now includes
+   pairing computations on BLS12-381 (see Section 4.1.2).
 
    Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being
    standardized [I-D.irtf-cfrg-bls-signature] and utilized in several
@@ -257,7 +256,7 @@ Table of Contents
    128-bit, 192-bit, and 256-bit security levels.  Then, from the
    viewpoints of "security" and "widely used", pairing-friendly curves
    corresponding to each security level are selected in accordance with
-   the security evaluation by Barbulescu and Duquesne [BD18].
+   the security evaluations summarized in Section 3.2 and Section 4.
 
    As a result, we recommend the BLS curve with 381-bit characteristic
    of embedding degree 12 and the BN curve with the 462-bit
@@ -292,9 +291,9 @@ Table of Contents
 
    E : y^2 = x^3 + a * x + b,
 
-   and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27
-   * b^2 != 0 in GF(q).  This is called the Weierstrass normal form of
-   an elliptic curve.
+   and a and b in GF(q) satisfy the discriminant inequality
+   4 * a^3 + 27 * b^2 != 0 in GF(q).  This is called the Weierstrass
+   normal form of an elliptic curve.
 
    A solution (x,y) to the equation E can be thought of as a point on
    the corresponding curve.  We define the set of GF(q)-rational points
@@ -314,8 +313,8 @@ Table of Contents
    through that point twice.  The identity of this group is the point at
    infinity O_E.  We also define scalar multiplication [K]P for a
    positive integer K as the point P added to itself (K-1) times.  Here,
-   [0]P becomes the point at infinity O_E and the relation [-K]P =
-   -([K]P) is satisfied.
+   [0]P becomes the point at infinity O_E and the relation
+   [-K]P = -([K]P) is satisfied.
 
 2.2.  Pairings
 
@@ -433,15 +432,14 @@ Table of Contents
    for an integer chi.
 
    The elliptic curve E has an equation of the form E: y^2 = x^3 + b,
-   where b is a primitive element of the multiplicative group (GF(p))^*
-   of order (p - 1).
+   where b is a nonzero element of GF(p) chosen so that #E(GF(p)) = r.
 
    In the case of BN curves, we can use twists of the degree 6.  If nu
    is an element that is neither a square nor a cube in an extension
    field GF(p^2), the twist E' of E is defined over an extension field
-   GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / nu or b' = b
-   * nu.  BN curves are called D-type if b' = b / nu, and M-type if b' =
-   b * nu.  The embedding degree k is 12.
+   GF(p^2) by the equation E': y^2 = x^3 + b' with b' = b / nu or
+   b' = b * nu.  BN curves are called D-type if b' = b / nu, and M-type
+   if b' = b * nu.  The embedding degree k is 12.
 
    A pairing e is defined by taking G_1 as a subgroup of E(GF(p)) of
    order r, G_2 as defined in Section 2.2 and represented by the
@@ -456,13 +454,14 @@ Table of Contents
 
    A BLS curve is defined by elliptic curves E and E' parameterized by a
    well-chosen integer chi.  E is defined over a finite field GF(p) by
-   an equation of the form E: y^2 = x^3 + b, and its twist E': y^2 = x^3
-   + b', is defined in the same way as BN curves.  In contrast to BN
-   curves, E(GF(p)) does not have a prime order.  Instead, its order is
-   divisible by a large parameterized prime r and denoted by h * r with
-   cofactor h.  The pairing is defined on the r-torsion points.  In the
-   same way as BN curves, BLS curves can be categorized as D-type and
-   M-type.
+   an equation of the form E: y^2 = x^3 + b, and its twist
+   E': y^2 = x^3 + b' is defined in the same way as for BN curves, with
+   nu and E' over GF(p^2) for BLS12 and over GF(p^8) for BLS48.  In
+   contrast to BN curves, E(GF(p)) does not have a prime order.
+   Instead, its order is divisible by a large parameterized prime r and
+   denoted by h * r with cofactor h.  The pairing is defined on the
+   r-torsion points.  In the same way as BN curves, BLS curves can be
+   categorized as D-type and M-type.
 
    BLS curves vary in accordance with different embedding degrees.  In
    this memo, we deal with the BLS12 and BLS48 families with embedding
@@ -542,8 +541,8 @@ Table of Contents
    The idea is applicable when the embedding degree k is a composite
    that can be written as k = i * j with gcd(i, j) = 1 and i, j > 1.
    Any k divisible by 6 meets this condition, taking i to be the largest
-   power of 2 dividing k and j to be k / i; [KB16] accordingly gives k =
-   6 as the first case it treats.  BN curves and BLS curves, whose
+   power of 2 dividing k and j to be k / i; [KB16] accordingly gives
+   k = 6 as the first case it treats.  BN curves and BLS curves, whose
    embedding degree is divisible by 6, are therefore affected by the
    exTNFS.  The basic idea of the exTNFS is based on the equality
    GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the
@@ -650,14 +649,15 @@ Table of Contents
    [ISOIEC15946-5] (published 2022) reorganized the numerical examples
    and extended coverage to include BLS12, BLS24, and BLS48 curves.  The
    BN462 parameter in this document matches the numerical example in
-   Annex D.2.3 of [ISOIEC15946-5] exactly (chi = 2^114 + 2^101 - 2^14 -
-   1, written u there), and the BLS48-581 parameter matches Annex D.3.5
-   exactly (chi = -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition
-   introduces a post-exTNFS security guideline that the characteristic p
-   of BN and BLS12 curves should be at least 461 bits for the 128-bit
-   security level.  As described below, BN curves with 256-bit p and
-   512-bit p from earlier editions of ISO/IEC 15946-5 are referenced by
-   other standards and libraries; these curves are denoted as BN256I and
+   Annex D.2.3 of [ISOIEC15946-5] exactly
+   (chi = 2^114 + 2^101 - 2^14 - 1, written u there), and the BLS48-581
+   parameter matches Annex D.3.5 exactly
+   (chi = -2^32 - 2^30 - 2^10 + 2^7 - 1).  The same edition introduces a
+   post-exTNFS security guideline that the characteristic p of BN and
+   BLS12 curves should be at least 461 bits for the 128-bit security
+   level.  As described below, BN curves with 256-bit p and 512-bit p
+   from earlier editions of ISO/IEC 15946-5 are referenced by other
+   standards and libraries; these curves are denoted as BN256I and
    BN512I, where the suffix 'I' is given from the initials of the
    standard name ISO.
 
@@ -1015,12 +1015,12 @@ Table of Contents
    GF(p^24) = GF(p^8)[z] / (z^3 + w)
    GF(p^48) = GF(p^24)[s] / (s^2 + z).
 
-   The elliptic curve E and its twist E' are represented by E: y^2 = x^3
-   + 1 and E': y^2 = x^3 - 1 / w.  BLS48-581 is categorized as D-type.
-   Concretely, in the tower above: w^2 = -v gives -1 / w = w / v, and
-   v^2 = -(u + 1) gives w / v = w * v / v^2 = -w * v / (u + 1); since
-   u^2 = -1, 1 / (u + 1) = (1 - u) / 2, so -1 / w = ((u - 1) / 2) * v *
-   w.
+   The elliptic curve E and its twist E' are represented by
+   E: y^2 = x^3 + 1 and E': y^2 = x^3 - 1 / w.  BLS48-581 is categorized
+   as D-type.  Concretely, in the tower above: w^2 = -v gives
+   -1 / w = w / v, and v^2 = -(u + 1) gives
+   w / v = w * v / v^2 = -w * v / (u + 1); since u^2 = -1,
+   1 / (u + 1) = (1 - u) / 2, so -1 / w = ((u - 1) / 2) * v * w.
 
    The untwist isomorphism psi of Section 2.2, restricted to
    E'(GF(p^8)), maps into E(GF(p^48)) and is given by
@@ -1030,8 +1030,8 @@ Table of Contents
    where xi = u * s in GF(p^48) satisfies xi^6 = -w, the reciprocal of
    the twist coefficient b' = -1 / w, per the tower given above.
    Concretely: u in GF(p^2) satisfies u^2 = -1, so u^6 = -1; s in
-   GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence xi^6 =
-   u^6 * s^6 = (-1) * w = -w.
+   GF(p^48) satisfies s^2 = -z and z^3 = -w, so s^6 = w; hence
+   xi^6 = u^6 * s^6 = (-1) * w = -w.
 
    We then give the parameters for BLS48-581 as follows.
 
@@ -1276,14 +1276,14 @@ Table of Contents
 
    *  The function sign_GF_p^m(y), for an element y = (y_0, ...,
       y_{m-1}) of GF(p^m), returns one bit computed as follows: let i be
-      the largest index in {0, ..., m-1} such that y_i is nonzero, or i
-      = 0 if all coefficients are zero; return sign_GF_p(y_i).  For
-      BLS12-381 (m=2), this specializes to: sign_GF_p^2(y') =
-      sign_GF_p(y'_0) if y'_1 equals 0, else sign_GF_p(y'_1).  For
-      BLS48-581 (m=8), this is the same function specified as
-      sign_GF_p^8 in [I-D.ietf-cose-bls-key-representations], evaluated
-      over the coefficient ordering (y'_0, ..., y'_7) given in
-      Section 4.
+      the largest index in {0, ..., m-1} such that y_i is nonzero, or
+      i = 0 if all coefficients are zero; return sign_GF_p(y_i).  For
+      BLS12-381 (m=2), this specializes to:
+      sign_GF_p^2(y') = sign_GF_p(y'_0) if y'_1 equals 0, else
+      sign_GF_p(y'_1).  For BLS48-581 (m=8), this is the same function
+      specified as sign_GF_p^8 in
+      [I-D.ietf-cose-bls-key-representations], evaluated over the
+      coefficient ordering (y'_0, ..., y'_7) given in Section 4.
 
    *  The function OS2FE(str, n), for a byte string str of m*n bytes,
       returns an element of GF(p^m) or INVALID.  It inverts the
@@ -1466,12 +1466,12 @@ Table of Contents
    applies to coordinates on E, recovered with OS2IP, as well as to the
    coefficients of coordinates on E', recovered with OS2FE.
 
-   1.  If s_string is empty, return INVALID.  Otherwise, let m_byte =
-       s_string[0] AND 0xE0, where AND is computed bitwise.  In other
-       words, the three most significant bits of m_byte equal the three
-       most significant bits of s_string[0], and the remaining bits are
-       0.  If m_byte equals any of 0x20, 0x60, or 0xE0, return INVALID.
-       Otherwise:
+   1.  If s_string is empty, return INVALID.  Otherwise, let
+       m_byte = s_string[0] AND 0xE0, where AND is computed bitwise.  In
+       other words, the three most significant bits of m_byte equal the
+       three most significant bits of s_string[0], and the remaining
+       bits are 0.  If m_byte equals any of 0x20, 0x60, or 0xE0, return
+       INVALID.  Otherwise:
 
        *  Let C_bit equal the most significant bit of m_byte,
 
@@ -1556,8 +1556,8 @@ Table of Contents
 
           -  If y2 is not square in GF(p), return INVALID.
 
-          -  Otherwise, let y = sqrt(y2) in GF(p) and let Y_bit =
-             sign_GF_p(y).
+          -  Otherwise, let y = sqrt(y2) in GF(p) and let
+             Y_bit = sign_GF_p(y).
 
        *  Otherwise (i.e., when the curve that was determined in step 2
           is E'):
@@ -1571,8 +1571,8 @@ Table of Contents
 
           -  If y2 is not square in GF(p^m), return INVALID.
 
-          -  Otherwise, let y = sqrt(y2) in GF(p^m) and let Y_bit =
-             sign_GF_p^m(y).
+          -  Otherwise, let y = sqrt(y2) in GF(p^m) and let
+             Y_bit = sign_GF_p^m(y).
 
    7.  If S_bit equals Y_bit, let P = (x, y).  Otherwise, let P = (x,
        -y).
@@ -1602,11 +1602,11 @@ Table of Contents
    to check such a point.
 
    For every curve in this document, r^2 divides neither the order of
-   E(GF(p)) nor the order of E'(GF(p^m)): those orders are h * r and h'
-   * r, and gcd(h, r) = gcd(h', r) = 1 by the definitions of h and h' in
-   Section 2.2.  Consequently a point of order dividing r is an element
-   of G_1, or of G'_2, respectively, and both checks can be carried out
-   as follows:
+   E(GF(p)) nor the order of E'(GF(p^m)): those orders are h * r and
+   h' * r, and gcd(h, r) = gcd(h', r) = 1 by the definitions of h and h'
+   in Section 2.2.  Consequently a point of order dividing r is an
+   element of G_1, or of G'_2, respectively, and both checks can be
+   carried out as follows:
 
    *  subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity
       on E, and FALSE otherwise.
@@ -1740,7 +1740,8 @@ Table of Contents
 
    The recommended pairing-friendly curves are selected by considering
    the exTNFS proposed by Kim and Barbulescu in 2016 [KB16] and they are
-   categorized in each security level in accordance with [BD18].
+   categorized in each security level in accordance with [BD18] and
+   [KIK17], apart from BLS12-381, whose case is described below.
    Implementers who will newly develop pairing-based cryptography
    applications SHOULD use the recommended parameters.  The estimates
    cited here ([BD18], [GMT19], [G20], [KIK17]) were reviewed against
@@ -1898,9 +1899,8 @@ Table of Contents
    [GMT19]    Guillevic, A., Masson, S., and E. Thomé, "Cocks–Pinch
               curves of embedding degrees five to eight and optimal ate
               pairing computation", DOI 10.1007/s10623-020-00727-w,
-              International Journal of Designs, Codes and
-              Cryptography vol. 88, pp. 1047-1081, 2019,
-              <https://doi.org/10.1007/s10623-020-00727-w>.
+              Designs, Codes and Cryptography vol. 88, pp. 1047-1081,
+              2020, <https://doi.org/10.1007/s10623-020-00727-w>.
 
    [KB16]     Kim, T. and R. Barbulescu, "Extended Tower Number Field
               Sieve: A New Complexity for the Medium Prime Case",
@@ -2412,7 +2412,7 @@ Appendix A.  Computing the Optimal Ate Pairing
 
 A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
-   Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in
+   Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ..., c_N in
    {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ...,
    N) equals c.  Implementations such as [mcl] and [MIRACL] compute c
    from chi and choose c_0, c_1, ..., c_N with few nonzero digits,
@@ -2426,10 +2426,10 @@ A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
    The following algorithm shows the computation of the optimal ate
    pairing on BN curves.  It takes P in G_1, Q in G_2, an integer c,
-   c_0, ...,c_N in {-1,0,1} with c_N != 0 such that the sum of c_i * 2^i
-   (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and
-   outputs e(P, Q).  If P or Q is the point at infinity O_E, the output
-   is 1, as required by Section 2.2.
+   c_0, ..., c_N in {-1,0,1} with c_N != 0 such that the sum of
+   c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as
+   input, and outputs e(P, Q).  If P or Q is the point at infinity O_E,
+   the output is 1, as required by Section 2.2.
 
    if (P = O_E or Q = O_E) then
        return 1;
@@ -2454,13 +2454,13 @@ A.1.  Optimal Ate Pairings over Barreto-Naehrig Curves
 
 A.2.  Optimal Ate Pairings over Barreto-Lynn-Scott Curves
 
-   Let c = chi for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1}
+   Let c = chi for a parameter chi and c_0, c_1, ..., c_N in {-1,0,1}
    with c_N != 0 such that the sum of c_i * 2^i (i = 0, 1, ..., N)
    equals c.
 
    The following algorithm shows the computation of the optimal ate
    pairing on Barreto-Lynn-Scott curves.  It takes P in G_1, Q in G_2,
-   an integer c, c_0, ...,c_N in {-1,0,1} with c_N != 0 such that the
+   an integer c, c_0, ..., c_N in {-1,0,1} with c_N != 0 such that the
    sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1
    as input, and outputs e(P, Q).  If P or Q is the point at infinity
    O_E, the output is 1, as required by Section 2.2.
@@ -2542,9 +2542,9 @@ Appendix C.  Test Vectors of Optimal Ate Pairing
    Section 4.  Here, the inputs are P = BP = (x, y) and Q = psi(BP'),
    where BP and BP' = (x', y') are the base points given in Section 4.
 
-   Note: The G_2 input is given in this appendix by the base point BP' =
-   (x', y') in twisted form, that is, as the corresponding point of
-   G'_2, with coordinates in GF(p^(k/d)), which gives a compact
+   Note: The G_2 input is given in this appendix by the base point
+   BP' = (x', y') in twisted form, that is, as the corresponding point
+   of G'_2, with coordinates in GF(p^(k/d)), which gives a compact
    representation.  The pseudocode in Appendix A operates on points of
    the untwisted curve E(GF(p^k)).  An implementation invoking that
    pseudocode directly has to apply the untwist isomorphism psi of
@@ -3077,10 +3077,10 @@ Appendix D.  Test Vectors for Serialization
 
    This appendix gives test vectors for the serialization procedures
    defined in Section 5.  The point vectors are computed for the base
-   points BP and BP' given in Section 4, in the compressed form (C_bit =
-   1) and in the uncompressed form (C_bit = 0).  The scalar vectors are
-   given for all three curves, since Section 5.2 applies to BN462 as
-   well.
+   points BP and BP' given in Section 4, in the compressed form
+   (C_bit = 1) and in the uncompressed form (C_bit = 0).  The scalar
+   vectors are given for all three curves, since Section 5.2 applies to
+   BN462 as well.
 
    In each uncompressed string, the first half is the corresponding
    compressed string with the three metadata bits cleared, and the
@@ -3115,9 +3115,9 @@ D.1.  BLS12-381 Points
    3f370d275cec1da1aaa9075ff05f79be0ce5d527727d6e118cc9cdc6da2e351a
    adfd9baa8cbdd3a76d429a695160d12c923ac9cc3baca289e193548608b82801
 
-   Identity on E: 48 zero bytes with the leading byte set to 0xc0 (C_bit
-   = 1, I_bit = 1) when compressed, and 96 zero bytes with the leading
-   byte set to 0x40 (I_bit = 1) when uncompressed.
+   Identity on E: 48 zero bytes with the leading byte set to 0xc0
+   (C_bit = 1, I_bit = 1) when compressed, and 96 zero bytes with the
+   leading byte set to 0x40 (I_bit = 1) when uncompressed.
 
    Identity on E': 96 zero bytes with the leading byte set to 0xc0 when
    compressed, and 192 zero bytes with the leading byte set to 0x40 when
@@ -3212,9 +3212,9 @@ D.2.  BLS48-581 Points
    f3b39ebfc435faab0906235afa27748d90f7336d8ae5163c1599abf77eea6d65
    9045012ab12c0ff323edd3fe4d2d7971
 
-   Identity on E: 73 zero bytes with the leading byte set to 0xc0 (C_bit
-   = 1, I_bit = 1) when compressed, and 146 zero bytes with the leading
-   byte set to 0x40 (I_bit = 1) when uncompressed.
+   Identity on E: 73 zero bytes with the leading byte set to 0xc0
+   (C_bit = 1, I_bit = 1) when compressed, and 146 zero bytes with the
+   leading byte set to 0x40 (I_bit = 1) when uncompressed.
 
    Identity on E': 584 zero bytes with the leading byte set to 0xc0 when
    compressed, and 1168 zero bytes with the leading byte set to 0x40
