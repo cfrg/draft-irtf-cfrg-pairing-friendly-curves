@@ -761,7 +761,7 @@ sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
 
 {{point-deserialization-procedure}} requires deciding whether a field element y2 is a square and, where it is, computing a square root. This document does not specify how. The following pointers are provided for implementers and are not requirements.
 
-For y2 in GF(p), all curves in this document have p = 3 (mod 4). Appendix I.1 of {{RFC9380}} therefore applies directly: y2 is a square exactly when y2^((p-1)/2) is 0 or 1, and a square root is given by y2^((p+1)/4).
+For y2 in GF(p), all curves in this document have p = 3 (mod 4). Section 4 and Appendix I.1 of {{RFC9380}} therefore apply directly: y2 is a square exactly when y2^((p-1)/2) is 0 or 1, and a square root is given by y2^((p+1)/4).
 
 For y2 in GF(p^m), that shortcut does not apply, since p^2 and p^8 are both 1 (mod 4). For BN462 and BLS12-381, p^2 = 9 (mod 16), so Appendix I.3 of {{RFC9380}} applies to GF(p^2). Appendix I.4 of {{RFC9380}} gives a constant-time Tonelli-Shanks procedure for a general field, and Appendix I.5 gives an is_square test for GF(p^2).
 
@@ -783,7 +783,7 @@ Serialization: a scalar kappa in the range [0, r - 1] is serialized as I2OSP(kap
 
 Deserialization: given a byte string s_string of length n_s, let kappa = OS2IP(s_string). If kappa >= r, return INVALID. Otherwise, return kappa.
 
-Rejecting values greater than or equal to r gives every scalar exactly one encoding, which matters wherever an encoded scalar is hashed or compared as bytes. The byte order is the big-endian order of I2OSP and OS2IP {{RFC8017}}, which is the order used by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. Other specifications for prime-order groups encode scalars in little-endian order, {{RFC8032}} among them, so an implementation working with both needs to convert.
+Rejecting values greater than or equal to r gives every scalar exactly one encoding, which matters wherever an encoded scalar is hashed or compared as bytes. The byte order is the big-endian order of I2OSP and OS2IP {{RFC8017}}, which is the order used by {{I-D.irtf-cfrg-bbs-signatures}} and {{I-D.ietf-cose-bls-key-representations}}. Other specifications encode scalars in little-endian order, {{RFC8032}} among them, so an implementation working with both needs to convert.
 
 This document does not define a distinct encoding for the zero scalar. Whether a protocol accepts it is a protocol-level decision, discussed in {{zero-scalar}}.
 
@@ -932,7 +932,7 @@ Section 5.2 of {{I-D.irtf-cfrg-bls-signature}} is an example of the first choice
 
 {{scalar-serialization}} accepts the zero scalar, and a protocol using it SHOULD state whether it does the same.
 
-This is a separate decision from the one above. Section 3.1 of {{RFC9591}} rejects the identity element when deserializing a group element while accepting zero scalars, so the two choices are made independently in at least one existing specification.
+This is a separate decision from the one above. {{RFC9591}} rejects the identity element when deserializing a group element (Section 3.1) while accepting zero scalars (Section 6), so the two choices are made independently in at least one existing specification.
 
 # Security Considerations  {#security-considerations}
 
@@ -950,7 +950,7 @@ Membership in the subgroup does not on its own exclude the identity element, whi
 
 The pairing-based protocols, such as the BLS signatures, use a scalar multiplication in G_1, G'_2 and an exponentiation in G_T with the secret key. In order to prevent the leakage of the secret key due to side channel attacks, implementers SHOULD apply countermeasure techniques such as the Montgomery ladder {{Montgomery}} {{CF06}} when they implement modules of a scalar multiplication and an exponentiation. Please refer to {{Montgomery}} and {{CF06}} for the detailed algorithms of the Montgomery ladder.
 
-A coordinate that is read from a byte string has to be checked against the order of the field it is claimed to lie in; a coefficient outside that range gives one value several encodings, which can lead to vulnerabilities such as signature forgery {{IEEE1363}}. {{point-deserialization-procedure}} makes this requirement normative for the procedures defined in this document.
+A coordinate that is read from a byte string has to be checked against the order of the field it is claimed to lie in {{IEEE1363}}; a coefficient outside that range gives one value several encodings, which can lead to vulnerabilities such as signature forgery. {{point-deserialization-procedure}} makes this requirement normative for the procedures defined in this document.
 
 The choice between the two identity-element behaviors described in {{identity-point-handling}} belongs to the calling protocol, because whether the identity element can legitimately appear is a property of the protocol rather than of the curve or the wire format. Treating the identity element as an unremarkable, always-valid deserialization result, when the calling protocol does not actually expect it, can introduce timing side channels from identity-checking branches. Protocol specifications SHOULD state explicitly whether they require the identity-rejecting or identity-allowing behavior, consistent with their own security assumptions, and SHOULD do the same for the zero scalar ({{zero-scalar}}).
 
