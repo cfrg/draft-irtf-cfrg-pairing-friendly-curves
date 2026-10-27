@@ -252,7 +252,7 @@ We show the pairing-friendly curves that have been selected by existing standard
 
 The adoption status of pairing-friendly curves is surveyed in standards, libraries and applications. The details are described as the following subsections. A BN curve with a XXX-bit characteristic p is denoted as BNXXX and a BLS curve of embedding degree k with a XXX-bit p is denoted as BLSk-XXX.
 
-Parameters whose security level is more than 5 bits below the 128-bit level are not candidates for selection here, because this document recommends against using parameters that fall that far below the 128-bit level. They are still named in the subsections below wherever a standard or a library supports them, and {{adoption_status_100bit_security}} tabulates that adoption, which is useful information for implementers.
+Parameters whose security level is more than 5 bits below the 128-bit level are not candidates for selection here, because this document recommends against using parameters that fall that far below the 128-bit level. They are still named in the subsections below wherever a standard or a library supports them, and {{adoption_status_100bit_security}} tabulates the adoption of the BN curves among them that are estimated at approximately 100 bits, which is useful information for implementers.
 
 The security level for each curve is evaluated in accordance with {{BD18}}, {{GMT19}}, {{MAF19}} and {{FK18}}. For the 128-bit level, {{G20}} revisits the Special variant of the tower number field sieve, which applies to pairing-friendly curves because their characteristic is a polynomial of moderate degree with tiny coefficients evaluated at a seed. It revises the estimates of earlier work downward for the families it examines, with BLS12 and BN as the exceptions that it leaves unchanged. Note that the Freeman curves {{Freeman06}} and MNT curves {{MNT01}} are not included in this survey because {{BD18}} does not show the security levels of these curves.
 
@@ -3251,7 +3251,7 @@ Should BN462 point encodings converge, or should a protocol specification come t
 
 # Adoption Status of Pairing-Friendly Curves at Approximately the 100-bit Security Level  {#adoption_status_100bit_security}
 
-BN curves including BN254 that were regarded as providing 128-bit security before exTNFS are estimated at approximately 100 bits after exTNFS {{BD18}}. The following table summarizes the adoption status of the parameters that {{secure_params}} does not select, namely those whose security level is more than 5 bits below the 128-bit level. Please refer to {{impl}} for the naming conventions for each curve.
+BN curves including BN254 that were regarded as providing 128-bit security before exTNFS are estimated at approximately 100 bits after exTNFS {{BD18}}. The following table summarizes the adoption status of the BN curves with a 254- or 256-bit characteristic, which {{secure_params}} does not select because their security level is more than 5 bits below the 128-bit level. Please refer to {{impl}} for the naming conventions for each curve.
 
 | Category | Name | Supported Curves |
 |:---:|:---:|:---:|
@@ -3265,9 +3265,6 @@ BN curves including BN254 that were regarded as providing 128-bit security befor
 | Library | TEPLA | BN254N |
 | Library | RELIC | BN254N |
 | Library | RELIC | BN256R |
-| Library | AMCL | BN254N |
-| Library | AMCL | BN254CX |
-| Library | AMCL | BN256I |
 | Library | Intel IPP | BN256I |
 | Library | MIRACL | BN254N |
 | Library | MIRACL | BN254CX |
@@ -3286,8 +3283,6 @@ BN curves including BN254 that were regarded as providing 128-bit security befor
 | Application | Zcash | BN_SNARK1 |
 | Application | Ethereum | BN_SNARK1 |
 | Application | Algorand | BN_SNARK1 |
-| Application | DFINITY | BN254N |
-| Application | DFINITY | BN_SNARK1 |
 
 # Scope of the Security Estimate Review  {#security-review-scope}
 
