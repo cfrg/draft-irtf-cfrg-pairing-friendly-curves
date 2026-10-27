@@ -593,7 +593,7 @@ Table of Contents
    above it outranks an efficiency advantage of a lower-margin
    alternative.  BLS12-381 is the one exception to this preference for
    margin: although its security level is estimated at approximately 126
-   bits [GMT19], slightly below the nominal 128-bit target, it is
+   bits [GMT19] [GS21], slightly below the nominal 128-bit target, it is
    retained because its adoption in production deployments (see
    Section 4.1) decisively satisfies the "widely used" criterion.  Where
    no candidate at a given security level satisfies "widely used", as is
@@ -773,7 +773,7 @@ Table of Contents
 
    On the other hand, from the viewpoint of the future use, the
    parameter of BN462 is also introduced.  As shown in recent security
-   evaluations for BLS12-381 [BD18] [GMT19], its security level is close
+   evaluations for BLS12-381 [GMT19] [GS21], its security level is close
    to 128 bits but less than 128 bits.  If the attack is improved even a
    little, BLS12-381 will not be suitable for the curve of the 128-bit
    security level.  As curves of 128-bit security level are currently
@@ -816,7 +816,7 @@ Table of Contents
    where w^2 = v in GF(p^6) and v^3 = u + 1, per the tower given above.
 
    We have to note that the security level of this pairing is expected
-   to be 126 rather than 128 bits [GMT19].
+   to be 126 rather than 128 bits [GMT19] [GS21].
 
    Parameters of BLS12-381 are given as follows.
 
@@ -1762,8 +1762,9 @@ Table of Contents
    BLS curves of embedding degree 12 typically require a characteristic
    p of 461 bits or larger to achieve the 128-bit security level [BD18].
    Note that the security level of BLS12-381, which is adopted by a lot
-   of libraries and applications, is slightly below 128 bits because a
-   381-bit characteristic is used [BD18] [GMT19].
+   of libraries and applications, is slightly below 128 bits: its
+   381-bit characteristic is below that minimum, and its security level
+   is estimated at approximately 126 bits [GMT19] [GS21].
 
    BN254 is used in most of the existing implementations as shown in
    Section 4.1 and Appendix F; however, BN curves that were estimated as
@@ -2150,6 +2151,12 @@ Table of Contents
    [go-algorand]
               Algorand, "go-algorand: Algorand's official implementation
               in Go", 2018, <https://github.com/algorand/go-algorand>.
+
+   [GS21]     Guillevic, A. and S. Singh, "On the Alpha Value of
+              Polynomials in the Tower Number Field Sieve Algorithm",
+              Mathematical Cryptology vol. 1, no. 1, pp. 1-39, 2021,
+              <https://journals.flvc.org/mathcryptology/article/
+              view/125142>.
 
    [HHT20]    Hayashida, D., Hayasaka, K., and T. Teruya, "Efficient
               Final Exponentiation via Cyclotomic Structure for Pairings
