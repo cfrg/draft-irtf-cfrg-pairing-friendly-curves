@@ -511,7 +511,7 @@ b':
 
 ## For 256-bit Security  {#for-256-bits-of-security}
 
-As shown in the survey in {{impl}}, there are three candidate pairing-friendly curves for 256-bit security: BLS48-556, BLS48-575 and BLS48-581. None of them is widely used in the sense of the policy given in {{secure_params}}, so the preference for margin governs. As noted in {{impact}}, {{KIK17}} puts the minimum size of p^k for BLS48 curves at 27,410 bits, which is 572 bits of p. BLS48-556 does not reach that size; BLS48-575 and BLS48-581 both exceed it, and BLS48-581 leaves the larger margin. We therefore select BLS48-581.
+As shown in the survey in {{impl}}, there are three BLS48 candidates for 256-bit security: BLS48-556, BLS48-575 and BLS48-581. None of them is widely used in the sense of the policy given in {{secure_params}}, so the preference for margin governs. As noted in {{impact}}, {{KIK17}} puts the minimum size of p^k for BLS48 curves at 27,410 bits, which is 572 bits of p. BLS48-556 does not reach that size; BLS48-575 and BLS48-581 both exceed it, and BLS48-581 leaves the larger margin. We therefore select BLS48-581.
 
 The selected BLS48 curve is shown in {{KIK17}} and it is defined by the parameter
 
