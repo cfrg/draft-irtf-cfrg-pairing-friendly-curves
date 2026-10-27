@@ -810,7 +810,7 @@ This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_
 
 This section defines octets_to_point_G1 and octets_to_point_G2. Each takes a byte string and returns an element of G_1 or of G'_2 respectively, or INVALID. A string that deserializes to a point of E or E' that is not in the group is INVALID, so a value returned by these procedures is a group element and a caller does not have to obtain one by a further step.
 
-This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and elements of G_1 and of G'_2 are what the specifications citing this document exchange; psi carries an element of G'_2 to the corresponding element of G_2, on which the pairing operates, as described in {{pairing}}. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires conforming implementations to perform the subgroup check for the same reason, and Section 6.2 of {{I-D.irtf-cfrg-bbs-signatures}} notes that a library may combine the two operations.
+This document does not define a deserialization procedure that stops at E or E'. G_1 and G_2 are the groups on which the pairing of {{pairing}} is defined, and elements of G_1 and of G'_2 are what the specifications citing this document exchange; psi carries an element of G'_2 to the corresponding element of G_2, on which the pairing operates, as described in {{pairing}}. Section 5.3 of {{I-D.irtf-cfrg-bls-signature}} requires conforming implementations to perform the subgroup check for the same reason, and Section 6.3 of {{I-D.irtf-cfrg-bbs-signatures}} notes that a library may combine the two operations.
 
 The procedure below is stated once, for a string s_string and the parameters n and m of {{point-serialization-params}}. It uses the OS2IP function defined in {{RFC8017}} and the OS2FE function defined in {{point-serialization-params}}.
 
@@ -1402,7 +1402,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8032.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9591.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9380.xml" />
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-10.xml" />
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-13.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-cose-bls-key-representations-08.xml" />
 
         <reference anchor="AR14">
