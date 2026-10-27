@@ -3358,7 +3358,7 @@ E.2.  Encodings Used by Existing Implementations
    BN462 and do not mark it deprecated have converged on a dedicated
    leading byte rather than on packing metadata into the coordinate;
    [mcl], which does mark it deprecated, is the exception and packs the
-   sign of y into the coordinate.  Second, none of the implementations
+   parity of y into the coordinate.  Second, none of the implementations
    examined carries the pair C_bit and I_bit in the two spare bits of
    the coordinate, which is the arrangement Appendix E.3 considers.
 
@@ -3397,9 +3397,9 @@ E.4.  Alternative Considered: A Dedicated Leading Byte
    incompatible variants are in use:
 
    *  The [SEC1] type byte: 0x04 for an uncompressed point, 0x02 or 0x03
-      for a compressed point with the value itself carrying the sign of
-      y, followed by the coordinates in big-endian order.  This is what
-      [MIRACL] and [pfcurve-js] emit.
+      for a compressed point with the value itself carrying the parity
+      of y, followed by the coordinates in big-endian order.  This is
+      what [MIRACL] and [pfcurve-js] emit.
 
    *  A flag byte carrying the same three metadata bits as Section 5.3
       in the same positions (C_bit at 0x80, I_bit at 0x40, S_bit at
