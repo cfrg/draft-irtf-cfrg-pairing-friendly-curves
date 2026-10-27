@@ -86,17 +86,17 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Elliptic Curves  {#elliptic-curve}
 
-Let p be a prime number at least 5, and let q be a power of p. Let GF(q) be a finite field. The curve defined by the following equation E is called an elliptic curve:
+Let p be a prime number at least 5, and let q be a power of p. Let GF(q) be the finite field with q elements. The curve defined by the following equation E is called an elliptic curve:
 
 ~~~~~~~~~~
 E : y^2 = x^3 + a * x + b,
 ~~~~~~~~~~
 
-and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 mod q. This is called the Weierstrass normal form of an elliptic curve.
+and a and b in GF(q) satisfy the discriminant inequality 4 * a^3 + 27 * b^2 != 0 in GF(q). This is called the Weierstrass normal form of an elliptic curve.
 
-A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. For a natural number n, we define the set of (GF(q^n))-rational points of E, denoted by E(GF(q^n)), to be the set of all solutions (x,y) in GF(q^n), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E.
+A solution (x,y) to the equation E can be thought of as a point on the corresponding curve. We define the set of GF(q)-rational points of E, denoted by E(GF(q)), to be the set of all solutions (x,y) in GF(q), together with a 'point at infinity' O_E, which is defined to lie on every vertical line passing through the curve E. Since a and b are also elements of every extension field of GF(q), the same definition gives the rational points of E over any such field; for example, E(GF(p^k)) for a curve E defined over GF(p), as used in {{pairing}}.
 
-The set E(GF(q^n)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q^n)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied.
+The set E(GF(q)) forms a group under a group law that can be defined geometrically as follows. For P and Q in E(GF(q)) define P + Q to be the reflection around the x-axis of the unique third point R of intersection of the straight line passing through P and Q with the curve E. If the straight line is tangent to E, we say that it passes through that point twice. The identity of this group is the point at infinity O_E. We also define scalar multiplication [K]P for a positive integer K as the point P added to itself (K-1) times. Here, [0]P becomes the point at infinity O_E and the relation [-K]P = -([K]P) is satisfied.
 
 ## Pairings  {#pairing}
 
@@ -109,9 +109,9 @@ G_1 = E(GF(p^k))[r] intersect ker(pi - [1]) = E(GF(p))[r],
 G_2 = E(GF(p^k))[r] intersect ker(pi - [p]),
 ~~~~~~~~~~
 
-where ker(pi - [a]) denotes the set of points T with pi(T) = [a]T. For the curves considered in this document, both G_1 and G_2 have order r. G_2 is identified by the eigenvalue p, and not merely as an order r subgroup of E(GF(p^k)): that weaker description is satisfied by G_1 as well, and the pairing computed in {{comp_pairing}} is degenerate when both of its arguments are taken from G_1.
+where, for an integer K, ker(pi - [K]) denotes the set of points T with pi(T) = [K]T. For the curves considered in this document, both G_1 and G_2 have order r. G_2 is identified by the eigenvalue p, and not merely as an order r subgroup of E(GF(p^k)): that weaker description is satisfied by G_1 as well, and the pairing computed in {{comp_pairing}} is degenerate when both of its arguments are taken from G_1.
 
-Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If there is an isomorphism psi from E'(GF(p^k)) to E(GF(p^k)), then E' is called the twist of E. It is more efficient to hold elements of G_2 as points of E'(GF(p^(k/d))), whose coordinates lie in a smaller field. Write G'_2 for the preimage of G_2 under psi, that is, the set of points Q of E'(GF(p^(k/d))) with psi(Q) in G_2. For the curves in this document, G_2 lies in the image of E'(GF(p^(k/d))) under psi, which is what makes that representation possible; since psi is injective, G'_2 is a subgroup of order r, and psi restricted to G'_2 is an isomorphism onto G_2. The formula for psi is given for each curve in {{secure_params}}. What is given there is the restriction of psi to E'(GF(p^(k/d))), which is an injective homomorphism into E(GF(p^k)) and not an isomorphism, since E'(GF(p^(k/d))) and E(GF(p^k)) differ in size. The formula is the same in either case. Where a point of G_2 is written with coordinates in this document, as in {{secure_params}} and in {{point-serialization}}, it is the corresponding point of G'_2 that is written; psi carries it back to G_2 when the pairing is evaluated. Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.
+Let d be a divisor of k and E' be an elliptic curve defined over GF(p^(k/d)). If there is an isomorphism psi from E'(GF(p^k)) to E(GF(p^k)), then E' is called the twist of E. It is more efficient to hold elements of G_2 as points of E'(GF(p^(k/d))), whose coordinates lie in a smaller field. Write G'_2 for the preimage of G_2 under psi, that is, the set of points Q of E'(GF(p^(k/d))) with psi(Q) in G_2. For the curves in this document, G_2 lies in the image of E'(GF(p^(k/d))) under psi, which is what makes that representation possible; since psi is injective, G'_2 is a subgroup of order r, and psi restricted to G'_2 is an isomorphism onto G_2. The formula for psi is given for each curve in {{secure_params}}. What is given there is the restriction of psi to E'(GF(p^(k/d))), which is an injective homomorphism into E(GF(p^k)) and not an isomorphism, since E'(GF(p^(k/d))) and E(GF(p^k)) differ in size. The formula is the same in either case. Where a point of G_2 is written with coordinates in this document, as in {{secure_params}} and in {{point-serialization}}, it is the corresponding point of G'_2 that is written; psi carries it back to G_2 when the pairing is evaluated. The exception is {{comp_pairing}}, where G_2 points are written in untwisted coordinates on E(GF(p^k)). Let G_T be an order r subgroup of the multiplicative group (GF(p^k))^*; this exists by definition of k.
 
 A pairing is defined as a bilinear map e: (G_1, G_2) -> G_T satisfying the following properties:
 
@@ -731,7 +731,7 @@ This section defines normative serialization and deserialization procedures for 
 At a high level, the point serialization format is defined as follows:
 
 - Serialized points include three metadata bits that indicate whether a point is compressed or not, whether a point is the point at infinity or not, and (for compressed points) the sign of the point's y-coordinate.
-- For a curve with characteristic p represented in n = ceil(L / 8) bytes, where L is the bit length of p, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in {{point-serialization-params}}, where m = k/d for the twist degree d of {{pairing}}, are serialized into m\*n bytes (compressed) or 2\*m\*n bytes (uncompressed).
+- For a curve with characteristic p represented in n bytes, where n is the bit length of p divided by 8 and rounded up, points on E are serialized into n bytes (compressed) or 2n bytes (uncompressed). Points on E', represented over GF(p^m) for the m given in {{point-serialization-params}}, where m = k/d for the twist degree d of {{pairing}}, are serialized into m\*n bytes (compressed) or 2\*m\*n bytes (uncompressed).
 - The serialization of a point at infinity comprises a string of zero bytes, except that the metadata bits may be nonzero.
 - The serialization of a compressed point other than the point at infinity comprises a serialized x-coordinate.
 - The serialization of an uncompressed point other than the point at infinity comprises a serialized x-coordinate followed by a serialized y-coordinate.
@@ -746,9 +746,10 @@ At a high level, the point serialization format is defined as follows:
 Below, we give detailed serialization and deserialization procedures, applicable to both curves using the parameters above. The following notation is used in the rest of this section:
 
 - Elements of GF(p^m) are represented as a vector of m coefficients in GF(p), (y_0, ..., y_{m-1}), using the basis and coefficient ordering already defined for each curve in {{secure_params}}.
+- The common procedures below use x and y for the coordinates of a nonidentity point on either E or E'. For points on E', x, y and their coefficients x_i, y_i use the same coordinate representation and coefficient ordering as x', y' and x'_i, y'_i in {{secure_params}}; their values are those of the point being processed, not necessarily those of BP'.
 - The identity element of G_1 is the point at infinity O_E of {{elliptic-curve}}, and the identity element of G'_2 is the point at infinity on E'. Below, 'the point at infinity' refers to whichever of the two curves is in question.
 - For a byte string str, str[0] is defined as the first byte of str.
-- The function sign_GF_p(y) returns one bit representing the sign of an element of GF(p). This function is defined as follows:
+- The function sign_GF_p(y) returns one bit representing the sign of an element y of GF(p), with y taken as an integer in the inclusive range [0, p - 1]. This function is defined as follows:
 
 ~~~~~~~~~~
 sign_GF_p(y) := { 1 if y > (p - 1) / 2, else
@@ -770,7 +771,7 @@ A faster approach reduces a square root in GF(p^2) to square roots in GF(p) by w
 
 This section defines a serialization format for elements of the scalar field GF(r), where r is the order of G_1 and G_2 as given for each curve in {{secure_params}}. Unlike point serialization, this format applies to all three curves in this document (BLS12-381, BN462, and BLS48-581), since no metadata bits are required.
 
-For a curve with scalar field order r represented in n_s = ceil(L_r / 8) bytes, where L_r is the bit length of r:
+For a curve with scalar field order r represented in n_s bytes, where n_s is the bit length of r divided by 8 and rounded up:
 
 | Curve | n_s (bytes) |
 |---|---|
@@ -788,7 +789,7 @@ This document does not define a distinct encoding for the zero scalar. Whether a
 
 ## Point Serialization  {#point-serialization-procedure}
 
-This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_G1 takes an element of G_1, which is a point on E, and point_to_octets_G2 takes an element of G'_2, which is a point on E'; each returns a byte string. Both are given by the single procedure below, stated for a point P = (x, y) and the parameters n and m of {{point-serialization-params}}. This procedure uses the I2OSP function defined in {{RFC8017}}.
+This section defines point_to_octets_G1 and point_to_octets_G2. point_to_octets_G1 takes an element of G_1, which is a point on E, and point_to_octets_G2 takes an element of G'_2, which is a point on E'; each returns a byte string. Both are given by the single procedure below, stated for a point P, written P = (x, y) when P is not the point at infinity, and the parameters n and m of {{point-serialization-params}}. This procedure uses the I2OSP function defined in {{RFC8017}}.
 
 1. Compute the metadata bits C_bit, I_bit, and S_bit, as follows:
    - C_bit is 1 if point compression should be used, otherwise it is 0.
@@ -2157,17 +2158,17 @@ Tsunekazu Saito was a co-author of this document from its first version through 
 
 Before presenting the computation of the optimal ate pairing e(P, Q) satisfying the properties shown in {{pairing}}, we give the subfunctions used for the pairing computation.
 
-The following algorithm, Line_function, shows the computation of the line function. It takes Q_1 = (x_1, y_1), Q_2 = (x_2, y_2) in G_2, and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).
+The following algorithm, Line_function, shows the computation of the line function. It takes A = (x_A, y_A), B = (x_B, y_B) in G_2, and P = (x, y) in G_1 as input, and outputs an element of GF(p^k).
 
 ~~~~~~~~~~
-if (Q_1 = Q_2) then
-    l := (3 * x_1^2) / (2 * y_1);
-else if (Q_1 = -Q_2) then
-    return (x - x_1);
+if (A = B) then
+    l := (3 * x_A^2) / (2 * y_A);
+else if (A = -B) then
+    return (x - x_A);
 else
-    l := (y_2 - y_1) / (x_2 - x_1);
+    l := (y_B - y_A) / (x_B - x_A);
 end if
-return (l * (x - x_1) + y_1 - y);
+return (l * (x - x_A) + y_A - y);
 ~~~~~~~~~~
 
 When implementing the line function, the isomorphism of E and its twist curve E' can be used to reduce the computational cost of operations in G_2 {{CLN09}} {{KIK17}}. We note that Line_function does not consider such an isomorphism; i.e., the above pseudocode operates on coordinates in untwisted form.
@@ -2176,7 +2177,7 @@ When implementing the line function, the isomorphism of E and its twist curve E'
 
 Let c = 6 * chi + 2 for a parameter chi and c_0, c_1, ... , c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c. Implementations such as {{mcl}} and {{MIRACL}} compute c from chi and choose c_0, c_1, ..., c_N with few nonzero digits, taking advantage of the low Hamming weight of chi.
 
-The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of {{pairing}}, applied to Q = (x, y) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x^p, y^p).
+The computation of the optimal ate pairing uses the p-power Frobenius endomorphism pi of {{pairing}}, applied to Q = (x_Q, y_Q) in G_2, that is, to a point on E(GF(p^k)) in untwisted form. The pseudocode below writes it with the characteristic as an explicit argument, pi(p, Q) = (x_Q^p, y_Q^p).
 
 The following algorithm shows the computation of the optimal ate pairing on BN curves. It takes P in G_1, Q in G_2, an integer c, c_0, ...,c_N in {-1,0,1} such that the sum of c_i * 2^i (i = 0, 1, ..., N) equals c, and the order r of G_1 as input, and outputs e(P, Q).
 
@@ -2256,11 +2257,11 @@ Standard references for the hard-part addition chain include {{SBCK09}} (the ori
 
 # Test Vectors of Optimal Ate Pairing  {#test-vectors-of-optimal-ate-pairing}
 
-We provide test vectors for the optimal ate pairing e(P, Q) given in {{comp_pairing}} for the curves BLS12-381, BN462 and BLS48-581 given in {{secure_params}}. Here, the inputs P = (x, y) and Q = (x', y') are the corresponding base points BP and BP' given in {{secure_params}}.
+We provide test vectors for the optimal ate pairing e(P, Q) given in {{comp_pairing}} for the curves BLS12-381, BN462 and BLS48-581 given in {{secure_params}}. Here, the inputs are P = BP = (x, y) and Q = psi(BP'), where BP and BP' = (x', y') are the base points given in {{secure_params}}.
 
-Note: The G_2 base points Q = (x', y') in this appendix are given in twisted form, that is, as the corresponding points of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in {{comp_pairing}} operates on points of the untwisted curve E(GF(p^k)). An implementation invoking that pseudocode directly has to apply the untwist isomorphism psi defined in {{secure_params}} first, to lift Q from E' to E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
+Note: The G_2 input is given in this appendix by the base point BP' = (x', y') in twisted form, that is, as the corresponding point of G'_2, with coordinates in GF(p^(k/d)), which gives a compact representation. The pseudocode in {{comp_pairing}} operates on points of the untwisted curve E(GF(p^k)). An implementation invoking that pseudocode directly has to apply the untwist isomorphism psi of {{pairing}}, whose formula for each curve is given in {{secure_params}}, to BP' first, to obtain Q on E(GF(p^k)). Most existing libraries perform this lifting implicitly by using twisted-form variants of Line_function, which are mathematically equivalent and more efficient.
 
-For BLS12-381 and BN462, Q = (x', y') is given by
+For BLS12-381 and BN462, BP' = (x', y') is given by
 
 ~~~~~~~~~~
 x' = x'_0 + x'_1 * u and
@@ -2269,7 +2270,7 @@ y' = y'_0 + y'_1 * u,
 
 where u is an indeterminate and x'_0, x'_1, y'_0, y'_1 are elements of GF(p).
 
-For BLS48-581, Q = (x', y') is given by
+For BLS48-581, BP' = (x', y') is given by
 
 ~~~~~~~~~~
 x' = x'_0 + x'_1 * u + x'_2 * v + x'_3 * u * v
@@ -3199,7 +3200,7 @@ Few libraries implement BN462 at all. Among those surveyed for this document, it
 
 Sizes are given as uncompressed / compressed, for G_1. For {{MIRACL}} and {{zig-pairings}}, the corresponding G'_2 sizes are 233 bytes uncompressed and 117 bytes compressed. The {{SEC1}} type byte is 0x04 for an uncompressed point and 0x02 or 0x03 for a compressed one; the dedicated flag byte is described in {{bn462-leading-byte}}. The byte order given for {{mcl}} is its default.
 
-Both leading-byte forms leave the coordinate encoding of {{point-serialization-procedure}} untouched: {{MIRACL}} writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does {{zig-pairings}}. The two differ only in what the leading byte means. Note that {{SEC1}} itself defines point encoding over GF(p) and GF(2^m) only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of {{point-serialization-procedure}} rather than {{SEC1}} as written.
+Both leading-byte forms leave the coordinate encoding of {{point-serialization-procedure}} untouched: {{MIRACL}} writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does {{zig-pairings}}. The two differ only in what the leading byte means. Note that {{SEC1}} itself defines point encoding over prime fields and binary extension fields only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of {{point-serialization-procedure}} rather than {{SEC1}} as written.
 
 In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
 
