@@ -434,7 +434,7 @@ where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower given above.
 
 We have to note that BN462 is significantly slower than BLS12-381, but has a 134-bit security level {{GMT19}}, so may be more resistant to future small improvements to the exTNFS attack.
 
-We note also that CP8-544 is about 20% faster than BN462 {{GMT19}}, has a 131-bit security level, and that, due to its construction, it will not be affected by future small improvements to the exTNFS attack. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.
+We note also that CP8-544 is about 20% faster than BN462 {{GMT19}}, has a 131-bit security level, and that {{GMT19}} describes it as the more conservative choice for users concerned about progress in variants of the number field sieve. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.
 
 We give the following parameters for BN462.
 
