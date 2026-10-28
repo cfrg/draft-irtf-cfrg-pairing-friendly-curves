@@ -63,7 +63,7 @@ Zcash implemented their own zero-knowledge proof algorithm named Zero-Knowledge 
 
 Cloudflare introduced Geo Key Manager {{Cloudflare}} to restrict distribution of customers' private keys to a subset of their data centers. To achieve this functionality, ABE is used, and pairings take a role as a building block. In addition, Cloudflare published a new cryptographic library, the Cloudflare Interoperable, Reusable Cryptographic Library (CIRCL) {{CIRCL}} in 2019. CIRCL now includes pairing computations on BLS12-381 (see {{cryptographic_libraries}}).
 
-Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I-D.irtf-cfrg-bls-signature}} and utilized in several blockchain projects such as Ethereum {{Ethereum}}, Algorand {{Algorand}}, Chia Network {{Chia}}, and DFINITY {{DFINITY}}. The aggregation functionality of BLS signatures is effective for their applications of decentralization and scalability.
+Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I-D.irtf-cfrg-bls-signature}} and utilized in several blockchain projects such as Ethereum {{Ethereum}}, Chia Network {{Chia}}, and DFINITY {{DFINITY}}. The aggregation functionality of BLS signatures is effective for their applications of decentralization and scalability.
 
 ## Motivation and Contribution  {#goal}
 
@@ -434,7 +434,7 @@ where w^2 = v in GF(p^6) and v^3 = u + 2, per the tower given above.
 
 We have to note that BN462 is significantly slower than BLS12-381, but has a 134-bit security level {{GMT19}}, so may be more resistant to future small improvements to the exTNFS attack.
 
-We note also that CP8-544 is about 20% faster than BN462 {{GMT19}}, has a 131-bit security level, and that {{GMT19}} describes it as the more conservative choice for users concerned about progress in variants of the number field sieve. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.
+We note also that {{GMT19}} estimates an optimal ate pairing on CP8-544 to take about 20% less time than one on BN462, that CP8-544 has a 131-bit security level, and that {{GMT19}} describes it as the more conservative choice for users concerned about progress in variants of the number field sieve. However, as this curve is not widely used (it is only implemented in one library), we instead chose BN462 for our 'safe' option.
 
 We give the following parameters for BN462.
 
@@ -936,7 +936,7 @@ This is a separate decision from the one above. {{RFC9591}} rejects the identity
 
 # Security Considerations  {#security-considerations}
 
-The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim and Barbulescu in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}} and {{KIK17}}, apart from BLS12-381, whose case is described below. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here ({{BD18}}, {{GMT19}}, {{G20}}, {{KIK17}}) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; {{security-review-scope}} records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. {{APT26}} is an example of the last kind: for the Conjugation method of polynomial selection, it accelerates the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a bit-level security estimate for the curves recommended here that is lower than those this document cites, and this document has not derived estimates of its own. Work published after this document is not covered, and has to be assessed separately.
+The recommended pairing-friendly curves are selected by considering the exTNFS proposed by Kim and Barbulescu in 2016 {{KB16}} and they are categorized in each security level in accordance with {{BD18}} and {{KIK17}}, apart from BLS12-381, whose case is described below. Implementers who will newly develop pairing-based cryptography applications SHOULD use the recommended parameters. The estimates cited here ({{BD18}}, {{GMT19}}, {{G20}}, {{KIK17}}) were reviewed against the work published in the major peer-reviewed cryptography venues, and in the IACR Cryptology ePrint Archive, between January 2020 and August 2026; {{security-review-scope}} records what that review covered. The work that review covered stays within the number field sieve and its tower variants rather than introducing a different kind of attack: it consists of record discrete-logarithm computations, refinements of the asymptotic analysis, and improvements to individual steps of the tower variant for fields of the extension degrees these curves use. {{APT26}} is an example of the last kind: for the Conjugation method of polynomial selection, it accelerates the linear algebra step over GF(p^12), the field that BLS12-381 and BN462 use, by a factor of approximately 144. None of that work gives a bit-level security estimate for the curves recommended here that is lower than those this document cites, and this document has not derived estimates of its own. Work published after August 2026 is not covered, and has to be assessed separately.
 
 {{BD18}} estimated that BLS curves of embedding degree 12 require a characteristic p of 461 bits or larger to achieve the 128-bit security level. Note that the security level of BLS12-381, which is adopted by a lot of libraries and applications, is slightly below 128 bits: its 381-bit characteristic is below that size, and its security level is estimated at approximately 126 bits {{GMT19}} {{GS21}}.
 
@@ -1437,15 +1437,6 @@ Tsunekazu Saito was a co-author of this document from its first version through 
               <organization />
             </author>
             <date />
-          </front>
-        </reference>
-        <reference anchor="Algorand" target="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">
-          <front>
-            <title>Pixel-signatures: Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains</title>
-            <author initials="S." surname="Gorbunov">
-              <organization />
-            </author>
-            <date year="2019" month="March" day="7" />
           </front>
         </reference>
         <reference anchor="Chia" target="https://github.com/Chia-Network/bls-signatures">
@@ -3223,7 +3214,7 @@ Sizes are given as uncompressed / compressed, for G_1. For {{MIRACL}} and {{zig-
 
 Both leading-byte forms leave the coordinate encoding of {{point-serialization-procedure}} untouched: {{MIRACL}} writes the coefficients of a GF(p^2) coordinate in decreasing index order, as that section does, and so does {{zig-pairings}}. The two differ only in what the leading byte means. Note that {{SEC1}} itself defines point encoding over prime fields and binary extension fields only, so its type byte applied to E'(GF(p^2)) is an extension of it by the coefficient rule of {{point-serialization-procedure}} rather than {{SEC1}} as written.
 
-In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: its coordinates are zero and the ordinary type byte is emitted, so the identity element is recognized by inspecting the coordinate values rather than by a metadata bit. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
+In {{mcl}}, BN462 is marked deprecated. Its affine serialization writes x followed by y with no metadata at all, its compressed form stores the parity of y in the most significant bit of the most significant byte of the coordinate, and the identity element is represented by an all-zero string. {{MIRACL}} likewise has no distinct representation for the identity element: it emits the ordinary type byte followed by zero coordinates, and its decoding routine reports a failure for such a string. This differs from the approach of {{point-serialization}}, which represents the identity element explicitly through I_bit and leaves the decision of whether to accept it to the calling protocol ({{identity-point-handling}}).
 
 Two observations follow. First, the implementations that support BN462 and do not mark it deprecated have converged on a dedicated leading byte rather than on packing metadata into the coordinate; {{mcl}}, which does mark it deprecated, is the exception and packs the parity of y into the coordinate. Second, none of the implementations examined carries the pair C_bit and I_bit in the two spare bits of the coordinate, which is the arrangement {{bn462-two-bit}} considers.
 
