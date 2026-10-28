@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 30 April 2027                                          R. Wahby
+Expires: 1 May 2027                                             R. Wahby
                                               Carnegie Mellon University
-                                                         27 October 2026
+                                                         28 October 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 April 2027.
+   This Internet-Draft will expire on 1 May 2027.
 
 Copyright Notice
 
@@ -214,10 +214,10 @@ Table of Contents
 
    Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being
    standardized [I-D.irtf-cfrg-bls-signature] and utilized in several
-   blockchain projects such as Ethereum [Ethereum], Algorand [Algorand],
-   Chia Network [Chia], and DFINITY [DFINITY].  The aggregation
-   functionality of BLS signatures is effective for their applications
-   of decentralization and scalability.
+   blockchain projects such as Ethereum [Ethereum], Chia Network [Chia],
+   and DFINITY [DFINITY].  The aggregation functionality of BLS
+   signatures is effective for their applications of decentralization
+   and scalability.
 
 1.3.  Motivation and Contribution
 
@@ -921,8 +921,9 @@ Table of Contents
    but has a 134-bit security level [GMT19], so may be more resistant to
    future small improvements to the exTNFS attack.
 
-   We note also that CP8-544 is about 20% faster than BN462 [GMT19], has
-   a 131-bit security level, and that [GMT19] describes it as the more
+   We note also that [GMT19] estimates an optimal ate pairing on CP8-544
+   to take about 20% less time than one on BN462, that CP8-544 has a
+   131-bit security level, and that [GMT19] describes it as the more
    conservative choice for users concerned about progress in variants of
    the number field sieve.  However, as this curve is not widely used
    (it is only implemented in one library), we instead chose BN462 for
@@ -1760,8 +1761,8 @@ Table of Contents
    approximately 144.  None of that work gives a bit-level security
    estimate for the curves recommended here that is lower than those
    this document cites, and this document has not derived estimates of
-   its own.  Work published after this document is not covered, and has
-   to be assessed separately.
+   its own.  Work published after August 2026 is not covered, and has to
+   be assessed separately.
 
    [BD18] estimated that BLS curves of embedding degree 12 require a
    characteristic p of 461 bits or larger to achieve the 128-bit
@@ -1958,11 +1959,6 @@ Table of Contents
               J. López, "Faster Explicit Formulas for Computing Pairings
               over Ordinary Curves", EUROCRYPT 2011, 2011,
               <https://eprint.iacr.org/2010/526>.
-
-   [Algorand] Gorbunov, S., "Pixel-signatures: Efficient and Secure
-              Digital Signatures for Proof-of-Stake Blockchains", 7
-              March 2019, <https://medium.com/algorand/digital-
-              signatures-for-blockchains-5820e15fbe95>.
 
    [AMCL]     The Apache Software Foundation, "The Apache Milagro
               Cryptographic Library (AMCL)", 2016,
@@ -3368,13 +3364,12 @@ E.2.  Encodings Used by Existing Implementations
    stores the parity of y in the most significant bit of the most
    significant byte of the coordinate, and the identity element is
    represented by an all-zero string.  [MIRACL] likewise has no distinct
-   representation for the identity element: its coordinates are zero and
-   the ordinary type byte is emitted, so the identity element is
-   recognized by inspecting the coordinate values rather than by a
-   metadata bit.  This differs from the approach of Section 5, which
-   represents the identity element explicitly through I_bit and leaves
-   the decision of whether to accept it to the calling protocol
-   (Section 5.6.2).
+   representation for the identity element: it emits the ordinary type
+   byte followed by zero coordinates, and its decoding routine reports a
+   failure for such a string.  This differs from the approach of
+   Section 5, which represents the identity element explicitly through
+   I_bit and leaves the decision of whether to accept it to the calling
+   protocol (Section 5.6.2).
 
    Two observations follow.  First, the implementations that support
    BN462 and do not mark it deprecated have converged on a dedicated
