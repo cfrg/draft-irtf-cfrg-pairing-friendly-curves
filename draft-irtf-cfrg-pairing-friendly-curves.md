@@ -63,7 +63,7 @@ Zcash implemented their own zero-knowledge proof algorithm named Zero-Knowledge 
 
 Cloudflare introduced Geo Key Manager {{Cloudflare}} to restrict distribution of customers' private keys to a subset of their data centers. To achieve this functionality, ABE is used, and pairings take a role as a building block. In addition, Cloudflare published a new cryptographic library, the Cloudflare Interoperable, Reusable Cryptographic Library (CIRCL) {{CIRCL}} in 2019. CIRCL now includes pairing computations on BLS12-381 (see {{cryptographic_libraries}}).
 
-Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I-D.irtf-cfrg-bls-signature}} and utilized in several blockchain projects such as Ethereum {{Ethereum}}, Algorand {{Algorand}}, Chia Network {{Chia}}, and DFINITY {{DFINITY}}. The aggregation functionality of BLS signatures is effective for their applications of decentralization and scalability.
+Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I-D.irtf-cfrg-bls-signature}} and utilized in several blockchain projects such as Ethereum {{Ethereum}}, Chia Network {{Chia}}, and DFINITY {{DFINITY}}. The aggregation functionality of BLS signatures is effective for their applications of decentralization and scalability.
 
 ## Motivation and Contribution  {#goal}
 
@@ -1437,15 +1437,6 @@ Tsunekazu Saito was a co-author of this document from its first version through 
               <organization />
             </author>
             <date />
-          </front>
-        </reference>
-        <reference anchor="Algorand" target="https://medium.com/algorand/digital-signatures-for-blockchains-5820e15fbe95">
-          <front>
-            <title>Pixel-signatures: Efficient and Secure Digital Signatures for Proof-of-Stake Blockchains</title>
-            <author initials="S." surname="Gorbunov">
-              <organization />
-            </author>
-            <date year="2019" month="March" day="7" />
           </front>
         </reference>
         <reference anchor="Chia" target="https://github.com/Chia-Network/bls-signatures">
