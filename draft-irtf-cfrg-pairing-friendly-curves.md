@@ -37,7 +37,7 @@ Pairing-based cryptography, a subfield of elliptic curve cryptography, has recei
 
 # Introduction  {#introduction}
 
-## Pairing-based Cryptography  {#pairing-based-cryptography}
+## Pairing-Based Cryptography  {#pairing-based-cryptography}
 
 Elliptic curve cryptography is an important area in currently deployed cryptography. The cryptographic algorithms based on elliptic curve cryptography, such as the Elliptic Curve Digital Signature Algorithm (ECDSA), are widely used in many applications.
 
@@ -45,7 +45,7 @@ Pairing-based cryptography, a subfield of elliptic curve cryptography, has attra
 
 As the importance of pairings grows, elliptic curves where pairings are efficiently computable are studied and the special curves called pairing-friendly curves are proposed.
 
-## Applications of Pairing-based Cryptography  {#applications-of-pairing-based-cryptography}
+## Applications of Pairing-Based Cryptography  {#applications-of-pairing-based-cryptography}
 
 Several applications using pairing-based cryptography have already been standardized and deployed. We list here some examples of applications available in the real world.
 
@@ -246,7 +246,7 @@ Within this policy, when "widely used" does not by itself distinguish between ca
 
 As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
 
-## Adoption Status of Pairing-friendly Curves  {#impl}
+## Adoption Status of Pairing-Friendly Curves  {#impl}
 
 We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications. A comprehensive curve-by-curve comparison, including proposed alternatives that were not selected, is maintained at [https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html](https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html).
 
