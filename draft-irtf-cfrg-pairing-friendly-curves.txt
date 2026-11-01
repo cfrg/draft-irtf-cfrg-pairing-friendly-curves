@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 1 May 2027                                             R. Wahby
+Expires: 5 May 2027                                             R. Wahby
                                               Carnegie Mellon University
-                                                         28 October 2026
+                                                         1 November 2026
 
 
                         Pairing-Friendly Curves
@@ -65,7 +65,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 May 2027.
+   This Internet-Draft will expire on 5 May 2027.
 
 Copyright Notice
 
@@ -81,8 +81,8 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-     1.1.  Pairing-based Cryptography
-     1.2.  Applications of Pairing-based Cryptography
+     1.1.  Pairing-Based Cryptography
+     1.2.  Applications of Pairing-Based Cryptography
      1.3.  Motivation and Contribution
      1.4.  Requirements Terminology
    2.  Preliminaries
@@ -94,7 +94,7 @@ Table of Contents
      3.1.  Evaluating the Security of Pairing-Friendly Curves
      3.2.  Impact of Recent Attacks
    4.  Selection of Pairing-Friendly Curves
-     4.1.  Adoption Status of Pairing-friendly Curves
+     4.1.  Adoption Status of Pairing-Friendly Curves
        4.1.1.  International Standards
        4.1.2.  Cryptographic Libraries
        4.1.3.  Applications
@@ -143,7 +143,7 @@ Table of Contents
 
 1.  Introduction
 
-1.1.  Pairing-based Cryptography
+1.1.  Pairing-Based Cryptography
 
    Elliptic curve cryptography is an important area in currently
    deployed cryptography.  The cryptographic algorithms based on
@@ -163,7 +163,7 @@ Table of Contents
    are efficiently computable are studied and the special curves called
    pairing-friendly curves are proposed.
 
-1.2.  Applications of Pairing-based Cryptography
+1.2.  Applications of Pairing-Based Cryptography
 
    Several applications using pairing-based cryptography have already
    been standardized and deployed.  We list here some examples of
@@ -223,7 +223,8 @@ Table of Contents
 
    At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field
    sieve (NFS) algorithm for the discrete logarithm problem in a finite
-   field GF(p^k) [KB16].  The attack improves the polynomial selection
+   field GF(p^k) [KB16], where p is a prime and k is the embedding
+   degree (Section 2.2).  The attack improves the polynomial selection
    that is the first step in the number field sieve algorithm for
    discrete logarithms in GF(p^k).  The idea is applicable when the
    embedding degree k is a composite that satisfies k = i * j with
@@ -262,7 +263,9 @@ Table of Contents
    of embedding degree 12 and the BN curve with the 462-bit
    characteristic for the 128-bit security level, and the BLS curves of
    embedding degree 48 with the 581-bit characteristic for the 256-bit
-   security level.  This memo shows their specific test vectors.
+   security level.  This memo shows their specific test vectors.  On the
+   other hand, we do not show the parameters for 192-bit security here
+   because there are no curves that match our selection policy.
 
    This memo also specifies how the points and scalars that protocols
    exchange are serialized and deserialized.  That format does not
@@ -607,7 +610,7 @@ Table of Contents
    192-bit security here because there are no curves that match our
    selection policy.
 
-4.1.  Adoption Status of Pairing-friendly Curves
+4.1.  Adoption Status of Pairing-Friendly Curves
 
    We show the pairing-friendly curves that have been selected by
    existing standards, cryptographic libraries, and applications.  A
@@ -1867,9 +1870,9 @@ Table of Contents
    that work.  The authors would like to thank a lot of authors
    including Akihiro Kato for their significant contribution to early
    versions of this memo.  The authors would also like to acknowledge
-   Taechan Kim, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe
-   Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene
-   Struik, and Diego F.  Aranha for their valuable comments.  The
+   Taechan Kim, Hoeteck Wee, Sergey Gorbunov, Michael Scott,
+   Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz,
+   Rene Struik, and Diego F. Aranha for their valuable comments.  The
    authors would further like to thank Thomas Bellebaum, Frank Denis,
    Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed
    reviews of recent revisions, which shaped Section 5 in particular.
@@ -2181,9 +2184,9 @@ Table of Contents
               Looker, T., Kalos, V., Whitehead, A., Lodder, M., and G.
               M. Bernstein, "The BBS Signature Scheme", Work in
               Progress, Internet-Draft, draft-irtf-cfrg-bbs-signatures-
-              13, 13 October 2026,
+              14, 29 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
-              bbs-signatures-13>.
+              bbs-signatures-14>.
 
    [I-D.irtf-cfrg-bls-signature]
               Boneh, D., Bradley, J., Gorbunov, S., Wahby, R. S., Wee,
