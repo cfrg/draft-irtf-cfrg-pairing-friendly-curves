@@ -1402,7 +1402,7 @@ Tsunekazu Saito was a co-author of this document from its first version through
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8032.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9591.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9380.xml" />
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-13.xml" />
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-14.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-cose-bls-key-representations-08.xml" />
 
         <reference anchor="AR14">
