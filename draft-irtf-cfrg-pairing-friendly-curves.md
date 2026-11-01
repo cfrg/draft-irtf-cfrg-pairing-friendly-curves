@@ -37,7 +37,7 @@ Pairing-based cryptography, a subfield of elliptic curve cryptography, has recei
 
 # Introduction  {#introduction}
 
-## Pairing-based Cryptography  {#pairing-based-cryptography}
+## Pairing-Based Cryptography  {#pairing-based-cryptography}
 
 Elliptic curve cryptography is an important area in currently deployed cryptography. The cryptographic algorithms based on elliptic curve cryptography, such as the Elliptic Curve Digital Signature Algorithm (ECDSA), are widely used in many applications.
 
@@ -45,7 +45,7 @@ Pairing-based cryptography, a subfield of elliptic curve cryptography, has attra
 
 As the importance of pairings grows, elliptic curves where pairings are efficiently computable are studied and the special curves called pairing-friendly curves are proposed.
 
-## Applications of Pairing-based Cryptography  {#applications-of-pairing-based-cryptography}
+## Applications of Pairing-Based Cryptography  {#applications-of-pairing-based-cryptography}
 
 Several applications using pairing-based cryptography have already been standardized and deployed. We list here some examples of applications available in the real world.
 
@@ -67,13 +67,13 @@ Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I
 
 ## Motivation and Contribution  {#goal}
 
-At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) {{KB16}}. The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j > 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) {{BN05}} and Barreto-Lynn-Scott curves (BLS curves) {{BLS02}} are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to {{KB16}} for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, the security level of BN254 is estimated at approximately 100 bits due to the effect of the attack {{BD18}}, where the security levels described in this memo correspond to the security strength of NIST recommendation {{SP800-57}}.
+At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) {{KB16}}, where p is a prime and k is the embedding degree ({{pairing}}). The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j > 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) {{BN05}} and Barreto-Lynn-Scott curves (BLS curves) {{BLS02}} are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to {{KB16}} for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, the security level of BN254 is estimated at approximately 100 bits due to the effect of the attack {{BD18}}, where the security levels described in this memo correspond to the security strength of NIST recommendation {{SP800-57}}.
 
 To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack {{BD18}} {{BLS12-381}}.
 
 In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in international standards, libraries and applications, and consider them at the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", pairing-friendly curves corresponding to each security level are selected in accordance with the security evaluations summarized in {{impact}} and {{secure_params}}.
 
-As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. This memo shows their specific test vectors.
+As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. This memo shows their specific test vectors. On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
 
 This memo also specifies how the points and scalars that protocols exchange are serialized and deserialized. That format does not originate here: it comes from {{ZcashRep}} and is already relied upon by other specifications, which cite this document for it. It is restated normatively in {{point-serialization}}, together with what makes a deserialized value valid and which decisions are left to the calling protocol. Point serialization is given for BLS12-381 and BLS48-581; scalar serialization applies to all three curves.
 
@@ -246,7 +246,7 @@ Within this policy, when "widely used" does not by itself distinguish between ca
 
 As a result, we recommend the BLS curve with 381-bit characteristic of embedding degree 12 and the BN curve with the 462-bit characteristic for the 128-bit security level, and the BLS curves of embedding degree 48 with the 581-bit characteristic for the 256-bit security level. On the other hand, we do not show the parameters for 192-bit security here because there are no curves that match our selection policy.
 
-## Adoption Status of Pairing-friendly Curves  {#impl}
+## Adoption Status of Pairing-Friendly Curves  {#impl}
 
 We show the pairing-friendly curves that have been selected by existing standards, cryptographic libraries, and applications. A comprehensive curve-by-curve comparison, including proposed alternatives that were not selected, is maintained at [https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html](https://cfrg.github.io/draft-irtf-cfrg-pairing-friendly-curves/adoption-status.html).
 
@@ -964,7 +964,7 @@ This document has no IANA actions.
 
 # Acknowledgements  {#acknowledgements}
 
-Tsunekazu Saito was a co-author of this document from its first version through revision 11, and much of what it contains comes from that work. The authors would like to thank a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Taechan Kim, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments. The authors would further like to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed reviews of recent revisions, which shaped Section 5 in particular.
+Tsunekazu Saito was a co-author of this document from its first version through revision 11, and much of what it contains comes from that work. The authors would like to thank a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Taechan Kim, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments. The authors would further like to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed reviews of recent revisions, which shaped Section 5 in particular.
 
 
 --- back
@@ -1402,7 +1402,7 @@ Tsunekazu Saito was a co-author of this document from its first version through 
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8032.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9591.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.9380.xml" />
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-13.xml" />
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-irtf-cfrg-bbs-signatures-14.xml" />
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-cose-bls-key-representations-08.xml" />
 
         <reference anchor="AR14">
