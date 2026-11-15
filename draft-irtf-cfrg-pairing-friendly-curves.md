@@ -2177,7 +2177,9 @@ Tsunekazu Saito was a co-author of this document from its first version through
             </author>
             <date year="2011" />
           </front>
-          <seriesInfo name="EUROCRYPT" value="2011" />
+          <seriesInfo name="DOI" value="10.1007/978-3-642-20465-4_5" />
+          <seriesInfo name="Advances in Cryptology - EUROCRYPT 2011" value="pp. 48-68" />
+          <seriesInfo name="Cryptology ePrint Archive" value="Report 2010/526" />
         </reference>
 
         <reference anchor="FCKR11" target="https://doi.org/10.1007/978-3-642-28496-0_25">
