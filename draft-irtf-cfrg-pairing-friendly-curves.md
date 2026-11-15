@@ -1762,7 +1762,9 @@ Tsunekazu Saito was a co-author of this document from its first version through
 
         <reference anchor="SG18" target="https://eprint.iacr.org/2018/193.pdf">
           <front>
-            <title>A New Family of Pairing-Friendly elliptic curves</title>
+            <title>A New Family of Pairing-Friendly Elliptic Curves</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-030-05153-2_2" />
+            <seriesInfo name="Arithmetic of Finite Fields - WAIFI 2018" value="pp. 43-57" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2018/193" />
             <author initials="M." surname="Scott">
               <organization />
