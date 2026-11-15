@@ -31,7 +31,7 @@ author:
 
 --- abstract
 
-Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairings are special maps defined using elliptic curves and they can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve algorithm named exTNFS for the discrete logarithm problem in a finite field. Several types of pairing-friendly curves such as Barreto-Naehrig curves are affected by the attack. In particular, a Barreto-Naehrig curve with a 254-bit characteristic was adopted by a lot of cryptographic libraries as a parameter of 128-bit security; however, its security level is estimated at approximately 100 bits due to the effect of the attack. In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in standards, libraries and applications, and consider them at the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", we select the recommended pairing-friendly curves considering exTNFS. This memo also specifies the serialization and deserialization of the points and scalars that protocols exchange, restating a format that is already in widespread use, and states which of the remaining decisions belong to the calling protocol.
+Pairing-based cryptography, a subfield of elliptic curve cryptography, has received attention due to its flexible and practical functionality. Pairings are special maps defined using elliptic curves and they can be applied to construct several cryptographic protocols such as identity-based encryption, attribute-based encryption, and so on. At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve algorithm named exTNFS for the discrete logarithm problem in a finite field extension. Several types of pairing-friendly curves such as Barreto-Naehrig curves are affected by the attack. In particular, a Barreto-Naehrig curve with a 254-bit characteristic was adopted by a lot of cryptographic libraries as a parameter of 128-bit security; however, its security level is estimated at approximately 100 bits due to the effect of the attack. In this memo, we list the security levels of certain pairing-friendly curves, and motivate our choices of curves. First, we summarize the adoption status of pairing-friendly curves in standards, libraries and applications, and consider them at the 128-bit, 192-bit, and 256-bit security levels. Then, from the viewpoints of "security" and "widely used", we select the recommended pairing-friendly curves considering exTNFS. This memo also specifies the serialization and deserialization of the points and scalars that protocols exchange, restating a format that is already in widespread use, and states which of the remaining decisions belong to the calling protocol.
 
 --- middle
 
@@ -67,7 +67,7 @@ Currently, Boneh-Lynn-Shacham (BLS) signature schemes are being standardized {{I
 
 ## Motivation and Contribution  {#goal}
 
-At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) {{KB16}}, where p is a prime and k is the embedding degree ({{pairing}}). The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j > 1. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) {{BN05}} and Barreto-Lynn-Scott curves (BLS curves) {{BLS02}} are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to {{KB16}} for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, the security level of BN254 is estimated at approximately 100 bits due to the effect of the attack {{BD18}}, where the security levels described in this memo correspond to the security strength of NIST recommendation {{SP800-57}}.
+At CRYPTO 2016, Kim and Barbulescu proposed an efficient number field sieve (NFS) algorithm for the discrete logarithm problem in a finite field GF(p^k) {{KB16}}, where p is a prime and k is the embedding degree ({{pairing}}). The attack improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that satisfies k = i * j with gcd(i, j) = 1 and i, j > 1. Kim and Jeong later extended it to any composite k {{KJ17}}. The basic idea is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving the discrete logarithm problem is using subfield calculation. Several types of pairing-friendly curves such as Barreto-Naehrig curves (BN curves) {{BN05}} and Barreto-Lynn-Scott curves (BLS curves) {{BLS02}} are affected by the attack, since a pairing-friendly curve suitable for cryptographic applications requires that the discrete logarithm problem is sufficiently difficult. Please refer to {{KB16}} for detailed ideas and calculation algorithms of the attack. In particular, BN254, which is a BN curve with a 254-bit characteristic effective for pairing calculations, was adopted by a lot of cryptographic libraries as a parameter of the 128-bit security level; however, the security level of BN254 is estimated at approximately 100 bits due to the effect of the attack {{BD18}}, where the security levels described in this memo correspond to the security strength of NIST recommendation {{SP800-57}}.
 
 To resolve this effect immediately, several research groups and implementers re-evaluated the security of pairing-friendly curves and they respectively proposed various curves that are secure against the attack {{BD18}} {{BLS12-381}}.
 
@@ -229,7 +229,7 @@ The security levels of pairing-friendly curves are estimated by the computationa
 
 ## Impact of Recent Attacks  {#impact}
 
-In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP {{KB16}}. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that can be written as k = i * j with gcd(i, j) = 1 and i, j > 1. Any k divisible by 6 meets this condition, taking i to be the largest power of 2 dividing k and j to be k / i; {{KB16}} accordingly gives k = 6 as the first case it treats. BN curves and BLS curves, whose embedding degree is divisible by 6, are therefore affected by the exTNFS. The basic idea of the exTNFS is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving FFDLP is using subfield calculation. Please refer to {{KB16}} for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of certain pairing-friendly curves asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits {{BD18}}. Here, the security levels described in this memo correspond to the security strength of NIST recommendation {{SP800-57}}.
+In 2016, Kim and Barbulescu proposed a new variant of the NFS algorithms, the extended tower number field sieve (exTNFS), which drastically reduces the complexity of solving FFDLP {{KB16}}. The exTNFS improves the polynomial selection that is the first step in the number field sieve algorithm for discrete logarithms in GF(p^k). The idea is applicable when the embedding degree k is a composite that can be written as k = i * j with gcd(i, j) = 1 and i, j > 1. Any k divisible by 6 meets this condition, taking i to be the largest power of 2 dividing k and j to be k / i; {{KB16}} accordingly gives k = 6 as the first case it treats. BN curves and BLS curves, whose embedding degree is divisible by 6, are therefore affected by the exTNFS. Kim and Jeong later extended the exTNFS to any composite embedding degree, without the condition gcd(i, j) = 1 {{KJ17}}. The basic idea of the exTNFS is based on the equality GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the amount of cost for solving FFDLP is using subfield calculation. Please refer to {{KB16}} for detailed ideas and calculation algorithms of exTNFS. Due to exTNFS, the security levels of pairing-friendly curves of composite embedding degree asymptotically dropped down. For instance, Barbulescu and Duquesne estimated that the security of the BN curves, which had been believed to provide 128-bit security (BN256, for example) was reduced to approximately 100 bits {{BD18}}. Here, the security levels described in this memo correspond to the security strength of NIST recommendation {{SP800-57}}.
 
 There has since been research into the minimum bit length of the parameters of pairing-friendly curves for each security level when applying exTNFS as an attacking method for FFDLP. For 128-bit security, Barbulescu and Duquesne estimated the minimum bit length of p of BN curves and BLS12 curves after exTNFS as 461 bits {{BD18}}. For 256-bit security, Kiyomura et al. estimated the minimum bit length of p^k of BLS48 curves as 27,410 bits, which indicated 572 bits of p {{KIK17}}.
 
@@ -891,7 +891,7 @@ For every curve in this document, r^2 divides neither the order of E(GF(p)) nor 
 - subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity on E, and FALSE otherwise.
 - subgroup_check_G2(Q) returns TRUE if [r]Q is the point at infinity on E', and FALSE otherwise.
 
-Faster tests are known for particular curves. Any method that decides the same predicate may be used.
+Faster tests are known for particular curves (see, for example, {{DLZZ23}}). Any method that decides the same predicate may be used.
 
 These checks apply to all three curves in this document. Note that for BN462 the cofactor h of E(GF(p)) is 1, so every point of E(GF(p)) is an element of G_1 and subgroup_check_G1 always returns TRUE; the cofactor h' of E'(GF(p^2)) is not 1, so subgroup_check_G2 remains meaningful.
 
@@ -964,7 +964,7 @@ This document has no IANA actions.
 
 # Acknowledgements  {#acknowledgements}
 
-Tsunekazu Saito was a co-author of this document from its first version through revision 11, and much of what it contains comes from that work. The authors would like to thank a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Taechan Kim, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments. The authors would further like to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed reviews of recent revisions, which shaped Section 5 in particular.
+Tsunekazu Saito was a co-author of this document from its first version through revision 11, and much of what it contains comes from that work. The authors would like to thank a lot of authors including Akihiro Kato for their significant contribution to early versions of this memo. The authors would also like to acknowledge Taechan Kim, Hoeteck Wee, Sergey Gorbunov, Michael Scott, Chloe Martindale as an Expert Reviewer, Watson Ladd, Armando Faz, Rene Struik, and Diego F. Aranha for their valuable comments. The authors would further like to thank Thomas Bellebaum, Frank Denis, Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed reviews of recent revisions, which shaped Section 5 in particular. The authors are also grateful to Aurore Guillevic for a careful review of revision 14.
 
 
 --- back
@@ -1042,6 +1042,21 @@ Tsunekazu Saito was a co-author of this document from its first version through
               <organization />
             </author>
             <date year="2016" />
+          </front>
+        </reference>
+        <reference anchor="KJ17" target="https://eprint.iacr.org/2016/526">
+          <front>
+            <title>Extended Tower Number Field Sieve with Application to Finite Fields of Arbitrary Composite Extension Degree</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-662-54365-8_16" />
+            <seriesInfo name="Public-Key Cryptography - PKC 2017" value="pp. 388-408" />
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2016/526" />
+            <author initials="T." surname="Kim" fullname="Taechan Kim">
+              <organization />
+            </author>
+            <author initials="J." surname="Jeong" fullname="Jinhyuck Jeong">
+              <organization />
+            </author>
+            <date year="2017" />
           </front>
         </reference>
         <reference anchor="BD18">
@@ -1747,7 +1762,9 @@ Tsunekazu Saito was a co-author of this document from its first version through
 
         <reference anchor="SG18" target="https://eprint.iacr.org/2018/193.pdf">
           <front>
-            <title>A New Family of Pairing-Friendly elliptic curves</title>
+            <title>A New Family of Pairing-Friendly Elliptic Curves</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-030-05153-2_2" />
+            <seriesInfo name="Arithmetic of Finite Fields - WAIFI 2018" value="pp. 43-57" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2018/193" />
             <author initials="M." surname="Scott">
               <organization />
@@ -1759,9 +1776,32 @@ Tsunekazu Saito was a co-author of this document from its first version through
           </front>
         </reference>
 
+        <reference anchor="DLZZ23" target="https://eprint.iacr.org/2022/348">
+          <front>
+            <title>Fast Subgroup Membership Testings for G1, G2 and GT on Pairing-Friendly Curves</title>
+            <seriesInfo name="DOI" value="10.1007/s10623-023-01223-7" />
+            <seriesInfo name="Designs, Codes and Cryptography" value="vol. 91, pp. 3141-3166" />
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2022/348" />
+            <author initials="Y." surname="Dai" fullname="Yu Dai">
+              <organization />
+            </author>
+            <author initials="K." surname="Lin" fullname="Kaizhan Lin">
+              <organization />
+            </author>
+            <author initials="C.-A." surname="Zhao" fullname="Chang-An Zhao">
+              <organization />
+            </author>
+            <author initials="Z." surname="Zhou" fullname="Zijian Zhou">
+              <organization />
+            </author>
+            <date year="2023" />
+          </front>
+        </reference>
         <reference anchor="BCM15" target="https://eprint.iacr.org/2015/247.pdf">
           <front>
-            <title>Subgroup security in pairing-based cryptography</title>
+            <title>Subgroup Security in Pairing-Based Cryptography</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-319-22174-8_14" />
+            <seriesInfo name="Progress in Cryptology - LATINCRYPT 2015" value="pp. 245-265" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2015/247" />
             <author initials="P. S. L. M." surname="Barreto">
               <organization />
@@ -1888,6 +1928,8 @@ Tsunekazu Saito was a co-author of this document from its first version through
         <reference anchor="CLN09" target="https://eprint.iacr.org/2009/615.pdf">
           <front>
             <title>Faster Pairing Computations on Curves with High-Degree Twists</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-642-13013-7_14" />
+            <seriesInfo name="Public Key Cryptography - PKC 2010" value="pp. 224-242" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2009/615" />
             <author initials="C." surname="Costello">
               <organization />
@@ -1898,7 +1940,7 @@ Tsunekazu Saito was a co-author of this document from its first version through
             <author initials="M." surname="Naehrig">
               <organization />
             </author>
-            <date year="2009" />
+            <date year="2010" />
           </front>
         </reference>
 
@@ -2135,7 +2177,9 @@ Tsunekazu Saito was a co-author of this document from its first version through
             </author>
             <date year="2011" />
           </front>
-          <seriesInfo name="EUROCRYPT" value="2011" />
+          <seriesInfo name="DOI" value="10.1007/978-3-642-20465-4_5" />
+          <seriesInfo name="Advances in Cryptology - EUROCRYPT 2011" value="pp. 48-68" />
+          <seriesInfo name="Cryptology ePrint Archive" value="Report 2010/526" />
         </reference>
 
         <reference anchor="FCKR11" target="https://doi.org/10.1007/978-3-642-28496-0_25">
