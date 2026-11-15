@@ -891,7 +891,7 @@ For every curve in this document, r^2 divides neither the order of E(GF(p)) nor 
 - subgroup_check_G1(P) returns TRUE if [r]P is the point at infinity on E, and FALSE otherwise.
 - subgroup_check_G2(Q) returns TRUE if [r]Q is the point at infinity on E', and FALSE otherwise.
 
-Faster tests are known for particular curves. Any method that decides the same predicate may be used.
+Faster tests are known for particular curves (see, for example, {{DLZZ23}}). Any method that decides the same predicate may be used.
 
 These checks apply to all three curves in this document. Note that for BN462 the cofactor h of E(GF(p)) is 1, so every point of E(GF(p)) is an element of G_1 and subgroup_check_G1 always returns TRUE; the cofactor h' of E'(GF(p^2)) is not 1, so subgroup_check_G2 remains meaningful.
 
@@ -1774,6 +1774,27 @@ Tsunekazu Saito was a co-author of this document from its first version through
           </front>
         </reference>
 
+        <reference anchor="DLZZ23" target="https://eprint.iacr.org/2022/348">
+          <front>
+            <title>Fast Subgroup Membership Testings for G1, G2 and GT on Pairing-Friendly Curves</title>
+            <seriesInfo name="DOI" value="10.1007/s10623-023-01223-7" />
+            <seriesInfo name="Designs, Codes and Cryptography" value="vol. 91, pp. 3141-3166" />
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2022/348" />
+            <author initials="Y." surname="Dai" fullname="Yu Dai">
+              <organization />
+            </author>
+            <author initials="K." surname="Lin" fullname="Kaizhan Lin">
+              <organization />
+            </author>
+            <author initials="C.-A." surname="Zhao" fullname="Chang-An Zhao">
+              <organization />
+            </author>
+            <author initials="Z." surname="Zhou" fullname="Zijian Zhou">
+              <organization />
+            </author>
+            <date year="2023" />
+          </front>
+        </reference>
         <reference anchor="BCM15" target="https://eprint.iacr.org/2015/247.pdf">
           <front>
             <title>Subgroup security in pairing-based cryptography</title>
