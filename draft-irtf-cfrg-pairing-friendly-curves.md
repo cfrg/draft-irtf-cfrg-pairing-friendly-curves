@@ -1797,7 +1797,9 @@ Tsunekazu Saito was a co-author of this document from its first version through
         </reference>
         <reference anchor="BCM15" target="https://eprint.iacr.org/2015/247.pdf">
           <front>
-            <title>Subgroup security in pairing-based cryptography</title>
+            <title>Subgroup Security in Pairing-Based Cryptography</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-319-22174-8_14" />
+            <seriesInfo name="Progress in Cryptology - LATINCRYPT 2015" value="pp. 245-265" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2015/247" />
             <author initials="P. S. L. M." surname="Barreto">
               <organization />
@@ -1924,6 +1926,8 @@ Tsunekazu Saito was a co-author of this document from its first version through
         <reference anchor="CLN09" target="https://eprint.iacr.org/2009/615.pdf">
           <front>
             <title>Faster Pairing Computations on Curves with High-Degree Twists</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-642-13013-7_14" />
+            <seriesInfo name="Public Key Cryptography - PKC 2010" value="pp. 224-242" />
             <seriesInfo name="Cryptology ePrint Archive" value="Report 2009/615" />
             <author initials="C." surname="Costello">
               <organization />
@@ -1934,7 +1938,7 @@ Tsunekazu Saito was a co-author of this document from its first version through
             <author initials="M." surname="Naehrig">
               <organization />
             </author>
-            <date year="2009" />
+            <date year="2010" />
           </front>
         </reference>
 
