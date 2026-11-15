@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 5 May 2027                                             R. Wahby
+Expires: 19 May 2027                                            R. Wahby
                                               Carnegie Mellon University
-                                                         1 November 2026
+                                                        15 November 2026
 
 
                         Pairing-Friendly Curves
@@ -22,22 +22,23 @@ Abstract
    cryptographic protocols such as identity-based encryption, attribute-
    based encryption, and so on.  At CRYPTO 2016, Kim and Barbulescu
    proposed an efficient number field sieve algorithm named exTNFS for
-   the discrete logarithm problem in a finite field.  Several types of
-   pairing-friendly curves such as Barreto-Naehrig curves are affected
-   by the attack.  In particular, a Barreto-Naehrig curve with a 254-bit
-   characteristic was adopted by a lot of cryptographic libraries as a
-   parameter of 128-bit security; however, its security level is
-   estimated at approximately 100 bits due to the effect of the attack.
-   In this memo, we list the security levels of certain pairing-friendly
-   curves, and motivate our choices of curves.  First, we summarize the
-   adoption status of pairing-friendly curves in standards, libraries
-   and applications, and consider them at the 128-bit, 192-bit, and
-   256-bit security levels.  Then, from the viewpoints of "security" and
-   "widely used", we select the recommended pairing-friendly curves
-   considering exTNFS.  This memo also specifies the serialization and
-   deserialization of the points and scalars that protocols exchange,
-   restating a format that is already in widespread use, and states
-   which of the remaining decisions belong to the calling protocol.
+   the discrete logarithm problem in a finite field extension.  Several
+   types of pairing-friendly curves such as Barreto-Naehrig curves are
+   affected by the attack.  In particular, a Barreto-Naehrig curve with
+   a 254-bit characteristic was adopted by a lot of cryptographic
+   libraries as a parameter of 128-bit security; however, its security
+   level is estimated at approximately 100 bits due to the effect of the
+   attack.  In this memo, we list the security levels of certain
+   pairing-friendly curves, and motivate our choices of curves.  First,
+   we summarize the adoption status of pairing-friendly curves in
+   standards, libraries and applications, and consider them at the
+   128-bit, 192-bit, and 256-bit security levels.  Then, from the
+   viewpoints of "security" and "widely used", we select the recommended
+   pairing-friendly curves considering exTNFS.  This memo also specifies
+   the serialization and deserialization of the points and scalars that
+   protocols exchange, restating a format that is already in widespread
+   use, and states which of the remaining decisions belong to the
+   calling protocol.
 
 Discussion Venues
 
@@ -65,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 May 2027.
+   This Internet-Draft will expire on 19 May 2027.
 
 Copyright Notice
 
@@ -228,11 +229,12 @@ Table of Contents
    that is the first step in the number field sieve algorithm for
    discrete logarithms in GF(p^k).  The idea is applicable when the
    embedding degree k is a composite that satisfies k = i * j with
-   gcd(i, j) = 1 and i, j > 1.  The basic idea is based on the equality
-   GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the
-   amount of cost for solving the discrete logarithm problem is using
-   subfield calculation.  Several types of pairing-friendly curves such
-   as Barreto-Naehrig curves (BN curves) [BN05] and Barreto-Lynn-Scott
+   gcd(i, j) = 1 and i, j > 1.  Kim and Jeong later extended it to any
+   composite k [KJ17].  The basic idea is based on the equality GF(p^k)
+   = GF((p^i)^j) and one of the improvements for reducing the amount of
+   cost for solving the discrete logarithm problem is using subfield
+   calculation.  Several types of pairing-friendly curves such as
+   Barreto-Naehrig curves (BN curves) [BN05] and Barreto-Lynn-Scott
    curves (BLS curves) [BLS02] are affected by the attack, since a
    pairing-friendly curve suitable for cryptographic applications
    requires that the discrete logarithm problem is sufficiently
@@ -547,17 +549,19 @@ Table of Contents
    power of 2 dividing k and j to be k / i; [KB16] accordingly gives
    k = 6 as the first case it treats.  BN curves and BLS curves, whose
    embedding degree is divisible by 6, are therefore affected by the
-   exTNFS.  The basic idea of the exTNFS is based on the equality
-   GF(p^k) = GF((p^i)^j) and one of the improvements for reducing the
-   amount of cost for solving FFDLP is using subfield calculation.
-   Please refer to [KB16] for detailed ideas and calculation algorithms
-   of exTNFS.  Due to exTNFS, the security levels of certain pairing-
-   friendly curves asymptotically dropped down.  For instance,
-   Barbulescu and Duquesne estimated that the security of the BN curves,
-   which had been believed to provide 128-bit security (BN256, for
-   example) was reduced to approximately 100 bits [BD18].  Here, the
-   security levels described in this memo correspond to the security
-   strength of NIST recommendation [SP800-57].
+   exTNFS.  Kim and Jeong later extended the exTNFS to any composite
+   embedding degree, without the condition gcd(i, j) = 1 [KJ17].  The
+   basic idea of the exTNFS is based on the equality GF(p^k) =
+   GF((p^i)^j) and one of the improvements for reducing the amount of
+   cost for solving FFDLP is using subfield calculation.  Please refer
+   to [KB16] for detailed ideas and calculation algorithms of exTNFS.
+   Due to exTNFS, the security levels of pairing-friendly curves of
+   composite embedding degree asymptotically dropped down.  For
+   instance, Barbulescu and Duquesne estimated that the security of the
+   BN curves, which had been believed to provide 128-bit security
+   (BN256, for example) was reduced to approximately 100 bits [BD18].
+   Here, the security levels described in this memo correspond to the
+   security strength of NIST recommendation [SP800-57].
 
    There has since been research into the minimum bit length of the
    parameters of pairing-friendly curves for each security level when
@@ -1619,8 +1623,8 @@ Table of Contents
    *  subgroup_check_G2(Q) returns TRUE if [r]Q is the point at infinity
       on E', and FALSE otherwise.
 
-   Faster tests are known for particular curves.  Any method that
-   decides the same predicate may be used.
+   Faster tests are known for particular curves (see, for example,
+   [DLZZ23]).  Any method that decides the same predicate may be used.
 
    These checks apply to all three curves in this document.  Note that
    for BN462 the cofactor h of E(GF(p)) is 1, so every point of E(GF(p))
@@ -1876,6 +1880,8 @@ Table of Contents
    authors would further like to thank Thomas Bellebaum, Frank Denis,
    Emil Lundberg, Michele Orrù, and Mamy Ratsimbazafy for their detailed
    reviews of recent revisions, which shaped Section 5 in particular.
+   The authors are also grateful to Aurore Guillevic for a careful
+   review of revision 14.
 
 9.  References
 
@@ -1921,6 +1927,13 @@ Table of Contents
               Applied Cryptography and Network Security pp. 59-79, 2017,
               <https://doi.org/10.1007/978-3-319-61204-1_4>.
 
+   [KJ17]     Kim, T. and J. Jeong, "Extended Tower Number Field Sieve
+              with Application to Finite Fields of Arbitrary Composite
+              Extension Degree", DOI 10.1007/978-3-662-54365-8_16,
+              Public-Key Cryptography - PKC 2017 pp. 388-408, Cryptology
+              ePrint Archive Report 2016/526, 2017,
+              <https://eprint.iacr.org/2016/526>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1960,7 +1973,9 @@ Table of Contents
 
    [AKLGL11]  Aranha, D.F., Karabina, K., Longa, P., Gebotys, C.H., and
               J. López, "Faster Explicit Formulas for Computing Pairings
-              over Ordinary Curves", EUROCRYPT 2011, 2011,
+              over Ordinary Curves", DOI 10.1007/978-3-642-20465-4_5,
+              Advances in Cryptology - EUROCRYPT 2011 pp. 48-68,
+              Cryptology ePrint Archive Report 2010/526, 2011,
               <https://eprint.iacr.org/2010/526>.
 
    [AMCL]     The Apache Software Foundation, "The Apache Milagro
@@ -1994,8 +2009,10 @@ Table of Contents
               <https://doi.org/10.1109/SP40000.2020.00050>.
 
    [BCM15]    Barreto, P. S. L. M., Costello, C., Misoczki, R., Naehrig,
-              M., Pereira, G. C. C. F., and G. Zanon, "Subgroup security
-              in pairing-based cryptography", Cryptology ePrint
+              M., Pereira, G. C. C. F., and G. Zanon, "Subgroup Security
+              in Pairing-Based Cryptography",
+              DOI 10.1007/978-3-319-22174-8_14, Progress in Cryptology -
+              LATINCRYPT 2015 pp. 245-265, Cryptology ePrint
               Archive Report 2015/247, 2015,
               <https://eprint.iacr.org/2015/247.pdf>.
 
@@ -2055,8 +2072,9 @@ Table of Contents
 
    [CLN09]    Costello, C., Lange, T., and M. Naehrig, "Faster Pairing
               Computations on Curves with High-Degree Twists",
-              Cryptology ePrint Archive Report 2009/615, 2009,
-              <https://eprint.iacr.org/2009/615.pdf>.
+              DOI 10.1007/978-3-642-13013-7_14, Public Key Cryptography
+              - PKC 2010 pp. 224-242, Cryptology ePrint Archive Report
+              2009/615, 2010, <https://eprint.iacr.org/2009/615.pdf>.
 
    [Cloudflare]
               Sullivan, N., "Geo Key Manager: How It Works",
@@ -2073,6 +2091,13 @@ Table of Contents
               <https://web.archive.org/web/20250307232101/
               https://dfinity.org/pdf-viewer/library/dfinity-
               consensus.pdf>.
+
+   [DLZZ23]   Dai, Y., Lin, K., Zhao, C.-A., and Z. Zhou, "Fast Subgroup
+              Membership Testings for G1, G2 and GT on Pairing-Friendly
+              Curves", DOI 10.1007/s10623-023-01223-7, Designs, Codes
+              and Cryptography vol. 91, pp. 3141-3166, Cryptology ePrint
+              Archive Report 2022/348, 2023,
+              <https://eprint.iacr.org/2022/348>.
 
    [DSD07]    Devegili, A. J., Scott, M., and R. Dahab, "Implementing
               Cryptographic Pairings over Barreto-Naehrig Curves",
@@ -2349,7 +2374,9 @@ Table of Contents
               <https://www.secg.org/sec1-v2.pdf>.
 
    [SG18]     Scott, M. and A. Guillevic, "A New Family of Pairing-
-              Friendly elliptic curves", Cryptology ePrint
+              Friendly Elliptic Curves",
+              DOI 10.1007/978-3-030-05153-2_2, Arithmetic of Finite
+              Fields - WAIFI 2018 pp. 43-57, Cryptology ePrint
               Archive Report 2018/193, 2018,
               <https://eprint.iacr.org/2018/193.pdf>.
 
