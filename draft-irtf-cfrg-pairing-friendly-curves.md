@@ -274,7 +274,7 @@ PBC is a library for pairing-based cryptography published by Stanford University
 
 {{mcl}} is a library for pairing-based cryptography that supports four BN curves and BLS12-381. These BN curves include BN254 proposed by Nogami et al. {{NASKM08}} (named BN254N), BN_SNARK1 suitable for SNARK applications {{libsnark}}, BN382M, and BN462. The suffix 'N' of BN254N and the suffix 'M' of BN382M are respectively given from the initials of the first author's name of the proposed paper and the library's name mcl. Kyushu University published a library that supports BLS48-581 {{BLS48}}. The University of Tsukuba Elliptic Curve and Pairing Library (TEPLA) {{TEPLA}} supports two BN curves, BN254N and BN254 proposed by Beuchat et al. {{BGMORT10}} (named BN254B). The suffix 'B' of BN254B is given from the initials of the first author's name of the proposed paper. Intel published a cryptographic library named Intel Integrated Performance Primitives (Intel-IPP) {{Intel-IPP}} and the library supports BN256I.
 
-{{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott et al. {{SG18}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
+{{RELIC}} uses various types of pairing-friendly curves including six BN curves (BN158, BN254N, BN256R, BN382R, BN446, and BN638), where BN256R and BN382R are RELIC specific parameters that are different from BN256I, BN256D, and BN382M. The suffix 'R' of BN256R and BN382R is given from the initials of the library's name RELIC. In addition, RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455, BLS12-638, BLS24-477, and BLS48-575 {{MAF19}}), a Cocks-Pinch curve of embedding degree 8 with 544-bit p (named CP8-544) {{GMT19}}, pairing-friendly curves constructed by Scott and Guillevic {{SG18}} based on Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p (named K54-569) {{MAF19}}, a KSS curve {{KSS08}} of embedding degree 18 with 508-bit p (named KSS18-508) {{AFKMR12}}, Optimal TNFS-secure curve {{FM19}} of embedding degree 8 with 511-bit p (OT8-511), and a supersingular curve {{S86}} with 1536-bit p (SS-1536).
 
 MIRACL Core {{MIRACL}} (the successor to the Apache Milagro Crypto Library (AMCL) {{AMCL}}) supports five BLS curves (BLS12-381, BLS12-461, BLS24-479, BLS48-556, and BLS48-581) and five BN curves (BN254N, BN254CX proposed by CertiVox, BN256I, BN512I, and BN462).
 
@@ -1044,21 +1044,6 @@ Tsunekazu Saito was a co-author of this document from its first version through
             <date year="2016" />
           </front>
         </reference>
-        <reference anchor="KJ17" target="https://eprint.iacr.org/2016/526">
-          <front>
-            <title>Extended Tower Number Field Sieve with Application to Finite Fields of Arbitrary Composite Extension Degree</title>
-            <seriesInfo name="DOI" value="10.1007/978-3-662-54365-8_16" />
-            <seriesInfo name="Public-Key Cryptography - PKC 2017" value="pp. 388-408" />
-            <seriesInfo name="Cryptology ePrint Archive" value="Report 2016/526" />
-            <author initials="T." surname="Kim" fullname="Taechan Kim">
-              <organization />
-            </author>
-            <author initials="J." surname="Jeong" fullname="Jinhyuck Jeong">
-              <organization />
-            </author>
-            <date year="2017" />
-          </front>
-        </reference>
         <reference anchor="BD18">
           <front>
             <title>Updating Key Size Estimations for Pairings</title>
@@ -1136,6 +1121,21 @@ Tsunekazu Saito was a co-author of this document from its first version through
 
       <references>
         <name>Informative References</name>
+        <reference anchor="KJ17" target="https://eprint.iacr.org/2016/526">
+          <front>
+            <title>Extended Tower Number Field Sieve with Application to Finite Fields of Arbitrary Composite Extension Degree</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-662-54365-8_16" />
+            <seriesInfo name="Public-Key Cryptography - PKC 2017" value="pp. 388-408" />
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2016/526" />
+            <author initials="T." surname="Kim" fullname="Taechan Kim">
+              <organization />
+            </author>
+            <author initials="J." surname="Jeong" fullname="Jinhyuck Jeong">
+              <organization />
+            </author>
+            <date year="2017" />
+          </front>
+        </reference>
         <reference anchor="APT26" target="https://eprint.iacr.org/2026/560">
           <front>
             <title>High-Order Galois Automorphisms for TNFS Linear Algebra</title>
