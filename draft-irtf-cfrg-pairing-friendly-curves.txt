@@ -5,9 +5,9 @@
 CFRG                                                      Y. Sakemi, Ed.
 Internet-Draft                                                  S. Kanno
 Intended status: Informational                          GMO CONNECT Inc.
-Expires: 19 May 2027                                            R. Wahby
+Expires: 20 May 2027                                            R. Wahby
                                               Carnegie Mellon University
-                                                        15 November 2026
+                                                        16 November 2026
 
 
                         Pairing-Friendly Curves
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 May 2027.
+   This Internet-Draft will expire on 20 May 2027.
 
 Copyright Notice
 
@@ -728,10 +728,10 @@ Table of Contents
    RELIC supports six BLS curves (BLS12-381, BLS12-446, BLS12-455,
    BLS12-638, BLS24-477, and BLS48-575 [MAF19]), a Cocks-Pinch curve of
    embedding degree 8 with 544-bit p (named CP8-544) [GMT19], pairing-
-   friendly curves constructed by Scott et al.  [SG18] based on Kachisa-
-   Scott-Schaefer curves with embedding degree 54 with 569-bit p (named
-   K54-569) [MAF19], a KSS curve [KSS08] of embedding degree 18 with
-   508-bit p (named KSS18-508) [AFKMR12], Optimal TNFS-secure curve
+   friendly curves constructed by Scott and Guillevic [SG18] based on
+   Kachisa-Scott-Schaefer curves with embedding degree 54 with 569-bit p
+   (named K54-569) [MAF19], a KSS curve [KSS08] of embedding degree 18
+   with 508-bit p (named KSS18-508) [AFKMR12], Optimal TNFS-secure curve
    [FM19] of embedding degree 8 with 511-bit p (OT8-511), and a
    supersingular curve [S86] with 1536-bit p (SS-1536).
 
@@ -1927,13 +1927,6 @@ Table of Contents
               Applied Cryptography and Network Security pp. 59-79, 2017,
               <https://doi.org/10.1007/978-3-319-61204-1_4>.
 
-   [KJ17]     Kim, T. and J. Jeong, "Extended Tower Number Field Sieve
-              with Application to Finite Fields of Arbitrary Composite
-              Extension Degree", DOI 10.1007/978-3-662-54365-8_16,
-              Public-Key Cryptography - PKC 2017 pp. 388-408, Cryptology
-              ePrint Archive Report 2016/526, 2017,
-              <https://eprint.iacr.org/2016/526>.
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2247,6 +2240,13 @@ Table of Contents
               Hellman", DOI 10.1007/10722028_23, Lecture Notes in
               Computer Science pp. 385-393, 2000,
               <https://doi.org/10.1007/10722028_23>.
+
+   [KJ17]     Kim, T. and J. Jeong, "Extended Tower Number Field Sieve
+              with Application to Finite Fields of Arbitrary Composite
+              Extension Degree", DOI 10.1007/978-3-662-54365-8_16,
+              Public-Key Cryptography - PKC 2017 pp. 388-408, Cryptology
+              ePrint Archive Report 2016/526, 2017,
+              <https://eprint.iacr.org/2016/526>.
 
    [KSS08]    Kachisa, E., Schaefer, E., and M. Scott, "Constructing
               Brezing-Weng Pairing-Friendly Elliptic Curves Using
