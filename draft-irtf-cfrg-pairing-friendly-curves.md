@@ -1044,21 +1044,6 @@ Tsunekazu Saito was a co-author of this document from its first version through
             <date year="2016" />
           </front>
         </reference>
-        <reference anchor="KJ17" target="https://eprint.iacr.org/2016/526">
-          <front>
-            <title>Extended Tower Number Field Sieve with Application to Finite Fields of Arbitrary Composite Extension Degree</title>
-            <seriesInfo name="DOI" value="10.1007/978-3-662-54365-8_16" />
-            <seriesInfo name="Public-Key Cryptography - PKC 2017" value="pp. 388-408" />
-            <seriesInfo name="Cryptology ePrint Archive" value="Report 2016/526" />
-            <author initials="T." surname="Kim" fullname="Taechan Kim">
-              <organization />
-            </author>
-            <author initials="J." surname="Jeong" fullname="Jinhyuck Jeong">
-              <organization />
-            </author>
-            <date year="2017" />
-          </front>
-        </reference>
         <reference anchor="BD18">
           <front>
             <title>Updating Key Size Estimations for Pairings</title>
@@ -1136,6 +1121,21 @@ Tsunekazu Saito was a co-author of this document from its first version through
 
       <references>
         <name>Informative References</name>
+        <reference anchor="KJ17" target="https://eprint.iacr.org/2016/526">
+          <front>
+            <title>Extended Tower Number Field Sieve with Application to Finite Fields of Arbitrary Composite Extension Degree</title>
+            <seriesInfo name="DOI" value="10.1007/978-3-662-54365-8_16" />
+            <seriesInfo name="Public-Key Cryptography - PKC 2017" value="pp. 388-408" />
+            <seriesInfo name="Cryptology ePrint Archive" value="Report 2016/526" />
+            <author initials="T." surname="Kim" fullname="Taechan Kim">
+              <organization />
+            </author>
+            <author initials="J." surname="Jeong" fullname="Jinhyuck Jeong">
+              <organization />
+            </author>
+            <date year="2017" />
+          </front>
+        </reference>
         <reference anchor="APT26" target="https://eprint.iacr.org/2026/560">
           <front>
             <title>High-Order Galois Automorphisms for TNFS Linear Algebra</title>
